@@ -32,7 +32,7 @@ body{background:var(--paper); color:var(--ink);
 a{color:inherit;}
 img{display:block; max-width:100%;}
 /* masthead */
-.mast{border-bottom:1px solid var(--line); background:rgba(250,250,246,.92); backdrop-filter:blur(10px); position:sticky; top:0; z-index:50;}
+.mast{border-bottom:1px solid var(--line); background:var(--paper); position:sticky; top:0; z-index:50;}
 .mast-in{display:flex; align-items:center; justify-content:space-between; height:66px;}
 .wordmark{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-weight:700; font-size:23px; letter-spacing:-0.5px; text-decoration:none;}
 .wordmark span{color:var(--accent);}
@@ -280,6 +280,10 @@ textarea.typebox{width:100%; border:1px solid var(--line); border-radius:12px; p
   .shopgrid{grid-template-columns:1fr 1fr;}
   .stats{grid-template-columns:1fr 1fr; padding:48px 40px;}
 }
+@media(max-width:1024px){
+  .mast nav a.nl{display:none;}
+  .mast nav{gap:14px;}
+}
 @media(max-width:760px){
   .mast-in{flex-wrap:wrap; height:auto; padding:10px 0; gap:8px;}
   .mast nav{display:contents;}
@@ -287,14 +291,13 @@ textarea.typebox{width:100%; border:1px solid var(--line); border-radius:12px; p
   .mast nav select.langsel{order:3; flex:1 1 120px; min-width:0; margin-left:0;}
   .grid2{grid-template-columns:1fr;}
   .card{padding:26px 20px;}
-  .mast nav a.nl{display:none;}
   .share-link{flex-direction:column;}
   .hero2-in{padding:52px 0 64px;}
   .hero-visual{min-height:520px;}
   .hv-photo{width:88%; height:380px;}
   .phone{width:250px; top:80px;}
-  .fc-wa{bottom:30px; max-width:220px;}
-  .fc-qr{bottom:0;}
+  .fc-wa{left:4px; bottom:112px; max-width:192px; transform:rotate(-2deg);}
+  .fc-qr{right:4px; bottom:8px; transform:rotate(2deg);}
   .how-row{grid-template-columns:1fr; gap:28px; padding:40px 0;}
   .how-row.flip .how-copy{order:0;}
   .bento{grid-template-columns:1fr;}
@@ -337,9 +340,11 @@ textarea.typebox{width:100%; border:1px solid var(--line); border-radius:12px; p
 
 html[dir="rtl"] body{direction:rtl}
 .langsel{background:transparent;border:1px solid var(--line);border-radius:99px;padding:8px 10px;font:inherit;font-size:13px;color:var(--ink);margin-left:10px;cursor:pointer}
-.loc-banner{position:fixed;left:16px;right:16px;bottom:16px;z-index:200;background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 50px rgba(20,20,30,.25);padding:16px 18px;display:flex;gap:14px;align-items:center;justify-content:space-between;max-width:660px;margin:0 auto}
+.loc-banner{position:relative;z-index:40;background:var(--paper);border-bottom:1px solid var(--line);padding:12px 52px 12px 20px;display:flex;gap:14px;align-items:center;justify-content:space-between}
 .loc-msg{font-size:14px;color:var(--ink)}
 .loc-btns{display:flex;gap:8px;flex-shrink:0}
+.loc-x{position:absolute;top:6px;right:8px;border:0;background:none;font-size:22px;line-height:1;color:var(--ink2);cursor:pointer;padding:8px}
+.loc-x:hover{color:var(--ink)}
 @media(max-width:560px){.loc-banner{flex-direction:column;align-items:stretch;text-align:center}.loc-btns{justify-content:center}}
 </style>
 </head>
@@ -499,12 +504,11 @@ const STR = { en: {
   loc_visit:"Looks like you\u2019re visiting from {country}.",
   loc_suggest:"Switch to {lang} \u00b7 prices in {cur}?",
   loc_cur_only:"Switch prices to {cur}?",
-  loc_switch:"Switch", loc_keep:"Keep {lang}", loc_lang_only:"Switch to {lang}?", country_label:"Country",
+  loc_switch:"Switch", loc_keep:"Keep {lang}", close:"Close", loc_lang_only:"Switch to {lang}?", country_label:"Country",
   loc_india_more:"\u0ba4\u0bae\u0bbf\u0bb4\u0bcd, \u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02 and more languages in the menu above."
 } };
 let uiLang = "en";
 try{ uiLang = localStorage.getItem("ts_ui") || "en"; }catch(e){}
-if(!STR[uiLang]) uiLang = "en";
 function t(k){
   const d = STR[uiLang] || {};
   if(d[k] != null) return d[k];
@@ -707,7 +711,7 @@ STR.ml = {
   "loc_visit":"നിങ്ങൾ {country}-ൽ നിന്നാണ് സന്ദർശിക്കുന്നതെന്ന് തോന്നുന്നു.",
   "loc_suggest":"{lang}-ലേക്ക് മാറണോ · വിലകൾ {cur}-ൽ?",
   "loc_cur_only":"വിലകൾ {cur}-ലേക്ക് മാറ്റണോ?",
-  "loc_switch":"മാറൂ",
+  "loc_switch":"മാറൂ", "close":"അടയ്ക്കുക",
   "loc_keep":"{lang} തുടരൂ",
   "loc_lang_only":"{lang}-ലേക്ക് മാറണോ?",
   "country_label":"രാജ്യം",
@@ -909,7 +913,7 @@ STR.hi = {
   "loc_visit":"आप {country} से देख रहे हैं, ऐसा लगता है।",
   "loc_suggest":"{lang} में बदलें · क़ीमतें {cur} में?",
   "loc_cur_only":"कीमतें {cur} में बदलें?",
-  "loc_switch":"बदलें",
+  "loc_switch":"बदलें", "close":"बंद करें",
   "loc_keep":"{lang} जारी रखें",
   "loc_lang_only":"{lang} में बदलें?",
   "country_label":"देश",
@@ -1111,28 +1115,231 @@ STR.ta = {
   "loc_visit":"நீங்கள் {country}-இலிருந்து பார்க்கிறீர்கள் என்று தெரிகிறது.",
   "loc_suggest":"{lang}-க்கு மாறவா? · விலைகள் {cur}-இல்?",
   "loc_cur_only":"விலைகள் {cur}-க்கு மாற்றவா?",
-  "loc_switch":"மாற்று",
+  "loc_switch":"மாற்று", "close":"மூடுக",
   "loc_keep":"{lang} தொடருங்கள்",
   "loc_lang_only":"{lang}-க்கு மாறவா?",
   "country_label":"நாடு",
   "loc_india_more":"மேலே உள்ள மெனுவில் மலையாளம், இந்தி உள்பட மேலும் மொழிகள் உள்ளன."
 };
+STR.es = {
+  "meta_title":"TalkShop: Describe tu tienda. Ponla en línea.",
+  "nav_how":"Cómo funciona",
+  "nav_sample":"Ver un ejemplo",
+  "nav_start":"Empieza gratis",
+  "foot_tag":"Describe tu tienda. Ponla en línea.<br>Gratis, sin cuenta, sin app.",
+  "foot_product":"PRODUCTO",
+  "foot_help":"AYUDA",
+  "foot_build":"Crea tu sitio",
+  "foot_sample":"Ver una tienda de ejemplo",
+  "foot_features":"Funciones",
+  "foot_how":"Cómo funciona",
+  "foot_faq":"Preguntas",
+  "foot_update":"Actualizar mi página",
+  "foot_rights":"© 2026 TalkShop",
+  "foot_note":"Gratis · Sin cuenta · Hecho para pequeñas tiendas de todo el mundo",
+  "hero_eyebrow":"PARA PEQUEÑAS TIENDAS, EN TODAS PARTES",
+  "hero_h1a":"Describe tu tienda. ",
+  "hero_h1b":"Ponla en línea.",
+  "hero_sub":"Escribe unas líneas sobre tu tienda, o simplemente habla, y TalkShop la convierte en un escaparate móvil impecable. Compártelo por WhatsApp, imprímelo como código QR, recibe pedidos directo desde la página.",
+  "hero_cta1":"Crear mi sitio, gratis",
+  "hero_cta2":"Ver una tienda de ejemplo",
+  "meta_free":"Gratis",
+  "meta_noaccount":"Sin cuenta",
+  "meta_noapp":"Sin app",
+  "meta_browser":"Funciona en cualquier navegador",
+  "mini_kicker":"AHORA ABIERTO EN LÍNEA",
+  "sample_tagline":"Pan fresco, tortas y pasteles horneados cada mañana.",
+  "prod1":"Pan de masa madre",
+  "prod2":"Croissant de mantequilla",
+  "prod3":"Torta de chocolate",
+  "sp1":"Pan de masa madre",
+  "sp2":"Croissant de mantequilla",
+  "sp3":"Torta de chocolate (entera)",
+  "sp4":"Rollos de canela (paquete de 4)",
+  "sp5":"Tortas de cumpleaños personalizadas",
+  "order":"Pedir",
+  "call_us":"Llámanos",
+  "wa_label":"WhatsApp",
+  "sale_tag":"OFERTA",
+  "sale_text":"Oferta de festival: 20% de descuento esta semana",
+  "wa_online":"en línea",
+  "wa_bubble":"¡Hola {name}! Quisiera pedir: {item} ({price})",
+  "qr_cap":"Escanea para visitar la tienda",
+  "mq_label":"HECHO PARA TODO TIPO DE TIENDA",
+  "mq_t1":"Panaderías",
+  "mq_s1":"Pedidos anticipados por WhatsApp antes de la hora pico.",
+  "mq_t2":"Sastrerías",
+  "mq_s2":"Tu lista de precios y horarios, a un toque.",
+  "mq_t3":"Barberías",
+  "mq_s3":"Deja que los clientes vean servicios y reserven una silla.",
+  "mq_t4":"Cafés",
+  "mq_s4":"Menús que se actualizan en segundos, QR en cada mesa.",
+  "mq_t5":"Floristerías",
+  "mq_s5":"Un enlace para clientes de bodas y pedidos diarios.",
+  "mq_t6":"Tiendas de barrio",
+  "mq_s6":"Precios y ofertas del día, siempre al día.",
+  "how_eyebrow":"CÓMO FUNCIONA",
+  "how_h2":"De palabras a sitio web en un minuto",
+  "how_lead":"Si puedes describir tu tienda a un cliente, puedes ponerla en línea. Este es todo el proceso.",
+  "how1_h":"Descríbela como se la describirías a un amigo",
+  "how1_p":"Escribe unas líneas: el nombre de tu tienda, qué vendes, tus horarios, tu número de teléfono, dónde estás. ¿Prefieres hablar? Toca el micrófono y dicta, en 21 idiomas.",
+  "how1_tag":"TÚ ESCRIBES O HABLAS",
+  "how1_mock":"Mi tienda se llama Panadería Amanecer. Vendemos pan de masa madre, croissants y tortas de cumpleaños. Abrimos de lunes a sábado de 7am a 7pm. Llama al 555 014 2288. Encuéntranos en Calle del Mercado 14.",
+  "how1_mic":"◉ Toca para dictar",
+  "how2_h":"Revísalo y publícalo",
+  "how2_p":"TalkShop lo organiza todo para que lo revises. Corrige lo que sea, agrega precios, agrega un banner de oferta y pulsa publicar. Toma segundos, y puedes cambiarlo cuando quieras.",
+  "how2_tag":"TU ESCAPARATE, AL INSTANTE",
+  "how3_h":"Compártelo en todas partes",
+  "how3_p":"Recibe un enlace a tu escaparate. Envíalo por WhatsApp, ponlo en tu bio de Instagram, imprímelo como código QR para tu mostrador. Los clientes tocan, exploran y piden.",
+  "how3_tag":"UN ENLACE, EN TODAS PARTES",
+  "b_eyebrow":"LO QUE OBTIENES",
+  "b_h2":"Todo lo que una pequeña tienda necesita. Nada de lo que no.",
+  "b_lead":"Cuatro cosas que de verdad atraen clientes, incluidas desde el inicio.",
+  "b1_k":"PEDIDOS",
+  "b1_h":"Los clientes piden por WhatsApp, directo desde tu página",
+  "b1_p":"Cada producto tiene un botón de Pedir. Un toque abre un chat de WhatsApp con tu tienda y el artículo ya escrito. Sin sistema de pago, sin comisiones, sin app nueva que aprender.",
+  "b1_c1":"¡Hola! ¿Tienen la torta de chocolate hoy?",
+  "b1_c2":"¡Sí! La torta entera cuesta {price}. ¿La preparo para las 5pm?",
+  "b2_k":"CÓDIGOS QR",
+  "b2_h":"Un código QR para tu mostrador",
+  "b2_p":"Imprímelo, pégalo en tu vitrina o mostrador. Cada escaneo abre tu tienda.",
+  "b2_cap":"Generado gratis,<br>listo para imprimir.",
+  "b3_k":"ANUNCIOS",
+  "b3_h":"Anuncia una oferta",
+  "b3_p":"Agrega un banner para festivales, descuentos o novedades. Va justo arriba de tu página.",
+  "b3_m1":"Ya llegaron los dulces de Diwali",
+  "b3_m2":"Horneadas frescas cada mañana esta semana",
+  "b4_k":"SIEMPRE EDITABLE",
+  "b4_h":"¿Cambiaste tus precios? Actualízalo en segundos",
+  "b4_p":"Cada escaparate tiene un enlace “Actualiza esta página” al final. Reabre tus datos, cambia lo que sea, comparte el nuevo enlace. Sin desarrollador, sin esperas.",
+  "b4_before":"ANTES",
+  "b4_after":"DESPUÉS",
+  "b4_b1":"Pan de masa madre: {p1}",
+  "b4_b2":"Abierto hasta las 6pm",
+  "b4_a1":"Pan de masa madre: {p1}",
+  "b4_a2":"Abierto hasta las 8pm ✓",
+  "s_eyebrow":"PARA QUIÉN ES",
+  "s_h2":"Hecho para tiendas como la tuya",
+  "s_lead":"La panadería de la esquina, el sastre de la cuadra, el taller de celulares, el salón sin sitio web. Si los clientes preguntan “¿tienen sitio web”, esta es la respuesta.",
+  "sc1k":"PANADERÍAS",
+  "sc1p":"Recibe pedidos anticipados por WhatsApp antes de la hora pico. Sin app que instalar.",
+  "sc2k":"SASTRERÍAS",
+  "sc2p":"Pon tu lista de precios, horarios y dirección en una página que los clientes pueden reenviar.",
+  "sc3k":"BARBERÍAS",
+  "sc3p":"Muestra servicios y precios. Tus clientes habituales comparten tu enlace por ti.",
+  "sc4k":"CAFÉS",
+  "sc4p":"Un menú que se actualiza en segundos, más un código QR para cada mesa.",
+  "sc5k":"FLORISTERÍAS",
+  "sc5p":"Un enlace para consultas de bodas, pedidos diarios y temporadas altas.",
+  "sc6k":"TIENDAS DE BARRIO",
+  "sc6p":"Precios y ofertas del día en una página siempre al día.",
+  "st1l":"de la descripción a un escaparate en vivo",
+  "st2l":"para crear y compartir, sin cuenta",
+  "st3l":"idiomas para dictar por voz, escribe en cualquiera",
+  "st4l":"apps que instalar, ni para ti ni para tus clientes",
+  "min_unit":"min",
+  "faq_eyebrow":"PREGUNTAS",
+  "faq_h2":"Respuestas directas",
+  "q1":"¿Es realmente gratis?",
+  "a1":"Sí. Puedes crear y compartir tu escaparate gratis, sin cuenta. Extras de pago como dominios personalizados pueden llegar después, pero el sitio base sigue gratis.",
+  "q2":"¿Necesito una cuenta o una app?",
+  "a2":"No. Todo funciona en tu navegador. Tu sitio vive en un enlace para compartir, los clientes lo tocan y se abre.",
+  "q3":"¿Qué pasa si algo está mal en mi página?",
+  "a3":"Revisas todo antes de publicar, y cada campo se puede editar. Cada escaparate tiene un enlace “Actualiza esta página” al final, así que corrígelo en segundos.",
+  "q4":"¿Qué idiomas funcionan?",
+  "a4":"La entrada de voz soporta 21 idiomas, incluidos inglés, español, portugués, francés, hindi, malayalam, árabe, indonesio y suajili. El sitio está disponible en inglés, español, hindi, tamil y malayalam. También puedes escribir en cualquier idioma.",
+  "q5":"¿Los clientes pueden pedir desde mi sitio?",
+  "a5":"Sí. Cada producto tiene un botón “Pedir” que abre un chat de WhatsApp con tu tienda y el artículo ya escrito, así los clientes piden en la app que ya usan. Sin sistema de pago.",
+  "q6":"¿Puedo imprimir un código QR para mi tienda?",
+  "a6":"Sí. Después de publicar, toca “Obtener código QR” para un código imprimible que abre tu escaparate. Pégalo en tu mostrador o vitrina.",
+  "cta_h2":"Tu tienda podría estar en línea antes de que se enfríe tu café",
+  "cta_p":"Descríbela en unas líneas. Comparte el enlace en todas partes. Recibe pedidos esta noche.",
+  "stage1":"01 · DESCRIBE",
+  "stage2":"02 · REVISA",
+  "stage3":"03 · COMPARTE",
+  "build_h1":"Crea tu escaparate",
+  "build_p":"Describe tu tienda con naturalidad: su nombre, qué vendes, tus horarios, tu número de teléfono y dónde estás.",
+  "f_describe":"Describe tu tienda",
+  "ph_example":"Ejemplo: Mi tienda se llama Panadería Amanecer. Vendemos pan de masa madre, croissants y tortas de cumpleaños. Abrimos de lunes a sábado de 7am a 7pm. Llama al 555 014 2288. Encuéntranos en Calle del Mercado 14.",
+  "mic_idle":"¿Prefieres hablar? Toca para dictar",
+  "mic_live":"Dictando… toca para parar",
+  "mic_more":"Toca para dictar más",
+  "lang_label":"Idioma",
+  "err_empty":"Cuenta o escribe un poco sobre tu tienda primero, aunque sea una frase.",
+  "err_no_voice":"La entrada de voz necesita Chrome o Edge (escritorio o Android). Puedes escribir tu descripción en el cuadro de abajo.",
+  "err_mic_blocked":"El micrófono está bloqueado. Permite el acceso al micrófono en tu navegador, o escribe tu descripción abajo.",
+  "err_voice_start":"No se pudo iniciar la entrada de voz. Por favor escribe.",
+  "btn_review":"Continuar a revisar →",
+  "rev_h2":"Revisa tus datos",
+  "rev_p":"Lo completamos con lo que dijiste. Corrige lo que sea y publícalo.",
+  "f_name":"Nombre de la tienda",
+  "f_tagline":"Descripción en una línea",
+  "hint_opt":"(opcional)",
+  "f_announce":"Anuncio",
+  "announce_hint":"(opcional, se muestra como banner en tu sitio, p. ej. “Oferta de festival: 20% de descuento esta semana”)",
+  "f_products":"Productos o servicios",
+  "products_hint":"(uno por línea, agrega precios como “Pan de masa madre - $4.50”)",
+  "f_hours":"Horario de apertura",
+  "f_phone":"Teléfono",
+  "f_whatsapp":"Número de WhatsApp",
+  "wa_hint":"(normalmente igual que el teléfono)",
+  "f_address":"Dirección",
+  "addr_hint":"(opcional, se usa para direcciones)",
+  "btn_back":"← Atrás",
+  "btn_publish":"Publicar mi sitio",
+  "err_noname":"Dale un nombre a tu tienda para que los clientes sepan de quién es el sitio.",
+  "sh_eyebrow":"TU TIENDA ESTÁ EN LÍNEA",
+  "sh_note":"Comparte este enlace donde sea: WhatsApp, bio de Instagram, SMS, un código QR en tu mostrador. Quien lo toque verá tu escaparate.",
+  "btn_copy":"Copiar enlace",
+  "copied":"¡Copiado!",
+  "btn_open":"Abrir mi sitio",
+  "btn_sharewa":"Compartir por WhatsApp",
+  "btn_qr":"Obtener código QR",
+  "btn_edit":"Editar datos",
+  "qr_note":"Imprímelo y pégalo en tu mostrador o vitrina.",
+  "btn_printqr":"Imprimir código QR",
+  "sh_tip":"Consejo: imprime el código QR y pégalo en tu mostrador, así cada cliente puede abrir tu tienda en su teléfono.",
+  "wa_share":"Visita mi tienda en línea: ",
+  "err_qr":"No se pudo generar el código QR. Inténtalo de nuevo.",
+  "sv_products":"Lo que vendemos",
+  "sv_products_sub":"Pregúntanos por lo que no veas aquí.",
+  "sv_hours":"Horario de apertura",
+  "sv_hours_sub":"Pásate, nos encantará verte.",
+  "sv_find":"Encuéntranos",
+  "sv_find_sub":"Ponte en contacto",
+  "btn_dir":"Cómo llegar",
+  "made_with_a":"Hecho gratis con",
+  "made_with_b":"Describe tu tienda. Ponla en línea.",
+  "update_link":"¿Es tu tienda? Actualiza esta página",
+  "nf_h":"Ese enlace no abrió una tienda.",
+  "nf_p":"El enlace puede estar incompleto. Pide al dueño que lo reenvíe.",
+  "nf_cta":"Crea el sitio de tu tienda",
+  "loc_visit":"Parece que nos visitas desde {country}.",
+  "loc_suggest":"¿Cambiar a {lang} · precios en {cur}?",
+  "loc_cur_only":"¿Cambiar precios a {cur}?",
+  "loc_switch":"Cambiar",
+  "loc_keep":"Seguir en {lang}",
+  "close":"Cerrar",
+  "loc_lang_only":"¿Cambiar a {lang}?",
+  "country_label":"País",
+  "loc_india_more":"தமிழ், മലയാളം y más idiomas en el menú de arriba."
+};
 
 
 /* ============================== locale: country + currency ============================== */
-const LANG_NAMES = { en:"English", hi:"\u0939\u093f\u0928\u094d\u0926\u0940", ta:"\u0ba4\u0bae\u0bbf\u0bb4\u0bcd", ml:"\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02" };
-const LOCALE_TAG = { en:"en", hi:"hi-IN", ta:"ta-IN", ml:"ml-IN" };
-const LANG_DIR = { en:"ltr", hi:"ltr", ta:"ltr", ml:"ltr" };
+const LANG_NAMES = { en:"English", es:"Español", hi:"\u0939\u093f\u0928\u094d\u0926\u0940", ta:"\u0ba4\u0bae\u0bbf\u0bb4\u0bcd", ml:"\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02" };
+const LOCALE_TAG = { en:"en", es:"es", hi:"hi-IN", ta:"ta-IN", ml:"ml-IN" };
+const LANG_DIR = { en:"ltr", es:"ltr", hi:"ltr", ta:"ltr", ml:"ltr" };
 const COUNTRY = {
   IN:{lang:"hi", cur:"INR", name:"India", more:"ta_ml"},
   CN:{lang:null, cur:"CNY", name:"China"},
-  US:{lang:null, cur:"USD", name:"United States"}, GB:{lang:null, cur:"GBP", name:"United Kingdom"},
-  CA:{lang:null, cur:"CAD", name:"Canada"}, AU:{lang:null, cur:"AUD", name:"Australia"},
-  SG:{lang:null, cur:"SGD", name:"Singapore"}, AE:{lang:null, cur:"AED", name:"UAE"},
+  US:{lang:"en", cur:"USD", name:"United States"}, GB:{lang:"en", cur:"GBP", name:"United Kingdom"},
+  CA:{lang:"en", cur:"CAD", name:"Canada"}, AU:{lang:"en", cur:"AUD", name:"Australia"},
+  SG:{lang:"en", cur:"SGD", name:"Singapore"}, AE:{lang:null, cur:"AED", name:"UAE"},
   BR:{lang:null, cur:"BRL", name:"Brazil"}, PT:{lang:null, cur:"EUR", name:"Portugal"},
-  ES:{lang:null, cur:"EUR", name:"Spain"}, MX:{lang:null, cur:"MXN", name:"Mexico"},
-  AR:{lang:null, cur:"ARS", name:"Argentina"}, CL:{lang:null, cur:"CLP", name:"Chile"},
-  CO:{lang:null, cur:"COP", name:"Colombia"}, PE:{lang:null, cur:"PEN", name:"Peru"},
+  ES:{lang:"es", cur:"EUR", name:"Spain"}, MX:{lang:"es", cur:"MXN", name:"Mexico"},
+  AR:{lang:"es", cur:"ARS", name:"Argentina"}, CL:{lang:"es", cur:"CLP", name:"Chile"},
+  CO:{lang:"es", cur:"COP", name:"Colombia"}, PE:{lang:"es", cur:"PEN", name:"Peru"},
   FR:{lang:null, cur:"EUR", name:"France"}, DE:{lang:null, cur:"EUR", name:"Germany"},
   IT:{lang:null, cur:"EUR", name:"Italy"}, NL:{lang:null, cur:"EUR", name:"Netherlands"},
   JP:{lang:null, cur:"JPY", name:"Japan"}, KR:{lang:null, cur:"KRW", name:"South Korea"},
@@ -1167,8 +1374,33 @@ async function setCurrency(cur){
 function flag(cc){
   return String(cc || "").toUpperCase().replace(/./g, c => String.fromCodePoint(127397 + c.charCodeAt(0)));
 }
-/* ---- privacy-safe country guess: device timezone first, then browser language region.
-   No network, no permission, never precise location. Only a suggestion, never forced. ---- */
+/* ---- country detection: IP geolocation first (country-level only, no precise
+   location), then device timezone, then browser language region. The IP result
+   is cached for a day to avoid repeat lookups. Only a suggestion, never forced. ---- */
+async function ipCountry(){
+  try{
+    const raw = localStorage.getItem("ts_ipcc");
+    if(raw){ const s = JSON.parse(raw); if(s && s.cc && COUNTRY[s.cc] && Date.now() - s.at < 864e5) return s.cc; }
+  }catch(e){}
+  try{
+    const ctl = new AbortController();
+    const timer = setTimeout(()=>ctl.abort(), 2500);
+    const r = await fetch("https://ipapi.co/json/", { signal: ctl.signal });
+    clearTimeout(timer);
+    const j = await r.json();
+    const cc = String((j && j.country_code) || "").toUpperCase();
+    if(cc && COUNTRY[cc]){
+      try{ localStorage.setItem("ts_ipcc", JSON.stringify({ cc: cc, at: Date.now() })); }catch(e){}
+      return cc;
+    }
+  }catch(e){}
+  return null;
+}
+async function guessCountryAsync(){
+  const ip = await ipCountry();
+  if(ip) return ip;
+  return guessCountry();
+}
 const TZ_COUNTRY = {
   "Asia/Kolkata":"IN","Asia/Calcutta":"IN",
   "America/New_York":"US","America/Detroit":"US","America/Kentucky/Louisville":"US","America/Kentucky/Monticello":"US","America/Indiana/Indianapolis":"US","America/Indiana/Vincennes":"US","America/Indiana/Winamac":"US","America/Indiana/Marengo":"US","America/Indiana/Petersburg":"US","America/Indiana/Vevay":"US","America/Chicago":"US","America/Indiana/Tell_City":"US","America/Indiana/Knox":"US","America/Menominee":"US","America/North_Dakota/Center":"US","America/North_Dakota/New_Salem":"US","America/North_Dakota/Beulah":"US","America/Denver":"US","America/Boise":"US","America/Phoenix":"US","America/Los_Angeles":"US","America/Anchorage":"US","America/Juneau":"US","America/Sitka":"US","America/Metlakatla":"US","America/Yakutat":"US","America/Nome":"US","America/Adak":"US","Pacific/Honolulu":"US",
@@ -1212,10 +1444,9 @@ function browserLang(){
   try{ return String(navigator.language || "en").split(/[-_]/)[0].toLowerCase(); }catch(e){ return "en"; }
 }
 function suggestLangFor(cc){
-  // Prefer the browser's own language when we ship a translation for it,
-  // otherwise the country's default language. null = no translation available.
-  const bl = browserLang();
-  if(bl !== uiLang && STR[bl]) return bl;
+  // Country-driven only: suggest the country's primary language when we ship a
+  // translation for it and it is not the current UI language. null = no
+  // translation available, so only currency is suggested.
   const cfg = COUNTRY[cc];
   if(cfg && cfg.lang && cfg.lang !== uiLang && STR[cfg.lang]) return cfg.lang;
   return null;
@@ -1266,18 +1497,28 @@ function setLang(l, silent){
   if(state.cc) cc = state.cc;
   try{ localStorage.setItem("ts_locale", JSON.stringify({ lang:l, cur:cur, cc:cc, dismissed:dismissed })); }catch(e){}
   applyLangHead();
+  const lb = document.getElementById("locBanner");
+  if(lb) lb.remove();
   if(!silent) router();
+}
+function mountLocBanner(el){
+  // In-flow strip at the very top of the page: it pushes content down and can
+  // never overlap text or buttons. Scrolls away naturally with the page.
+  document.body.insertBefore(el, document.body.firstChild);
+  return ()=>{ el.remove(); };
 }
 function showLangBanner(langCode){
   if(document.getElementById("locBanner")) return;
   const el = document.createElement("div");
   el.id = "locBanner"; el.className = "loc-banner";
-  el.innerHTML = '<div class="loc-msg">'+t("loc_lang_only").replace("{lang}", LANG_NAMES[langCode])+'</div>'
+  el.innerHTML = '<button class="loc-x" aria-label="'+t("close")+'">&times;</button>'
+    + '<div class="loc-msg">'+t("loc_lang_only").replace("{lang}", LANG_NAMES[langCode])+'</div>'
     + '<div class="loc-btns"><button class="btn btn-sm btn-solid" id="locYes">'+t("loc_switch")+'</button>'
     + '<button class="btn btn-sm" id="locNo">'+t("loc_keep").replace("{lang}", LANG_NAMES[uiLang]||"English")+'</button></div>';
-  document.body.appendChild(el);
-  document.getElementById("locYes").onclick = ()=>{ setLang(langCode); persistLocale(); el.remove(); };
-  document.getElementById("locNo").onclick = ()=>{ el.remove(); };
+  const bye = mountLocBanner(el);
+  document.getElementById("locYes").onclick = ()=>{ setLang(langCode); persistLocale(); bye(); };
+  document.getElementById("locNo").onclick = bye;
+  el.querySelector(".loc-x").onclick = bye;
 }
 function showLocaleBanner(cc, cfg, suggestLang){
   if(document.getElementById("locBanner")) return;
@@ -1289,23 +1530,23 @@ function showLocaleBanner(cc, cfg, suggestLang){
   else if(langName) msg += t("loc_lang_only").replace("{lang}", langName);
   else msg += t("loc_cur_only").replace("{cur}", cfg.cur);
   if(cfg.more) msg += " " + t("loc_india_more");
-  el.innerHTML = '<div class="loc-msg">'+msg+'</div>'
+  el.innerHTML = '<button class="loc-x" aria-label="'+t("close")+'">&times;</button>'
+    + '<div class="loc-msg">'+msg+'</div>'
     + '<div class="loc-btns"><button class="btn btn-sm btn-solid" id="locYes">'+t("loc_switch")+'</button>'
     + '<button class="btn btn-sm" id="locNo">'+t("loc_keep").replace("{lang}", LANG_NAMES[uiLang]||"English")+'</button></div>';
-  document.body.appendChild(el);
+  const bye = mountLocBanner(el);
   document.getElementById("locYes").onclick = async ()=>{
     if(suggestLang) setLang(suggestLang, true);
     await setCurrency(cfg.cur);
     state.cc = cc;
     persistLocale();
-    el.remove(); router();
+    bye(); router();
   };
-  document.getElementById("locNo").onclick = ()=>{
-    persistLocale();
-    el.remove();
-  };
+  const no = ()=>{ persistLocale(); bye(); };
+  document.getElementById("locNo").onclick = no;
+  el.querySelector(".loc-x").onclick = no;
 }
-function initLocale(){
+async function initLocale(){
   let saved = null;
   try{ saved = JSON.parse(localStorage.getItem("ts_locale")||"null"); }catch(e){}
   if(saved && saved.dismissed){
@@ -1315,7 +1556,7 @@ function initLocale(){
     applyLangHead();
     return;
   }
-  const cc = guessCountry();
+  const cc = await guessCountryAsync();
   const cfg = cc && COUNTRY[cc];
   if(!cfg) return;
   const sl = suggestLangFor(cc);
@@ -1767,6 +2008,7 @@ function router(){
   window.scrollTo(0,0);
 }
 window.addEventListener("hashchange", router);
+if(!STR[uiLang]) uiLang = "en";
 applyLangHead();
 router();
 wireLangSel();
