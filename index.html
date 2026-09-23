@@ -505,7 +505,33 @@ const STR = { en: {
   loc_suggest:"Switch to {lang} \u00b7 prices in {cur}?",
   loc_cur_only:"Switch prices to {cur}?",
   loc_switch:"Switch", loc_keep:"Keep {lang}", close:"Close", loc_lang_only:"Switch to {lang}?", country_label:"Country",
-  loc_india_more:"\u0ba4\u0bae\u0bbf\u0bb4\u0bcd, \u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02 and more languages in the menu above."
+  loc_india_more:"\u0ba4\u0bae\u0bbf\u0bb4\u0bcd, \u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02 and more languages in the menu above.",
+  "legal_updated":"Last updated: September 24, 2026",
+  "foot_legal":"Legal",
+  "foot_privacy":"Privacy Policy",
+  "foot_terms":"Terms of Service",
+  "pp_title":"Privacy Policy",
+  "pp_intro":"TalkShop is a free tool that turns a short description of your shop into a shareable storefront page. It runs entirely in your browser. There are no accounts, no sign-ups, and no analytics or advertising trackers on this site.",
+  "pp_c1t":"What we collect",
+  "pp_c1b":"Almost nothing. To suggest your country and currency, we look up the country of your current IP address through ipapi.co. This is country-level only: we never ask for or receive your precise location. The result is used for the suggestion and is not stored anywhere.",
+  "pp_c2t":"What stays on your device",
+  "pp_c2b":"Your language and country choices, and a cached currency exchange rate, are saved in your browser's local storage so the site remembers your preferences. Nothing else is stored locally. You can erase this at any time by clearing this site's data in your browser settings.",
+  "pp_c3t":"Your shop data",
+  "pp_c3b":"Your storefront content is encoded directly into your share link. We have no server that receives or stores it, so we never see your shop details, prices, or orders. When a customer taps an order button, your browser opens WhatsApp with a pre-filled message to your number. That conversation happens between you and your customer; TalkShop is not part of it.",
+  "pp_c4t":"Third parties",
+  "pp_c4b":"Three outside services are involved, each with its own policy: ipapi.co (IP address to country lookup), api.frankfurter.app (currency exchange rates), and WhatsApp (only when you or a customer taps an order or share button). We do not send them your shop content.",
+  "pp_c5t":"Your control",
+  "pp_c5b":"The country suggestion is only a suggestion: it never changes your settings silently, and the banner has a close button. You can change country, currency, and language yourself at any time from the header.",
+  "tos_title":"Terms of Service",
+  "tos_intro":"By using TalkShop you agree to these terms. If you do not agree, please do not use the site.",
+  "tos_c1t":"The service",
+  "tos_c1b":"TalkShop is a free, self-serve tool for creating shareable storefront pages. It is provided as-is, without warranties of any kind. We may change, limit, or discontinue any part of the service at any time.",
+  "tos_c2t":"Your content",
+  "tos_c2b":"You own the shop content you enter and the links you share. You are responsible for making sure your content is truthful, legal, and does not infringe anyone else's rights. Do not use TalkShop for illegal goods or services, fraud, spam, or harassment.",
+  "tos_c3t":"Acceptable use",
+  "tos_c3b":"Do not abuse the service: no attempts to disrupt the site, scrape it at abusive rates, or misrepresent your shop to customers. We may block misuse to keep the service running for everyone.",
+  "tos_c4t":"Liability",
+  "tos_c4b":"To the fullest extent permitted by law, TalkShop is not liable for any loss arising from your use of the service, including lost orders or business. Your use of third-party services (such as WhatsApp) is governed by their own terms."
 } };
 let uiLang = "en";
 try{ uiLang = localStorage.getItem("ts_ui") || "en"; }catch(e){}
@@ -715,7 +741,33 @@ STR.ml = {
   "loc_keep":"{lang} തുടരൂ",
   "loc_lang_only":"{lang}-ലേക്ക് മാറണോ?",
   "country_label":"രാജ്യം",
-  "loc_india_more":"മുകളിലെ മെനുവിൽ हिन्ദी, தமிழ் എന്നിവയുൾപ്പെടെ കൂടുതൽ ഭാഷകൾ."
+  "loc_india_more":"മുകളിലെ മെനുവിൽ हिन्ദी, தமிழ் എന്നിവയുൾപ്പെടെ കൂടുതൽ ഭാഷകൾ.",
+  "legal_updated":"അവസാനം അപ്ഡേറ്റ് ചെയ്തത്: സെപ്റ്റംബർ 24, 2026",
+  "foot_legal":"നിയമപരം",
+  "foot_privacy":"സ്വകാര്യതാ നയം",
+  "foot_terms":"സേവന നിബന്ധനകൾ",
+  "pp_title":"സ്വകാര്യതാ നയം",
+  "pp_intro":"നിങ്ങളുടെ കടയെക്കുറിച്ചുള്ള ചെറിയ വിവരണം പങ്കിടാവുന്ന കട പേജാക്കി മാറ്റുന്ന സൗജന്യ ഉപകരണമാണ് TalkShop. ഇത് പൂർണ്ണമായും നിങ്ങളുടെ ബ്രൗസറിൽ പ്രവർത്തിക്കുന്നു. അക്കൗണ്ടുകളില്ല, സൈൻ-അപ്പില്ല, ഈ സൈറ്റിൽ അനലിറ്റിക്സോ പരസ്യ ട്രാക്കറുകളോ ഇല്ല.",
+  "pp_c1t":"ഞങ്ങൾ ശേഖരിക്കുന്നത്",
+  "pp_c1b":"ഏതാണ്ട് ഒന്നുമില്ല. നിങ്ങളുടെ രാജ്യവും കറൻസിയും നിർദ്ദേശിക്കാൻ, ipapi.co വഴി നിങ്ങളുടെ നിലവിലെ IP വിലാസത്തിന്റെ രാജ്യം ഞങ്ങൾ നോക്കുന്നു. ഇത് രാജ്യതല വിവരം മാത്രമാണ്: നിങ്ങളുടെ കൃത്യമായ സ്ഥാനം ഞങ്ങൾ ഒരിക്കലും ചോദിക്കുകയോ ലഭിക്കുകയോ ചെയ്യുന്നില്ല. ഫലം നിർദ്ദേശത്തിന് മാത്രം ഉപയോഗിക്കുന്നു, എവിടെയും സംഭരിക്കുന്നില്ല.",
+  "pp_c2t":"നിങ്ങളുടെ ഉപകരണത്തിൽ തങ്ങുന്നത്",
+  "pp_c2b":"നിങ്ങളുടെ ഭാഷയും രാജ്യവും തിരഞ്ഞെടുക്കലുകൾ, കാഷ് ചെയ്ത കറൻസി വിനിമയ നിരക്ക് എന്നിവ സൈറ്റ് നിങ്ങളുടെ മുൻഗണനകൾ ഓർമ്മിക്കാൻ നിങ്ങളുടെ ബ്രൗസറിന്റെ ലോക്കൽ സ്റ്റോറേജിൽ സേവ് ചെയ്യുന്നു. ഇതല്ലാതെ മറ്റൊന്നും പ്രാദേശികമായി സംഭരിക്കുന്നില്ല. ബ്രൗസർ ക്രമീകരണങ്ങളിൽ ഈ സൈറ്റിന്റെ ഡാറ്റ മായ്ച്ച് എപ്പോൾ വേണമെങ്കിലും ഇത് ഇല്ലാതാക്കാം.",
+  "pp_c3t":"നിങ്ങളുടെ കടയുടെ ഡാറ്റ",
+  "pp_c3b":"നിങ്ങളുടെ കടയുടെ ഉള്ളടക്കം നേരിട്ട് നിങ്ങളുടെ ഷെയർ ലിങ്കിൽ തന്നെ എൻകോഡ് ചെയ്യപ്പെടുന്നു. അത് സ്വീകരിക്കുകയോ സംഭരിക്കുകയോ ചെയ്യുന്ന സെർവർ ഞങ്ങൾക്കില്ല, അതിനാൽ നിങ്ങളുടെ കട വിവരങ്ങൾ, വിലകൾ, ഓർഡറുകൾ എന്നിവ ഞങ്ങൾ ഒരിക്കലും കാണുന്നില്ല. ഒരു ഉപഭോക്താവ് ഓർഡർ ബട്ടൺ അമർത്തുമ്പോൾ, നിങ്ങളുടെ ബ്രൗസർ നിങ്ങളുടെ നമ്പറിലേക്ക് മുൻകൂട്ടി എഴുതിയ സന്ദേശവുമായി WhatsApp തുറക്കുന്നു. ആ സംഭാഷണം നിങ്ങൾക്കും നിങ്ങളുടെ ഉപഭോക്താവിനും ഇടയിലാണ്; TalkShop അതിന്റെ ഭാഗമല്ല.",
+  "pp_c4t":"മൂന്നാം കക്ഷികൾ",
+  "pp_c4b":"മൂന്ന് പുറം സേവനങ്ങൾ ഉൾപ്പെട്ടിട്ടുണ്ട്, ഓരോന്നിനും സ്വന്തം നയമുണ്ട്: ipapi.co (IP വിലാസത്തിൽ നിന്ന് രാജ്യം), api.frankfurter.app (കറൻസി വിനിമയ നിരക്കുകൾ), WhatsApp (നിങ്ങളോ ഉപഭോക്താവോ ഓർഡർ അല്ലെങ്കിൽ ഷെയർ ബട്ടൺ അമർത്തുമ്പോൾ മാത്രം). നിങ്ങളുടെ കടയുടെ ഉള്ളടക്കം ഞങ്ങൾ അവർക്ക് അയയ്ക്കുന്നില്ല.",
+  "pp_c5t":"നിങ്ങളുടെ നിയന്ത്രണം",
+  "pp_c5b":"രാജ്യ നിർദ്ദേശം വെറും നിർദ്ദേശം മാത്രമാണ്: അത് നിങ്ങളുടെ ക്രമീകരണങ്ങൾ നിശബ്ദമായി മാറ്റില്ല, ബാനറിൽ അടയ്ക്കാനുള്ള ബട്ടൺ ഉണ്ട്. ഹെഡറിൽ നിന്ന് രാജ്യം, കറൻസി, ഭാഷ എന്നിവ എപ്പോൾ വേണമെങ്കിലും നിങ്ങൾക്ക് തന്നെ മാറ്റാം.",
+  "tos_title":"സേവന നിബന്ധനകൾ",
+  "tos_intro":"TalkShop ഉപയോഗിക്കുന്നതിലൂടെ നിങ്ങൾ ഈ നിബന്ധനകൾ അംഗീകരിക്കുന്നു. അംഗീകരിക്കുന്നില്ലെങ്കിൽ ദയവായി സൈറ്റ് ഉപയോഗിക്കരുത്.",
+  "tos_c1t":"സേവനം",
+  "tos_c1b":"പങ്കിടാവുന്ന കട പേജുകൾ ഉണ്ടാക്കാനുള്ള സൗജന്യ, സെൽഫ്-സർവ് ഉപകരണമാണ് TalkShop. യാതൊരു വാറണ്ടിയുമില്ലാതെ, ഉള്ളതുപോലെ നൽകുന്നു. സേവനത്തിന്റെ ഏതെങ്കിലും ഭാഗം എപ്പോൾ വേണമെങ്കിലും മാറ്റാനോ പരിമിതപ്പെടുത്താനോ നിർത്താനോ ഞങ്ങൾക്ക് അവകാശമുണ്ട്.",
+  "tos_c2t":"നിങ്ങളുടെ ഉള്ളടക്കം",
+  "tos_c2b":"നിങ്ങൾ നൽകുന്ന കട ഉള്ളടക്കത്തിന്റെയും നിങ്ങൾ പങ്കിടുന്ന ലിങ്കുകളുടെയും ഉടമ നിങ്ങളാണ്. നിങ്ങളുടെ ഉള്ളടക്കം സത്യസന്ധവും നിയമപരവും മറ്റുള്ളവരുടെ അവകാശങ്ങൾ ലംഘിക്കാത്തതുമാണെന്ന് ഉറപ്പാക്കേണ്ടത് നിങ്ങളുടെ ഉത്തരവാദിത്തമാണ്. നിയമവിരുദ്ധമായ സാധനങ്ങൾക്കോ സേവനങ്ങൾക്കോ, തട്ടിപ്പിനോ, സ്പാമിനോ, ഉപദ്രവത്തിനോ TalkShop ഉപയോഗിക്കരുത്.",
+  "tos_c3t":"സ്വീകാര്യമായ ഉപയോഗം",
+  "tos_c3b":"സേവനം ദുരുപയോഗം ചെയ്യരുത്: സൈറ്റ് തടസ്സപ്പെടുത്താനോ, അമിത നിരക്കിൽ സ്ക്രേപ്പ് ചെയ്യാനോ, ഉപഭോക്താക്കളെ തെറ്റിദ്ധരിപ്പിക്കാനോ ശ്രമിക്കരുത്. എല്ലാവർക്കും സേവനം പ്രവർത്തിക്കാൻ ദുരുപയോഗം തടയാൻ ഞങ്ങൾക്ക് കഴിയും.",
+  "tos_c4t":"ബാധ്യത",
+  "tos_c4b":"നിയമം അനുവദിക്കുന്ന പരമാവധി പരിധിവരെ, സേവനത്തിന്റെ ഉപയോഗത്തിൽ നിന്നുണ്ടാകുന്ന ഏതൊരു നഷ്ടത്തിനും (നഷ്ടപ്പെട്ട ഓർഡറുകളോ ബിസിനസോ ഉൾപ്പെടെ) TalkShop ബാധ്യസ്ഥമല്ല. മൂന്നാം കക്ഷി സേവനങ്ങളുടെ (WhatsApp പോലുള്ളവ) നിങ്ങളുടെ ഉപയോഗം അവരുടെ സ്വന്തം നിബന്ധനകൾക്ക് വിധേയമാണ്."
 };
 STR.hi = {
   "meta_title":"TalkShop: अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।",
@@ -917,7 +969,33 @@ STR.hi = {
   "loc_keep":"{lang} जारी रखें",
   "loc_lang_only":"{lang} में बदलें?",
   "country_label":"देश",
-  "loc_india_more":"ऊपर के मेनू में मलयालम, तमिल सहित और भाषाएँ भी हैं।"
+  "loc_india_more":"ऊपर के मेनू में मलयालम, तमिल सहित और भाषाएँ भी हैं।",
+  "legal_updated":"अंतिम अपडेट: 24 सितंबर 2026",
+  "foot_legal":"कानूनी",
+  "foot_privacy":"गोपनीयता नीति",
+  "foot_terms":"सेवा की शर्तें",
+  "pp_title":"गोपनीयता नीति",
+  "pp_intro":"TalkShop एक मुफ़्त टूल है जो आपकी दुकान के छोटे से विवरण को शेयर करने लायक स्टोर पेज में बदल देता है। यह पूरी तरह आपके ब्राउज़र में चलता है। कोई अकाउंट नहीं, कोई साइन-अप नहीं, और इस साइट पर कोई एनालिटिक्स या विज्ञापन ट्रैकर नहीं है।",
+  "pp_c1t":"हम क्या लेते हैं",
+  "pp_c1b":"लगभग कुछ नहीं। आपका देश और मुद्रा सुझाने के लिए हम ipapi.co के ज़रिए आपके मौजूदा IP पते का देश देखते हैं। यह सिर्फ देश-स्तर की जानकारी है: हम आपकी सटीक लोकेशन कभी नहीं मांगते या पाते। नतीजा सिर्फ सुझाव के लिए इस्तेमाल होता है और कहीं स्टोर नहीं होता।",
+  "pp_c2t":"आपके डिवाइस पर क्या रहता है",
+  "pp_c2b":"आपकी भाषा और देश की पसंद, और एक कैश्ड मुद्रा विनिमय दर, आपके ब्राउज़र के लोकल स्टोरेज में सेव होती है ताकि साइट आपकी पसंद याद रखे। इसके अलावा कुछ भी स्थानीय रूप से स्टोर नहीं होता। आप ब्राउज़र सेटिंग्स में साइट का डेटा साफ़ करके इसे कभी भी मिटा सकते हैं।",
+  "pp_c3t":"आपकी दुकान का डेटा",
+  "pp_c3b":"आपकी दुकान की सामग्री सीधे आपके शेयर लिंक में कोड की जाती है। हमारे पास इसे पाने या स्टोर करने वाला कोई सर्वर नहीं है, इसलिए हम आपकी दुकान का विवरण, कीमतें या ऑर्डर कभी नहीं देखते। जब कोई ग्राहक ऑर्डर बटन दबाता है, तो आपका ब्राउज़र आपके नंबर पर पहले से लिखा संदेश लेकर WhatsApp खोलता है। वह बातचीत आपके और आपके ग्राहक के बीच होती है; TalkShop उसका हिस्सा नहीं है।",
+  "pp_c4t":"तीसरे पक्ष",
+  "pp_c4b":"तीन बाहरी सेवाएं शामिल हैं, हर एक की अपनी नीति है: ipapi.co (IP पते से देश की जानकारी), api.frankfurter.app (मुद्रा विनिमय दरें), और WhatsApp (सिर्फ तब जब आप या कोई ग्राहक ऑर्डर या शेयर बटन दबाता है)। हम उन्हें आपकी दुकान की सामग्री नहीं भेजते।",
+  "pp_c5t":"आपका नियंत्रण",
+  "pp_c5b":"देश का सुझाव सिर्फ सुझाव है: यह आपकी सेटिंग्स चुपचाप कभी नहीं बदलता, और बैनर में बंद करने का बटन है। आप हेडर से कभी भी देश, मुद्रा और भाषा खुद बदल सकते हैं।",
+  "tos_title":"सेवा की शर्तें",
+  "tos_intro":"TalkShop का इस्तेमाल करके आप इन शर्तों से सहमत होते हैं। अगर आप सहमत नहीं हैं, तो कृपया साइट का इस्तेमाल न करें।",
+  "tos_c1t":"सेवा",
+  "tos_c1b":"TalkShop शेयर करने लायक स्टोर पेज बनाने का एक मुफ़्त, सेल्फ-सर्व टूल है। यह बिना किसी वारंटी के, जैसा है वैसा दिया जाता है। हम कभी भी सेवा के किसी हिस्से को बदल, सीमित या बंद कर सकते हैं।",
+  "tos_c2t":"आपकी सामग्री",
+  "tos_c2b":"आप जो दुकान की सामग्री डालते हैं और जो लिंक शेयर करते हैं, उसके मालिक आप हैं। यह आपकी ज़िम्मेदारी है कि आपकी सामग्री सच्ची, कानूनी हो और किसी और के अधिकारों का उल्लंघन न करे। अवैध सामान या सेवाओं, धोखाधड़ी, स्पैम या उत्पीड़न के लिए TalkShop का इस्तेमाल न करें।",
+  "tos_c3t":"स्वीकार्य उपयोग",
+  "tos_c3b":"सेवा का दुरुपयोग न करें: साइट को बाधित करने, गलत तरीके से स्क्रैप करने, या ग्राहकों को गुमराह करने की कोशिश न करें। सेवा सबके लिए चालू रखने हेतु हम दुरुपयोग को रोक सकते हैं।",
+  "tos_c4t":"दायित्व",
+  "tos_c4b":"कानून द्वारा अनुमत अधिकतम सीमा तक, सेवा के इस्तेमाल से होने वाले किसी भी नुकसान के लिए TalkShop ज़िम्मेदार नहीं है, जिसमें खोए हुए ऑर्डर या व्यापार भी शामिल है। तीसरे पक्ष की सेवाओं (जैसे WhatsApp) का आपका इस्तेमाल उनकी अपनी शर्तों से नियंत्रित होता है।"
 };
 STR.ta = {
   "meta_title":"TalkShop: உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.",
@@ -1119,7 +1197,33 @@ STR.ta = {
   "loc_keep":"{lang} தொடருங்கள்",
   "loc_lang_only":"{lang}-க்கு மாறவா?",
   "country_label":"நாடு",
-  "loc_india_more":"மேலே உள்ள மெனுவில் மலையாளம், இந்தி உள்பட மேலும் மொழிகள் உள்ளன."
+  "loc_india_more":"மேலே உள்ள மெனுவில் மலையாளம், இந்தி உள்பட மேலும் மொழிகள் உள்ளன.",
+  "legal_updated":"கடைசியாக புதுப்பிக்கப்பட்டது: செப்டம்பர் 24, 2026",
+  "foot_legal":"சட்டம்",
+  "foot_privacy":"தனியுரிமைக் கொள்கை",
+  "foot_terms":"சேவை விதிமுறைகள்",
+  "pp_title":"தனியுரிமைக் கொள்கை",
+  "pp_intro":"TalkShop உங்கள் கடையைப் பற்றிய சிறு விளக்கத்தைப் பகிரக்கூடிய கடைப் பக்கமாக மாற்றும் இலவசக் கருவி. இது முழுக்க உங்கள் உலாவியிலேயே இயங்குகிறது. கணக்குகள் இல்லை, பதிவு இல்லை, இந்தத் தளத்தில் பகுப்பாய்வு அல்லது விளம்பரக் கண்காணிப்பிகள் இல்லை.",
+  "pp_c1t":"நாங்கள் சேகரிப்பது",
+  "pp_c1b":"கிட்டத்தட்ட ஒன்றுமில்லை. உங்கள் நாடு மற்றும் நாணயத்தைப் பரிந்துரைக்க, ipapi.co மூலம் உங்கள் தற்போதைய IP முகவரியின் நாட்டைப் பார்க்கிறோம். இது நாடு அளவிலான தகவல் மட்டுமே: உங்கள் துல்லியமான இருப்பிடத்தை நாங்கள் ஒருபோதும் கேட்பதில்லை, பெறுவதில்லை. முடிவு பரிந்துரைக்கு மட்டும் பயன்படுத்தப்படுகிறது, எங்கும் சேமிக்கப்படுவதில்லை.",
+  "pp_c2t":"உங்கள் சாதனத்தில் இருப்பது",
+  "pp_c2b":"உங்கள் மொழி மற்றும் நாட்டுத் தேர்வுகள், மற்றும் சேமிக்கப்பட்ட நாணய மாற்று விகிதம் உங்கள் உலாவியின் உள்ளூர் சேமிப்பில் வைக்கப்படுகின்றன, தளம் உங்கள் விருப்பங்களை நினைவில் வைக்க. வேறு எதுவும் உள்ளூரில் சேமிக்கப்படுவதில்லை. உலாவி அமைப்புகளில் இந்தத் தளத்தின் தரவை நீக்கி எப்போது வேண்டுமானாலும் அழிக்கலாம்.",
+  "pp_c3t":"உங்கள் கடைத் தரவு",
+  "pp_c3b":"உங்கள் கடையின் உள்ளடக்கம் நேரடியாக உங்கள் பகிர் இணைப்பிலேயே குறியாக்கம் செய்யப்படுகிறது. அதைப் பெறும் அல்லது சேமிக்கும் சேவையகம் எங்களிடம் இல்லை, எனவே உங்கள் கடை விவரங்கள், விலைகள் அல்லது ஆர்டர்களை நாங்கள் ஒருபோதும் பார்ப்பதில்லை. வாடிக்கையாளர் ஆர்டர் பொத்தானை அழுத்தும்போது, உங்கள் உலாவி உங்கள் எண்ணுக்கு முன்பே எழுதிய செய்தியுடன் WhatsApp-ஐத் திறக்கிறது. அந்த உரையாடல் உங்களுக்கும் உங்கள் வாடிக்கையாளருக்கும் இடையே நடக்கிறது; TalkShop அதில் பங்கேற்காது.",
+  "pp_c4t":"மூன்றாம் தரப்பினர்",
+  "pp_c4b":"மூன்று வெளிச் சேவைகள் ஈடுபட்டுள்ளன, ஒவ்வொன்றுக்கும் தனிக் கொள்கை உண்டு: ipapi.co (IP முகவரியிலிருந்து நாடு), api.frankfurter.app (நாணய மாற்று விகிதங்கள்), WhatsApp (நீங்களோ வாடிக்கையாளரோ ஆர்டர் அல்லது பகிர் பொத்தானை அழுத்தும்போது மட்டும்). உங்கள் கடை உள்ளடக்கத்தை அவர்களுக்கு அனுப்புவதில்லை.",
+  "pp_c5t":"உங்கள் கட்டுப்பாடு",
+  "pp_c5b":"நாட்டுப் பரிந்துரை வெறும் பரிந்துரை மட்டுமே: அது உங்கள் அமைப்புகளை அமைதியாக மாற்றாது, அறிவிப்பில் மூடும் பொத்தான் உள்ளது. தலைப்புப் பட்டியிலிருந்து நாடு, நாணயம், மொழியை எப்போது வேண்டுமானாலும் நீங்களே மாற்றலாம்.",
+  "tos_title":"சேவை விதிமுறைகள்",
+  "tos_intro":"TalkShop-ஐப் பயன்படுத்துவதன் மூலம் இந்த விதிமுறைகளை ஏற்கிறீர்கள். உடன்படவில்லை என்றால் தளத்தைப் பயன்படுத்த வேண்டாம்.",
+  "tos_c1t":"சேவை",
+  "tos_c1b":"TalkShop பகிரக்கூடிய கடைப் பக்கங்களை உருவாக்கும் இலவச, தன்சேவைக் கருவி. எந்த உத்தரவாதமும் இன்றி, உள்ளபடியே வழங்கப்படுகிறது. சேவையின் எந்தப் பகுதியையும் எப்போது வேண்டுமானாலும் மாற்ற, கட்டுப்படுத்த அல்லது நிறுத்த எங்களுக்கு உரிமை உண்டு.",
+  "tos_c2t":"உங்கள் உள்ளடக்கம்",
+  "tos_c2b":"நீங்கள் உள்ளிடும் கடை உள்ளடக்கம் மற்றும் நீங்கள் பகிரும் இணைப்புகளுக்கு நீங்களே உரிமையாளர். உங்கள் உள்ளடக்கம் உண்மையானது, சட்டபூர்வமானது, மற்றவர்களின் உரிமைகளை மீறாதது என்பதை உறுதி செய்வது உங்கள் பொறுப்பு. சட்டவிரோதப் பொருட்கள் அல்லது சேவைகள், மோசடி, ஸ்பேம், துன்புறுத்தலுக்கு TalkShop-ஐப் பயன்படுத்த வேண்டாம்.",
+  "tos_c3t":"ஏற்கத்தக்க பயன்",
+  "tos_c3b":"சேவையைத் தவறாகப் பயன்படுத்த வேண்டாம்: தளத்தைச் சீர்குலைக்கவோ, அதிக விகிதத்தில் தரவெடுக்கவோ, வாடிக்கையாளர்களை ஏமாற்றவோ முயற்சிக்க வேண்டாம். அனைவருக்கும் சேவை இயங்க தவறான பயன்பாட்டைத் தடுக்கலாம்.",
+  "tos_c4t":"பொறுப்பு",
+  "tos_c4b":"சட்டம் அனுமதிக்கும் அதிகபட்ச அளவில், சேவையைப் பயன்படுத்துவதால் ஏற்படும் எந்த இழப்புக்கும் (இழந்த ஆர்டர்கள் அல்லது வணிகம் உட்பட) TalkShop பொறுப்பல்ல. மூன்றாம் தரப்புச் சேவைகளை (WhatsApp போன்றவை) நீங்கள் பயன்படுத்துவது அவர்களின் சொந்த விதிமுறைகளுக்கு உட்பட்டது."
 };
 STR.es = {
   "meta_title":"TalkShop: Describe tu tienda. Ponla en línea.",
@@ -1322,7 +1426,33 @@ STR.es = {
   "close":"Cerrar",
   "loc_lang_only":"¿Cambiar a {lang}?",
   "country_label":"País",
-  "loc_india_more":"தமிழ், മലയാളം y más idiomas en el menú de arriba."
+  "loc_india_more":"தமிழ், മലയാളം y más idiomas en el menú de arriba.",
+  "legal_updated":"Última actualización: 24 de septiembre de 2026",
+  "foot_legal":"Legal",
+  "foot_privacy":"Política de privacidad",
+  "foot_terms":"Términos del servicio",
+  "pp_title":"Política de privacidad",
+  "pp_intro":"TalkShop es una herramienta gratuita que convierte una breve descripción de tu tienda en una página compartible. Funciona por completo en tu navegador. No hay cuentas, no hay registros, y no hay analíticas ni rastreadores de publicidad en este sitio.",
+  "pp_c1t":"Lo que recopilamos",
+  "pp_c1b":"Casi nada. Para sugerir tu país y tu moneda, consultamos el país de tu dirección IP actual a través de ipapi.co. Es solo a nivel de país: nunca pedimos ni recibimos tu ubicación exacta. El resultado se usa para la sugerencia y no se almacena en ningún lugar.",
+  "pp_c2t":"Lo que queda en tu dispositivo",
+  "pp_c2b":"Tus elecciones de idioma y país, y un tipo de cambio en caché, se guardan en el almacenamiento local de tu navegador para que el sitio recuerde tus preferencias. No se almacena nada más localmente. Puedes borrarlo en cualquier momento desde los ajustes de tu navegador.",
+  "pp_c3t":"Los datos de tu tienda",
+  "pp_c3b":"El contenido de tu tienda se codifica directamente en tu enlace para compartir. No tenemos ningún servidor que lo reciba o lo almacene, así que nunca vemos los detalles de tu tienda, tus precios ni tus pedidos. Cuando un cliente toca un botón de pedido, tu navegador abre WhatsApp con un mensaje prellenado a tu número. Esa conversación ocurre entre tú y tu cliente; TalkShop no forma parte de ella.",
+  "pp_c4t":"Terceros",
+  "pp_c4b":"Intervienen tres servicios externos, cada uno con su propia política: ipapi.co (consulta de país por dirección IP), api.frankfurter.app (tipos de cambio de moneda) y WhatsApp (solo cuando tú o un cliente tocan un botón de pedido o de compartir). No les enviamos el contenido de tu tienda.",
+  "pp_c5t":"Tu control",
+  "pp_c5b":"La sugerencia de país es solo eso, una sugerencia: nunca cambia tus ajustes en silencio, y el aviso tiene un botón para cerrarlo. Puedes cambiar el país, la moneda y el idioma cuando quieras desde el encabezado.",
+  "tos_title":"Términos del servicio",
+  "tos_intro":"Al usar TalkShop aceptas estos términos. Si no estás de acuerdo, por favor no uses el sitio.",
+  "tos_c1t":"El servicio",
+  "tos_c1b":"TalkShop es una herramienta gratuita y de autoservicio para crear páginas de tienda compartibles. Se ofrece tal cual, sin garantías de ningún tipo. Podemos cambiar, limitar o suspender cualquier parte del servicio en cualquier momento.",
+  "tos_c2t":"Tu contenido",
+  "tos_c2b":"Eres dueño del contenido de tu tienda que introduces y de los enlaces que compartes. Eres responsable de que tu contenido sea veraz, legal y no infrinja los derechos de otros. No uses TalkShop para bienes o servicios ilegales, fraude, spam ni acoso.",
+  "tos_c3t":"Uso aceptable",
+  "tos_c3b":"No abuses del servicio: no intentes interrumpir el sitio, extraerlo a ritmos abusivos ni engañar a tus clientes. Podemos bloquear el uso indebido para que el servicio siga funcionando para todos.",
+  "tos_c4t":"Responsabilidad",
+  "tos_c4b":"En la máxima medida permitida por la ley, TalkShop no se hace responsable de ninguna pérdida derivada del uso del servicio, incluidos pedidos o negocios perdidos. Tu uso de servicios de terceros (como WhatsApp) se rige por sus propios términos."
 };
 
 
@@ -1374,14 +1504,15 @@ async function setCurrency(cur){
 function flag(cc){
   return String(cc || "").toUpperCase().replace(/./g, c => String.fromCodePoint(127397 + c.charCodeAt(0)));
 }
-/* ---- country detection: IP geolocation first (country-level only, no precise
-   location), then device timezone, then browser language region. The IP result
-   is cached for a day to avoid repeat lookups. Only a suggestion, never forced. ---- */
+/* ---- country detection: IP geolocation only (country-level, no precise
+   location). Deliberately NOT cached in localStorage: VPN/proxy changes take
+   effect on a plain reload. In-memory for this page load only. The result is
+   only a suggestion, never forced. If the lookup fails, no guess is made and
+   the visitor picks manually from the header. ---- */
+let _ipcc = null, _ipccDone = false;
 async function ipCountry(){
-  try{
-    const raw = localStorage.getItem("ts_ipcc");
-    if(raw){ const s = JSON.parse(raw); if(s && s.cc && COUNTRY[s.cc] && Date.now() - s.at < 864e5) return s.cc; }
-  }catch(e){}
+  if(_ipccDone) return _ipcc;
+  _ipccDone = true;
   try{
     const ctl = new AbortController();
     const timer = setTimeout(()=>ctl.abort(), 2500);
@@ -1389,59 +1520,9 @@ async function ipCountry(){
     clearTimeout(timer);
     const j = await r.json();
     const cc = String((j && j.country_code) || "").toUpperCase();
-    if(cc && COUNTRY[cc]){
-      try{ localStorage.setItem("ts_ipcc", JSON.stringify({ cc: cc, at: Date.now() })); }catch(e){}
-      return cc;
-    }
+    if(cc && COUNTRY[cc]){ _ipcc = cc; return cc; }
   }catch(e){}
   return null;
-}
-async function guessCountryAsync(){
-  const ip = await ipCountry();
-  if(ip) return ip;
-  return guessCountry();
-}
-const TZ_COUNTRY = {
-  "Asia/Kolkata":"IN","Asia/Calcutta":"IN",
-  "America/New_York":"US","America/Detroit":"US","America/Kentucky/Louisville":"US","America/Kentucky/Monticello":"US","America/Indiana/Indianapolis":"US","America/Indiana/Vincennes":"US","America/Indiana/Winamac":"US","America/Indiana/Marengo":"US","America/Indiana/Petersburg":"US","America/Indiana/Vevay":"US","America/Chicago":"US","America/Indiana/Tell_City":"US","America/Indiana/Knox":"US","America/Menominee":"US","America/North_Dakota/Center":"US","America/North_Dakota/New_Salem":"US","America/North_Dakota/Beulah":"US","America/Denver":"US","America/Boise":"US","America/Phoenix":"US","America/Los_Angeles":"US","America/Anchorage":"US","America/Juneau":"US","America/Sitka":"US","America/Metlakatla":"US","America/Yakutat":"US","America/Nome":"US","America/Adak":"US","Pacific/Honolulu":"US",
-  "Europe/London":"GB","Europe/Belfast":"GB","Europe/Guernsey":"GB","Europe/Jersey":"GB","Europe/Isle_of_Man":"GB",
-  "Asia/Shanghai":"CN","Asia/Chongqing":"CN","Asia/Harbin":"CN","Asia/Urumqi":"CN","Asia/Kashgar":"CN",
-  "America/Toronto":"CA","America/Vancouver":"CA","America/Edmonton":"CA","America/Winnipeg":"CA","America/Halifax":"CA","America/St_Johns":"CA","America/Montreal":"CA","America/Regina":"CA","America/Swift_Current":"CA","America/Goose_Bay":"CA","America/Moncton":"CA","America/Glace_Bay":"CA","America/Blanc-Sablon":"CA","America/Atikokan":"CA","America/Creston":"CA","America/Dawson_Creek":"CA","America/Fort_Nelson":"CA","America/Cambridge_Bay":"CA","America/Dawson":"CA","America/Whitehorse":"CA","America/Inuvik":"CA","America/Iqaluit":"CA","America/Pangnirtung":"CA","America/Rankin_Inlet":"CA","America/Resolute":"CA",
-  "Australia/Sydney":"AU","Australia/Melbourne":"AU","Australia/Brisbane":"AU","Australia/Perth":"AU","Australia/Adelaide":"AU","Australia/Darwin":"AU","Australia/Hobart":"AU","Australia/Canberra":"AU","Australia/Broken_Hill":"AU","Australia/Lord_Howe":"AU","Australia/Lindeman":"AU","Australia/Currie":"AU","Australia/Eucla":"AU",
-  "Asia/Singapore":"SG","Asia/Dubai":"AE",
-  "America/Sao_Paulo":"BR","America/Rio_Branco":"BR","America/Manaus":"BR","America/Belem":"BR","America/Fortaleza":"BR","America/Recife":"BR","America/Bahia":"BR","America/Noronha":"BR","America/Campo_Grande":"BR","America/Cuiaba":"BR","America/Santarem":"BR","America/Porto_Velho":"BR","America/Boa_Vista":"BR","America/Araguaina":"BR","America/Maceio":"BR",
-  "Europe/Lisbon":"PT","Atlantic/Madeira":"PT","Atlantic/Azores":"PT",
-  "Europe/Madrid":"ES","Atlantic/Canary":"ES","Africa/Ceuta":"ES",
-  "America/Mexico_City":"MX","America/Cancun":"MX","America/Tijuana":"MX","America/Chihuahua":"MX","America/Mazatlan":"MX","America/Monterrey":"MX","America/Merida":"MX","America/Hermosillo":"MX",
-  "America/Argentina/Buenos_Aires":"AR","America/Argentina/Cordoba":"AR","America/Argentina/Mendoza":"AR","America/Argentina/Rosario":"AR",
-  "America/Santiago":"CL","Pacific/Easter":"CL",
-  "America/Bogota":"CO","America/Lima":"PE",
-  "Europe/Paris":"FR","Europe/Berlin":"DE","Europe/Rome":"IT","Europe/Amsterdam":"NL",
-  "Asia/Tokyo":"JP","Asia/Seoul":"KR",
-  "Asia/Jakarta":"ID","Asia/Makassar":"ID","Asia/Jayapura":"ID","Asia/Pontianak":"ID",
-  "Asia/Kuala_Lumpur":"MY","Asia/Kuching":"MY",
-  "Asia/Manila":"PH","Asia/Bangkok":"TH","Asia/Ho_Chi_Minh":"VN","Asia/Saigon":"VN",
-  "Asia/Dhaka":"BD","Asia/Karachi":"PK","Asia/Colombo":"LK","Asia/Kathmandu":"NP","Asia/Katmandu":"NP",
-  "Africa/Johannesburg":"ZA","Africa/Lagos":"NG","Africa/Nairobi":"KE","Africa/Cairo":"EG",
-  "Asia/Riyadh":"SA","Asia/Jerusalem":"IL","Asia/Tel_Aviv":"IL","Asia/Gaza":"IL","Asia/Hebron":"IL",
-  "Europe/Istanbul":"TR","Asia/Istanbul":"TR",
-  "Europe/Moscow":"RU","Europe/Kaliningrad":"RU","Europe/Samara":"RU","Europe/Volgograd":"RU","Asia/Yekaterinburg":"RU","Asia/Omsk":"RU","Asia/Novosibirsk":"RU","Asia/Krasnoyarsk":"RU","Asia/Irkutsk":"RU","Asia/Yakutsk":"RU","Asia/Vladivostok":"RU","Asia/Magadan":"RU","Asia/Sakhalin":"RU","Asia/Kamchatka":"RU","Asia/Anadyr":"RU",
-  "Europe/Stockholm":"SE","Europe/Oslo":"NO","Europe/Zurich":"CH",
-  "Pacific/Auckland":"NZ","Pacific/Chatham":"NZ"
-};
-function guessCountry(){
-  try{
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    if(tz && TZ_COUNTRY[tz]) return TZ_COUNTRY[tz];
-  }catch(e){}
-  try{
-    const parts = String(navigator.language || "").split(/[-_]/);
-    if(parts.length > 1){ const cc = parts[1].toUpperCase(); if(COUNTRY[cc]) return cc; }
-  }catch(e){}
-  return null;
-}
-function browserLang(){
-  try{ return String(navigator.language || "en").split(/[-_]/)[0].toLowerCase(); }catch(e){ return "en"; }
 }
 function suggestLangFor(cc){
   // Country-driven only: suggest the country's primary language when we ship a
@@ -1556,7 +1637,7 @@ async function initLocale(){
     applyLangHead();
     return;
   }
-  const cc = await guessCountryAsync();
+  const cc = await ipCountry();
   const cfg = cc && COUNTRY[cc];
   if(!cfg) return;
   const sl = suggestLangFor(cc);
@@ -1635,6 +1716,7 @@ function footer(){
     + '<div>'+t("foot_tag")+'</div></div>'
     + '<div><h5>'+t("foot_product")+'</h5><a href="#/build" onclick="freshBuild()">'+t("foot_build")+'</a><a class="sample-link" href="#/">'+t("foot_sample")+'</a><a href="#features">'+t("foot_features")+'</a><a href="#how">'+t("foot_how")+'</a></div>'
     + '<div><h5>'+t("foot_help")+'</h5><a href="#faq">'+t("foot_faq")+'</a><a href="#/build" onclick="freshBuild()">'+t("foot_update")+'</a></div>'
+    + '<div><h5>'+t("foot_legal")+'</h5><a href="#/privacy">'+t("foot_privacy")+'</a><a href="#/terms">'+t("foot_terms")+'</a></div>'
     + '</div><div class="foot-bottom"><div>'+t("foot_rights")+'</div><div>'+t("foot_note")+'</div></div></div></footer>';
 }
 function render(html){ $("#view").innerHTML = html; wireSampleLinks(); wireCountrySel(); wireLangSel(); }
@@ -1987,6 +2069,29 @@ function notFoundView(){
   + '<p style="color:var(--ink2);margin:12px 0 26px;">'+t("nf_p")+'</p>'
   + '<a class="btn btn-accent" href="#/build" onclick="freshBuild()">'+t("nf_cta")+'</a></div>' + footer();
 }
+function legalView(title, intro, sections){
+  let h = header() + '<div class="wrap" style="padding:64px 22px 90px;max-width:760px;">'
+    + '<h1 class="serif" style="font-size:clamp(32px,5vw,52px);margin:0 0 8px;">'+title+'</h1>'
+    + '<p style="color:var(--ink2);font-size:14px;margin:0 0 24px;">'+t("legal_updated")+'</p>'
+    + '<p style="font-size:17px;line-height:1.65;color:var(--ink2);margin:0 0 10px;">'+intro+'</p>';
+  sections.forEach(function(sec){
+    h += '<h2 class="serif" style="font-size:23px;margin:32px 0 10px;">'+sec[0]+'</h2>'
+       + '<p style="font-size:16px;line-height:1.7;color:var(--ink2);margin:0;">'+sec[1]+'</p>';
+  });
+  return h + '</div>' + footer();
+}
+function privacyView(){
+  return legalView(t("pp_title"), t("pp_intro"), [
+    [t("pp_c1t"), t("pp_c1b")], [t("pp_c2t"), t("pp_c2b")], [t("pp_c3t"), t("pp_c3b")],
+    [t("pp_c4t"), t("pp_c4b")], [t("pp_c5t"), t("pp_c5b")]
+  ]);
+}
+function termsView(){
+  return legalView(t("tos_title"), t("tos_intro"), [
+    [t("tos_c1t"), t("tos_c1b")], [t("tos_c2t"), t("tos_c2b")],
+    [t("tos_c3t"), t("tos_c3b")], [t("tos_c4t"), t("tos_c4b")]
+  ]);
+}
 /* ============================== router ============================== */
 function router(){
   stopRec(true);
@@ -1999,6 +2104,10 @@ function router(){
     const d = decodeSite(h.slice(5));
     if(d){ state.data = d; state.step = 2; state.transcript = ""; render(buildView()); wireBuild(); }
     else render(notFoundView());
+  } else if(h==="privacy"){
+    render(privacyView());
+  } else if(h==="terms"){
+    render(termsView());
   } else if(h==="build" || h.indexOf("build")===0){
     render(buildView()); wireBuild();
   } else {
