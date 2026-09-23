@@ -362,6 +362,96 @@ html[dir="rtl"] body{direction:rtl}
 .foot-loc{display:inline-flex;align-items:center;gap:6px;color:var(--ink2);text-decoration:none;font-size:14px;margin-top:12px}
 .foot-loc:hover{color:var(--ink)}
 .shop-loc{display:inline-block;margin-top:10px;color:var(--ink2);font-size:13px;text-decoration:none}
+/* ---- shop themes ---- */
+.shopview{--s-accent:var(--accent);--s-accent-deep:var(--accent-deep);}
+.theme-ocean{--s-accent:#1E5AAF;--s-accent-deep:#123F82;}
+.theme-plum{--s-accent:#7A2E5E;--s-accent-deep:#521D40;}
+.theme-sunset{--s-accent:#B4531F;--s-accent-deep:#7E3A12;}
+.theme-char{--s-accent:#3A3A35;--s-accent-deep:#23231F;}
+.shopview .banner{background:var(--s-accent);}
+.shopview .shop-mast .kicker{color:var(--s-accent);}
+.shopview .order-btn{background:var(--s-accent);}
+.shopview .shop-foot a{color:var(--s-accent);}
+/* ---- shop: search, categories, products ---- */
+.shop-tools{margin-bottom:4px;}
+.shop-search{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px;background:#fff;font-size:16px;}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:8px;-webkit-overflow-scrolling:touch;}
+.chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 18px;font-size:14px;cursor:pointer;color:var(--ink);}
+.chip.on{background:var(--s-accent);border-color:var(--s-accent);color:#fff;font-weight:700;}
+.prod2{display:block;padding:16px 0;border-bottom:1px dotted var(--line);}
+.prod2:last-child{border-bottom:none;}
+.prod2 .pn{font-size:17px;font-weight:600;display:flex;align-items:center;flex-wrap:wrap;gap:4px;}
+.prod2 .pp{font-family:ui-monospace,Menlo,monospace;font-size:15px;white-space:nowrap;}
+.prow1{display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+.prow2{display:flex;gap:8px;justify-content:flex-end;align-items:center;margin-top:10px;flex-wrap:wrap;}
+.stk{font-size:11px;font-weight:700;border-radius:999px;padding:3px 10px;margin-left:8px;white-space:nowrap;}
+.stk-low{background:#FCF3DC;color:#8a5a00;}
+.stk-out{background:#F1EFE7;color:#8a8577;}
+.varsel{border:1px solid var(--line);border-radius:8px;padding:7px 8px;font-size:13.5px;background:#fff;max-width:170px;}
+.ask-btn{font-size:13.5px;font-weight:600;color:var(--s-accent);text-decoration:underline;white-space:nowrap;background:none;border:0;cursor:pointer;padding:8px 6px;}
+.add-btn:disabled{opacity:.35;cursor:not-allowed;}
+.openbadge{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-size:14px;font-weight:700;border-radius:999px;padding:8px 18px;}
+.ob-open{background:#E7F6EA;color:#14663a;}
+.ob-closed{background:#F1EFE7;color:#6b675c;}
+.openbadge .dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none;}
+/* ---- cart bar + drawer ---- */
+.cartbar{position:fixed;left:0;right:0;bottom:0;z-index:60;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid var(--line);}
+.cartbar-btn{width:100%;max-width:560px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;background:var(--s-accent);color:#fff;border:0;border-radius:14px;padding:15px 20px;font-size:16px;font-weight:700;cursor:pointer;}
+.drawer-wrap{position:fixed;inset:0;z-index:70;background:rgba(27,27,24,.5);}
+.drawer{position:absolute;left:0;right:0;bottom:0;max-height:92dvh;overflow-y:auto;background:var(--paper);border-radius:20px 20px 0 0;padding:20px 20px calc(28px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch;}
+@media(min-width:760px){.drawer{left:50%;right:auto;transform:translateX(-50%);width:560px;border-radius:20px;margin-bottom:24px;max-height:86dvh;}}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.drawer-x{border:0;background:none;font-size:28px;cursor:pointer;color:var(--ink2);padding:2px 10px;line-height:1;}
+.cline{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px dotted var(--line);}
+.cline .cn{flex:1;min-width:0;}
+.cline .cn b{display:block;font-size:15px;}
+.cline .cn small{color:var(--ink2);font-size:13px;}
+.cline .lt{font-family:ui-monospace,Menlo,monospace;font-size:14px;white-space:nowrap;}
+.stepper{display:flex;align-items:center;gap:10px;flex:none;}
+.stepper button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:18px;cursor:pointer;line-height:1;color:var(--ink);}
+.stepper b{min-width:20px;text-align:center;}
+.trow{display:flex;justify-content:space-between;gap:12px;padding:6px 0;font-size:15px;}
+.trow.grand{font-weight:800;font-size:18px;border-top:1px solid var(--line);margin-top:8px;padding-top:12px;}
+.trow .neg{color:#a33b2e;}
+.coupon-row{display:flex;gap:8px;margin:12px 0;}
+.coupon-row input{flex:1;border:1px solid var(--line);border-radius:10px;padding:11px 13px;min-width:0;}
+.fulfill{display:flex;gap:8px;margin:10px 0 4px;}
+.fulfill label{flex:1;text-align:center;border:1px solid var(--line);border-radius:12px;padding:11px;cursor:pointer;font-weight:600;font-size:15px;background:#fff;}
+.fulfill label.on{border-color:var(--s-accent);box-shadow:inset 0 0 0 1px var(--s-accent);}
+.fulfill input{position:absolute;opacity:0;pointer-events:none;}
+.d-field{margin:12px 0;}
+.d-field label{display:block;font-weight:600;font-size:14px;margin-bottom:6px;}
+.d-field input,.d-field textarea,.d-field select{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px 13px;background:#fff;font-size:16px;}
+.d-sec{font-weight:700;font-size:16px;margin:22px 0 2px;}
+.pay-opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;background:#fff;font-size:15px;}
+.pay-opt.on{border-color:var(--s-accent);box-shadow:inset 0 0 0 1px var(--s-accent);}
+.pay-opt input{margin-top:5px;flex:none;}
+.pay-opt small{display:block;color:var(--ink2);font-weight:400;font-size:13px;}
+.d-err{background:#FDF0EF;border:1px solid #E5B8B3;color:#8C2F28;border-radius:10px;padding:12px 14px;margin:12px 0;font-size:14px;}
+.d-warn{background:var(--amber-soft);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:12px 0;font-size:14px;}
+.pay-instr{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin:6px 0;font-size:15px;}
+.pay-instr pre{white-space:pre-wrap;font-family:inherit;background:var(--paper);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:14px;}
+.upi-btn{display:inline-block;background:var(--s-accent);color:#fff !important;text-decoration:none;border-radius:999px;padding:12px 26px;font-weight:700;margin-top:10px;}
+.wa-big{width:100%;background:#1FA855;border:0;color:#fff;border-radius:14px;padding:16px;font-size:17px;font-weight:800;cursor:pointer;margin-top:14px;}
+.wa-big:disabled{opacity:.45;cursor:not-allowed;}
+/* ---- builder extras ---- */
+.sec-label{font-weight:700;font-size:17px;margin:32px 0 2px;}
+.sec-sub{color:var(--ink2);font-size:14px;margin-bottom:12px;}
+.hrs-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px dotted var(--line);font-size:15px;}
+.hrs-row input[type=time]{border:1px solid var(--line);border-radius:8px;padding:8px 6px;background:#fff;font-size:14px;}
+.hrs-row input[type=time]:disabled{opacity:.35;}
+.hrs-closed{display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--ink2);white-space:nowrap;}
+.swatch-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;}
+.swatch{width:54px;height:54px;border-radius:50%;border:3px solid transparent;cursor:pointer;padding:0;flex:none;}
+.swatch.on{border-color:var(--ink);}
+.pay-check{display:flex;gap:10px;align-items:flex-start;margin-bottom:14px;font-size:15px;}
+.pay-check input{margin-top:5px;flex:none;width:18px;height:18px;}
+.pay-check small{display:block;color:var(--ink2);font-weight:400;font-size:13px;}
+.pay-detail{margin:-6px 0 16px 28px;}
+@media(max-width:760px){
+  .hrs-row{grid-template-columns:1fr 1fr;}
+  .hrs-day{grid-column:1/-1;font-weight:600;}
+}
 </style>
 </head>
 <body>
@@ -553,7 +643,77 @@ const STR = { en: {
   "locale_lang":"Language",
   "locale_country":"Country or Region",
   "locale_back":"Back",
-  "locale_shopnote":"Prices on this shop are shown in the shop's currency ({flag} {cur})."
+  "locale_shopnote":"Prices on this shop are shown in the shop's currency ({flag} {cur}).",
+  "search_ph":"Search items...",
+  "cat_all":"All",
+  "add":"Add",
+  "ask":"Ask",
+  "stock_low":"Low stock",
+  "stock_out":"Out of stock",
+  "open_now":"Open now",
+  "closed_now":"Closed",
+  "opens_at":"Opens {t}",
+  "cart_title":"Your order",
+  "cart_empty":"Your cart is empty.",
+  "view_cart":"View cart",
+  "co_name":"Your name",
+  "co_phone":"Phone number",
+  "co_pickup":"Pickup",
+  "co_delivery":"Delivery",
+  "co_address":"Delivery address",
+  "co_notes":"Notes (optional)",
+  "co_slot":"Preferred time",
+  "slot_asap":"As soon as possible",
+  "coupon_ph":"Coupon code",
+  "coupon_apply":"Apply",
+  "coupon_disc":"Discount",
+  "coupon_bad":"That code did not work.",
+  "subtotal":"Subtotal",
+  "dlv_fee":"Delivery fee",
+  "free":"FREE",
+  "total":"Total",
+  "min_order":"Minimum order is {x}",
+  "pay_title":"Payment",
+  "pay_cod":"Cash on delivery",
+  "pay_upi":"UPI",
+  "pay_bank":"Bank transfer",
+  "pay_paypal":"PayPal",
+  "pay_store":"Pay in store",
+  "order_wa":"Send order on WhatsApp",
+  "pay_next":"How to pay",
+  "pay_upi_go":"Pay {x} with UPI",
+  "pay_after":"Send your order on WhatsApp first, then pay.",
+  "err_need_name":"Please enter your name.",
+  "err_need_phone":"Please enter your phone number.",
+  "err_need_addr":"Please enter your delivery address.",
+  "wa_order":"New order for {shop}",
+  "wa_ask":"Hi {name}! I have a question about {item}.",
+  "wa_name":"Name",
+  "wa_phone":"Phone",
+  "wa_type":"Order type",
+  "wa_addr":"Address",
+  "wa_time":"Time",
+  "wa_pay":"Payment",
+  "wa_notes":"Notes",
+  "prod_fmt":"One per line. Add #Category to group items, !low or !out for stock, {Size: price} for options. Example: Sourdough - $4.50 #Bread {Small: $3.50, Large: $5.50}",
+  "f_hours_note":"Hours note",
+  "hours_note_hint":"(optional, e.g. closed on public holidays)",
+  "day_closed":"Closed",
+  "f_delivery":"Delivery and minimum order",
+  "f_dlv_fee":"Delivery fee",
+  "f_dlv_free":"Free delivery above",
+  "f_dlv_min":"Minimum order",
+  "f_slots":"Time slots",
+  "f_slots_hint":"(optional, one per line, e.g. Today 4 PM - 6 PM)",
+  "f_coupons":"Coupon codes",
+  "f_coupons_hint":"(optional, one per line: FESTIVE10 = 10% or FLAT50 = 50)",
+  "f_pay":"Payment methods",
+  "f_pay_hint":"Customers see these after they place their order.",
+  "f_upi_id":"UPI ID",
+  "f_bank":"Bank account details",
+  "f_paypal":"PayPal email or link",
+  "f_custompay":"Other payment instruction",
+  "f_theme":"Shop theme"
 } };
 let uiLang = "en";
 try{ uiLang = localStorage.getItem("ts_ui") || "en"; }catch(e){}
@@ -795,7 +955,77 @@ STR.ml = {
   "locale_lang":"ഭാഷ",
   "locale_country":"രാജ്യം അല്ലെങ്കിൽ പ്രദേശം",
   "locale_back":"തിരികെ",
-  "locale_shopnote":"ഈ കടയിലെ വിലകൾ കടയുടെ കറൻസിയിൽ ({flag} {cur}) ആണ് കാണിക്കുന്നത്."
+  "locale_shopnote":"ഈ കടയിലെ വിലകൾ കടയുടെ കറൻസിയിൽ ({flag} {cur}) ആണ് കാണിക്കുന്നത്.",
+  "search_ph":"സാധനങ്ങൾ തിരയൂ...",
+  "cat_all":"എല്ലാം",
+  "add":"ചേർക്കൂ",
+  "ask":"ചോദിക്കൂ",
+  "stock_low":"സ്റ്റോക്ക് കുറവാണ്",
+  "stock_out":"സ്റ്റോക്ക് തീർന്നു",
+  "open_now":"ഇപ്പോൾ തുറന്നിരിക്കുന്നു",
+  "closed_now":"അടച്ചിരിക്കുന്നു",
+  "opens_at":"{t} തുറക്കും",
+  "cart_title":"നിങ്ങളുടെ ഓർഡർ",
+  "cart_empty":"നിങ്ങളുടെ കൊട്ട കാലിയാണ്.",
+  "view_cart":"കൊട്ട കാണൂ",
+  "co_name":"നിങ്ങളുടെ പേര്",
+  "co_phone":"ഫോൺ നമ്പർ",
+  "co_pickup":"നേരിട്ട് വാങ്ങൽ",
+  "co_delivery":"ഡെലിവറി",
+  "co_address":"ഡെലിവറി വിലാസം",
+  "co_notes":"കുറിപ്പുകൾ (ഓപ്ഷണൽ)",
+  "co_slot":"ഇഷ്ടമുള്ള സമയം",
+  "slot_asap":"എത്രയും പെട്ടെന്ന്",
+  "coupon_ph":"കൂപ്പൺ കോഡ്",
+  "coupon_apply":"പ്രയോഗിക്കൂ",
+  "coupon_disc":"കിഴിവ്",
+  "coupon_bad":"ആ കോഡ് പ്രവർത്തിച്ചില്ല.",
+  "subtotal":"ആകെത്തുക",
+  "dlv_fee":"ഡെലിവറി ഫീസ്",
+  "free":"സൗജന്യം",
+  "total":"ആകെ",
+  "min_order":"കുറഞ്ഞ ഓർഡർ {x} ആണ്",
+  "pay_title":"പേയ്മെന്റ്",
+  "pay_cod":"സാധനം കിട്ടുമ്പോൾ പണം",
+  "pay_upi":"UPI",
+  "pay_bank":"ബാങ്ക് ട്രാൻസ്ഫർ",
+  "pay_paypal":"PayPal",
+  "pay_store":"കടയിൽ പണം നൽകൂ",
+  "order_wa":"WhatsApp-ൽ ഓർഡർ അയയ്ക്കൂ",
+  "pay_next":"എങ്ങനെ പണം നൽകാം",
+  "pay_upi_go":"UPI വഴി {x} അടയ്ക്കൂ",
+  "pay_after":"ആദ്യം WhatsApp-ൽ ഓർഡർ അയയ്ക്കൂ, എന്നിട്ട് പണം നൽകൂ.",
+  "err_need_name":"ദയവായി നിങ്ങളുടെ പേര് എഴുതൂ.",
+  "err_need_phone":"ദയവായി ഫോൺ നമ്പർ എഴുതൂ.",
+  "err_need_addr":"ദയവായി ഡെലിവറി വിലാസം എഴുതൂ.",
+  "wa_order":"{shop}-ലേക്ക് പുതിയ ഓർഡർ",
+  "wa_ask":"ഹായ് {name}! {item}-നെക്കുറിച്ച് ചോദിക്കാനുണ്ട്.",
+  "wa_name":"പേര്",
+  "wa_phone":"ഫോൺ",
+  "wa_type":"ഓർഡർ തരം",
+  "wa_addr":"വിലാസം",
+  "wa_time":"സമയം",
+  "wa_pay":"പേയ്മെന്റ്",
+  "wa_notes":"കുറിപ്പുകൾ",
+  "prod_fmt":"ഓരോ വരിയിലും ഒന്ന്. ഗ്രൂപ്പ് ചെയ്യാൻ #വിഭാഗം, സ്റ്റോക്കിന് !low അല്ലെങ്കിൽ !out, ഓപ്ഷനുകൾക്ക് {സൈസ്: വില}. ഉദാ: ബ്രെഡ് - ₹40 #ബേക്കറി {ചെറുത്: ₹30, വലുത്: ₹50}",
+  "f_hours_note":"സമയത്തെക്കുറിച്ചുള്ള കുറിപ്പ്",
+  "hours_note_hint":"(ഓപ്ഷണൽ, ഉദാ. അവധി ദിവസങ്ങളിൽ അടച്ചിരിക്കും)",
+  "day_closed":"അടച്ചു",
+  "f_delivery":"ഡെലിവറിയും കുറഞ്ഞ ഓർഡറും",
+  "f_dlv_fee":"ഡെലിവറി ഫീസ്",
+  "f_dlv_free":"ഇതിന് മുകളിൽ സൗജന്യ ഡെലിവറി",
+  "f_dlv_min":"കുറഞ്ഞ ഓർഡർ",
+  "f_slots":"സമയ സ്ലോട്ടുകൾ",
+  "f_slots_hint":"(ഓപ്ഷണൽ, ഓരോ വരിയിലും ഒന്ന്, ഉദാ. ഇന്ന് വൈകിട്ട് 4-6)",
+  "f_coupons":"കൂപ്പൺ കോഡുകൾ",
+  "f_coupons_hint":"(ഓപ്ഷണൽ, ഓരോ വരിയിലും ഒന്ന്: FESTIVE10 = 10% അല്ലെങ്കിൽ FLAT50 = 50)",
+  "f_pay":"പേയ്മെന്റ് രീതികൾ",
+  "f_pay_hint":"ഓർഡർ ചെയ്ത ശേഷം കസ്റ്റമേഴ്സ് ഇവ കാണും.",
+  "f_upi_id":"UPI ID",
+  "f_bank":"ബാങ്ക് അക്കൗണ്ട് വിവരങ്ങൾ",
+  "f_paypal":"PayPal ഇമെയിൽ അല്ലെങ്കിൽ ലിങ്ക്",
+  "f_custompay":"മറ്റ് പേയ്മെന്റ് നിർദ്ദേശം",
+  "f_theme":"കടയുടെ തീം"
 };
 STR.hi = {
   "meta_title":"TalkShop: अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।",
@@ -1029,7 +1259,77 @@ STR.hi = {
   "locale_lang":"भाषा",
   "locale_country":"देश या क्षेत्र",
   "locale_back":"वापस",
-  "locale_shopnote":"इस दुकान की कीमतें दुकान की मुद्रा ({flag} {cur}) में दिखाई जाती हैं।"
+  "locale_shopnote":"इस दुकान की कीमतें दुकान की मुद्रा ({flag} {cur}) में दिखाई जाती हैं।",
+  "search_ph":"आइटम खोजें...",
+  "cat_all":"सभी",
+  "add":"जोड़ें",
+  "ask":"पूछें",
+  "stock_low":"कम स्टॉक",
+  "stock_out":"स्टॉक खत्म",
+  "open_now":"अभी खुला है",
+  "closed_now":"बंद है",
+  "opens_at":"{t} को खुलेगा",
+  "cart_title":"आपका ऑर्डर",
+  "cart_empty":"आपकी टोकरी खाली है।",
+  "view_cart":"टोकरी देखें",
+  "co_name":"आपका नाम",
+  "co_phone":"फ़ोन नंबर",
+  "co_pickup":"पिकअप",
+  "co_delivery":"डिलीवरी",
+  "co_address":"डिलीवरी का पता",
+  "co_notes":"नोट्स (वैकल्पिक)",
+  "co_slot":"पसंदीदा समय",
+  "slot_asap":"जितनी जल्दी हो सके",
+  "coupon_ph":"कूपन कोड",
+  "coupon_apply":"लागू करें",
+  "coupon_disc":"छूट",
+  "coupon_bad":"यह कोड काम नहीं कर रहा।",
+  "subtotal":"उप-योग",
+  "dlv_fee":"डिलीवरी शुल्क",
+  "free":"मुफ़्त",
+  "total":"कुल",
+  "min_order":"न्यूनतम ऑर्डर {x} है",
+  "pay_title":"भुगतान",
+  "pay_cod":"कैश ऑन डिलीवरी",
+  "pay_upi":"UPI",
+  "pay_bank":"बैंक ट्रांसफर",
+  "pay_paypal":"PayPal",
+  "pay_store":"दुकान पर भुगतान",
+  "order_wa":"WhatsApp पर ऑर्डर भेजें",
+  "pay_next":"भुगतान कैसे करें",
+  "pay_upi_go":"UPI से {x} भुगतान करें",
+  "pay_after":"पहले WhatsApp पर ऑर्डर भेजें, फिर भुगतान करें।",
+  "err_need_name":"कृपया अपना नाम लिखें।",
+  "err_need_phone":"कृपया अपना फ़ोन नंबर लिखें।",
+  "err_need_addr":"कृपया अपना डिलीवरी पता लिखें।",
+  "wa_order":"{shop} के लिए नया ऑर्डर",
+  "wa_ask":"नमस्ते {name}! मुझे {item} के बारे में पूछना है।",
+  "wa_name":"नाम",
+  "wa_phone":"फ़ोन",
+  "wa_type":"ऑर्डर का प्रकार",
+  "wa_addr":"पता",
+  "wa_time":"समय",
+  "wa_pay":"भुगतान",
+  "wa_notes":"नोट्स",
+  "prod_fmt":"हर लाइन में एक। समूह के लिए #श्रेणी, स्टॉक के लिए !low या !out, विकल्पों के लिए {साइज़: कीमत}। उदाहरण: ब्रेड - ₹40 #बेकरी {छोटा: ₹30, बड़ा: ₹50}",
+  "f_hours_note":"समय पर नोट",
+  "hours_note_hint":"(वैकल्पिक, जैसे छुट्टियों में बंद)",
+  "day_closed":"बंद",
+  "f_delivery":"डिलीवरी और न्यूनतम ऑर्डर",
+  "f_dlv_fee":"डिलीवरी शुल्क",
+  "f_dlv_free":"इतने से ऊपर मुफ़्त डिलीवरी",
+  "f_dlv_min":"न्यूनतम ऑर्डर",
+  "f_slots":"समय स्लॉट",
+  "f_slots_hint":"(वैकल्पिक, हर लाइन में एक, जैसे आज शाम 4-6 बजे)",
+  "f_coupons":"कूपन कोड",
+  "f_coupons_hint":"(वैकल्पिक, हर लाइन में एक: FESTIVE10 = 10% या FLAT50 = 50)",
+  "f_pay":"भुगतान के तरीके",
+  "f_pay_hint":"ग्राहक ऑर्डर के बाद इन्हें देखेंगे।",
+  "f_upi_id":"UPI ID",
+  "f_bank":"बैंक खाते का विवरण",
+  "f_paypal":"PayPal ईमेल या लिंक",
+  "f_custompay":"भुगतान का अन्य निर्देश",
+  "f_theme":"दुकान की थीम"
 };
 STR.ta = {
   "meta_title":"TalkShop: உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.",
@@ -1263,7 +1563,77 @@ STR.ta = {
   "locale_lang":"மொழி",
   "locale_country":"நாடு அல்லது பகுதி",
   "locale_back":"பின் செல்",
-  "locale_shopnote":"இந்தக் கடையின் விலைகள் கடையின் நாணயத்தில் ({flag} {cur}) காட்டப்படும்."
+  "locale_shopnote":"இந்தக் கடையின் விலைகள் கடையின் நாணயத்தில் ({flag} {cur}) காட்டப்படும்.",
+  "search_ph":"பொருட்களைத் தேடுக...",
+  "cat_all":"அனைத்தும்",
+  "add":"சேர்",
+  "ask":"கேள்",
+  "stock_low":"குறைந்த இருப்பு",
+  "stock_out":"இருப்பு இல்லை",
+  "open_now":"இப்போது திறந்துள்ளது",
+  "closed_now":"மூடப்பட்டுள்ளது",
+  "opens_at":"{t} திறக்கும்",
+  "cart_title":"உங்கள் ஆர்டர்",
+  "cart_empty":"உங்கள் கூடை காலியாக உள்ளது.",
+  "view_cart":"கூடையைப் பார்",
+  "co_name":"உங்கள் பெயர்",
+  "co_phone":"தொலைபேசி எண்",
+  "co_pickup":"நேரில் வாங்குதல்",
+  "co_delivery":"டெலிவரி",
+  "co_address":"டெலிவரி முகவரி",
+  "co_notes":"குறிப்புகள் (விருப்பம்)",
+  "co_slot":"விருப்பமான நேரம்",
+  "slot_asap":"முடிந்தவரை விரைவில்",
+  "coupon_ph":"கூப்பன் குறியீடு",
+  "coupon_apply":"பயன்படுத்து",
+  "coupon_disc":"தள்ளுபடி",
+  "coupon_bad":"அந்தக் குறியீடு வேலை செய்யவில்லை.",
+  "subtotal":"கூட்டுத்தொகை",
+  "dlv_fee":"டெலிவரி கட்டணம்",
+  "free":"இலவசம்",
+  "total":"மொத்தம்",
+  "min_order":"குறைந்தபட்ச ஆர்டர் {x}",
+  "pay_title":"பணம் செலுத்துதல்",
+  "pay_cod":"பொருள் வந்ததும் பணம்",
+  "pay_upi":"UPI",
+  "pay_bank":"வங்கி பரிமாற்றம்",
+  "pay_paypal":"PayPal",
+  "pay_store":"கடையில் செலுத்துக",
+  "order_wa":"WhatsApp-ல் ஆர்டர் அனுப்பு",
+  "pay_next":"பணம் செலுத்தும் முறை",
+  "pay_upi_go":"UPI மூலம் {x} செலுத்து",
+  "pay_after":"முதலில் WhatsApp-ல் ஆர்டரை அனுப்புங்கள், பின் பணம் செலுத்துங்கள்.",
+  "err_need_name":"உங்கள் பெயரை எழுதுங்கள்.",
+  "err_need_phone":"உங்கள் தொலைபேசி எண்ணை எழுதுங்கள்.",
+  "err_need_addr":"டெலிவரி முகவரியை எழுதுங்கள்.",
+  "wa_order":"{shop} க்கு புதிய ஆர்டர்",
+  "wa_ask":"வணக்கம் {name}! {item} பற்றி கேட்க விரும்புகிறேன்.",
+  "wa_name":"பெயர்",
+  "wa_phone":"தொலைபேசி",
+  "wa_type":"ஆர்டர் வகை",
+  "wa_addr":"முகவரி",
+  "wa_time":"நேரம்",
+  "wa_pay":"பணம்",
+  "wa_notes":"குறிப்புகள்",
+  "prod_fmt":"ஒரு வரியில் ஒன்று. தொகுக்க #வகை, இருப்புக்கு !low அல்லது !out, விருப்பங்களுக்கு {அளவு: விலை}. எ.கா: ரொட்டி - ₹40 #பேக்கரி {சிறியது: ₹30, பெரியது: ₹50}",
+  "f_hours_note":"நேரம் குறிப்பு",
+  "hours_note_hint":"(விருப்பம், எ.கா. விடுமுறை நாட்களில் மூடல்)",
+  "day_closed":"மூடல்",
+  "f_delivery":"டெலிவரி மற்றும் குறைந்தபட்ச ஆர்டர்",
+  "f_dlv_fee":"டெலிவரி கட்டணம்",
+  "f_dlv_free":"இதற்கு மேல் இலவச டெலிவரி",
+  "f_dlv_min":"குறைந்தபட்ச ஆர்டர்",
+  "f_slots":"நேர ஒதுக்கீடுகள்",
+  "f_slots_hint":"(விருப்பம், ஒரு வரியில் ஒன்று, எ.கா. இன்று மாலை 4-6)",
+  "f_coupons":"கூப்பன் குறியீடுகள்",
+  "f_coupons_hint":"(விருப்பம், ஒரு வரியில் ஒன்று: FESTIVE10 = 10% அல்லது FLAT50 = 50)",
+  "f_pay":"பணம் செலுத்தும் முறைகள்",
+  "f_pay_hint":"ஆர்டர் செய்த பின் வாடிக்கையாளர்கள் இவற்றைக் காண்பர்.",
+  "f_upi_id":"UPI ID",
+  "f_bank":"வங்கி கணக்கு விவரங்கள்",
+  "f_paypal":"PayPal மின்னஞ்சல் அல்லது இணைப்பு",
+  "f_custompay":"மற்ற பணம் செலுத்தும் அறிவுறுத்தல்",
+  "f_theme":"கடை தோற்றம்"
 };
 STR.es = {
   "meta_title":"TalkShop: Describe tu tienda. Ponla en línea.",
@@ -1498,7 +1868,77 @@ STR.es = {
   "locale_lang":"Idioma",
   "locale_country":"País o región",
   "locale_back":"Atrás",
-  "locale_shopnote":"Los precios de esta tienda se muestran en la moneda de la tienda ({flag} {cur})."
+  "locale_shopnote":"Los precios de esta tienda se muestran en la moneda de la tienda ({flag} {cur}).",
+  "search_ph":"Buscar productos...",
+  "cat_all":"Todo",
+  "add":"Añadir",
+  "ask":"Preguntar",
+  "stock_low":"Poco stock",
+  "stock_out":"Agotado",
+  "open_now":"Abierto ahora",
+  "closed_now":"Cerrado",
+  "opens_at":"Abre {t}",
+  "cart_title":"Tu pedido",
+  "cart_empty":"Tu carrito está vacío.",
+  "view_cart":"Ver carrito",
+  "co_name":"Tu nombre",
+  "co_phone":"Número de teléfono",
+  "co_pickup":"Recoger",
+  "co_delivery":"Entrega",
+  "co_address":"Dirección de entrega",
+  "co_notes":"Notas (opcional)",
+  "co_slot":"Hora preferida",
+  "slot_asap":"Lo antes posible",
+  "coupon_ph":"Código de descuento",
+  "coupon_apply":"Aplicar",
+  "coupon_disc":"Descuento",
+  "coupon_bad":"Ese código no funcionó.",
+  "subtotal":"Subtotal",
+  "dlv_fee":"Costo de entrega",
+  "free":"GRATIS",
+  "total":"Total",
+  "min_order":"El pedido mínimo es {x}",
+  "pay_title":"Pago",
+  "pay_cod":"Pago contra entrega",
+  "pay_upi":"UPI",
+  "pay_bank":"Transferencia bancaria",
+  "pay_paypal":"PayPal",
+  "pay_store":"Pagar en la tienda",
+  "order_wa":"Enviar pedido por WhatsApp",
+  "pay_next":"Cómo pagar",
+  "pay_upi_go":"Pagar {x} con UPI",
+  "pay_after":"Primero envía tu pedido por WhatsApp, luego paga.",
+  "err_need_name":"Por favor escribe tu nombre.",
+  "err_need_phone":"Por favor escribe tu número de teléfono.",
+  "err_need_addr":"Por favor escribe tu dirección de entrega.",
+  "wa_order":"Nuevo pedido para {shop}",
+  "wa_ask":"¡Hola {name}! Tengo una pregunta sobre {item}.",
+  "wa_name":"Nombre",
+  "wa_phone":"Teléfono",
+  "wa_type":"Tipo de pedido",
+  "wa_addr":"Dirección",
+  "wa_time":"Hora",
+  "wa_pay":"Pago",
+  "wa_notes":"Notas",
+  "prod_fmt":"Uno por línea. Añade #Categoría para agrupar, !low o !out para el stock, {Tamaño: precio} para opciones. Ejemplo: Pan - $4.50 #Panadería {Pequeño: $3.50, Grande: $5.50}",
+  "f_hours_note":"Nota sobre el horario",
+  "hours_note_hint":"(opcional, ej. cerrado en festivos)",
+  "day_closed":"Cerrado",
+  "f_delivery":"Entrega y pedido mínimo",
+  "f_dlv_fee":"Costo de entrega",
+  "f_dlv_free":"Entrega gratis desde",
+  "f_dlv_min":"Pedido mínimo",
+  "f_slots":"Horarios de entrega",
+  "f_slots_hint":"(opcional, uno por línea, ej. Hoy 4 PM - 6 PM)",
+  "f_coupons":"Cupones de descuento",
+  "f_coupons_hint":"(opcional, uno por línea: FESTIVE10 = 10% o FLAT50 = 50)",
+  "f_pay":"Métodos de pago",
+  "f_pay_hint":"Los clientes los verán después de pedir.",
+  "f_upi_id":"ID de UPI",
+  "f_bank":"Datos de la cuenta bancaria",
+  "f_paypal":"Email o enlace de PayPal",
+  "f_custompay":"Otra instrucción de pago",
+  "f_theme":"Tema de la tienda"
 };
 
 
@@ -1674,13 +2114,20 @@ const SAMPLE = {
   name:"Sunrise Bakery",
   taglineKey:"sample_tagline",
   announce:"Festival sale: 20% off this week",
+  theme:"ocean",
   products:[
-    {k:"sp1", usd:4.50},
-    {k:"sp2", usd:2.00},
-    {k:"sp3", usd:28},
-    {k:"sp4", usd:9},
-    {k:"sp5", usd:35}
+    {k:"sp1", usd:4.50, cat:"Breads"},
+    {k:"sp2", usd:2.00, cat:"Pastries", stock:"low"},
+    {k:"sp3", usd:28, cat:"Cakes", variants:[{n:"Small", usd:18},{n:"Whole", usd:28}]},
+    {k:"sp4", usd:9, cat:"Pastries", variants:[{n:"4 pack", usd:9},{n:"8 pack", usd:16}]},
+    {k:"sp5", usd:35, cat:"Cakes", stock:"out"}
   ],
+  hrs:[{o:"08:00",c:"13:00"},{o:"07:00",c:"19:00"},{o:"07:00",c:"19:00"},{o:"07:00",c:"19:00"},{o:"07:00",c:"19:00"},{o:"07:00",c:"19:00"},{o:"07:00",c:"19:00"}],
+  hrsNote:"",
+  dlv:{fee:2, freeAbove:30, min:5},
+  coupons:[{code:"FESTIVE10", type:"pct", val:10}],
+  slots:["Today 4 PM - 6 PM", "Tomorrow 10 AM - 12 PM"],
+  pay:{cod:true, upi:"sunrise@upi", paypal:"hello@sunrise.example"},
   hours:"Monday to Saturday, 7am to 7pm. Sundays 8am to 1pm.",
   phone:"+1 555-014-2288", whatsapp:"+1 555-014-2288",
   address:"14 Market Street, Springfield"
@@ -1887,6 +2334,28 @@ function afterHome(){
   paint("heroQr", 118); paint("bentoQr", 132);
 }
 
+/* ============================== shared shop helpers ============================== */
+const THEMES = { forest:"#175E3B", ocean:"#1E5AAF", plum:"#7A2E5E", sunset:"#B4531F", char:"#3A3A35" };
+function dayName(dd){
+  // dd: 0=Sunday .. 6=Saturday. 2026-09-27 is a Sunday.
+  try{ return new Intl.DateTimeFormat(LOCALE_TAG[uiLang]||"en",{weekday:"long"}).format(new Date(2026,8,27+dd)); }
+  catch(e){ return ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][dd]; }
+}
+function fmtTime(hm){
+  const m=String(hm||"").match(/(\d{1,2}):(\d{2})/);
+  if(!m) return String(hm||"");
+  try{ return new Intl.DateTimeFormat(LOCALE_TAG[uiLang]||"en",{hour:"numeric",minute:"2-digit"}).format(new Date(2026,0,1,+m[1],+m[2])); }
+  catch(e){ return hm; }
+}
+function parseHM(s){
+  const m=String(s||"").match(/(\d{1,2}):(\d{2})/);
+  return m ? (+m[1])*60 + (+m[2]) : null;
+}
+function builderCur(){
+  const bcc = state.cc || _ipcc || "US";
+  return ((COUNTRY[bcc]||{}).cur) || "USD";
+}
+
 /* ============================== builder ============================== */
 function stageBar(){
   const s = state.step;
@@ -1925,15 +2394,58 @@ function stepSpeakHtml(){
 }
 function stepReviewHtml(){
   const d = state.data;
-  const prodText = d.products.map(p=>p.name + (p.price ? " - " + p.price : "")).join("\n");
+  const prodText = (d.products||[]).map(productToLine).join("\n");
+  const cur = builderCur();
+  const hrs = d.hrs || null;
+  const hrsRows = [1,2,3,4,5,6,0].map(dd=>{
+    const h = hrs ? hrs[dd] : null;
+    const closed = hrs ? !h : (dd===0);
+    const o = h ? h.o : "09:00", c = h ? h.c : "21:00";
+    return '<div class="hrs-row"><span class="hrs-day">'+dayName(dd)+'</span>'
+      + '<label class="hrs-closed"><input type="checkbox" data-hrs-closed="'+dd+'"'+(closed?" checked":"")+'> '+t("day_closed")+'</label>'
+      + '<input type="time" data-hrs-open="'+dd+'" value="'+esc(o)+'"'+(closed?" disabled":"")+' aria-label="'+dayName(dd)+'">'
+      + '<input type="time" data-hrs-close="'+dd+'" value="'+esc(c)+'"'+(closed?" disabled":"")+' aria-label="'+dayName(dd)+'">'
+      + '</div>';
+  }).join("");
+  const hrsNote = d.hrsNote || (!d.hrs && d.hours ? d.hours : "");
+  const dlv = d.dlv || {};
+  const pay = d.pay || {};
+  const theme = (d.theme && THEMES[d.theme]) ? d.theme : "forest";
+  const swatches = Object.keys(THEMES).map(k=>
+    '<button type="button" class="swatch'+(k===theme?" on":"")+'" data-theme="'+k+'" style="background:'+THEMES[k]+'" aria-label="'+k+'"></button>'
+  ).join("");
   return '<h2 class="serif" style="font-size:26px;margin-bottom:8px;">'+t("rev_h2")+'</h2>'
   + '<p style="color:var(--ink2);margin-bottom:26px;">'+t("rev_p")+'</p>'
   + '<div class="field"><label>'+t("f_name")+'</label><input type="text" id="f_name" value="'+esc(d.name)+'"></div>'
   + '<div class="field"><label>'+t("f_tagline")+' <span class="hint">'+t("hint_opt")+'</span></label><input type="text" id="f_tagline" value="'+esc(d.tagline)+'"></div>'
   + '<div class="field"><label>'+t("f_announce")+' <span class="hint">'+t("announce_hint")+'</span></label><input type="text" id="f_announce" value="'+esc(d.announce)+'"></div>'
   + '<div class="field"><label>'+t("f_products")+' <span class="hint">'+t("products_hint")+'</span></label>'
-  + '<textarea id="f_products" style="min-height:130px;">'+esc(prodText)+'</textarea></div>'
-  + '<div class="field"><label>'+t("f_hours")+'</label><textarea id="f_hours">'+esc(d.hours)+'</textarea></div>'
+  + '<textarea id="f_products" style="min-height:150px;">'+esc(prodText)+'</textarea>'
+  + '<div class="hint" style="margin-top:6px;">'+t("prod_fmt")+'</div></div>'
+  + '<div class="sec-label">'+t("f_hours")+'</div><div class="sec-sub">'+t("sv_hours_sub")+'</div>'
+  + hrsRows
+  + '<div class="field" style="margin-top:14px;"><label>'+t("f_hours_note")+' <span class="hint">'+t("hours_note_hint")+'</span></label><input type="text" id="f_hours_note" value="'+esc(hrsNote)+'"></div>'
+  + '<div class="sec-label">'+t("f_delivery")+'</div>'
+  + '<div class="grid2"><div class="field"><label>'+t("f_dlv_fee")+' ('+cur+') <span class="hint">'+t("hint_opt")+'</span></label><input type="text" inputmode="decimal" id="f_dlv_fee" value="'+(dlv.fee!=null?esc(dlv.fee):"")+'"></div>'
+  + '<div class="field"><label>'+t("f_dlv_free")+' ('+cur+') <span class="hint">'+t("hint_opt")+'</span></label><input type="text" inputmode="decimal" id="f_dlv_free" value="'+(dlv.freeAbove!=null?esc(dlv.freeAbove):"")+'"></div></div>'
+  + '<div class="field"><label>'+t("f_dlv_min")+' ('+cur+') <span class="hint">'+t("hint_opt")+'</span></label><input type="text" inputmode="decimal" id="f_dlv_min" value="'+(dlv.min!=null?esc(dlv.min):"")+'"></div>'
+  + '<div class="sec-label">'+t("f_slots")+'</div>'
+  + '<div class="field"><span class="hint">'+t("f_slots_hint")+'</span><textarea id="f_slots" style="min-height:80px;">'+esc((d.slots||[]).join("\n"))+'</textarea></div>'
+  + '<div class="sec-label">'+t("f_coupons")+'</div>'
+  + '<div class="field"><span class="hint">'+t("f_coupons_hint")+'</span><textarea id="f_coupons" style="min-height:80px;">'+esc(couponsToText(d.coupons))+'</textarea></div>'
+  + '<div class="sec-label">'+t("f_pay")+'</div><div class="sec-sub">'+t("f_pay_hint")+'</div>'
+  + '<div class="pay-check"><input type="checkbox" id="pay_cod"'+(pay.cod?" checked":"")+'><label for="pay_cod"><b>'+t("pay_cod")+'</b></label></div>'
+  + '<div class="pay-check"><input type="checkbox" id="pay_upi_on"'+(pay.upi?" checked":"")+'><label for="pay_upi_on"><b>'+t("pay_upi")+'</b></label></div>'
+  + '<div class="pay-detail"><div class="field" style="margin:0;"><label>'+t("f_upi_id")+'</label><input type="text" id="pay_upi" value="'+esc(pay.upi||"")+'"></div></div>'
+  + '<div class="pay-check"><input type="checkbox" id="pay_bank_on"'+(pay.bank?" checked":"")+'><label for="pay_bank_on"><b>'+t("pay_bank")+'</b></label></div>'
+  + '<div class="pay-detail"><div class="field" style="margin:0;"><label>'+t("f_bank")+'</label><textarea id="pay_bank" style="min-height:70px;">'+esc(pay.bank||"")+'</textarea></div></div>'
+  + '<div class="pay-check"><input type="checkbox" id="pay_paypal_on"'+(pay.paypal?" checked":"")+'><label for="pay_paypal_on"><b>'+t("pay_paypal")+'</b></label></div>'
+  + '<div class="pay-detail"><div class="field" style="margin:0;"><label>'+t("f_paypal")+'</label><input type="text" id="pay_paypal" value="'+esc(pay.paypal||"")+'"></div></div>'
+  + '<div class="pay-check"><input type="checkbox" id="pay_store"'+(pay.store?" checked":"")+'><label for="pay_store"><b>'+t("pay_store")+'</b></label></div>'
+  + '<div class="field"><label>'+t("f_custompay")+' <span class="hint">'+t("hint_opt")+'</span></label><input type="text" id="pay_custom" value="'+esc(pay.custom||"")+'"></div>'
+  + '<div class="sec-label">'+t("f_theme")+'</div>'
+  + '<div class="swatch-row" id="themeRow">'+swatches+'</div>'
+  + '<div class="sec-label">'+t("sv_find")+'</div>'
   + '<div class="grid2"><div class="field"><label>'+t("f_phone")+'</label><input type="tel" id="f_phone" value="'+esc(d.phone)+'"></div>'
   + '<div class="field"><label>'+t("f_whatsapp")+' <span class="hint">'+t("wa_hint")+'</span></label><input type="tel" id="f_whatsapp" value="'+esc(d.whatsapp)+'"></div></div>'
   + '<div class="field"><label>'+t("f_address")+' <span class="hint">'+t("addr_hint")+'</span></label><input type="text" id="f_address" value="'+esc(d.address)+'"></div>'
@@ -1962,11 +2474,64 @@ function showErr(msg){
 }
 function parseProductsText(txt){
   return String(txt||"").split("\n").map(l=>l.trim()).filter(Boolean).slice(0,30).map(line=>{
+    let s=line, stock=null, cat=null, variants=null, m;
+    // stock marker: trailing !low or !out
+    m=s.match(/\s*!(low|out)\s*$/i);
+    if(m){ stock=m[1].toLowerCase(); s=s.slice(0,m.index).trim(); }
+    // variant block: trailing {Name: price, Name2: price2}
+    m=s.match(/\s*\{([^}]*)\}\s*$/);
+    if(m){
+      variants=m[1].split(",").map(v=>v.trim()).filter(Boolean).map(v=>{
+        const vm=v.match(/^(.*?)\s*:\s*(.+)$/);
+        return vm ? {n:vm[1].trim(), p:vm[2].trim()} : {n:v, p:""};
+      }).filter(v=>v.n).slice(0,8);
+      s=s.slice(0,m.index).trim();
+    }
+    // category tag: trailing #Word
+    m=s.match(/\s*#([^\s#{}!]+)\s*$/);
+    if(m){ cat=m[1].trim(); s=s.slice(0,m.index).trim(); }
     // relaxed: "Cake - $4.50", "Cake: $28" (colon without spaces), but not "9:30"
-    const pm = line.match(/^(.*?)\s+[-–:]\s+(.+)$/) || line.match(/^(.*\D)[-–:]\s*(.+)$/);
-    if(pm && /^[$€£₹\d]/.test(pm[2].trim())) return {name:pm[1].trim(), price:pm[2].trim()};
-    return {name:line, price:""};
+    const pm = s.match(/^(.*?)\s+[-–:]\s+(.+)$/) || s.match(/^(.*\D)[-–:]\s*(.+)$/);
+    let name=s, price="";
+    if(pm && /^[$€£₹\d]/.test(pm[2].trim())){ name=pm[1].trim(); price=pm[2].trim(); }
+    const p={name:name, price:price};
+    if(cat) p.cat=cat;
+    if(stock) p.stock=stock;
+    if(variants && variants.length) p.variants=variants;
+    return p;
   }).filter(p=>p.name);
+}
+function productToLine(p){
+  const nm = p.k ? t(p.k) : (p.name||"");
+  const pr = p.usd!=null ? "$"+p.usd : (p.price||"");
+  let s = nm + (pr ? " - "+pr : "");
+  if(p.cat) s += " #"+p.cat;
+  if(p.variants && p.variants.length) s += " {"+p.variants.map(v=>v.n+(v.usd!=null?": $"+v.usd:(v.p?": "+v.p:""))).join(", ")+"}";
+  if(p.stock) s += " !"+p.stock;
+  return s;
+}
+function parseNum(s){
+  let t=String(s==null?"":s).trim().replace(/\s/g,"");
+  if(t.indexOf(",")>=0 && t.indexOf(".")<0) t=t.replace(",",".");
+  t=t.replace(/[^0-9.]/g,"");
+  const v=parseFloat(t);
+  return isNaN(v)?null:v;
+}
+function parseCoupons(txt){
+  return String(txt||"").split("\n").map(l=>l.trim()).filter(Boolean).slice(0,10).map(line=>{
+    const m=line.match(/^(.*?)\s*=\s*(.+)$/);
+    if(!m) return null;
+    const code=m[1].trim().toUpperCase().replace(/\s+/g,"");
+    const rhs=m[2].trim();
+    const pm=rhs.match(/([\d.]+)\s*%/);
+    if(pm && parseFloat(pm[1])>0) return {code:code, type:"pct", val:parseFloat(pm[1])};
+    const fm=rhs.match(/([\d.]+)/);
+    if(fm && parseFloat(fm[1])>0) return {code:code, type:"flat", val:parseFloat(fm[1])};
+    return null;
+  }).filter(c=>c && c.code);
+}
+function couponsToText(cs){
+  return (cs||[]).map(c=>c.code+" = "+(c.type==="pct"?c.val+"%":c.val)).join("\n");
 }
 function collectForm(){
   state.data = {
@@ -1974,11 +2539,44 @@ function collectForm(){
     tagline: $("#f_tagline").value.trim(),
     announce: $("#f_announce").value.trim(),
     products: parseProductsText($("#f_products").value),
-    hours: $("#f_hours").value.trim(),
+    hours: "",
     phone: $("#f_phone").value.trim(),
     whatsapp: $("#f_whatsapp").value.trim(),
     address: $("#f_address").value.trim()
   };
+  // structured hours: array indexed by getDay() (0=Sunday), null = closed
+  const hrsArr=[null,null,null,null,null,null,null];
+  document.querySelectorAll("[data-hrs-closed]").forEach(cb=>{
+    const dd=+cb.getAttribute("data-hrs-closed");
+    if(!cb.checked){
+      const oEl=document.querySelector('[data-hrs-open="'+dd+'"]');
+      const cEl=document.querySelector('[data-hrs-close="'+dd+'"]');
+      let o=oEl?oEl.value.slice(0,5):"09:00", c=cEl?cEl.value.slice(0,5):"21:00";
+      if(!/^\d{2}:\d{2}$/.test(o)) o="09:00";
+      if(!/^\d{2}:\d{2}$/.test(c)) c="21:00";
+      hrsArr[dd]={o:o, c:c};
+    }
+  });
+  state.data.hrs=hrsArr;
+  state.data.hrsNote=$("#f_hours_note").value.trim();
+  // delivery config
+  const fee=parseNum($("#f_dlv_fee").value), freeAbove=parseNum($("#f_dlv_free").value), min=parseNum($("#f_dlv_min").value);
+  state.data.dlv=(fee!=null||freeAbove!=null||min!=null)?{fee:fee||0, freeAbove:freeAbove, min:min}:null;
+  // slots, coupons
+  state.data.slots=$("#f_slots").value.split("\n").map(s=>s.trim()).filter(Boolean).slice(0,12);
+  state.data.coupons=parseCoupons($("#f_coupons").value);
+  // payment methods
+  const pay={};
+  if($("#pay_cod").checked) pay.cod=true;
+  const upi=$("#pay_upi").value.trim(); if(upi && $("#pay_upi_on").checked) pay.upi=upi;
+  const bank=$("#pay_bank").value.trim(); if(bank && $("#pay_bank_on").checked) pay.bank=bank;
+  const pp=$("#pay_paypal").value.trim(); if(pp && $("#pay_paypal_on").checked) pay.paypal=pp;
+  if($("#pay_store").checked) pay.store=true;
+  const cust=$("#pay_custom").value.trim(); if(cust) pay.custom=cust;
+  state.data.pay=pay;
+  // theme
+  const sw=document.querySelector("#themeRow .swatch.on");
+  state.data.theme=sw?sw.getAttribute("data-theme"):"forest";
 }
 function freshBuild(){ if(state.step===3){ state.step=1; state.transcript=""; state.data=null; state.link=""; const h=location.hash.replace(/^#\/?/,""); if(h.indexOf("build")===0){ render(buildView()); wireBuild(); window.scrollTo(0,0); } } }
 function goStep(n){ state.step = n; const c = $("#buildCard"); if(c){ c.innerHTML = buildStepHtml(); wireBuild(); } const st = $(".stages"); if(st) st.outerHTML = stageBar(); window.scrollTo(0,0); }
@@ -2068,31 +2666,454 @@ function wireBuild(){
     render();
     $("#printQr").onclick = () => window.print();
   };
+  // builder extras: theme swatches + hours closed toggles (delegated, survives re-render)
+  const card = $("#buildCard");
+  if(card && !card.dataset.wired2){
+    card.dataset.wired2 = "1";
+    card.addEventListener("click", e=>{
+      const sw=e.target.closest(".swatch");
+      if(sw){ card.querySelectorAll(".swatch").forEach(s=>s.classList.remove("on")); sw.classList.add("on"); }
+    });
+    card.addEventListener("change", e=>{
+      const cb=e.target.closest("[data-hrs-closed]");
+      if(cb){
+        const dd=cb.getAttribute("data-hrs-closed");
+        const o=card.querySelector('[data-hrs-open="'+dd+'"]');
+        const c=card.querySelector('[data-hrs-close="'+dd+'"]');
+        if(o) o.disabled=cb.checked;
+        if(c) c.disabled=cb.checked;
+      }
+    });
+  }
+}
+/* ============================== shop runtime: cart + checkout ============================== */
+let shopRT = null;
+const cartStore = {};
+function openStatus(hrs){
+  if(!hrs) return null;
+  const now=new Date(), day=now.getDay(), mins=now.getHours()*60+now.getMinutes();
+  const todays=hrs[day];
+  if(todays){
+    const o=parseHM(todays.o), c=parseHM(todays.c);
+    if(o!=null && c!=null){
+      const open = c>o ? (mins>=o && mins<c) : (mins>=o || mins<c);
+      if(open) return {open:true};
+    }
+  }
+  for(let i=0;i<8;i++){
+    const dd=(day+i)%7, h=hrs[dd];
+    if(!h) continue;
+    const o=parseHM(h.o);
+    if(o==null) continue;
+    if(i===0 && mins>=o) continue;
+    return {open:false, day:dd, time:h.o};
+  }
+  return {open:false};
+}
+function priceLabel(p, vi){
+  const v=(p.variants && vi!=null)?p.variants[vi]:null;
+  if(v) return v.usd!=null?fmt(v.usd):(v.p||"");
+  return p.usd!=null?fmt(p.usd):(p.price||"");
+}
+function priceNum(p, vi){
+  const v=(p.variants && vi!=null)?p.variants[vi]:null;
+  const usd=v?v.usd:p.usd;
+  if(usd!=null) return usd*fxRate;
+  let s=String(v?v.p:(p.price||""));
+  if(s.indexOf(",")>=0 && s.indexOf(".")<0) s=s.replace(",",".");
+  s=s.replace(/,/g,"");
+  const m=s.match(/[\d]+(?:\.\d+)?/);
+  return m?parseFloat(m[0]):0;
+}
+function shopMoney(v){
+  try{ return new Intl.NumberFormat(LOCALE_TAG[uiLang]||"en",{style:"currency",currency:fxCur}).format(v); }
+  catch(e){ return fxCur+" "+Number(v).toFixed(2); }
+}
+function payMethods(d){
+  const p=d.pay||{}, m=[];
+  if(p.cod)m.push("cod"); if(p.upi)m.push("upi"); if(p.bank)m.push("bank");
+  if(p.paypal)m.push("paypal"); if(p.store)m.push("store"); if(p.custom)m.push("custom");
+  return m;
+}
+function payLabel(k,d){
+  const p=(d&&d.pay)||{};
+  if(k==="custom"&&p.custom) return p.custom;
+  return k==="cod"?t("pay_cod"):k==="upi"?t("pay_upi"):k==="bank"?t("pay_bank"):k==="paypal"?t("pay_paypal"):t("pay_store");
+}
+function defaultPay(d){ const m=payMethods(d); return m.length?m[0]:""; }
+function cartTotals(){
+  const RT=shopRT, d=RT.d;
+  let sub=0;
+  RT.cart.forEach(l=>{ const p=d.products[l.pi]; if(p) sub+=priceNum(p,l.vi)*l.qty; });
+  let disc=0;
+  const c=RT.coupon;
+  if(c){
+    if(c.type==="pct") disc=sub*c.val/100;
+    else disc=Math.min(sub, RT.usdShop?c.val*fxRate:c.val);
+  }
+  const after=sub-disc;
+  let fee=0;
+  if(RT.fulfillment==="delivery" && d.dlv){
+    const fv=RT.usdShop?(d.dlv.fee||0)*fxRate:(d.dlv.fee||0);
+    if(d.dlv.freeAbove!=null){
+      const fa=RT.usdShop?d.dlv.freeAbove*fxRate:d.dlv.freeAbove;
+      fee=after>=fa?0:fv;
+    } else fee=fv;
+  }
+  const total=Math.max(0, after+fee);
+  const min=(d.dlv&&d.dlv.min!=null)?(RT.usdShop?d.dlv.min*fxRate:d.dlv.min):null;
+  return {sub:sub, disc:disc, fee:fee, total:total, min:min, okMin:(min==null||after>=min), code:c?c.code:null};
+}
+function prodCats(d){
+  const s=[];
+  (d.products||[]).forEach(p=>{ if(p.cat && s.indexOf(p.cat)<0) s.push(p.cat); });
+  return s;
+}
+function prodRow(p, i){
+  const name=p.k?t(p.k):(p.name||"");
+  const out=p.stock==="out";
+  let badge="";
+  if(p.stock==="low") badge='<span class="stk stk-low">'+t("stock_low")+'</span>';
+  else if(out) badge='<span class="stk stk-out">'+t("stock_out")+'</span>';
+  let varSel="";
+  if(p.variants && p.variants.length){
+    varSel='<select class="varsel" data-vi="'+i+'" aria-label="'+esc(name)+'">'
+      + p.variants.map((v,vi)=>{
+          const vl=v.usd!=null?fmt(v.usd):(v.p||"");
+          return '<option value="'+vi+'">'+esc(v.n)+(vl?" · "+esc(vl):"")+'</option>';
+        }).join("")+'</select>';
+  }
+  const hasPrice=(p.usd!=null||p.price||(p.variants&&p.variants.length));
+  const askBtn=shopRT.waNum?'<button class="ask-btn" data-ask="'+i+'">'+t("ask")+'</button>':"";
+  return '<div class="prod2"><div class="prow1"><div class="pn">'+esc(name)+badge+'</div>'
+    + (hasPrice?'<div class="pp" id="pp_'+i+'">'+esc(priceLabel(p,(p.variants&&p.variants.length)?0:null))+'</div>':"")
+    + '</div><div class="prow2">'+varSel
+    + '<button class="order-btn add-btn" data-add="'+i+'"'+(out?" disabled":"")+'>'+t("add")+'</button>'
+    + askBtn+'</div></div>';
+}
+function renderProds(){
+  const RT=shopRT, d=RT.d;
+  const box=$("#prodList");
+  if(!box) return;
+  const cats=prodCats(d);
+  const q=RT.q.trim().toLowerCase();
+  let html="";
+  if(cats.length){
+    html+='<div class="chips"><button class="chip'+(RT.cat==="all"?" on":"")+'" data-cat="all">'+t("cat_all")+'</button>'
+      + cats.map(c=>'<button class="chip'+(RT.cat===c?" on":"")+'" data-cat="'+esc(c)+'">'+esc(c)+'</button>').join("")+'</div>';
+  }
+  const rows=(d.products||[]).map((p,i)=>({p:p,i:i})).filter(o=>{
+    if(RT.cat!=="all" && o.p.cat!==RT.cat) return false;
+    if(q){
+      const nm=(o.p.k?t(o.p.k):(o.p.name||"")).toLowerCase();
+      if(nm.indexOf(q)<0) return false;
+    }
+    return true;
+  }).map(o=>prodRow(o.p,o.i)).join("");
+  box.innerHTML=html+rows;
+}
+function saveShop(){
+  if(shopRT) cartStore[shopRT.payload]={cart:shopRT.cart,coupon:shopRT.coupon,fulfillment:shopRT.fulfillment,slot:shopRT.slot,pay:shopRT.pay,form:shopRT.form};
+}
+function addToCart(pi,vi){
+  const RT=shopRT;
+  const line=RT.cart.find(l=>l.pi===pi&&l.vi===vi);
+  if(line) line.qty++; else RT.cart.push({pi:pi,vi:vi,qty:1});
+  saveShop(); renderCartBar();
+}
+function askAbout(i,vi){
+  const RT=shopRT;
+  if(!RT.waNum) return;
+  const p=RT.d.products[i];
+  const v=(p.variants&&vi!=null)?p.variants[vi]:null;
+  const nm=(p.k?t(p.k):(p.name||""))+(v?" ("+v.n+")":"");
+  window.open("https://wa.me/"+RT.waNum+"?text="+encodeURIComponent(t("wa_ask").replace("{name}",RT.d.name).replace("{item}",nm)),"_blank");
+}
+function renderCartBar(){
+  const w=$("#cartBarWrap");
+  if(!w||!shopRT) return;
+  const n=shopRT.cart.reduce((a,l)=>a+l.qty,0);
+  if(!n){ w.innerHTML=""; return; }
+  const tt=cartTotals();
+  w.innerHTML='<div class="cartbar"><button class="cartbar-btn" id="cartOpenBtn"><span>'+t("view_cart")+' · '+n+'</span><b>'+esc(shopMoney(tt.total))+'</b></button></div>';
+  document.getElementById("cartOpenBtn").onclick=openDrawer;
+}
+function openDrawer(){
+  if(!shopRT) return;
+  shopRT.ordered=false;
+  renderDrawer();
+  const w=$("#drawerWrap");
+  if(w) w.classList.remove("hidden");
+  document.body.style.overflow="hidden";
+}
+function closeDrawer(){
+  const w=$("#drawerWrap");
+  if(w) w.classList.add("hidden");
+  document.body.style.overflow="";
+}
+function drawerItemsHtml(){
+  const RT=shopRT, d=RT.d;
+  return RT.cart.map((l,idx)=>{
+    const p=d.products[l.pi];
+    if(!p) return "";
+    const v=(p.variants&&l.vi!=null)?p.variants[l.vi]:null;
+    const nm=(p.k?t(p.k):(p.name||""))+(v?" ("+v.n+")":"");
+    return '<div class="cline"><div class="cn"><b>'+esc(nm)+'</b><small>'+esc(priceLabel(p,l.vi))+'</small></div>'
+      +'<div class="stepper"><button data-dec="'+idx+'" aria-label="-">−</button><b>'+l.qty+'</b><button data-inc="'+idx+'" aria-label="+">+</button></div>'
+      +'<div class="lt">'+esc(shopMoney(priceNum(p,l.vi)*l.qty))+'</div></div>';
+  }).join("");
+}
+function couponHtml(tt){
+  const RT=shopRT, d=RT.d;
+  if(!(d.coupons&&d.coupons.length)) return "";
+  if(RT.coupon) return '<div class="trow"><span>'+t("coupon_disc")+' ('+esc(RT.coupon.code)+') <button class="ask-btn" id="couponRm" style="padding:0 4px;" aria-label="remove">✕</button></span><span class="neg">−'+esc(shopMoney(tt.disc))+'</span></div>';
+  return '<div class="coupon-row"><input id="couponInp" placeholder="'+esc(t("coupon_ph"))+'" autocapitalize="characters" autocomplete="off"><button class="btn btn-sm btn-solid" id="couponGo">'+t("coupon_apply")+'</button></div>';
+}
+function fulfillHtml(){
+  const RT=shopRT;
+  return '<div class="d-sec">'+t("wa_type")+'</div><div class="fulfill">'
+    +'<label class="'+(RT.fulfillment==="pickup"?"on":"")+'"><input type="radio" name="ful" value="pickup"'+(RT.fulfillment==="pickup"?" checked":"")+'>'+t("co_pickup")+'</label>'
+    +'<label class="'+(RT.fulfillment==="delivery"?"on":"")+'"><input type="radio" name="ful" value="delivery"'+(RT.fulfillment==="delivery"?" checked":"")+'>'+t("co_delivery")+'</label></div>';
+}
+function slotHtml(){
+  const d=shopRT.d;
+  if(!(d.slots&&d.slots.length)) return "";
+  const opts='<option value="asap"'+(shopRT.slot==="asap"?" selected":"")+'>'+t("slot_asap")+'</option>'
+    + d.slots.map(s=>'<option value="'+esc(s)+'"'+(shopRT.slot===s?" selected":"")+'>'+esc(s)+'</option>').join("");
+  return '<div class="d-field"><label for="coSlot">'+t("co_slot")+'</label><select id="coSlot">'+opts+'</select></div>';
+}
+function totalsHtml(tt){
+  const RT=shopRT, d=RT.d;
+  let h='<div style="margin-top:14px;"><div class="trow"><span>'+t("subtotal")+'</span><span>'+esc(shopMoney(tt.sub))+'</span></div>';
+  if(RT.fulfillment==="delivery"&&d.dlv){
+    h+='<div class="trow"><span>'+t("dlv_fee")+'</span><span>'+(tt.fee>0?esc(shopMoney(tt.fee)):t("free"))+'</span></div>';
+  }
+  h+='<div class="trow grand"><span>'+t("total")+'</span><span>'+esc(shopMoney(tt.total))+'</span></div></div>';
+  if(!tt.okMin) h+='<div class="d-warn">'+esc(t("min_order").replace("{x}",shopMoney(tt.min)))+'</div>';
+  return h;
+}
+function formHtml(){
+  const f=shopRT.form, del=shopRT.fulfillment==="delivery";
+  return '<div class="d-field"><label for="coName">'+t("co_name")+'</label><input id="coName" value="'+esc(f.name)+'" autocomplete="name"></div>'
+    +'<div class="d-field"><label for="coPhone">'+t("co_phone")+'</label><input id="coPhone" type="tel" value="'+esc(f.phone)+'" autocomplete="tel"></div>'
+    +(del?'<div class="d-field"><label for="coAddr">'+t("co_address")+'</label><textarea id="coAddr" style="min-height:64px;" autocomplete="street-address">'+esc(f.addr)+'</textarea></div>':"")
+    +'<div class="d-field"><label for="coNotes">'+t("co_notes")+'</label><input id="coNotes" value="'+esc(f.notes)+'"></div>';
+}
+function payHtml(){
+  const d=shopRT.d, ms=payMethods(d);
+  if(!ms.length) return "";
+  return '<div class="d-sec">'+t("pay_title")+'</div>'
+    + ms.map(k=>'<label class="pay-opt'+(shopRT.pay===k?" on":"")+'"><input type="radio" name="paym" value="'+k+'"'+(shopRT.pay===k?" checked":"")+'>'
+      +'<span><b>'+esc(payLabel(k,d))+'</b>'
+      +(k==="upi"&&d.pay.upi?'<small>'+esc(d.pay.upi)+'</small>':"")
+      +(k==="bank"&&d.pay.bank?'<small>'+esc(d.pay.bank.split("\n")[0])+'</small>':"")
+      +'</span></label>').join("");
+}
+function orderBtnHtml(tt){
+  const dis=(!tt.okMin||!shopRT.cart.length)?" disabled":"";
+  return '<button class="wa-big" id="orderWaBtn"'+dis+'>'+t("order_wa")+'</button>';
+}
+function payPanelHtml(tt){
+  const RT=shopRT, d=RT.d, p=d.pay||{};
+  let h='<div class="pay-instr"><b>'+t("pay_next")+'</b>'
+    +'<div style="color:var(--ink2);font-size:14px;margin:8px 0;">'+t("pay_after")+'</div>';
+  const m=RT.pay;
+  if(m==="upi"&&p.upi){
+    h+='<div><b>'+t("pay_upi")+':</b> '+esc(p.upi)+'</div>'
+      +'<a class="upi-btn" href="upi://pay?pa='+encodeURIComponent(p.upi)+'&pn='+encodeURIComponent(d.name)+'&am='+tt.total.toFixed(2)+'&cu='+fxCur+'">'
+      +t("pay_upi_go").replace("{x}",shopMoney(tt.total))+'</a>';
+  } else if(m==="bank"&&p.bank){
+    h+='<div><b>'+t("pay_bank")+':</b></div><pre>'+esc(p.bank)+'</pre>';
+  } else if(m==="paypal"&&p.paypal){
+    let u=String(p.paypal).trim();
+    if(!/^https?:\/\//i.test(u)) u="https://"+u;
+    h+='<a class="upi-btn" href="'+esc(u)+'" target="_blank" rel="noopener">'+t("pay_paypal")+'</a>';
+  } else if(m==="cod"){ h+='<div>'+t("pay_cod")+'</div>'; }
+  else if(m==="store"){ h+='<div>'+t("pay_store")+'</div>'; }
+  else if(m==="custom"&&p.custom){ h+='<div>'+esc(p.custom)+'</div>'; }
+  h+='<div style="margin-top:14px;"><button class="btn btn-sm" id="backToCart">'+t("btn_back")+'</button></div></div>';
+  return h;
+}
+function renderDrawer(){
+  const RT=shopRT, d=RT.d, w=$("#drawerWrap");
+  if(!w) return;
+  const tt=cartTotals();
+  let body="";
+  if(RT.ordered){ body=payPanelHtml(tt); }
+  else if(!RT.cart.length){ body='<p style="color:var(--ink2);padding:8px 0 20px;">'+t("cart_empty")+'</p>'; }
+  else{
+    body=drawerItemsHtml()+couponHtml(tt)+fulfillHtml()+slotHtml()+totalsHtml(tt)+formHtml()+payHtml()+orderBtnHtml(tt);
+  }
+  w.innerHTML='<div class="drawer"><div class="drawer-head"><h3 class="serif" style="font-size:22px;">'+t("cart_title")+'</h3>'
+    +'<button class="drawer-x" id="drawerX" aria-label="'+t("close")+'">&times;</button></div>'
+    +'<div id="dErr"></div>'+body+'</div>';
+  wireDrawer();
+}
+function applyCoupon(){
+  const RT=shopRT, d=RT.d;
+  const inp=$("#couponInp");
+  const code=(inp?inp.value:"").trim().toUpperCase().replace(/\s+/g,"");
+  const c=(d.coupons||[]).find(c=>c.code===code);
+  const err=$("#dErr");
+  if(!c){ if(err) err.innerHTML='<div class="d-err">'+t("coupon_bad")+'</div>'; return; }
+  RT.coupon=c; saveShop(); renderDrawer();
+}
+function buildOrderMsg(tt){
+  const RT=shopRT, d=RT.d;
+  const L=[t("wa_order").replace("{shop}",d.name)];
+  RT.cart.forEach(l=>{
+    const p=d.products[l.pi];
+    if(!p) return;
+    const v=(p.variants&&l.vi!=null)?p.variants[l.vi]:null;
+    const nm=(p.k?t(p.k):(p.name||""))+(v?" ("+v.n+")":"");
+    L.push(l.qty+" x "+nm+" - "+shopMoney(priceNum(p,l.vi)*l.qty));
+  });
+  L.push("----------------");
+  L.push(t("subtotal")+": "+shopMoney(tt.sub));
+  if(tt.disc>0&&tt.code) L.push(t("coupon_disc")+" ("+tt.code+"): -"+shopMoney(tt.disc));
+  if(RT.fulfillment==="delivery"&&d.dlv) L.push(t("dlv_fee")+": "+(tt.fee>0?shopMoney(tt.fee):t("free")));
+  L.push(t("total")+": "+shopMoney(tt.total));
+  L.push("----------------");
+  L.push(t("wa_name")+": "+RT.form.name.trim());
+  L.push(t("wa_phone")+": "+RT.form.phone.trim());
+  L.push(t("wa_type")+": "+(RT.fulfillment==="delivery"?t("co_delivery"):t("co_pickup")));
+  if(RT.fulfillment==="delivery") L.push(t("wa_addr")+": "+RT.form.addr.trim());
+  if(d.slots&&d.slots.length) L.push(t("wa_time")+": "+(RT.slot==="asap"?t("slot_asap"):RT.slot));
+  if(RT.pay) L.push(t("wa_pay")+": "+payLabel(RT.pay,d));
+  if(RT.form.notes.trim()) L.push(t("wa_notes")+": "+RT.form.notes.trim());
+  return L.join("\n");
+}
+function placeOrder(){
+  const RT=shopRT, tt=cartTotals(), err=$("#dErr");
+  const fail=m=>{ if(err) err.innerHTML='<div class="d-err">'+m+'</div>'; const dr=$(".drawer"); if(dr) dr.scrollTop=0; };
+  if(!RT.cart.length) return;
+  if(!tt.okMin){ fail(esc(t("min_order").replace("{x}",shopMoney(tt.min)))); return; }
+  if(!RT.form.name.trim()){ fail(t("err_need_name")); return; }
+  if(!RT.form.phone.trim()){ fail(t("err_need_phone")); return; }
+  if(RT.fulfillment==="delivery" && !RT.form.addr.trim()){ fail(t("err_need_addr")); return; }
+  const msg=buildOrderMsg(tt);
+  window.open("https://wa.me/"+RT.waNum+"?text="+encodeURIComponent(msg),"_blank");
+  RT.ordered=true; saveShop(); renderDrawer();
+}
+function wireDrawer(){
+  const RT=shopRT;
+  const x=$("#drawerX");
+  if(x) x.onclick=closeDrawer;
+  const w=$("#drawerWrap");
+  if(w) w.onclick=e=>{ if(e.target===w) closeDrawer(); };
+  const dr=$(".drawer");
+  if(!dr) return;
+  dr.addEventListener("input", e=>{
+    const id=e.target.id;
+    if(id==="coName") RT.form.name=e.target.value;
+    else if(id==="coPhone") RT.form.phone=e.target.value;
+    else if(id==="coAddr") RT.form.addr=e.target.value;
+    else if(id==="coNotes") RT.form.notes=e.target.value;
+    saveShop();
+  });
+  dr.addEventListener("click", e=>{
+    const inc=e.target.closest("[data-inc]"), dec=e.target.closest("[data-dec]");
+    if(inc){ RT.cart[+inc.getAttribute("data-inc")].qty++; saveShop(); renderCartBar(); renderDrawer(); return; }
+    if(dec){
+      const l=RT.cart[+dec.getAttribute("data-dec")];
+      if(l){ l.qty--; if(l.qty<=0) RT.cart.splice(RT.cart.indexOf(l),1); }
+      saveShop(); renderCartBar(); renderDrawer(); return;
+    }
+    if(e.target.closest("#couponGo")){ applyCoupon(); return; }
+    if(e.target.closest("#couponRm")){ RT.coupon=null; saveShop(); renderDrawer(); return; }
+    if(e.target.closest("#orderWaBtn")){ placeOrder(); return; }
+    if(e.target.closest("#backToCart")){ RT.ordered=false; renderDrawer(); return; }
+  });
+  dr.addEventListener("change", e=>{
+    if(e.target.name==="ful"){ RT.fulfillment=e.target.value; saveShop(); renderDrawer(); }
+    else if(e.target.name==="paym"){ RT.pay=e.target.value; saveShop(); renderDrawer(); }
+    else if(e.target.id==="coSlot"){ RT.slot=e.target.value; saveShop(); }
+  });
+  dr.addEventListener("keydown", e=>{
+    if(e.target.id==="couponInp" && e.key==="Enter"){ e.preventDefault(); applyCoupon(); }
+  });
+}
+function initShop(d, payload){
+  const saved=cartStore[payload]||{};
+  shopRT={
+    d:d, payload:payload, waNum:cleanPhone(d.whatsapp||"").replace(/^\+/,""),
+    cart:saved.cart||[], cat:"all", q:"", coupon:saved.coupon||null,
+    fulfillment:saved.fulfillment||"pickup", slot:saved.slot||"asap",
+    pay:(saved.pay!=null?saved.pay:defaultPay(d)),
+    form:saved.form||{name:"",phone:"",addr:"",notes:""},
+    ordered:false, usdShop:(d.products||[]).some(p=>p.usd!=null)
+  };
+  renderProds(); renderCartBar();
+  const si=$("#shopSearch");
+  if(si) si.oninput=e=>{ shopRT.q=e.target.value; renderProds(); };
+  const pl=$("#prodList");
+  if(pl){
+    pl.addEventListener("click", e=>{
+      const chip=e.target.closest("[data-cat]");
+      if(chip){ shopRT.cat=chip.getAttribute("data-cat"); renderProds(); return; }
+      const addBtn=e.target.closest("[data-add]");
+      const askBtn=e.target.closest("[data-ask]");
+      if(addBtn && !addBtn.disabled){
+        const i=+addBtn.getAttribute("data-add");
+        const sel=pl.querySelector('.varsel[data-vi="'+i+'"]');
+        addToCart(i, sel?+sel.value:null);
+      } else if(askBtn){
+        const i=+askBtn.getAttribute("data-ask");
+        const sel=pl.querySelector('.varsel[data-vi="'+i+'"]');
+        askAbout(i, sel?+sel.value:null);
+      }
+    });
+    pl.addEventListener("change", e=>{
+      const s=e.target.closest(".varsel");
+      if(!s) return;
+      const i=+s.getAttribute("data-vi");
+      const p=shopRT.d.products[i];
+      const pp=document.getElementById("pp_"+i);
+      if(pp) pp.textContent=priceLabel(p,+s.value);
+    });
+  }
 }
 /* ============================== published site ============================== */
 function siteView(d, payload){
-  const waNum = cleanPhone(d.whatsapp).replace(/^\+/,"");
-  const prods = (d.products||[]).map(p=>{
-    const order = waNum
-      ? '<a class="order-btn" href="https://wa.me/'+esc(waNum)+'?text='+encodeURIComponent(waMsg(d.name, p.k?t(p.k):p.name, p.usd!=null?fmt(p.usd):(p.price||"")))+'" target="_blank" rel="noopener">'+t("order")+'</a>'
-      : "";
-    return '<div class="prod"><div class="pn">'+(p.k?t(p.k):esc(p.name))+'</div><div class="prod-right">'+((p.usd!=null||p.price)?'<div class="pp">'+(p.usd!=null?fmt(p.usd):esc(p.price))+'</div>':"")+order+'</div></div>';
-  }).join("");
-  const hoursHtml = esc(d.hours).split(/\n|;\s*/).filter(Boolean).map(h=>'<div class="hours-row"><span>'+h+'</span></div>').join("");
+  const waNum = cleanPhone(d.whatsapp||"").replace(/^\+/,"");
+  const theme=(d.theme&&THEMES[d.theme])?d.theme:"forest";
+  const ost=openStatus(d.hrs);
+  let openBadge="";
+  if(ost){
+    openBadge=ost.open
+      ? '<div class="openbadge ob-open"><span class="dot"></span>'+t("open_now")+'</div>'
+      : '<div class="openbadge ob-closed"><span class="dot"></span>'+t("closed_now")+(ost.time?' · '+esc(t("opens_at").replace("{t}",dayName(ost.day)+" "+fmtTime(ost.time))):"")+'</div>';
+  }
+  let hoursSec="";
+  if(d.hrs){
+    const rows=[1,2,3,4,5,6,0].map(dd=>{
+      const h=d.hrs[dd];
+      return '<div class="hours-row"><span>'+dayName(dd)+'</span><span>'+(h?fmtTime(h.o)+" – "+fmtTime(h.c):t("day_closed"))+'</span></div>';
+    }).join("");
+    hoursSec='<div class="shop-sec"><h2>'+t("sv_hours")+'</h2><div class="sub">'+(d.hrsNote?esc(d.hrsNote):t("sv_hours_sub"))+'</div>'+rows+'</div>';
+  } else if(d.hours){
+    const hoursHtml = esc(d.hours).split(/\n|;\s*/).filter(Boolean).map(h=>'<div class="hours-row"><span>'+h+'</span></div>').join("");
+    hoursSec='<div class="shop-sec"><h2>'+t("sv_hours")+'</h2><div class="sub">'+t("sv_hours_sub")+'</div>'+hoursHtml+'</div>';
+  }
   const btns = [];
   if(d.phone) btns.push('<a class="btn btn-accent" href="tel:'+esc(cleanPhone(d.phone))+'">'+t("call_us")+'</a>');
   if(waNum) btns.push('<a class="btn" href="https://wa.me/'+esc(waNum)+'" target="_blank" rel="noopener">'+t("wa_label")+'</a>');
   if(d.address) btns.push('<a class="btn" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.address)+'" target="_blank" rel="noopener">'+t("btn_dir")+'</a>');
+  const prodsSec=(d.products&&d.products.length)
+    ? '<div class="shop-sec"><h2>'+t("sv_products")+'</h2><div class="sub">'+t("sv_products_sub")+'</div>'
+      +'<div class="shop-tools"><input class="shop-search" id="shopSearch" placeholder="'+esc(t("search_ph"))+'"></div>'
+      +'<div id="prodList"></div></div>'
+    : "";
   return (d.announce ? '<div class="banner">'+esc(d.announce)+'</div>' : "")
-  + '<div class="wrap"><div class="shop-mast"><div class="kicker">'+t("mini_kicker")+'</div>'
-  + '<h1>'+esc(d.name)+'</h1>' + ((d.tagline||d.taglineKey)?'<p>'+(d.taglineKey?t(d.taglineKey):esc(d.tagline))+'</p>':"") + '</div>'
-  + (prods ? '<div class="shop-sec"><h2>'+t("sv_products")+'</h2><div class="sub">'+t("sv_products_sub")+'</div>'+prods+'</div>' : "")
-  + (d.hours ? '<div class="shop-sec"><h2>'+t("sv_hours")+'</h2><div class="sub">'+t("sv_hours_sub")+'</div>'+hoursHtml+'</div>' : "")
+  + '<div class="wrap shopview theme-'+theme+'"><div class="shop-mast"><div class="kicker">'+t("mini_kicker")+'</div>'
+  + '<h1>'+esc(d.name)+'</h1>' + ((d.tagline||d.taglineKey)?'<p>'+(d.taglineKey?t(d.taglineKey):esc(d.tagline))+'</p>':"") + openBadge + '</div>'
+  + prodsSec + hoursSec
   + ((btns.length||d.address) ? '<div class="shop-sec"><h2>'+t("sv_find")+'</h2><div class="sub">'+(d.address?esc(d.address):t("sv_find_sub"))+'</div><div class="contact-btns">'+btns.join("")+'</div></div>' : "")
   + '<div class="shop-foot">'+t("made_with_a")+' <a href="#/">TalkShop</a> · '+t("made_with_b")+'.'
   + '<br><a class="shop-loc" href="#/locale" onclick="goLocale()">&#127760; '+(LANG_NAMES[uiLang]||"English")+'</a>'
   + (payload ? '<br><a class="update-link" href="#/edit/'+payload+'">'+t("update_link")+'</a>' : "")
-  + '</div></div>';
+  + '</div></div>'
+  + '<div id="cartBarWrap"></div><div id="drawerWrap" class="drawer-wrap hidden"></div>';
 }
 function notFoundView(){
   return header() + '<div class="wrap center" style="padding:90px 0;"><h2 class="serif">'+t("nf_h")+'</h2>'
@@ -2206,6 +3227,7 @@ async function applyShopLocale(d, payload){
     if(cur !== fxCur){ fxCur = cur; fxRate = FX_FALLBACK[cur]||1; }
   }
   render(siteView(d, payload));
+  initShop(d, payload);
   window.scrollTo(0,0);
   if(shopCC){
     const cur = COUNTRY[shopCC].cur;
@@ -2213,7 +3235,7 @@ async function applyShopLocale(d, payload){
       const r = await fetch("https://api.frankfurter.app/latest?from=USD&to=" + cur);
       const j = await r.json();
       const rate = (j.rates && j.rates[cur]) ? j.rates[cur] : (FX_FALLBACK[cur]||1);
-      if(rate !== fxRate && location.hash.replace(/^#\/?/,"").indexOf("s/")===0){ fxRate = rate; render(siteView(d, payload)); }
+      if(rate !== fxRate && location.hash.replace(/^#\/?/,"").indexOf("s/")===0){ fxRate = rate; render(siteView(d, payload)); initShop(d, payload); }
     }catch(e){}
   }
 }
