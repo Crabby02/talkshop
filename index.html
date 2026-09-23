@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TalkShop — Talk for a minute. Get your shop online.</title>
+<meta name="description" content="TalkShop turns 60 seconds of talking about your shop into a mobile storefront you can share anywhere. Free, no account needed.">
+<style>
+:root{
+  --paper:#FAFAF6; --paper2:#F3F1EA; --ink:#1B1B18; --ink2:#55534B;
+  --line:#E3E0D4; --accent:#175E3B; --accent-ink:#fff; --warn:#8A5A00;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;}
+.serif{font-family:"Iowan Old Style",Palatino,"Palatino Linotype",Georgia,"Times New Roman",serif;}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+.wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+a{color:inherit;}
+/* masthead */
+.mast{border-bottom:1px solid var(--line); background:var(--paper); position:sticky; top:0; z-index:50;}
+.mast-in{display:flex; align-items:center; justify-content:space-between; height:64px;}
+.wordmark{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-weight:700; font-size:22px; letter-spacing:-0.5px; text-decoration:none;}
+.wordmark span{color:var(--accent);}
+.mast nav{display:flex; gap:28px; align-items:center;}
+.mast nav a.nl{text-decoration:none; font-size:15px; color:var(--ink2);}
+.mast nav a.nl:hover{color:var(--ink);}
+.btn{display:inline-block; text-decoration:none; border:1px solid var(--ink); border-radius:999px;
+  padding:12px 26px; font-size:16px; font-weight:600; cursor:pointer; background:transparent; color:var(--ink);
+  transition:transform .12s ease, background .12s ease;}
+.btn:hover{transform:translateY(-1px);}
+.btn-solid{background:var(--ink); color:var(--paper);}
+.btn-solid:hover{background:#000;}
+.btn-accent{background:var(--accent); border-color:var(--accent); color:#fff;}
+.btn-accent:hover{background:#10482d;}
+.btn-sm{padding:8px 18px; font-size:14px;}
+/* hero */
+.hero{padding:88px 0 64px; border-bottom:1px solid var(--line);}
+.eyebrow{font-family:ui-monospace,Menlo,monospace; font-size:13px; letter-spacing:2px; color:var(--accent); margin-bottom:20px;}
+.hero h1{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(40px,6vw,68px);
+  line-height:1.05; letter-spacing:-1.5px; max-width:16ch; margin-bottom:22px; font-weight:700;}
+.hero p.sub{font-size:20px; color:var(--ink2); max-width:34em; margin-bottom:34px;}
+.cta-row{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:26px;}
+.meta-row{font-family:ui-monospace,Menlo,monospace; font-size:13px; color:var(--ink2); letter-spacing:.5px;}
+.meta-row b{color:var(--ink);}
+/* ticker */
+.ticker{border-bottom:1px solid var(--line); overflow:hidden; white-space:nowrap; padding:12px 0; background:var(--paper2);}
+.ticker span{font-family:ui-monospace,Menlo,monospace; font-size:13px; letter-spacing:1.5px; color:var(--ink2); padding:0 26px;}
+/* sections */
+.sec{padding:72px 0; border-bottom:1px solid var(--line);}
+.sec h2{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(28px,4vw,40px); letter-spacing:-0.8px; margin-bottom:14px;}
+.sec p.lead{color:var(--ink2); font-size:19px; max-width:36em; margin-bottom:40px;}
+.steps{display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff;}
+.step{padding:34px 30px; border-right:1px solid var(--line);}
+.step:last-child{border-right:none;}
+.step .n{font-family:ui-monospace,Menlo,monospace; font-size:13px; color:var(--accent); letter-spacing:2px; margin-bottom:14px;}
+.step h3{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:22px; margin-bottom:10px; letter-spacing:-0.3px;}
+.step p{color:var(--ink2); font-size:16px;}
+.chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:8px;}
+.chip{border:1px solid var(--line); background:#fff; border-radius:999px; padding:9px 18px; font-size:15px;}
+/* faq */
+.faq{max-width:760px;}
+.faq details{border:1px solid var(--line); border-radius:10px; background:#fff; margin-bottom:12px; padding:0;}
+.faq summary{cursor:pointer; padding:18px 22px; font-weight:600; font-size:17px; list-style:none;}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::after{content:"+"; float:right; color:var(--accent); font-weight:400;}
+.faq details[open] summary::after{content:"–";}
+.faq .a{padding:0 22px 20px; color:var(--ink2);}
+/* footer */
+footer{padding:44px 0 60px;}
+.foot{display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; color:var(--ink2); font-size:14px;}
+/* ---------- builder ---------- */
+.builder-head{padding:56px 0 8px;}
+.builder-head h1{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(30px,4.5vw,44px); letter-spacing:-1px; margin-bottom:10px;}
+.builder-head p{color:var(--ink2); font-size:18px; max-width:34em;}
+.stages{display:flex; gap:8px; margin:30px 0 10px;}
+.stage{flex:1; font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:1.5px; color:var(--ink2);
+  border-top:2px solid var(--line); padding-top:10px;}
+.stage.on{color:var(--ink); border-top-color:var(--accent); font-weight:700;}
+.card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:40px; margin:26px 0 70px;}
+.mic-zone{text-align:center; padding:26px 0 10px;}
+.mic-btn{width:120px; height:120px; border-radius:50%; border:2px solid var(--accent); background:#fff;
+  cursor:pointer; display:inline-flex; align-items:center; justify-content:center; margin-bottom:18px;
+  transition:transform .15s ease, background .15s ease;}
+.mic-btn:hover{transform:scale(1.04);}
+.mic-btn.live{background:var(--accent); animation:pulse 1.6s infinite;}
+.mic-btn svg{width:44px; height:44px; stroke:var(--accent); fill:none; stroke-width:2;}
+.mic-btn.live svg{stroke:#fff;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(23,94,59,.35);}70%{box-shadow:0 0 0 22px rgba(23,94,59,0);}100%{box-shadow:0 0 0 0 rgba(23,94,59,0);}}
+.mic-label{font-weight:600; font-size:18px; margin-bottom:6px;}
+.mic-hint{color:var(--ink2); font-size:15px; max-width:30em; margin:0 auto 18px;}
+.lang-row{display:flex; gap:10px; justify-content:center; align-items:center; margin-bottom:8px; font-size:14px; color:var(--ink2);}
+select,input[type=text],input[type=tel],textarea{font:inherit; color:var(--ink);}
+select{border:1px solid var(--line); border-radius:8px; padding:8px 12px; background:#fff;}
+.transcript{border:1px dashed var(--line); border-radius:12px; background:var(--paper); min-height:120px;
+  padding:18px; margin:18px 0; text-align:left; font-size:16px; color:var(--ink2);}
+.transcript.has{color:var(--ink); border-style:solid;}
+.or-type{text-align:center; margin:14px 0; color:var(--ink2); font-size:14px;}
+textarea.typebox{width:100%; border:1px solid var(--line); border-radius:12px; padding:16px; min-height:110px; background:#fff;}
+.field{margin-bottom:20px;}
+.field label{display:block; font-weight:600; font-size:15px; margin-bottom:8px;}
+.field .hint{font-weight:400; color:var(--ink2); font-size:14px;}
+.field input,.field textarea{width:100%; border:1px solid var(--line); border-radius:10px; padding:13px 15px; background:#fff;}
+.field textarea{min-height:96px; resize:vertical;}
+.field input:focus,.field textarea:focus{outline:2px solid var(--accent); outline-offset:-1px; border-color:var(--accent);}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+.share-panel{text-align:center; padding:20px 0 6px;}
+.share-link{display:flex; gap:10px; margin:22px 0;}
+.share-link input{flex:1; border:1px solid var(--line); border-radius:10px; padding:13px 15px; background:var(--paper); font-size:14px;}
+.share-btns{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:26px;}
+.note{font-size:14px; color:var(--ink2); max-width:34em; margin:0 auto;}
+/* ---------- published shop ---------- */
+.shop-mast{text-align:center; padding:70px 0 34px; border-bottom:1px solid var(--line);}
+.shop-mast .kicker{font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:3px; color:var(--accent); margin-bottom:14px;}
+.shop-mast h1{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(36px,6vw,58px); letter-spacing:-1.2px; margin-bottom:12px;}
+.shop-mast p{color:var(--ink2); font-size:19px; max-width:32em; margin:0 auto;}
+.shop-sec{padding:44px 0; border-bottom:1px solid var(--line);}
+.shop-sec h2{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:26px; letter-spacing:-0.5px; margin-bottom:6px;}
+.shop-sec .sub{color:var(--ink2); font-size:15px; margin-bottom:22px;}
+.prod{display:flex; justify-content:space-between; align-items:baseline; gap:16px; padding:14px 0; border-bottom:1px dotted var(--line);}
+.prod:last-child{border-bottom:none;}
+.prod .pn{font-size:17px;}
+.prod .pp{font-family:ui-monospace,Menlo,monospace; font-size:15px; white-space:nowrap;}
+.hours-row{display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dotted var(--line); font-size:16px;}
+.contact-btns{display:flex; gap:12px; flex-wrap:wrap; margin-top:6px;}
+.shop-foot{text-align:center; padding:34px 0 60px; color:var(--ink2); font-size:14px;}
+.shop-foot a{color:var(--accent);}
+/* misc */
+.hidden{display:none !important;}
+.center{text-align:center;}
+.err{background:#FDF0EF; border:1px solid #E5B8B3; color:#8C2F28; border-radius:10px; padding:14px 18px; margin:16px 0; font-size:15px;}
+@media(max-width:760px){
+  .steps{grid-template-columns:1fr;}
+  .step{border-right:none; border-bottom:1px solid var(--line);}
+  .step:last-child{border-bottom:none;}
+  .grid2{grid-template-columns:1fr;}
+  .card{padding:26px 20px;}
+  .mast nav a.nl{display:none;}
+  .hero{padding:60px 0 44px;}
+  .share-link{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+<div id="view"></div>
+<script>
+"use strict";
+/* ============================== utils ============================== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function b64urlEncode(str){
+  const b64 = btoa(unescape(encodeURIComponent(str)));
+  return b64.replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+function b64urlDecode(s){
+  s = s.replace(/-/g,"+").replace(/_/g,"/");
+  while(s.length % 4) s += "=";
+  return decodeURIComponent(escape(atob(s)));
+}
+function encodeSite(d){ return b64urlEncode(JSON.stringify({v:1, d})); }
+function decodeSite(p){ try{ const o = JSON.parse(b64urlDecode(p)); return (o && o.v===1 && o.d) ? o.d : null; }catch(e){ return null; } }
+function cleanPhone(p){ return String(p||"").replace(/[^\d+]/g,""); }
+/* ============================== sample ============================== */
+const SAMPLE = {
+  name:"Sunrise Bakery",
+  tagline:"Fresh bread, cakes and pastries baked every morning since 2009.",
+  products:[
+    {name:"Sourdough loaf", price:"$4.50"},
+    {name:"Butter croissant", price:"$2.00"},
+    {name:"Chocolate cake (whole)", price:"$28"},
+    {name:"Cinnamon rolls (4 pack)", price:"$9"},
+    {name:"Custom birthday cakes", price:"from $35"}
+  ],
+  hours:"Monday to Saturday, 7am to 7pm. Sundays 8am to 1pm.",
+  phone:"+1 555-014-2288", whatsapp:"+1 555-014-2288",
+  address:"14 Market Street, Springfield"
+};
+/* ============================== parser ============================== */
+function parseTranscript(raw){
+  const t = String(raw||"").replace(/\s+/g," ").trim();
+  const d = {name:"", tagline:"", products:[], hours:"", phone:"", whatsapp:"", address:""};
+  if(!t) return d;
+  // Sentence capture that does not break on decimal points like $4.50
+  const SENT = "((?:[^.!?]|\\.(?=\\d))+)";
+  const after = (pat) => { const m = t.match(new RegExp(pat + "\\s*" + SENT, "i")); return m ? m[1].trim() : ""; };
+  // name
+  let m = t.match(/(?:my|our)\s+(?:shop|store|business|salon|bakery|studio|restaurant|cafe|boutique|pharmacy)\s+(?:is\s+called|is|called)\s+([^.,!?]+)/i)
+       || t.match(/(?:shop|store|business)\s+(?:name|called)\s+(?:is\s+)?([^.,!?]+)/i)
+       || t.match(/(?:we are|we're|this is)\s+([A-Z][A-Za-z'& ]{1,40}?)(?:\.|,|!|\?|\s+and\s+we|\s+we\s)/);
+  if(m) d.name = m[1].trim().replace(/\s+is\s*$/i,"");
+  // products
+  let prod = after("we sell") || after("(?:we offer|our products are|our menu includes|selling)") || after("(?:speciali[sz]e in|known for)");
+  if(prod){
+    d.products = prod.split(/,|\s+and\s+/).map(s=>s.trim()).filter(s=>s && s.length<60).slice(0,24)
+      .map(item=>{
+        const pm = item.match(/^(.*?)\s*(?:for\s*)?(\$\s?[\d.,]+(?:\s?(?:each|a piece))?)\s*$/);
+        return pm ? {name:pm[1].trim(), price:pm[2].trim()} : {name:item, price:""};
+      }).filter(p=>p.name);
+  }
+  // hours
+  let hrs = after("[^.!?]*\\bopen\\b") || after("[^.!?]*(?:opening\\s+)?\\bhours\\b");
+  if(hrs) d.hours = hrs.replace(/^(we are|we're|and)\s+/i,"").trim();
+  // phone
+  m = t.match(/(\+\d[\d\s\-()]{6,}\d)/) || t.match(/\b(\d{3}[\s\-.]?\d{3}[\s\-.]?\d{4})\b/) || t.match(/\b(\d{10})\b/);
+  if(m){ d.phone = m[1].trim(); d.whatsapp = m[1].trim(); }
+  // address
+  d.address = after("(?:located at|find us at|address is|we are at|we're at|visit us at)");
+  // tagline: prefer what they make/serve, never the hours sentence
+  let tag = after("we\\s+(?:offer|make|bake|serve|provide|speciali[sz]e in)");
+  if(!tag){
+    const first = t.split(/(?<!\d)\.(?!\d)|!|\?/)[0];
+    if(first && first.length > 20 && first.length < 140 && !/my (shop|store)/i.test(first) && !/\bopen\b/i.test(first)) tag = first.trim();
+  }
+  if(tag && !/\.$/.test(tag)) tag += ".";
+  d.tagline = tag || "";
+  return d;
+}
+/* ============================== state ============================== */
+const state = { step:1, lang:"en-US", transcript:"", listening:false, rec:null, recStart:0, data:null, link:"" };
+const LANGS = [["en-US","English (US)"],["en-GB","English (UK)"],["en-IN","English (India)"],["es-ES","Spanish"],["es-MX","Spanish (Mexico)"],["pt-BR","Portuguese (Brazil)"],["fr-FR","French"],["de-DE","German"],["hi-IN","Hindi"],["ar-SA","Arabic"],["id-ID","Indonesian"],["ms-MY","Malay"],["tl-PH","Filipino"],["ur-PK","Urdu"],["bn-IN","Bengali"],["ta-IN","Tamil"],["te-IN","Telugu"],["sw-KE","Swahili"],["nl-NL","Dutch"],["it-IT","Italian"]];
+/* ============================== chrome ============================== */
+function header(){
+  return '<div class="mast"><div class="wrap mast-in">'
+    + '<a class="wordmark" href="#/">Talk<span>Shop</span></a>'
+    + '<nav><a class="nl" href="#how">How it works</a><a class="nl sample-link" href="#/">See a sample</a>'
+    + '<a class="btn btn-sm btn-solid" href="#/build">Start free</a></nav></div></div>';
+}
+function footer(){
+  return '<footer><div class="wrap foot"><div><span class="serif" style="font-weight:700;color:var(--ink);">TalkShop</span> &nbsp;·&nbsp; Talk for a minute. Get your shop online.</div>'
+    + '<div>Free &nbsp;·&nbsp; No account &nbsp;·&nbsp; © 2026 TalkShop</div></div></footer>';
+}
+function render(html){ $("#view").innerHTML = html; wireSampleLinks(); }
+function wireSampleLinks(){
+  const href = "#/s/" + encodeSite(SAMPLE);
+  document.querySelectorAll(".sample-link").forEach(a => a.href = href);
+}
+/* ============================== home ============================== */
+function homeView(){
+  const chips = ["Bakeries","Salons & barbers","Tailors","Phone repair","Boutiques","Corner stores","Cafes","Florists","Laundry","Spare parts"].map(c=>'<span class="chip">'+c+'</span>').join("");
+  return header()
+  + '<div class="hero"><div class="wrap">'
+  + '<div class="eyebrow">FOR SMALL SHOPS, EVERYWHERE</div>'
+  + '<h1>Talk for a minute.<br>Get your shop online.</h1>'
+  + '<p class="sub">No website builder to learn, no designer to hire, nothing to install. Describe your shop out loud and TalkShop turns it into a clean mobile storefront you can share on WhatsApp, in your bio, or anywhere.</p>'
+  + '<div class="cta-row"><a class="btn btn-accent" href="#/build">Build my site, free</a>'
+  + '<a class="btn sample-link" href="#/">See a sample shop</a></div>'
+  + '<div class="meta-row"><b>Free</b> &nbsp;·&nbsp; <b>No account</b> &nbsp;·&nbsp; Works in any browser &nbsp;·&nbsp; 18 languages</div>'
+  + '</div></div>'
+  + '<div class="ticker"><div class="wrap"><span>BAKERIES</span><span>SALONS</span><span>TAILORS</span><span>REPAIR SHOPS</span><span>BOUTIQUES</span><span>CAFES</span><span>FLORISTS</span><span>CORNER STORES</span></div></div>'
+  + '<div class="sec" id="how"><div class="wrap"><h2>Three steps, about a minute</h2>'
+  + '<p class="lead">If you can describe your shop to a customer, you can put it online. No typing skills required.</p>'
+  + '<div class="steps">'
+  + '<div class="step"><div class="n">01</div><h3>Speak</h3><p>Tap the microphone and talk about your shop: what you sell, your hours, your phone number, where you are. About a minute of talking.</p></div>'
+  + '<div class="step"><div class="n">02</div><h3>Review</h3><p>TalkShop lays everything out for you to check. Fix anything, add prices, then hit publish. It takes seconds.</p></div>'
+  + '<div class="step"><div class="n">03</div><h3>Share</h3><p>Get a link to your storefront. Send it on WhatsApp, put it in your Instagram bio, print it as a QR code for your counter.</p></div>'
+  + '</div></div></div>'
+  + '<div class="sec"><div class="wrap"><h2>Made for shops like yours</h2>'
+  + '<p class="lead">The corner bakery, the tailor down the lane, the phone repair counter, the salon with no website. If customers ask "do you have a website", this is the answer.</p>'
+  + '<div class="chips">'+chips+'</div></div></div>'
+  + '<div class="sec" id="faq"><div class="wrap"><h2>Questions</h2><p class="lead">Straight answers.</p><div class="faq">'
+  + '<details><summary>Is it really free?</summary><div class="a">Yes. You can build and share your storefront free, with no account. Paid extras like custom domains may come later, but the core site stays free.</div></details>'
+  + '<details><summary>Do I need an account or an app?</summary><div class="a">No. Everything runs in your browser. Your site lives at a shareable link, so customers just tap and it opens.</div></details>'
+  + '<details><summary>What if the transcription gets something wrong?</summary><div class="a">You review everything before publishing, and every field is editable. Fix it in seconds, no re-recording needed.</div></details>'
+  + '<details><summary>Which languages work?</summary><div class="a">Voice input supports 18 languages including English, Spanish, Portuguese, French, Hindi, Arabic, Indonesian and Swahili. You can also just type.</div></details>'
+  + '<details><summary>Can customers order from my site?</summary><div class="a">Your site has tap-to-call and WhatsApp buttons, so customers reach you instantly on the apps they already use. Online checkout is on the roadmap.</div></details>'
+  + '<details><summary>Can I change my site later?</summary><div class="a">Yes. Your publish page gives you an edit link that re-opens your details. Change anything and share the new link.</div></details>'
+  + '</div></div></div>'
+  + '<div class="sec"><div class="wrap center"><h2>Your shop, online, in a minute</h2>'
+  + '<p class="lead" style="margin-left:auto;margin-right:auto;">Join the shops that stopped saying "sorry, we don\'t have a website".</p>'
+  + '<a class="btn btn-accent" href="#/build">Build my site, free</a></div></div>'
+  + footer();
+}
+/* ============================== builder ============================== */
+function stageBar(){
+  const s = state.step;
+  return '<div class="stages">'
+    + '<div class="stage'+(s>=1?' on':'')+'">01 · SPEAK</div>'
+    + '<div class="stage'+(s>=2?' on':'')+'">02 · REVIEW</div>'
+    + '<div class="stage'+(s>=3?' on':'')+'">03 · SHARE</div></div>';
+}
+function buildView(){
+  return header()
+  + '<div class="wrap"><div class="builder-head"><h1>Build your storefront</h1>'
+  + '<p>Talk about your shop naturally: its name, what you sell, your hours, your phone number, and where you are.</p></div>'
+  + stageBar()
+  + '<div class="card" id="buildCard">'+ buildStepHtml() +'</div></div>'
+  + footer();
+}
+function buildStepHtml(){
+  if(state.step===1) return stepSpeakHtml();
+  if(state.step===2) return stepReviewHtml();
+  return stepShareHtml();
+}
+function stepSpeakHtml(){
+  const opts = LANGS.map(l=>'<option value="'+l[0]+'"'+(l[0]===state.lang?' selected':'')+'>'+l[1]+'</option>').join("");
+  return '<div class="mic-zone">'
+  + '<button class="mic-btn'+(state.listening?' live':'')+'" id="micBtn" aria-label="Start speaking">'
+  + '<svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/></svg></button>'
+  + '<div class="mic-label" id="micLabel">'+(state.listening?"Listening… tap to stop":"Tap the mic and talk")+'</div>'
+  + '<div class="mic-hint">Try: "My shop is called Sunrise Bakery. We sell sourdough, croissants and birthday cakes. We are open Monday to Saturday 7am to 7pm. Call us on 555 014 2288. Find us at 14 Market Street."</div>'
+  + '<div class="lang-row"><label for="langSel">I\'ll speak in</label><select id="langSel">'+opts+'</select></div>'
+  + '</div>'
+  + '<div id="errBox"></div>'
+  + '<div class="transcript'+(state.transcript?' has':'')+'" id="transcriptBox">'+(state.transcript?esc(state.transcript):"Your words will appear here as you speak.")+'</div>'
+  + '<div class="or-type">No mic? No problem. Type it instead:</div>'
+  + '<textarea class="typebox" id="typeBox" placeholder="Describe your shop here…">'+esc(state.transcript)+'</textarea>'
+  + '<div class="center" style="margin-top:24px;"><button class="btn btn-accent" id="toReview">Continue to review →</button></div>';
+}
+function stepReviewHtml(){
+  const d = state.data;
+  const prodText = d.products.map(p=>p.name + (p.price ? " - " + p.price : "")).join("\n");
+  return '<h2 class="serif" style="font-size:26px;margin-bottom:8px;">Check your details</h2>'
+  + '<p style="color:var(--ink2);margin-bottom:26px;">We filled this in from what you said. Fix anything, then publish.</p>'
+  + '<div class="field"><label>Shop name</label><input type="text" id="f_name" value="'+esc(d.name)+'"></div>'
+  + '<div class="field"><label>One-line description <span class="hint">(optional)</span></label><input type="text" id="f_tagline" value="'+esc(d.tagline)+'"></div>'
+  + '<div class="field"><label>Products or services <span class="hint">(one per line, add prices like "Sourdough - $4.50")</span></label>'
+  + '<textarea id="f_products" style="min-height:130px;">'+esc(prodText)+'</textarea></div>'
+  + '<div class="field"><label>Opening hours</label><textarea id="f_hours">'+esc(d.hours)+'</textarea></div>'
+  + '<div class="grid2"><div class="field"><label>Phone</label><input type="tel" id="f_phone" value="'+esc(d.phone)+'"></div>'
+  + '<div class="field"><label>WhatsApp number <span class="hint">(usually same as phone)</span></label><input type="tel" id="f_whatsapp" value="'+esc(d.whatsapp)+'"></div></div>'
+  + '<div class="field"><label>Address <span class="hint">(optional, used for directions)</span></label><input type="text" id="f_address" value="'+esc(d.address)+'"></div>'
+  + '<div id="errBox"></div>'
+  + '<div class="center" style="margin-top:10px;"><button class="btn" id="backSpeak" style="margin-right:10px;">← Back</button>'
+  + '<button class="btn btn-accent" id="publishBtn">Publish my site</button></div>';
+}
+function stepShareHtml(){
+  const wa = "https://wa.me/?text=" + encodeURIComponent("Visit my shop online: " + state.link);
+  return '<div class="share-panel"><div class="eyebrow">YOUR SHOP IS ONLINE</div>'
+  + '<h2 class="serif" style="font-size:32px;margin-bottom:10px;">'+esc(state.data.name)+'</h2>'
+  + '<p class="note">Share this link anywhere: WhatsApp, Instagram bio, SMS, a QR code on your counter. Anyone who taps it sees your storefront.</p>'
+  + '<div class="share-link"><input type="text" id="shareUrl" readonly value="'+esc(state.link)+'">'
+  + '<button class="btn btn-solid btn-sm" id="copyBtn" style="padding:12px 22px;">Copy link</button></div>'
+  + '<div class="share-btns"><a class="btn btn-accent" id="openSite" href="'+esc(state.link)+'" target="_blank" rel="noopener">Open my site</a>'
+  + '<a class="btn" href="'+wa+'" target="_blank" rel="noopener">Share on WhatsApp</a>'
+  + '<button class="btn" id="editBtn">Edit details</button></div>'
+  + '<p class="note">Tip: print this link as a QR code and stick it on your counter, so every customer can pull up your shop on their phone.</p>'
+  + '</div>';
+}
+function showErr(msg){
+  const b = $("#errBox"); if(!b) return;
+  b.innerHTML = '<div class="err">'+esc(msg)+'</div>';
+}
+function parseProductsText(txt){
+  return String(txt||"").split("\n").map(l=>l.trim()).filter(Boolean).slice(0,30).map(line=>{
+    const pm = line.match(/^(.*?)\s+[-–:]\s+(.+)$/);
+    if(pm && /^[$€£₹\d]/.test(pm[2].trim())) return {name:pm[1].trim(), price:pm[2].trim()};
+    return {name:line, price:""};
+  }).filter(p=>p.name);
+}
+function collectForm(){
+  state.data = {
+    name: $("#f_name").value.trim(),
+    tagline: $("#f_tagline").value.trim(),
+    products: parseProductsText($("#f_products").value),
+    hours: $("#f_hours").value.trim(),
+    phone: $("#f_phone").value.trim(),
+    whatsapp: $("#f_whatsapp").value.trim(),
+    address: $("#f_address").value.trim()
+  };
+}
+function goStep(n){ state.step = n; const c = $("#buildCard"); if(c){ c.innerHTML = buildStepHtml(); wireBuild(); } const st = $(".stages"); if(st) st.outerHTML = stageBar(); window.scrollTo(0,0); }
+/* ---- speech ---- */
+function stopRec(silent){
+  state.listening = false;
+  if(state.rec){ try{ state.rec.onend = null; state.rec.stop(); }catch(e){} state.rec = null; }
+  if(!silent) updateMicUI();
+}
+function updateMicUI(){
+  const b = $("#micBtn"), l = $("#micLabel");
+  if(!b) return;
+  b.classList.toggle("live", state.listening);
+  if(l) l.textContent = state.listening ? "Listening… tap to stop" : (state.transcript ? "Tap to add more" : "Tap the mic and talk");
+}
+function toggleMic(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ showErr("Voice input needs Chrome or Edge (desktop or Android). You can type your description in the box below instead."); return; }
+  if(state.listening){ stopRec(); return; }
+  const rec = new SR();
+  rec.lang = state.lang; rec.continuous = true; rec.interimResults = true;
+  rec.onresult = e => {
+    let interim = "";
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const tr = e.results[i][0].transcript;
+      if(e.results[i].isFinal) state.transcript = (state.transcript ? state.transcript.replace(/\s+$/,"")+" " : "") + tr.trim();
+      else interim += tr;
+    }
+    const box = $("#transcriptBox");
+    if(box){ const full = (state.transcript + " " + interim).trim(); box.textContent = full || "Listening… speak now."; box.classList.add("has"); }
+    const tb = $("#typeBox"); if(tb && document.activeElement !== tb) tb.value = state.transcript;
+  };
+  rec.onerror = e => {
+    if(e.error==="not-allowed" || e.error==="service-not-allowed"){
+      showErr("Microphone is blocked. Allow mic access in your browser, or type your description below instead.");
+      stopRec();
+    }
+  };
+  rec.onend = () => {
+    if(state.listening && Date.now() - state.recStart > 1200){ try{ state.recStart = Date.now(); rec.start(); }catch(e){ stopRec(); } }
+    else if(state.listening){ stopRec(); }
+  };
+  state.rec = rec; state.listening = true; state.recStart = Date.now();
+  try{ rec.start(); }catch(e){ stopRec(); showErr("Could not start voice input. Please type instead."); return; }
+  updateMicUI();
+}
+function wireBuild(){
+  const mic = $("#micBtn"); if(mic) mic.onclick = toggleMic;
+  const lang = $("#langSel"); if(lang) lang.onchange = e => { state.lang = e.target.value; };
+  const tb = $("#typeBox"); if(tb) tb.oninput = e => {
+    state.transcript = e.target.value;
+    const box = $("#transcriptBox");
+    if(box){ box.textContent = state.transcript || "Your words will appear here as you speak."; box.classList.toggle("has", !!state.transcript); }
+  };
+  const toR = $("#toReview");
+  if(toR) toR.onclick = () => {
+    const typed = $("#typeBox"); if(typed && typed.value.trim()) state.transcript = typed.value.trim();
+    if(!state.transcript.trim()){ showErr("Say or type a little about your shop first, even one sentence."); return; }
+    stopRec(true);
+    state.data = parseTranscript(state.transcript);
+    goStep(2);
+  };
+  const back = $("#backSpeak"); if(back) back.onclick = () => { collectForm(); goStep(1); };
+  const pub = $("#publishBtn");
+  if(pub) pub.onclick = () => {
+    collectForm();
+    if(!state.data.name){ showErr("Give your shop a name so customers know whose site this is."); $("#f_name").focus(); return; }
+    const payload = encodeSite(state.data);
+    state.link = location.origin + location.pathname + "#/s/" + payload;
+    goStep(3);
+  };
+  const copy = $("#copyBtn");
+  if(copy) copy.onclick = () => {
+    const inp = $("#shareUrl"); inp.select();
+    const done = () => { copy.textContent = "Copied!"; setTimeout(()=>copy.textContent="Copy link", 1800); };
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(state.link).then(done).catch(()=>{ document.execCommand("copy"); done(); }); }
+    else { document.execCommand("copy"); done(); }
+  };
+  const edit = $("#editBtn"); if(edit) edit.onclick = () => goStep(2);
+}
+/* ============================== published site ============================== */
+function siteView(d){
+  const prods = (d.products||[]).map(p=>'<div class="prod"><div class="pn">'+esc(p.name)+'</div>'+(p.price?'<div class="pp">'+esc(p.price)+'</div>':"")+'</div>').join("");
+  const hoursHtml = esc(d.hours).split(/\n|;\s*/).filter(Boolean).map(h=>'<div class="hours-row"><span>'+h+'</span></div>').join("");
+  const waNum = cleanPhone(d.whatsapp).replace(/^\+/,"");
+  const btns = [];
+  if(d.phone) btns.push('<a class="btn btn-accent" href="tel:'+esc(cleanPhone(d.phone))+'">Call us</a>');
+  if(waNum) btns.push('<a class="btn" href="https://wa.me/'+esc(waNum)+'" target="_blank" rel="noopener">WhatsApp</a>');
+  if(d.address) btns.push('<a class="btn" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.address)+'" target="_blank" rel="noopener">Directions</a>');
+  return '<div class="wrap"><div class="shop-mast"><div class="kicker">NOW OPEN ONLINE</div>'
+  + '<h1>'+esc(d.name)+'</h1>' + (d.tagline?'<p>'+esc(d.tagline)+'</p>':"") + '</div>'
+  + (prods ? '<div class="shop-sec"><h2>What we sell</h2><div class="sub">Ask us about anything you don\'t see here.</div>'+prods+'</div>' : "")
+  + (d.hours ? '<div class="shop-sec"><h2>Opening hours</h2><div class="sub">Come by, we\'d love to see you.</div>'+hoursHtml+'</div>' : "")
+  + ((btns.length||d.address) ? '<div class="shop-sec"><h2>Find us</h2><div class="sub">'+(d.address?esc(d.address):"Get in touch")+'</div><div class="contact-btns">'+btns.join("")+'</div></div>' : "")
+  + '<div class="shop-foot">Made free with <a href="#/">TalkShop</a> · Talk for a minute, get your shop online.</div></div>';
+}
+function notFoundView(){
+  return header() + '<div class="wrap center" style="padding:90px 0;"><h2 class="serif">That link didn\'t open a shop.</h2>'
+  + '<p style="color:var(--ink2);margin:12px 0 26px;">The link may be incomplete. Ask the shop owner to resend it.</p>'
+  + '<a class="btn btn-accent" href="#/build">Make your own shop site</a></div>' + footer();
+}
+/* ============================== router ============================== */
+function router(){
+  stopRec(true);
+  const h = location.hash.replace(/^#\/?/, "");
+  if(h.indexOf("s/")===0){
+    const d = decodeSite(h.slice(2));
+    render(d ? siteView(d) : notFoundView());
+  } else if(h==="build" || h.indexOf("build")===0){
+    render(buildView()); wireBuild();
+  } else {
+    render(homeView());
+  }
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", router);
+router();
+</script>
+</body>
+</html>
