@@ -352,16 +352,26 @@ html[dir="rtl"] body{direction:rtl}
 .loc-list{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
 .loc-row{display:flex;align-items:center;gap:14px;width:100%;padding:14px 18px;background:#fff;border:0;border-bottom:1px solid var(--line);font:inherit;color:var(--ink);cursor:pointer;text-align:left}
 .loc-row:last-child{border-bottom:0}
-.loc-row .fl{font-size:22px;line-height:1}
 .loc-row .tt{flex:1;min-width:0}
 .loc-row .tt b{display:block;font-size:16px;font-weight:600}
 .loc-row .tt small{color:var(--ink2);font-size:13px}
-.loc-row .ck{color:var(--accent);font-weight:800;font-size:18px;visibility:hidden}
+.loc-row .ck{color:var(--accent);font-weight:800;font-size:18px;visibility:hidden;flex:none}
 .loc-row.on .ck{visibility:visible}
 .loc-note{background:var(--amber-soft);border:1px solid var(--line);border-radius:16px;padding:16px 18px;color:var(--ink2);font-size:15px;line-height:1.6}
-.foot-loc{display:inline-flex;align-items:center;gap:6px;color:var(--ink2);text-decoration:none;font-size:14px;margin-top:12px}
-.foot-loc:hover{color:var(--ink)}
+.loc-stick{position:sticky;top:66px;z-index:5;background:var(--paper);padding:12px 0;margin-top:18px}
+.loc-search{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff;font-size:16px;box-sizing:border-box}
+.loc-pills{display:flex;gap:8px;overflow-x:auto;padding:10px 2px 2px;-webkit-overflow-scrolling:touch}
+.loc-pill{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--ink)}
+.loc-pill.mine{background:var(--ink);border-color:var(--ink);color:#fff}
+.loc-region{scroll-margin-top:150px}
+.loc-reghead{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);font-weight:700;padding:22px 2px 8px;position:sticky;top:var(--stick,150px);z-index:4;background:var(--paper)}
+.loc-none{padding:22px 18px;color:var(--ink2);font-size:15px;background:#fff;border:1px solid var(--line);border-radius:16px;margin-top:14px;display:none}
+@media(min-width:900px){.loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;align-items:start}}
+.foot-loc{display:inline-block;color:var(--ink2);text-decoration:none;font-size:14px;margin-top:12px}
+.foot-loc a{color:var(--ink2);text-decoration:none}
+.foot-loc a:hover{color:var(--ink)}
 .shop-loc{display:inline-block;margin-top:10px;color:var(--ink2);font-size:13px;text-decoration:none}
+.shop-loc a{color:var(--ink2);text-decoration:none}
 /* ---- shop themes ---- */
 .shopview{--s-accent:var(--accent);--s-accent-deep:var(--accent-deep);}
 .theme-ocean{--s-accent:#1E5AAF;--s-accent-deep:#123F82;}
@@ -643,7 +653,7 @@ const STR = { en: {
   "locale_lang":"Language",
   "locale_country":"Country or Region",
   "locale_back":"Back",
-  "locale_shopnote":"Prices on this shop are shown in the shop's currency ({flag} {cur}).",
+  "locale_shopnote":"Prices on this shop are shown in the shop's currency ({cur}).",
   "search_ph":"Search items...",
   "cat_all":"All",
   "add":"Add",
@@ -713,10 +723,24 @@ const STR = { en: {
   "f_bank":"Bank account details",
   "f_paypal":"PayPal email or link",
   "f_custompay":"Other payment instruction",
-  "f_theme":"Shop theme"
+  "f_theme":"Shop theme",
+  "loc_search":"Search countries or regions",
+  "loc_none":"No matching countries or regions",
+  "region_sasia":"South Asia",
+  "region_apac":"Asia Pacific",
+  "region_europe":"Europe",
+  "region_mea":"Middle East and Africa",
+  "region_americas":"Americas",
+  "loc_detect_msg":"We've detected you're in {country}.",
+  "loc_use_country":"Use {country}",
+  "loc_choose_another":"Choose another",
+  "loc_shop_msg":"This shop is in {country}. Prices are in {cur}.",
+  "loc_change_lang":"Change language",
+  "loc_foot_choose":"Choose your country or region"
 } };
 let uiLang = "en";
 try{ uiLang = localStorage.getItem("ts_ui") || "en"; }catch(e){}
+try{ const tl = sessionStorage.getItem("ts_lang_tab"); if(tl && STR[tl]) uiLang = tl; }catch(e){}
 function t(k){
   const d = STR[uiLang] || {};
   if(d[k] != null) return d[k];
@@ -955,7 +979,7 @@ STR.ml = {
   "locale_lang":"ഭാഷ",
   "locale_country":"രാജ്യം അല്ലെങ്കിൽ പ്രദേശം",
   "locale_back":"തിരികെ",
-  "locale_shopnote":"ഈ കടയിലെ വിലകൾ കടയുടെ കറൻസിയിൽ ({flag} {cur}) ആണ് കാണിക്കുന്നത്.",
+  "locale_shopnote":"ഈ കടയിലെ വിലകൾ കടയുടെ കറൻസിയിൽ ({cur}) ആണ് കാണിക്കുന്നത്.",
   "search_ph":"സാധനങ്ങൾ തിരയൂ...",
   "cat_all":"എല്ലാം",
   "add":"ചേർക്കൂ",
@@ -1025,7 +1049,20 @@ STR.ml = {
   "f_bank":"ബാങ്ക് അക്കൗണ്ട് വിവരങ്ങൾ",
   "f_paypal":"PayPal ഇമെയിൽ അല്ലെങ്കിൽ ലിങ്ക്",
   "f_custompay":"മറ്റ് പേയ്മെന്റ് നിർദ്ദേശം",
-  "f_theme":"കടയുടെ തീം"
+  "f_theme":"കടയുടെ തീം",
+  "loc_search":"രാജ്യങ്ങളോ പ്രദേശങ്ങളോ തിരയുക",
+  "loc_none":"യോജിക്കുന്ന രാജ്യങ്ങളോ പ്രദേശങ്ങളോ ഇല്ല",
+  "region_sasia":"ദക്ഷിണേഷ്യ",
+  "region_apac":"ഏഷ്യാ പസഫിക്",
+  "region_europe":"യൂറോപ്പ്",
+  "region_mea":"മധ്യപൗരസ്ത്യവും ആഫ്രിക്കയും",
+  "region_americas":"അമേരിക്കകൾ",
+  "loc_detect_msg":"നിങ്ങൾ {country} ലാണ് എന്ന് ഞങ്ങൾ കണ്ടെത്തി.",
+  "loc_use_country":"{country} ഉപയോഗിക്കുക",
+  "loc_choose_another":"മറ്റൊന്ന് തിരഞ്ഞെടുക്കുക",
+  "loc_shop_msg":"ഈ കട {country} ലാണ്. വിലകൾ {cur} ൽ ആണ്.",
+  "loc_change_lang":"ഭാഷ മാറ്റുക",
+  "loc_foot_choose":"നിങ്ങളുടെ രാജ്യമോ പ്രദേശമോ തിരഞ്ഞെടുക്കുക"
 };
 STR.hi = {
   "meta_title":"TalkShop: अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।",
@@ -1259,7 +1296,7 @@ STR.hi = {
   "locale_lang":"भाषा",
   "locale_country":"देश या क्षेत्र",
   "locale_back":"वापस",
-  "locale_shopnote":"इस दुकान की कीमतें दुकान की मुद्रा ({flag} {cur}) में दिखाई जाती हैं।",
+  "locale_shopnote":"इस दुकान की कीमतें दुकान की मुद्रा ({cur}) में दिखाई जाती हैं।",
   "search_ph":"आइटम खोजें...",
   "cat_all":"सभी",
   "add":"जोड़ें",
@@ -1329,7 +1366,20 @@ STR.hi = {
   "f_bank":"बैंक खाते का विवरण",
   "f_paypal":"PayPal ईमेल या लिंक",
   "f_custompay":"भुगतान का अन्य निर्देश",
-  "f_theme":"दुकान की थीम"
+  "f_theme":"दुकान की थीम",
+  "loc_search":"देश या क्षेत्र खोजें",
+  "loc_none":"कोई मिलता-जुलता देश या क्षेत्र नहीं",
+  "region_sasia":"दक्षिण एशिया",
+  "region_apac":"एशिया प्रशांत",
+  "region_europe":"यूरोप",
+  "region_mea":"मध्य पूर्व और अफ़्रीका",
+  "region_americas":"अमेरिका",
+  "loc_detect_msg":"हमें पता चला है कि आप {country} में हैं।",
+  "loc_use_country":"{country} चुनें",
+  "loc_choose_another":"कोई और चुनें",
+  "loc_shop_msg":"यह दुकान {country} में है। कीमतें {cur} में हैं।",
+  "loc_change_lang":"भाषा बदलें",
+  "loc_foot_choose":"अपना देश या क्षेत्र चुनें"
 };
 STR.ta = {
   "meta_title":"TalkShop: உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.",
@@ -1563,7 +1613,7 @@ STR.ta = {
   "locale_lang":"மொழி",
   "locale_country":"நாடு அல்லது பகுதி",
   "locale_back":"பின் செல்",
-  "locale_shopnote":"இந்தக் கடையின் விலைகள் கடையின் நாணயத்தில் ({flag} {cur}) காட்டப்படும்.",
+  "locale_shopnote":"இந்தக் கடையின் விலைகள் கடையின் நாணயத்தில் ({cur}) காட்டப்படும்.",
   "search_ph":"பொருட்களைத் தேடுக...",
   "cat_all":"அனைத்தும்",
   "add":"சேர்",
@@ -1633,7 +1683,20 @@ STR.ta = {
   "f_bank":"வங்கி கணக்கு விவரங்கள்",
   "f_paypal":"PayPal மின்னஞ்சல் அல்லது இணைப்பு",
   "f_custompay":"மற்ற பணம் செலுத்தும் அறிவுறுத்தல்",
-  "f_theme":"கடை தோற்றம்"
+  "f_theme":"கடை தோற்றம்",
+  "loc_search":"நாடுகள் அல்லது பகுதிகளைத் தேடு",
+  "loc_none":"பொருந்தும் நாடுகள் அல்லது பகுதிகள் இல்லை",
+  "region_sasia":"தெற்காசியா",
+  "region_apac":"ஆசியா பசிபிக்",
+  "region_europe":"ஐரோப்பா",
+  "region_mea":"மத்திய கிழக்கு மற்றும் ஆப்பிரிக்கா",
+  "region_americas":"அமெரிக்காக்கள்",
+  "loc_detect_msg":"நீங்கள் {country} இல் இருப்பதைக் கண்டறிந்தோம்.",
+  "loc_use_country":"{country} ஐப் பயன்படுத்து",
+  "loc_choose_another":"வேறொன்றைத் தேர்வு செய்",
+  "loc_shop_msg":"இந்தக் கடை {country} இல் உள்ளது. விலைகள் {cur} இல் உள்ளன.",
+  "loc_change_lang":"மொழியை மாற்று",
+  "loc_foot_choose":"உங்கள் நாடு அல்லது பகுதியைத் தேர்வு செய்க"
 };
 STR.es = {
   "meta_title":"TalkShop: Describe tu tienda. Ponla en línea.",
@@ -1868,7 +1931,7 @@ STR.es = {
   "locale_lang":"Idioma",
   "locale_country":"País o región",
   "locale_back":"Atrás",
-  "locale_shopnote":"Los precios de esta tienda se muestran en la moneda de la tienda ({flag} {cur}).",
+  "locale_shopnote":"Los precios de esta tienda se muestran en la moneda de la tienda ({cur}).",
   "search_ph":"Buscar productos...",
   "cat_all":"Todo",
   "add":"Añadir",
@@ -1938,7 +2001,20 @@ STR.es = {
   "f_bank":"Datos de la cuenta bancaria",
   "f_paypal":"Email o enlace de PayPal",
   "f_custompay":"Otra instrucción de pago",
-  "f_theme":"Tema de la tienda"
+  "f_theme":"Tema de la tienda",
+  "loc_search":"Buscar países o regiones",
+  "loc_none":"Sin países o regiones coincidentes",
+  "region_sasia":"Asia del Sur",
+  "region_apac":"Asia Pacífico",
+  "region_europe":"Europa",
+  "region_mea":"Oriente Medio y África",
+  "region_americas":"Américas",
+  "loc_detect_msg":"Hemos detectado que estás en {country}.",
+  "loc_use_country":"Usar {country}",
+  "loc_choose_another":"Elegir otro",
+  "loc_shop_msg":"Esta tienda está en {country}. Los precios están en {cur}.",
+  "loc_change_lang":"Cambiar idioma",
+  "loc_foot_choose":"Elige tu país o región"
 };
 
 
@@ -1972,10 +2048,40 @@ const COUNTRY = {
   NZ:{lang:null, cur:"NZD", name:"New Zealand"}
 };
 const FX_FALLBACK = { USD:1, CNY:7.15, INR:88.6, GBP:0.79, EUR:0.92, CAD:1.38, AUD:1.52, SGD:1.29, AED:3.67, BRL:5.45, MXN:18.6, JPY:155, KRW:1380, ARS:1340, CLP:950, COP:4400, PEN:3.75, IDR:16200, MYR:4.45, PHP:58.5, THB:33.5, VND:25400, BDT:120, PKR:278, LKR:300, NPR:140, ZAR:17.8, NGN:1550, KES:129, EGP:48.5, SAR:3.75, ILS:3.7, TRY:34, RUB:95, SEK:10.5, NOK:10.8, CHF:0.88, NZD:1.65 };
+/* ---- locale: region grouping, endonyms, per-country number formatting ---- */
+const REGION_OF = {
+  IN:"sasia", BD:"sasia", PK:"sasia", LK:"sasia", NP:"sasia",
+  CN:"apac", JP:"apac", KR:"apac", ID:"apac", MY:"apac", PH:"apac", TH:"apac", VN:"apac", SG:"apac", AU:"apac", NZ:"apac",
+  GB:"europe", ES:"europe", PT:"europe", FR:"europe", DE:"europe", IT:"europe", NL:"europe", SE:"europe", NO:"europe", CH:"europe", RU:"europe", TR:"europe",
+  AE:"mea", SA:"mea", IL:"mea", EG:"mea", NG:"mea", KE:"mea", ZA:"mea",
+  US:"americas", CA:"americas", MX:"americas", BR:"americas", AR:"americas", CL:"americas", CO:"americas", PE:"americas"
+};
+const REGION_KEYS = ["sasia","apac","europe","mea","americas"];
+const REGION_KEY = { sasia:"region_sasia", apac:"region_apac", europe:"region_europe", mea:"region_mea", americas:"region_americas" };
+// Country name in its own script (endonym)
+const CC_ENDO = { IN:"भारत", CN:"中国", US:"United States", GB:"United Kingdom", CA:"Canada", AU:"Australia", SG:"Singapore", AE:"الإمارات", BR:"Brasil", PT:"Portugal", ES:"España", MX:"México", AR:"Argentina", CL:"Chile", CO:"Colombia", PE:"Perú", FR:"France", DE:"Deutschland", IT:"Italia", NL:"Nederland", JP:"日本", KR:"대한민국", ID:"Indonesia", MY:"Malaysia", PH:"Pilipinas", TH:"ประเทศไทย", VN:"Việt Nam", BD:"বাংলাদেশ", PK:"پاکستان", LK:"ශ්‍රී ලංකාව", NP:"नेपाल", ZA:"South Africa", NG:"Nigeria", KE:"Kenya", EG:"مصر", SA:"السعودية", IL:"ישראל", TR:"Türkiye", RU:"Россия", SE:"Sverige", NO:"Norge", CH:"Schweiz", NZ:"New Zealand" };
+// Country names in the UI languages (fallback: English name from COUNTRY)
+const CC_I18N = {
+  es:{IN:"India",CN:"China",US:"Estados Unidos",GB:"Reino Unido",CA:"Canadá",AU:"Australia",SG:"Singapur",AE:"Emiratos Árabes Unidos",BR:"Brasil",PT:"Portugal",ES:"España",MX:"México",AR:"Argentina",CL:"Chile",CO:"Colombia",PE:"Perú",FR:"Francia",DE:"Alemania",IT:"Italia",NL:"Países Bajos",JP:"Japón",KR:"Corea del Sur",ID:"Indonesia",MY:"Malasia",PH:"Filipinas",TH:"Tailandia",VN:"Vietnam",BD:"Bangladés",PK:"Pakistán",LK:"Sri Lanka",NP:"Nepal",ZA:"Sudáfrica",NG:"Nigeria",KE:"Kenia",EG:"Egipto",SA:"Arabia Saudita",IL:"Israel",TR:"Turquía",RU:"Rusia",SE:"Suecia",NO:"Noruega",CH:"Suiza",NZ:"Nueva Zelanda"},
+  hi:{IN:"भारत",CN:"चीन",US:"संयुक्त राज्य अमेरिका",GB:"यूनाइटेड किंगडम",CA:"कनाडा",AU:"ऑस्ट्रेलिया",SG:"सिंगापुर",AE:"संयुक्त अरब अमीरात",BR:"ब्राज़ील",PT:"पुर्तगाल",ES:"स्पेन",MX:"मेक्सिको",AR:"अर्जेंटीना",CL:"चिली",CO:"कोलंबिया",PE:"पेरू",FR:"फ़्रांस",DE:"जर्मनी",IT:"इटली",NL:"नीदरलैंड",JP:"जापान",KR:"दक्षिण कोरिया",ID:"इंडोनेशिया",MY:"मलेशिया",PH:"फ़िलीपींस",TH:"थाईलैंड",VN:"वियतनाम",BD:"बांग्लादेश",PK:"पाकिस्तान",LK:"श्रीलंका",NP:"नेपाल",ZA:"दक्षिण अफ़्रीका",NG:"नाइजीरिया",KE:"केन्या",EG:"मिस्र",SA:"सऊदी अरब",IL:"इज़राइल",TR:"तुर्की",RU:"रूस",SE:"स्वीडन",NO:"नॉर्वे",CH:"स्विट्ज़रलैंड",NZ:"न्यूज़ीलैंड"},
+  ta:{IN:"இந்தியா",CN:"சீனா",US:"ஐக்கிய அமெரிக்க நாடுகள்",GB:"ஐக்கிய இராச்சியம்",CA:"கனடா",AU:"ஆஸ்திரேலியா",SG:"சிங்கப்பூர்",AE:"ஐக்கிய அரபு அமீரகம்",BR:"பிரேசில்",PT:"போர்த்துக்கல்",ES:"ஸ்பெயின்",MX:"மெக்சிகோ",AR:"அர்ஜென்டினா",CL:"சிலி",CO:"கொலம்பியா",PE:"பெரு",FR:"பிரான்ஸ்",DE:"ஜெர்மனி",IT:"இத்தாலி",NL:"நெதர்லாந்து",JP:"ஜப்பான்",KR:"தென் கொரியா",ID:"இந்தோனேசியா",MY:"மலேசியா",PH:"பிலிப்பைன்ஸ்",TH:"தாய்லாந்து",VN:"வியட்நாம்",BD:"வங்காளதேசம்",PK:"பாகிஸ்தான்",LK:"இலங்கை",NP:"நேபாளம்",ZA:"தென் ஆப்பிரிக்கா",NG:"நைஜீரியா",KE:"கென்யா",EG:"எகிப்து",SA:"சவூதி அரேபியா",IL:"இஸ்ரேல்",TR:"துருக்கி",RU:"ரஷ்யா",SE:"சுவீடன்",NO:"நார்வே",CH:"சுவிட்சர்லாந்து",NZ:"நியூசிலாந்து"},
+  ml:{IN:"ഇന്ത്യ",CN:"ചൈന",US:"അമേരിക്കൻ ഐക്യനാടുകൾ",GB:"യുണൈറ്റഡ് കിംഗ്ഡം",CA:"കാനഡ",AU:"ഓസ്ട്രേലിയ",SG:"സിംഗപ്പൂർ",AE:"യുണൈറ്റഡ് അറബ് എമിറേറ്റ്സ്",BR:"ബ്രസീൽ",PT:"പോർച്ചുഗൽ",ES:"സ്പെയിൻ",MX:"മെക്സിക്കോ",AR:"അർജന്റീന",CL:"ചിലി",CO:"കൊളംബിയ",PE:"പെറു",FR:"ഫ്രാൻസ്",DE:"ജർമനി",IT:"ഇറ്റലി",NL:"നെതർലാൻഡ്സ്",JP:"ജപ്പാൻ",KR:"ദക്ഷിണ കൊറിയ",ID:"ഇന്തോനേഷ്യ",MY:"മലേഷ്യ",PH:"ഫിലിപ്പീൻസ്",TH:"തായ്ലൻഡ്",VN:"വിയറ്റ്നാം",BD:"ബംഗ്ലാദേശ്",PK:"പാകിസ്ഥാൻ",LK:"ശ്രീലങ്ക",NP:"നേപ്പാൾ",ZA:"ദക്ഷിണാഫ്രിക്ക",NG:"നൈജീരിയ",KE:"കെനിയ",EG:"ഈജിപ്ത്",SA:"സൗദി അറേബ്യ",IL:"ഇസ്രായേൽ",TR:"തുർക്കി",RU:"റഷ്യ",SE:"സ്വീഡൻ",NO:"നോർവേ",CH:"സ്വിറ്റ്സർലാൻഡ്",NZ:"ന്യൂസിലാൻഡ്"}
+};
+function countryName(cc){
+  const cfg = COUNTRY[cc]; if(!cfg) return "";
+  const m = CC_I18N[uiLang];
+  if(m && m[cc]) return m[cc];
+  return cfg.name;
+}
+// Number/currency formatting conventions per country, so a storefront formats
+// prices the shop's way (e.g. lakh grouping for INR) even when the viewer
+// picked a different UI language.
+const CC_LOCALE = { IN:"en-IN", CN:"zh-CN", US:"en-US", GB:"en-GB", CA:"en-CA", AU:"en-AU", SG:"en-SG", AE:"ar-AE", BR:"pt-BR", PT:"pt-PT", ES:"es-ES", MX:"es-MX", AR:"es-AR", CL:"es-CL", CO:"es-CO", PE:"es-PE", FR:"fr-FR", DE:"de-DE", IT:"it-IT", NL:"nl-NL", JP:"ja-JP", KR:"ko-KR", ID:"id-ID", MY:"ms-MY", PH:"fil-PH", TH:"th-TH", VN:"vi-VN", BD:"bn-BD", PK:"ur-PK", LK:"si-LK", NP:"ne-NP", ZA:"en-ZA", NG:"en-NG", KE:"en-KE", EG:"ar-EG", SA:"ar-SA", IL:"he-IL", TR:"tr-TR", RU:"ru-RU", SE:"sv-SE", NO:"nb-NO", CH:"de-CH", NZ:"en-NZ" };
 let fxCur = "USD", fxRate = 1;
 try{ const s = JSON.parse(localStorage.getItem("ts_fx") || "null"); if(s && s.cur){ fxCur = s.cur; fxRate = s.rate || FX_FALLBACK[s.cur] || 1; } }catch(e){}
 function fmt(usd){
-  try{ return new Intl.NumberFormat(LOCALE_TAG[uiLang] || "en", { style:"currency", currency: fxCur }).format(usd * fxRate); }
+  const locTag = (state.cc && CC_LOCALE[state.cc]) ? CC_LOCALE[state.cc] : (LOCALE_TAG[uiLang] || "en");
+  try{ return new Intl.NumberFormat(locTag, { style:"currency", currency: fxCur }).format(usd * fxRate); }
   catch(e){ return fxCur + " " + (usd * fxRate).toFixed(2); }
 }
 async function setCurrency(cur, save){
@@ -1987,9 +2093,6 @@ async function setCurrency(cur, save){
     fxRate = (j.rates && j.rates[cur]) ? j.rates[cur] : (FX_FALLBACK[cur] || 1);
   }catch(e){ fxRate = FX_FALLBACK[cur] || 1; }
   if(save){ try{ localStorage.setItem("ts_fx", JSON.stringify({ cur: fxCur, rate: fxRate })); }catch(e){} }
-}
-function flag(cc){
-  return String(cc || "").toUpperCase().replace(/./g, c => String.fromCodePoint(127397 + c.charCodeAt(0)));
 }
 /* ---- country detection: IP geolocation only (country-level, no precise
    location). Deliberately NOT cached in localStorage: VPN/proxy changes take
@@ -2033,10 +2136,11 @@ function applyLangHead(){
 function persistLocale(){
   try{ localStorage.setItem("ts_locale", JSON.stringify({ lang:uiLang, cur:fxCur, cc:state.cc||null, dismissed:true })); }catch(e){}
 }
-function setLang(l, silent){
+function setLang(l, silent, tabOnly){
   if(!STR[l]) l = "en";
   uiLang = l;
-  try{ localStorage.setItem("ts_ui", l); }catch(e){}
+  if(tabOnly){ try{ sessionStorage.setItem("ts_lang_tab", l); }catch(e){} }
+  else { try{ localStorage.setItem("ts_ui", l); }catch(e){} }
   let cur = fxCur, cc = null, dismissed = false;
   try{ const s = JSON.parse(localStorage.getItem("ts_locale")||"null"); if(s){ cur = s.cur||cur; cc = s.cc||null; dismissed = !!s.dismissed; } }catch(e){}
   if(state.cc) cc = state.cc;
@@ -2052,44 +2156,42 @@ function mountLocBanner(el){
   document.body.insertBefore(el, document.body.firstChild);
   return ()=>{ el.remove(); };
 }
-function showLangBanner(langCode){
-  if(document.getElementById("locBanner")) return;
+let _detBannerDismissed = false;   // in-memory only: dismissal never persists
+let _shopInfoShown = false;
+function showDetectBanner(cc, cfg){
+  // Builder/landing first load: suggest-only, never forces anything.
+  if(document.getElementById("locBanner") || _detBannerDismissed) return;
+  const nm = countryName(cc);
   const el = document.createElement("div");
   el.id = "locBanner"; el.className = "loc-banner";
   el.innerHTML = '<button class="loc-x" aria-label="'+t("close")+'">&times;</button>'
-    + '<div class="loc-msg">'+t("loc_lang_only").replace("{lang}", LANG_NAMES[langCode])+'</div>'
-    + '<div class="loc-btns"><button class="btn btn-sm btn-solid" id="locYes">'+t("loc_switch")+'</button>'
-    + '<button class="btn btn-sm" id="locNo">'+t("loc_keep").replace("{lang}", LANG_NAMES[uiLang]||"English")+'</button></div>';
+    + '<div class="loc-msg">'+t("loc_detect_msg").replace("{country}", nm)+'</div>'
+    + '<div class="loc-btns"><button class="btn btn-sm btn-solid" id="locYes">'+t("loc_use_country").replace("{country}", nm)+'</button>'
+    + '<button class="btn btn-sm" id="locOther">'+t("loc_choose_another")+'</button></div>';
   const bye = mountLocBanner(el);
-  document.getElementById("locYes").onclick = ()=>{ setLang(langCode); persistLocale(); bye(); };
-  document.getElementById("locNo").onclick = bye;
-  el.querySelector(".loc-x").onclick = bye;
-}
-function showLocaleBanner(cc, cfg, suggestLang){
-  if(document.getElementById("locBanner")) return;
-  const el = document.createElement("div");
-  el.id = "locBanner"; el.className = "loc-banner";
-  const langName = suggestLang ? LANG_NAMES[suggestLang] : null;
-  let msg = t("loc_visit").replace("{country}", flag(cc)+" "+cfg.name) + " ";
-  if(langName && cfg.cur !== fxCur) msg += t("loc_suggest").replace("{lang}", langName).replace("{cur}", cfg.cur);
-  else if(langName) msg += t("loc_lang_only").replace("{lang}", langName);
-  else msg += t("loc_cur_only").replace("{cur}", cfg.cur);
-  if(cfg.more) msg += " " + t("loc_india_more");
-  el.innerHTML = '<button class="loc-x" aria-label="'+t("close")+'">&times;</button>'
-    + '<div class="loc-msg">'+msg+'</div>'
-    + '<div class="loc-btns"><button class="btn btn-sm btn-solid" id="locYes">'+t("loc_switch")+'</button>'
-    + '<button class="btn btn-sm" id="locNo">'+t("loc_keep").replace("{lang}", LANG_NAMES[uiLang]||"English")+'</button></div>';
-  const bye = mountLocBanner(el);
+  const dismiss = ()=>{ _detBannerDismissed = true; bye(); };
   document.getElementById("locYes").onclick = async ()=>{
-    if(suggestLang) setLang(suggestLang, true);
-    await setCurrency(cfg.cur);
     state.cc = cc;
+    await setCurrency(cfg.cur);
     persistLocale();
-    bye(); router();
+    dismiss(); router();
   };
-  const no = ()=>{ persistLocale(); bye(); };
-  document.getElementById("locNo").onclick = no;
-  el.querySelector(".loc-x").onclick = no;
+  document.getElementById("locOther").onclick = ()=>{ dismiss(); goLocale(); location.hash = "#/locale"; };
+  el.querySelector(".loc-x").onclick = dismiss;
+}
+function showShopInfoBanner(shopCC, cfg){
+  // Storefront: country is hard-locked to the shop, so this is information
+  // only, plus a language escape hatch. Never offers a region switch.
+  if(document.getElementById("locBanner") || _shopInfoShown) return;
+  _shopInfoShown = true;
+  const el = document.createElement("div");
+  el.id = "locBanner"; el.className = "loc-banner";
+  el.innerHTML = '<button class="loc-x" aria-label="'+t("close")+'">&times;</button>'
+    + '<div class="loc-msg">'+t("loc_shop_msg").replace("{country}", countryName(shopCC)).replace("{cur}", cfg.cur)+'</div>'
+    + '<div class="loc-btns"><button class="btn btn-sm btn-solid" id="locLang">'+t("loc_change_lang")+'</button></div>';
+  const bye = mountLocBanner(el);
+  document.getElementById("locLang").onclick = ()=>{ goLocale(); location.hash = "#/locale"; };
+  el.querySelector(".loc-x").onclick = ()=>{ _detBannerDismissed = true; bye(); };
 }
 async function initLocale(){
   if(state.isShop){ applyLangHead(); return; }
@@ -2103,11 +2205,19 @@ async function initLocale(){
     return;
   }
   const cc = await ipCountry();
-  const cfg = cc && COUNTRY[cc];
-  if(!cfg) return;
-  const sl = suggestLangFor(cc);
-  if(!sl && cfg.cur === fxCur) return;
-  showLocaleBanner(cc, cfg, sl);
+  if(!cc || cc === state.cc) return;
+  showDetectBanner(cc, COUNTRY[cc]);
+}
+async function maybeShopInfoBanner(d){
+  // Information-only banner on storefronts, shown when the detected region
+  // differs from the shop's baked-in country. Fail silent on lookup failure.
+  if(_shopInfoShown || document.getElementById("locBanner")) return;
+  const loc = (d && d.loc) || {};
+  const shopCC = (loc.cc && COUNTRY[loc.cc]) ? loc.cc : null;
+  if(!shopCC) return;
+  const cc = await ipCountry();
+  if(!cc || cc === shopCC) return;
+  showShopInfoBanner(shopCC, COUNTRY[shopCC]);
 }
 /* ============================== sample */
 const SAMPLE = {
@@ -2190,7 +2300,7 @@ function footer(){
     + '<div><h5>'+t("foot_help")+'</h5><a href="#faq">'+t("foot_faq")+'</a><a href="#/build" onclick="freshBuild()">'+t("foot_update")+'</a></div>'
     + '<div><h5>'+t("foot_legal")+'</h5><a href="#/privacy">'+t("foot_privacy")+'</a><a href="#/terms">'+t("foot_terms")+'</a></div>'
     + '</div><div class="foot-bottom"><div>'+t("foot_rights")+'</div><div>'+t("foot_note")+'</div></div>'
-    + '<a class="foot-loc" href="#/locale" onclick="goLocale()">&#127760; '+footLocLabel()+'</a></div></footer>';
+    + footLocHTML() + '</div></footer>';
 }
 function render(html){ $("#view").innerHTML = html; wireSampleLinks(); }
 function wireSampleLinks(){
@@ -3076,6 +3186,7 @@ function initShop(d, payload){
 /* ============================== published site ============================== */
 function siteView(d, payload){
   const waNum = cleanPhone(d.whatsapp||"").replace(/^\+/,"");
+  const shopFootCC = (d.loc && d.loc.cc && COUNTRY[d.loc.cc]) ? d.loc.cc : null;
   const theme=(d.theme&&THEMES[d.theme])?d.theme:"forest";
   const ost=openStatus(d.hrs);
   let openBadge="";
@@ -3110,7 +3221,9 @@ function siteView(d, payload){
   + prodsSec + hoursSec
   + ((btns.length||d.address) ? '<div class="shop-sec"><h2>'+t("sv_find")+'</h2><div class="sub">'+(d.address?esc(d.address):t("sv_find_sub"))+'</div><div class="contact-btns">'+btns.join("")+'</div></div>' : "")
   + '<div class="shop-foot">'+t("made_with_a")+' <a href="#/">TalkShop</a> · '+t("made_with_b")+'.'
-  + '<br><a class="shop-loc" href="#/locale" onclick="goLocale()">&#127760; '+(LANG_NAMES[uiLang]||"English")+'</a>'
+  + '<br><span class="shop-loc"><a href="#/locale" onclick="goLocale()">'+(LANG_NAMES[uiLang]||"English")+'</a>'
+  + (shopFootCC ? ' &middot; <a href="#/locale" onclick="goLocale()">'+countryName(shopFootCC)+'. '+t("loc_foot_choose")+'</a>' : "")
+  + '</span>'
   + (payload ? '<br><a class="update-link" href="#/edit/'+payload+'">'+t("update_link")+'</a>' : "")
   + '</div></div>'
   + '<div id="cartBarWrap"></div><div id="drawerWrap" class="drawer-wrap hidden"></div>';
@@ -3146,9 +3259,16 @@ function termsView(){
 /* ============================== locale chooser ============================== */
 function goLocale(){ try{ sessionStorage.setItem("ts_loc_back", location.hash); }catch(e){} }
 function footLocLabel(){
-  const lang = LANG_NAMES[uiLang] || "English";
-  const cc = (state.cc && COUNTRY[state.cc]) ? " \u00b7 " + COUNTRY[state.cc].name : "";
-  return lang + cc;
+  return {
+    lang: LANG_NAMES[uiLang] || "English",
+    country: (state.cc && COUNTRY[state.cc]) ? countryName(state.cc) : ""
+  };
+}
+function footLocHTML(){
+  const fl = footLocLabel();
+  const choose = '<a href="#/locale" onclick="goLocale()">'+t("loc_foot_choose")+'</a>';
+  return '<div class="foot-loc"><a href="#/locale" onclick="goLocale()">'+fl.lang+'</a>'
+    + ' &middot; ' + (fl.country ? '<a href="#/locale" onclick="goLocale()">'+fl.country+'.</a> ' : "") + choose + '</div>';
 }
 function localeBack(){
   let b = "#/";
@@ -3157,6 +3277,15 @@ function localeBack(){
   return b;
 }
 const LANG_ENGLISH_NAMES = { en:"English", es:"Spanish", hi:"Hindi", ta:"Tamil", ml:"Malayalam" };
+function locRowHTML(cc){
+  const cfg = COUNTRY[cc];
+  const endo = CC_ENDO[cc] || cfg.name;
+  const unm = countryName(cc);
+  const same = endo.toLowerCase() === unm.toLowerCase();
+  const title = same ? unm : endo;
+  const sub = (same ? "" : unm + " \u00b7 ") + cfg.cur;
+  return '<button class="loc-row'+(cc===state.cc?' on':'')+'" data-cc="'+cc+'"><span class="tt"><b dir="auto">'+esc(title)+'</b><small dir="auto">'+esc(sub)+'</small></span><span class="ck">\u2713</span></button>';
+}
 function localeView(){
   const back = localeBack();
   const isShop = back.replace(/^#\/?/,"").indexOf("s/")===0;
@@ -3168,23 +3297,36 @@ function localeView(){
     let scc = null;
     try{ const d = decodeSite(back.replace(/^#\/?/,"").slice(2)); if(d && d.loc && d.loc.cc && COUNTRY[d.loc.cc]) scc = d.loc.cc; }catch(e){}
     const cur = scc ? COUNTRY[scc].cur : fxCur;
-    const fl = scc ? flag(scc) : "";
     ccBlock = '<div class="loc-sec">'+t("locale_country")+'</div><div class="loc-note">'
-      + t("locale_shopnote").replace("{flag}", fl).replace("{cur}", cur) + '</div>';
+      + t("locale_shopnote").replace("{cur}", cur) + '</div>';
   } else {
-    const codes = Object.keys(COUNTRY).sort((a,b)=>COUNTRY[a].name.localeCompare(COUNTRY[b].name));
-    ccBlock = '<div class="loc-sec">'+t("locale_country")+'</div><div class="loc-list">'
-      + codes.map(c=>'<button class="loc-row'+(c===state.cc?' on':'')+'" data-cc="'+c+'"><span class="fl">'+flag(c)+'</span><span class="tt"><b>'+COUNTRY[c].name+'</b><small>'+COUNTRY[c].cur+'</small></span><span class="ck">\u2713</span></button>').join("")
-      + '</div>';
+    const mine = (state.cc && REGION_OF[state.cc]) ? REGION_OF[state.cc] : null;
+    const pills = REGION_KEYS.map(r=>
+      '<button class="loc-pill'+(r===mine?' mine':'')+'" data-jump="'+r+'">'+t(REGION_KEY[r])+'</button>'
+    ).join("");
+    const sections = REGION_KEYS.map(r=>{
+      const codes = Object.keys(COUNTRY).filter(c=>REGION_OF[c]===r)
+        .sort((a,b)=>countryName(a).localeCompare(countryName(b), LOCALE_TAG[uiLang]||"en"));
+      return '<section class="loc-region" id="locR-'+r+'"><div class="loc-reghead">'+t(REGION_KEY[r])+'</div>'
+        + '<div class="loc-list">'+codes.map(locRowHTML).join("")+'</div></section>';
+    }).join("");
+    ccBlock = '<div class="loc-stick" id="locStick">'
+      + '<input class="loc-search" id="locSearch" type="search" autocomplete="off" placeholder="'+t("loc_search")+'" aria-label="'+t("loc_search")+'">'
+      + '<div class="loc-pills">'+pills+'</div></div>'
+      + '<div class="loc-grid" id="locRegions">'+sections+'</div>'
+      + '<div class="loc-none" id="locNone">'+t("loc_none")+'</div>';
   }
   return header()
-    + '<div class="wrap" style="padding:40px 22px 90px;max-width:720px;">'
+    + '<div class="wrap" id="locWrap" style="padding:40px 22px 90px;max-width:720px;">'
     + '<a class="loc-back" href="'+back+'">\u2039 '+t("locale_back")+'</a>'
     + '<h1 class="serif" style="font-size:clamp(30px,5vw,44px);margin:0 0 6px;">'+t("locale_title")+'</h1>'
     + '<p style="color:var(--ink2);font-size:16px;margin:0;">'+t("locale_note")+'</p>'
     + '<div class="loc-sec">'+t("locale_lang")+'</div><div class="loc-list">'+langRows+'</div>'
     + ccBlock
     + '</div>' + footer();
+}
+function foldStr(s){
+  return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 }
 function wireLocale(){
   const back = localeBack();
@@ -3193,12 +3335,57 @@ function wireLocale(){
     b.onclick = ()=>{
       const l = b.getAttribute("data-lang");
       if(backPayload){ try{ sessionStorage.setItem("ts_shop_lang", JSON.stringify({ ref: backPayload, lang: l })); }catch(e){} }
-      setLang(l);
+      // Per-tab only: never the URL, never localStorage.
+      setLang(l, false, true);
     };
   });
   document.querySelectorAll('.loc-row[data-cc]').forEach(b=>{
     b.onclick = ()=> pickCountry(b.getAttribute("data-cc"));
   });
+  const stick = document.getElementById("locStick");
+  if(stick){
+    // Keep sticky section headers below the sticky toolbar, and anchor jumps
+    // clear of both.
+    const setStick = ()=>{
+      const stickH = stick.offsetHeight + 66;
+      const wrap = document.getElementById("locWrap");
+      if(wrap){
+        wrap.style.setProperty("--stick", (stickH + 8) + "px");
+        document.querySelectorAll(".loc-region").forEach(s=>{ s.style.scrollMarginTop = (stickH + 12) + "px"; });
+      }
+    };
+    const inp = document.getElementById("locSearch");
+    const none = document.getElementById("locNone");
+    const filter = ()=>{
+      const q = foldStr(inp.value.trim());
+      let any = false;
+      document.querySelectorAll(".loc-region").forEach(sec=>{
+        let vis = 0;
+        sec.querySelectorAll(".loc-row[data-cc]").forEach(row=>{
+          const cc = row.getAttribute("data-cc");
+          const hay = foldStr((CC_ENDO[cc]||"") + " " + countryName(cc) + " " + COUNTRY[cc].name + " " + COUNTRY[cc].cur + " " + cc);
+          const show = !q || hay.indexOf(q) !== -1;
+          row.style.display = show ? "" : "none";
+          if(show) vis++;
+        });
+        sec.style.display = vis ? "" : "none";
+        if(vis) any = true;
+      });
+      if(none) none.style.display = any ? "none" : "block";
+      setStick();
+    };
+    inp.addEventListener("input", filter);
+    inp.addEventListener("keydown", e=>{ if(e.key === "Escape"){ inp.value = ""; filter(); inp.blur(); } });
+    document.querySelectorAll(".loc-pill").forEach(p=>{
+      p.onclick = ()=>{
+        const r = p.getAttribute("data-jump");
+        const sec = document.getElementById("locR-" + r);
+        if(sec) sec.scrollIntoView({ behavior:"smooth", block:"start" });
+      };
+    });
+    setStick();
+    window.addEventListener("resize", setStick);
+  }
 }
 async function pickCountry(cc){
   const cfg = COUNTRY[cc]; if(!cfg) return;
@@ -3229,6 +3416,7 @@ async function applyShopLocale(d, payload){
   render(siteView(d, payload));
   initShop(d, payload);
   window.scrollTo(0,0);
+  maybeShopInfoBanner(d);
   if(shopCC){
     const cur = COUNTRY[shopCC].cur;
     try{
