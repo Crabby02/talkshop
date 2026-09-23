@@ -9,72 +9,199 @@
 <meta property="og:description" content="Free mobile storefronts for small shops. Describe your shop, share the link anywhere. No account, no cost.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#175E3B">
+<meta property="og:image" content="https://crabby02.github.io/talkshop/assets/shop-bakery.jpg">
 <style>
 :root{
   --paper:#FAFAF6; --paper2:#F3F1EA; --ink:#1B1B18; --ink2:#55534B;
-  --line:#E3E0D4; --accent:#175E3B; --accent-ink:#fff; --warn:#8A5A00;
+  --line:#E3E0D4; --accent:#175E3B; --accent-deep:#0C3D27; --accent-ink:#fff;
+  --amber:#F2B33D; --amber-soft:#FCF3DC; --wa:#1FA855;
+  --shadow-lg:0 30px 60px -20px rgba(27,27,24,.28);
+  --shadow-md:0 16px 34px -14px rgba(27,27,24,.22);
+  --shadow-sm:0 8px 20px -8px rgba(27,27,24,.18);
+  --r:20px;
 }
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-behavior:smooth;}
 body{background:var(--paper); color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;}
+::selection{background:var(--accent); color:#fff;}
 .serif{font-family:"Iowan Old Style",Palatino,"Palatino Linotype",Georgia,"Times New Roman",serif;}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
-.wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+.wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
 a{color:inherit;}
+img{display:block; max-width:100%;}
 /* masthead */
-.mast{border-bottom:1px solid var(--line); background:var(--paper); position:sticky; top:0; z-index:50;}
-.mast-in{display:flex; align-items:center; justify-content:space-between; height:64px;}
-.wordmark{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-weight:700; font-size:22px; letter-spacing:-0.5px; text-decoration:none;}
+.mast{border-bottom:1px solid var(--line); background:rgba(250,250,246,.92); backdrop-filter:blur(10px); position:sticky; top:0; z-index:50;}
+.mast-in{display:flex; align-items:center; justify-content:space-between; height:66px;}
+.wordmark{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-weight:700; font-size:23px; letter-spacing:-0.5px; text-decoration:none;}
 .wordmark span{color:var(--accent);}
 .mast nav{display:flex; gap:28px; align-items:center;}
 .mast nav a.nl{text-decoration:none; font-size:15px; color:var(--ink2);}
 .mast nav a.nl:hover{color:var(--ink);}
 .btn{display:inline-block; text-decoration:none; border:1px solid var(--ink); border-radius:999px;
   padding:12px 26px; font-size:16px; font-weight:600; cursor:pointer; background:transparent; color:var(--ink);
-  transition:transform .12s ease, background .12s ease;}
-.btn:hover{transform:translateY(-1px);}
+  transition:transform .12s ease, background .12s ease, box-shadow .12s ease;}
+.btn:hover{transform:translateY(-1px); box-shadow:var(--shadow-sm);}
 .btn-solid{background:var(--ink); color:var(--paper);}
 .btn-solid:hover{background:#000;}
 .btn-accent{background:var(--accent); border-color:var(--accent); color:#fff;}
-.btn-accent:hover{background:#10482d;}
+.btn-accent:hover{background:var(--accent-deep);}
 .btn-sm{padding:8px 18px; font-size:14px;}
-/* hero */
-.hero{padding:88px 0 64px; border-bottom:1px solid var(--line);}
-.eyebrow{font-family:ui-monospace,Menlo,monospace; font-size:13px; letter-spacing:2px; color:var(--accent); margin-bottom:20px;}
-.hero h1{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(40px,6vw,68px);
-  line-height:1.05; letter-spacing:-1.5px; max-width:16ch; margin-bottom:22px; font-weight:700;}
-.hero p.sub{font-size:20px; color:var(--ink2); max-width:34em; margin-bottom:34px;}
-.cta-row{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:26px;}
+.btn-lg{padding:16px 34px; font-size:18px;}
+/* ============ hero ============ */
+.hero2{position:relative; overflow:hidden; border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(900px 480px at 88% -8%, #F8EAC9 0%, rgba(248,234,201,0) 60%),
+    radial-gradient(760px 520px at -12% 24%, #E2EBDA 0%, rgba(226,235,218,0) 55%),
+    var(--paper);}
+.hero2-in{display:grid; grid-template-columns:1.02fr .98fr; gap:40px; align-items:center; padding:88px 0 100px;}
+.eyebrow{font-family:ui-monospace,Menlo,monospace; font-size:13px; letter-spacing:2.5px; color:var(--accent); margin-bottom:22px; font-weight:700;}
+.hero2 h1{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(46px,6.2vw,82px);
+  line-height:1.02; letter-spacing:-2px; margin-bottom:24px; font-weight:700;}
+.hero2 h1 em{font-style:italic; color:var(--accent);}
+.hero2 p.sub{font-size:20px; color:var(--ink2); max-width:31em; margin-bottom:34px;}
+.cta-row{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:28px;}
 .meta-row{font-family:ui-monospace,Menlo,monospace; font-size:13px; color:var(--ink2); letter-spacing:.5px;}
 .meta-row b{color:var(--ink);}
-/* ticker */
-.ticker{border-bottom:1px solid var(--line); overflow:hidden; white-space:nowrap; padding:12px 0; background:var(--paper2);}
-.ticker span{font-family:ui-monospace,Menlo,monospace; font-size:13px; letter-spacing:1.5px; color:var(--ink2); padding:0 26px;}
-/* sections */
-.sec{padding:72px 0; border-bottom:1px solid var(--line);}
-.sec h2{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(28px,4vw,40px); letter-spacing:-0.8px; margin-bottom:14px;}
-.sec p.lead{color:var(--ink2); font-size:19px; max-width:36em; margin-bottom:40px;}
-.steps{display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff;}
-.step{padding:34px 30px; border-right:1px solid var(--line);}
-.step:last-child{border-right:none;}
-.step .n{font-family:ui-monospace,Menlo,monospace; font-size:13px; color:var(--accent); letter-spacing:2px; margin-bottom:14px;}
-.step h3{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:22px; margin-bottom:10px; letter-spacing:-0.3px;}
-.step p{color:var(--ink2); font-size:16px;}
-.chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:8px;}
-.chip{border:1px solid var(--line); background:#fff; border-radius:999px; padding:9px 18px; font-size:15px;}
+/* layered hero visual */
+.hero-visual{position:relative; min-height:620px;}
+.hv-photo{position:absolute; right:0; top:10px; width:76%; height:470px; object-fit:cover;
+  border-radius:28px; transform:rotate(2.5deg); box-shadow:var(--shadow-lg); border:7px solid #fff;}
+.hv-glow{position:absolute; left:6%; top:34%; width:280px; height:280px; border-radius:50%;
+  background:radial-gradient(circle, rgba(242,179,61,.35), rgba(242,179,61,0) 70%); filter:blur(6px);}
+.phone{position:absolute; left:2%; top:52px; width:288px; background:#fff; border-radius:40px;
+  border:1px solid var(--line); box-shadow:var(--shadow-lg); overflow:hidden; transform:rotate(-3deg); z-index:3;}
+.phone-notch{height:26px; display:flex; justify-content:center; align-items:center; background:#fff;}
+.phone-notch i{width:96px; height:20px; background:var(--ink); border-radius:999px; display:block;}
+.mini-shop{padding:6px 18px 22px;}
+.mini-kicker{font-family:ui-monospace,Menlo,monospace; font-size:9px; letter-spacing:2.5px; color:var(--accent); text-align:center; margin:8px 0 6px; font-weight:700;}
+.mini-shop h4{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:24px; text-align:center; letter-spacing:-.5px; margin-bottom:4px;}
+.mini-shop .tag{font-size:11.5px; color:var(--ink2); text-align:center; margin-bottom:12px; line-height:1.45;}
+.mini-prod{display:flex; justify-content:space-between; align-items:center; gap:8px; padding:9px 0; border-bottom:1px dotted var(--line); font-size:13.5px;}
+.mini-prod:last-of-type{border-bottom:none;}
+.mini-prod .mp{font-family:ui-monospace,Menlo,monospace; font-size:12px;}
+.mini-order{font-size:10.5px; font-weight:700; background:var(--accent); color:#fff; border-radius:999px; padding:4px 11px;}
+.mini-foot{display:flex; gap:8px; margin-top:14px;}
+.mini-foot span{flex:1; text-align:center; font-size:11px; font-weight:700; border-radius:999px; padding:8px 0;}
+.mini-foot .a{background:var(--accent); color:#fff;}
+.mini-foot .b{border:1px solid var(--line);}
+.float{position:absolute; background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow-md); padding:14px 16px; z-index:4;}
+.fc-sale{top:0; right:6%; background:var(--ink); color:#fff; border:none; border-radius:999px;
+  font-size:13.5px; font-weight:700; padding:11px 20px; transform:rotate(2deg); box-shadow:var(--shadow-md);}
+.fc-sale i{font-style:normal; background:var(--amber); color:var(--ink); border-radius:999px; padding:2px 9px; margin-right:8px; font-size:12px;}
+.fc-wa{left:0; bottom:56px; max-width:258px; transform:rotate(-2deg);}
+.wa-head{display:flex; gap:9px; align-items:center; margin-bottom:10px; font-weight:700; font-size:13.5px;}
+.wa-dot{width:30px; height:30px; border-radius:50%; background:var(--wa); color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; flex:none;}
+.wa-head small{display:block; font-weight:400; color:var(--wa); font-size:11px;}
+.bubble{background:#E9F8EA; border-radius:4px 14px 14px 14px; padding:10px 12px; font-size:13.5px; line-height:1.45;}
+.bubble .tick{color:var(--wa); font-size:11px; display:block; text-align:right; margin-top:4px;}
+.fc-qr{right:2%; bottom:8px; text-align:center; transform:rotate(2deg); padding:14px 16px 12px;}
+.fc-qr .cap{font-size:12px; color:var(--ink2); margin-top:8px; font-weight:600;}
+#heroQr img, #heroQr canvas{border-radius:8px;}
+/* ============ photo marquee ============ */
+.marquee{border-bottom:1px solid var(--line); background:var(--paper); overflow:hidden; padding:30px 0 34px;}
+.mq-label{text-align:center; font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:2.5px; color:var(--ink2); margin-bottom:20px;}
+.mq-view{overflow:hidden; -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);}
+.mq-track{display:flex; gap:18px; width:max-content; animation:mq 42s linear infinite;}
+.mq-track:hover{animation-play-state:paused;}
+@keyframes mq{to{transform:translateX(-50%);}}
+.mq-card{width:252px; flex:none; background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:var(--shadow-sm);}
+.mq-card img{width:100%; height:148px; object-fit:cover;}
+.mq-card .t{font-weight:700; font-size:15px; padding:12px 16px 2px;}
+.mq-card .s{color:var(--ink2); font-size:13px; padding:0 16px 14px;}
+/* ============ sections ============ */
+.sec{padding:88px 0; border-bottom:1px solid var(--line);}
+.sec h2{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(30px,4.2vw,44px); letter-spacing:-1px; margin-bottom:14px;}
+.sec p.lead{color:var(--ink2); font-size:19px; max-width:38em; margin-bottom:48px;}
+.sec-head{margin-bottom:8px;}
+/* how it works rows */
+.how-row{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; padding:52px 0; border-bottom:1px solid var(--line);}
+.how-row:last-child{border-bottom:none;}
+.how-row.flip .how-copy{order:2;}
+.how-num{font-family:ui-monospace,Menlo,monospace; font-size:13px; color:var(--accent); letter-spacing:2.5px; margin-bottom:14px; font-weight:700;}
+.how-copy h3{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(24px,3vw,32px); letter-spacing:-.6px; margin-bottom:12px;}
+.how-copy p{color:var(--ink2); font-size:18px; max-width:26em;}
+.how-vis{background:#fff; border:1px solid var(--line); border-radius:24px; padding:30px; box-shadow:var(--shadow-md); position:relative; overflow:hidden;}
+.how-vis .tag{font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:2px; color:var(--ink2); margin-bottom:16px;}
+.mock-type{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:16px; font-size:15px; color:var(--ink2); line-height:1.6; margin-bottom:16px;}
+.mock-mic{display:inline-flex; align-items:center; gap:10px; border:1.5px solid var(--accent); color:var(--accent); font-weight:700; border-radius:999px; padding:10px 20px; font-size:14px;}
+.mock-site{border:1px solid var(--line); border-radius:14px; overflow:hidden;}
+.mock-banner{background:var(--accent); color:#fff; text-align:center; font-size:13px; font-weight:700; padding:9px;}
+.mock-site .ms-body{padding:16px 18px;}
+.mock-site .ms-body h5{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:20px; margin-bottom:8px;}
+.mock-site .ms-prod{display:flex; justify-content:space-between; font-size:14px; padding:8px 0; border-bottom:1px dotted var(--line);}
+.mock-qr-row{display:flex; gap:16px; align-items:center;}
+.mock-qr-row .qr-ph{width:110px; height:110px; border-radius:12px; border:1px solid var(--line);
+  background:repeating-conic-gradient(#1B1B18 0 25%, #fff 0 50%) 0 0/22px 22px; flex:none;}
+.mock-share-btns{display:flex; flex-direction:column; gap:10px; flex:1;}
+.mock-share-btns span{border:1px solid var(--ink); border-radius:999px; text-align:center; font-size:13.5px; font-weight:600; padding:10px;}
+.mock-share-btns span.solid{background:var(--ink); color:#fff;}
+/* bento */
+.bento{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+.b-card{background:#fff; border:1px solid var(--line); border-radius:var(--r); padding:32px; position:relative; overflow:hidden; display:flex; flex-direction:column;}
+.b-card.span2{grid-column:span 2;}
+.b-card.dark{background:var(--accent-deep); border-color:var(--accent-deep); color:#fff;}
+.b-card .k{font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:2px; color:var(--accent); margin-bottom:12px; font-weight:700;}
+.b-card.dark .k{color:var(--amber);}
+.b-card h3{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:25px; letter-spacing:-.5px; margin-bottom:10px;}
+.b-card p{color:var(--ink2); font-size:16px; max-width:30em;}
+.b-card.dark p{color:#CBDDD1;}
+.b-visual{margin-top:24px;}
+.chat-mock{max-width:340px;}
+.chat-mock .bubble{font-size:14.5px; margin-bottom:8px; color:var(--ink);}
+.chat-mock .bubble.out{background:var(--accent); color:#fff; border-radius:14px 14px 4px 14px; margin-left:36px;}
+.chat-mock .bubble.out .tick{color:#fff;}
+.qr-mock{display:flex; gap:18px; align-items:center;}
+#bentoQr img, #bentoQr canvas{border:1px solid var(--line); border-radius:12px; padding:8px; background:#fff;}
+.qr-mock .t{font-size:14px; color:var(--ink2);}
+.banner-mock{background:var(--accent); color:#fff; border-radius:12px; padding:16px 18px; font-weight:700; text-align:center; box-shadow:var(--shadow-sm);}
+.banner-mock small{display:block; font-weight:400; opacity:.85; font-size:13px; margin-top:4px;}
+.edit-mock{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.edit-mock .em{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:14px; font-size:13.5px;}
+.edit-mock .em .ek{font-family:ui-monospace,Menlo,monospace; font-size:10.5px; letter-spacing:1.5px; color:var(--ink2); margin-bottom:6px;}
+.edit-mock .em.new{border-color:var(--accent); background:#EFF6F0;}
+/* shop photo grid */
+.shopgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+.shopcard{background:#fff; border:1px solid var(--line); border-radius:var(--r); overflow:hidden; transition:transform .15s ease, box-shadow .15s ease;}
+.shopcard:hover{transform:translateY(-4px); box-shadow:var(--shadow-md);}
+.shopcard img{width:100%; height:210px; object-fit:cover;}
+.shopcard .b{padding:22px 24px 26px;}
+.shopcard .k{font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:2px; color:var(--accent); font-weight:700; margin-bottom:8px;}
+.shopcard p{font-size:16px; color:var(--ink2);}
+/* stats band */
+.stats{background:var(--accent-deep); color:#fff; border-radius:28px; padding:60px 56px; display:grid; grid-template-columns:repeat(4,1fr); gap:32px; position:relative; overflow:hidden;}
+.stats::before{content:""; position:absolute; width:520px; height:520px; border-radius:50%;
+  background:radial-gradient(circle, rgba(242,179,61,.16), rgba(242,179,61,0) 70%); right:-140px; top:-160px;}
+.stat{position:relative;}
+.stat .n{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(36px,4vw,54px); letter-spacing:-1px; margin-bottom:6px;}
+.stat .n em{font-style:normal; color:var(--amber);}
+.stat .l{color:#BFD3C6; font-size:15px;}
+/* cta panel */
+.cta-panel{position:relative; border-radius:28px; overflow:hidden; padding:110px 32px; text-align:center; color:#fff;
+  background:linear-gradient(rgba(12,61,39,.84), rgba(12,61,39,.9)), url('assets/shop-bakery.jpg') center/cover;}
+.cta-panel h2{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(34px,5vw,58px); letter-spacing:-1.5px; margin-bottom:16px; max-width:18ch; margin-left:auto; margin-right:auto;}
+.cta-panel p{color:#DCE8DF; font-size:19px; max-width:32em; margin:0 auto 34px;}
+.cta-panel .btn-accent{background:#fff; border-color:#fff; color:var(--accent-deep);}
+.cta-panel .btn-accent:hover{background:var(--amber-soft);}
 /* faq */
-.faq{max-width:760px;}
-.faq details{border:1px solid var(--line); border-radius:10px; background:#fff; margin-bottom:12px; padding:0;}
-.faq summary{cursor:pointer; padding:18px 22px; font-weight:600; font-size:17px; list-style:none;}
+.faq{max-width:780px;}
+.faq details{border:1px solid var(--line); border-radius:12px; background:#fff; margin-bottom:12px; padding:0; transition:box-shadow .15s ease;}
+.faq details:hover{box-shadow:var(--shadow-sm);}
+.faq summary{cursor:pointer; padding:20px 24px; font-weight:600; font-size:17px; list-style:none;}
 .faq summary::-webkit-details-marker{display:none;}
-.faq summary::after{content:"+"; float:right; color:var(--accent); font-weight:400;}
+.faq summary::after{content:"+"; float:right; color:var(--accent); font-weight:400; font-size:22px; line-height:1;}
 .faq details[open] summary::after{content:"–";}
-.faq .a{padding:0 22px 20px; color:var(--ink2);}
+.faq .a{padding:0 24px 22px; color:var(--ink2);}
 /* footer */
-footer{padding:44px 0 60px;}
-.foot{display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; color:var(--ink2); font-size:14px;}
+footer{padding:56px 0 60px;}
+.foot{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:32px; color:var(--ink2); font-size:15px;}
+.foot h5{font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:2px; color:var(--ink); margin-bottom:14px;}
+.foot a{display:block; text-decoration:none; margin-bottom:10px;}
+.foot a:hover{color:var(--ink);}
+.foot .brand{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-weight:700; font-size:22px; color:var(--ink); margin-bottom:10px; display:block;}
+.foot .brand span{color:var(--accent);}
+.foot-bottom{margin-top:44px; padding-top:24px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:13.5px; color:var(--ink2);}
 /* ---------- builder ---------- */
 .builder-head{padding:56px 0 8px;}
 .builder-head h1{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(30px,4.5vw,44px); letter-spacing:-1px; margin-bottom:10px;}
@@ -84,7 +211,6 @@ footer{padding:44px 0 60px;}
   border-top:2px solid var(--line); padding-top:10px;}
 .stage.on{color:var(--ink); border-top-color:var(--accent); font-weight:700;}
 .card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:40px; margin:26px 0 70px;}
-.mic-zone{text-align:center; padding:26px 0 10px;}
 .mic-btn{width:120px; height:120px; border-radius:50%; border:2px solid var(--accent); background:#fff;
   cursor:pointer; display:inline-flex; align-items:center; justify-content:center; margin-bottom:18px;
   transition:transform .15s ease, background .15s ease;}
@@ -94,13 +220,9 @@ footer{padding:44px 0 60px;}
 .mic-btn.live svg{stroke:#fff;}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(23,94,59,.35);}70%{box-shadow:0 0 0 22px rgba(23,94,59,0);}100%{box-shadow:0 0 0 0 rgba(23,94,59,0);}}
 .mic-label{font-weight:600; font-size:18px; margin-bottom:6px;}
-.mic-hint{color:var(--ink2); font-size:15px; max-width:30em; margin:0 auto 18px;}
 .lang-row{display:flex; gap:10px; justify-content:center; align-items:center; margin-bottom:8px; font-size:14px; color:var(--ink2);}
 select,input[type=text],input[type=tel],textarea{font:inherit; color:var(--ink);}
 select{border:1px solid var(--line); border-radius:8px; padding:8px 12px; background:#fff;}
-.transcript{border:1px dashed var(--line); border-radius:12px; background:var(--paper); min-height:120px;
-  padding:18px; margin:18px 0; text-align:left; font-size:16px; color:var(--ink2);}
-.transcript.has{color:var(--ink); border-style:solid;}
 .or-type{text-align:center; margin:14px 0; color:var(--ink2); font-size:14px;}
 textarea.typebox{width:100%; border:1px solid var(--line); border-radius:12px; padding:16px; min-height:110px; background:#fff;}
 .field{margin-bottom:20px;}
@@ -146,16 +268,41 @@ textarea.typebox{width:100%; border:1px solid var(--line); border-radius:12px; p
 .hidden{display:none !important;}
 .center{text-align:center;}
 .err{background:#FDF0EF; border:1px solid #E5B8B3; color:#8C2F28; border-radius:10px; padding:14px 18px; margin:16px 0; font-size:15px;}
+/* responsive */
+@media(max-width:1020px){
+  .hero2-in{grid-template-columns:1fr; padding:64px 0 80px; gap:56px;}
+  .hero-visual{min-height:560px; max-width:560px;}
+  .bento{grid-template-columns:1fr 1fr;}
+  .b-card.span2{grid-column:span 2;}
+  .shopgrid{grid-template-columns:1fr 1fr;}
+  .stats{grid-template-columns:1fr 1fr; padding:48px 40px;}
+}
 @media(max-width:760px){
-  .steps{grid-template-columns:1fr;}
-  .step{border-right:none; border-bottom:1px solid var(--line);}
-  .step:last-child{border-bottom:none;}
   .grid2{grid-template-columns:1fr;}
   .card{padding:26px 20px;}
   .mast nav a.nl{display:none;}
-  .hero{padding:60px 0 44px;}
   .share-link{flex-direction:column;}
+  .hero2-in{padding:52px 0 64px;}
+  .hero-visual{min-height:520px;}
+  .hv-photo{width:88%; height:380px;}
+  .phone{width:250px; top:80px;}
+  .fc-wa{bottom:30px; max-width:220px;}
+  .fc-qr{bottom:0;}
+  .how-row{grid-template-columns:1fr; gap:28px; padding:40px 0;}
+  .how-row.flip .how-copy{order:0;}
+  .bento{grid-template-columns:1fr;}
+  .b-card.span2{grid-column:span 1;}
+  .shopgrid{grid-template-columns:1fr;}
+  .stats{grid-template-columns:1fr; padding:40px 32px; gap:28px;}
+  .foot{grid-template-columns:1fr;}
+  .cta-panel{padding:72px 24px;}
+  .sec{padding:64px 0;}
 }
+@media(prefers-reduced-motion:reduce){
+  .mq-track{animation:none;}
+  html{scroll-behavior:auto;}
+}
+
 </style>
 </head>
 <body>
@@ -247,8 +394,12 @@ function header(){
     + '<a class="btn btn-sm btn-solid" href="#/build">Start free</a></nav></div></div>';
 }
 function footer(){
-  return '<footer><div class="wrap foot"><div><span class="serif" style="font-weight:700;color:var(--ink);">TalkShop</span> &nbsp;·&nbsp; Describe your shop. Get it online.</div>'
-    + '<div>Free &nbsp;·&nbsp; No account &nbsp;·&nbsp; © 2026 TalkShop</div></div></footer>';
+  return '<footer><div class="wrap"><div class="foot">'
+    + '<div><span class="brand">Talk<span>Shop</span></span>'
+    + '<div>Describe your shop. Get it online.<br>Free, no account, no app.</div></div>'
+    + '<div><h5>PRODUCT</h5><a href="#/build">Build your site</a><a class="sample-link" href="#/">See a sample shop</a><a href="#features">Features</a><a href="#how">How it works</a></div>'
+    + '<div><h5>HELP</h5><a href="#faq">Questions</a><a href="#/build">Update my page</a></div>'
+    + '</div><div class="foot-bottom"><div>© 2026 TalkShop</div><div>Free &nbsp;·&nbsp; No account &nbsp;·&nbsp; Made for small shops everywhere</div></div></div></footer>';
 }
 function render(html){ $("#view").innerHTML = html; wireSampleLinks(); }
 function wireSampleLinks(){
@@ -257,40 +408,141 @@ function wireSampleLinks(){
 }
 /* ============================== home ============================== */
 function homeView(){
-  const chips = ["Bakeries","Salons & barbers","Tailors","Phone repair","Boutiques","Corner stores","Cafes","Florists","Laundry","Spare parts"].map(c=>'<span class="chip">'+c+'</span>').join("");
+  const mqCards = [
+    ["assets/shop-bakery.jpg","Bakeries","Pre-orders on WhatsApp before the morning rush."],
+    ["assets/shop-tailor.jpg","Tailors","Your price list and timings, one tap away."],
+    ["assets/shop-barber.jpg","Barbershops","Let customers see services and book a chair."],
+    ["assets/shop-cafe.jpg","Cafes","Menus that update in seconds, QR on every table."],
+    ["assets/shop-flowers.jpg","Florists","One link for wedding clients and daily orders."],
+    ["assets/shop-grocery.jpg","Corner groceries","Daily prices and offers, always current."]
+  ].map(c=>'<div class="mq-card"><img src="'+c[0]+'" alt="'+c[1]+'" loading="lazy"><div class="t">'+c[1]+'</div><div class="s">'+c[2]+'</div></div>').join("");
+  const shopCards = [
+    ["assets/shop-bakery.jpg","BAKERIES","Take pre-orders on WhatsApp before the morning rush. No app for customers to install."],
+    ["assets/shop-tailor.jpg","TAILORS","Put your price list, timings and address on one page customers can forward."],
+    ["assets/shop-barber.jpg","BARBERSHOPS","Show services and prices. Regulars share your link for you."],
+    ["assets/shop-cafe.jpg","CAFES","A menu that updates in seconds, plus a QR code for every table."],
+    ["assets/shop-flowers.jpg","FLORISTS","One link for wedding enquiries, daily orders and festival rushes."],
+    ["assets/shop-grocery.jpg","CORNER GROCERIES","Daily prices and offers on a page that is always current."]
+  ].map(c=>'<div class="shopcard"><img src="'+c[0]+'" alt="'+c[1]+'" loading="lazy"><div class="b"><div class="k">'+c[1]+'</div><p>'+c[2]+'</p></div></div>').join("");
   return header()
-  + '<div class="hero"><div class="wrap">'
+  /* ---------- hero ---------- */
+  + '<div class="hero2"><div class="wrap hero2-in">'
+  + '<div class="hero-copy">'
   + '<div class="eyebrow">FOR SMALL SHOPS, EVERYWHERE</div>'
-  + '<h1>Describe your shop.<br>Get it online.</h1>'
-  + '<p class="sub">No website builder to learn, no designer to hire, nothing to install. Type a few lines about your shop (or just talk) and TalkShop turns it into a clean mobile storefront you can share on WhatsApp, in your bio, or anywhere.</p>'
-  + '<div class="cta-row"><a class="btn btn-accent" href="#/build">Build my site, free</a>'
-  + '<a class="btn sample-link" href="#/">See a sample shop</a></div>'
-  + '<div class="meta-row"><b>Free</b> &nbsp;·&nbsp; <b>No account</b> &nbsp;·&nbsp; Works in any browser &nbsp;·&nbsp; 18 languages</div>'
+  + '<h1>Describe your shop. <em>Get it online.</em></h1>'
+  + '<p class="sub">Type a few lines about your shop, or just talk, and TalkShop turns it into a clean mobile storefront. Share it on WhatsApp, print it as a QR code, take orders straight from the page.</p>'
+  + '<div class="cta-row"><a class="btn btn-accent btn-lg" href="#/build">Build my site, free</a>'
+  + '<a class="btn btn-lg sample-link" href="#/">See a sample shop</a></div>'
+  + '<div class="meta-row"><b>Free</b> &nbsp;·&nbsp; <b>No account</b> &nbsp;·&nbsp; <b>No app</b> &nbsp;·&nbsp; Works in any browser</div>'
+  + '</div>'
+  + '<div class="hero-visual">'
+  + '<div class="hv-glow"></div>'
+  + '<img class="hv-photo" src="assets/shop-bakery.jpg" alt="A neighborhood bakery">'
+  + '<div class="phone"><div class="phone-notch"><i></i></div><div class="mini-shop">'
+  + '<div class="mini-kicker">NOW OPEN ONLINE</div><h4>Sunrise Bakery</h4>'
+  + '<div class="tag">Fresh bread, cakes and pastries baked every morning.</div>'
+  + '<div class="mini-prod"><span>Sourdough loaf</span><span class="mp">$4.50</span><span class="mini-order">Order</span></div>'
+  + '<div class="mini-prod"><span>Butter croissant</span><span class="mp">$2.00</span><span class="mini-order">Order</span></div>'
+  + '<div class="mini-prod"><span>Chocolate cake</span><span class="mp">$28</span><span class="mini-order">Order</span></div>'
+  + '<div class="mini-foot"><span class="a">Call us</span><span class="b">WhatsApp</span></div>'
   + '</div></div>'
-  + '<div class="ticker"><div class="wrap"><span>BAKERIES</span><span>SALONS</span><span>TAILORS</span><span>REPAIR SHOPS</span><span>BOUTIQUES</span><span>CAFES</span><span>FLORISTS</span><span>CORNER STORES</span></div></div>'
-  + '<div class="sec" id="how"><div class="wrap"><h2>Three steps, about a minute</h2>'
-  + '<p class="lead">If you can describe your shop to a customer, you can put it online. No typing skills required.</p>'
-  + '<div class="steps">'
-  + '<div class="step"><div class="n">01</div><h3>Describe</h3><p>Type a few lines about your shop: what you sell, your hours, your phone number, where you are. Prefer talking? Tap the mic and dictate instead.</p></div>'
-  + '<div class="step"><div class="n">02</div><h3>Review</h3><p>TalkShop lays everything out for you to check. Fix anything, add prices, then hit publish. It takes seconds.</p></div>'
-  + '<div class="step"><div class="n">03</div><h3>Share</h3><p>Get a link to your storefront. Send it on WhatsApp, put it in your Instagram bio, print it as a QR code for your counter. Customers can order straight from the page.</p></div>'
+  + '<div class="float fc-sale"><i>SALE</i>Festival sale: 20% off this week</div>'
+  + '<div class="float fc-wa"><div class="wa-head"><div class="wa-dot">✆</div><div>Sunrise Bakery<small>online</small></div></div>'
+  + '<div class="bubble">Hi Sunrise Bakery! I would like to order: Sourdough loaf ($4.50)<span class="tick">✓✓ 9:41</span></div></div>'
+  + '<div class="float fc-qr"><div id="heroQr"></div><div class="cap">Scan to visit the shop</div></div>'
+  + '</div>'
+  + '</div></div>'
+  /* ---------- marquee ---------- */
+  + '<div class="marquee"><div class="mq-label">MADE FOR EVERY KIND OF SHOP</div>'
+  + '<div class="mq-view"><div class="mq-track">'+mqCards+mqCards+'</div></div></div>'
+  /* ---------- how it works ---------- */
+  + '<div class="sec" id="how"><div class="wrap">'
+  + '<div class="sec-head"><div class="eyebrow">HOW IT WORKS</div><h2>From words to website in about a minute</h2>'
+  + '<p class="lead">If you can describe your shop to a customer, you can put it online. Here is the whole process.</p></div>'
+  + '<div class="how-row"><div class="how-copy"><div class="how-num">01</div><h3>Describe it like you would to a friend</h3>'
+  + '<p>Type a few lines: your shop name, what you sell, your hours, your phone number, where you are. Prefer talking? Tap the mic and dictate instead, in 18 languages.</p></div>'
+  + '<div class="how-vis"><div class="tag">YOU TYPE OR TALK</div>'
+  + '<div class="mock-type">My shop is called Sunrise Bakery. We sell sourdough, croissants and birthday cakes. Open Monday to Saturday 7am to 7pm. Call 555 014 2288. Find us at 14 Market Street.</div>'
+  + '<span class="mock-mic">◉ Tap to dictate</span></div></div>'
+  + '<div class="how-row flip"><div class="how-copy"><div class="how-num">02</div><h3>Review it, then publish</h3>'
+  + '<p>TalkShop lays everything out for you to check. Fix anything, add prices, add a sale banner, then hit publish. It takes seconds, and you can change it anytime.</p></div>'
+  + '<div class="how-vis"><div class="tag">YOUR STOREFRONT, INSTANTLY</div>'
+  + '<div class="mock-site"><div class="mock-banner">Festival sale: 20% off this week</div><div class="ms-body"><h5>Sunrise Bakery</h5>'
+  + '<div class="ms-prod"><span>Sourdough loaf</span><span>$4.50</span></div>'
+  + '<div class="ms-prod"><span>Butter croissant</span><span>$2.00</span></div>'
+  + '<div class="ms-prod"><span>Chocolate cake</span><span>$28</span></div>'
+  + '</div></div></div></div>'
+  + '<div class="how-row"><div class="how-copy"><div class="how-num">03</div><h3>Share it everywhere</h3>'
+  + '<p>Get a link to your storefront. Send it on WhatsApp, put it in your Instagram bio, print it as a QR code for your counter. Customers tap, browse, and order.</p></div>'
+  + '<div class="how-vis"><div class="tag">ONE LINK, EVERYWHERE</div>'
+  + '<div class="mock-qr-row"><div class="qr-ph"></div><div class="mock-share-btns"><span class="solid">Copy link</span><span>Share on WhatsApp</span><span>Get QR code</span></div></div>'
+  + '</div></div>'
+  + '</div></div>'
+  /* ---------- bento features ---------- */
+  + '<div class="sec" id="features"><div class="wrap">'
+  + '<div class="sec-head"><div class="eyebrow">WHAT YOU GET</div><h2>Everything a small shop needs. Nothing it doesn\'t.</h2>'
+  + '<p class="lead">Four things that actually bring customers in, built in from the start.</p></div>'
+  + '<div class="bento">'
+  + '<div class="b-card dark span2"><div class="k">ORDERS</div><h3>Customers order on WhatsApp, straight from your page</h3>'
+  + '<p>Every product gets an Order button. One tap opens a WhatsApp chat with your shop and the item pre-typed. No checkout system, no commission, no new app to learn.</p>'
+  + '<div class="b-visual"><div class="chat-mock">'
+  + '<div class="bubble">Hi! Do you have the chocolate cake today?<span class="tick">✓✓ 9:38</span></div>'
+  + '<div class="bubble out">Yes! One whole cake is $28. Shall I pack it for 5pm?<span class="tick">✓✓ 9:39</span></div>'
   + '</div></div></div>'
-  + '<div class="sec"><div class="wrap"><h2>Made for shops like yours</h2>'
-  + '<p class="lead">The corner bakery, the tailor down the lane, the phone repair counter, the salon with no website. If customers ask "do you have a website", this is the answer.</p>'
-  + '<div class="chips">'+chips+'</div></div></div>'
-  + '<div class="sec" id="faq"><div class="wrap"><h2>Questions</h2><p class="lead">Straight answers.</p><div class="faq">'
+  + '<div class="b-card"><div class="k">QR CODES</div><h3>A QR code for your counter</h3>'
+  + '<p>Print it, stick it on your window or counter. Every scan opens your shop.</p>'
+  + '<div class="b-visual"><div class="qr-mock"><div id="bentoQr"></div><div class="t">Generated free,<br>ready to print.</div></div></div></div>'
+  + '<div class="b-card"><div class="k">ANNOUNCEMENTS</div><h3>Shout about a sale</h3>'
+  + '<p>Add a banner for festivals, discounts or new arrivals. It sits right on top of your page.</p>'
+  + '<div class="b-visual"><div class="banner-mock">Diwali sweets are here<small>Fresh batches every morning this week</small></div></div></div>'
+  + '<div class="b-card span2"><div class="k">ALWAYS EDITABLE</div><h3>Changed your prices? Update in seconds</h3>'
+  + '<p>Every storefront has an "Update this page" link at the bottom. Reopen your details, change anything, share the new link. No developer, no waiting.</p>'
+  + '<div class="b-visual"><div class="edit-mock">'
+  + '<div class="em"><div class="ek">BEFORE</div>Sourdough loaf — $4.00<br><span style="color:var(--ink2)">Open till 6pm</span></div>'
+  + '<div class="em new"><div class="ek">AFTER</div>Sourdough loaf — $4.50<br><span style="color:var(--accent);font-weight:700;">Open till 8pm ✓</span></div>'
+  + '</div></div></div>'
+  + '</div></div></div>'
+  /* ---------- shop grid ---------- */
+  + '<div class="sec"><div class="wrap">'
+  + '<div class="sec-head"><div class="eyebrow">WHO IT\'S FOR</div><h2>Made for shops like yours</h2>'
+  + '<p class="lead">The corner bakery, the tailor down the lane, the phone repair counter, the salon with no website. If customers ask "do you have a website", this is the answer.</p></div>'
+  + '<div class="shopgrid">'+shopCards+'</div>'
+  + '</div></div>'
+  /* ---------- stats ---------- */
+  + '<div class="sec"><div class="wrap"><div class="stats">'
+  + '<div class="stat"><div class="n">~<em>1</em> min</div><div class="l">from description to a live storefront</div></div>'
+  + '<div class="stat"><div class="n"><em>$0</em></div><div class="l">to build and share, no account needed</div></div>'
+  + '<div class="stat"><div class="n"><em>18</em></div><div class="l">languages for voice input, type in any</div></div>'
+  + '<div class="stat"><div class="n"><em>0</em></div><div class="l">apps to install, for you or your customers</div></div>'
+  + '</div></div></div>'
+  /* ---------- faq ---------- */
+  + '<div class="sec" id="faq"><div class="wrap"><div class="sec-head"><div class="eyebrow">QUESTIONS</div><h2>Straight answers</h2></div><div class="faq">'
   + '<details><summary>Is it really free?</summary><div class="a">Yes. You can build and share your storefront free, with no account. Paid extras like custom domains may come later, but the core site stays free.</div></details>'
   + '<details><summary>Do I need an account or an app?</summary><div class="a">No. Everything runs in your browser. Your site lives at a shareable link, so customers just tap and it opens.</div></details>'
-  + '<details><summary>What if the transcription gets something wrong?</summary><div class="a">You review everything before publishing, and every field is editable. Fix it in seconds, no re-recording needed.</div></details>'
-  + '<details><summary>Which languages work?</summary><div class="a">Voice input supports 18 languages including English, Spanish, Portuguese, French, Hindi, Arabic, Indonesian and Swahili. You can also just type.</div></details>'
+  + '<details><summary>What if something is wrong on my page?</summary><div class="a">You review everything before publishing, and every field is editable. Every storefront has an "Update this page" link at the bottom, so fix it in seconds.</div></details>'
+  + '<details><summary>Which languages work?</summary><div class="a">Voice input supports 18 languages including English, Spanish, Portuguese, French, Hindi, Arabic, Indonesian and Swahili. You can also just type in any language.</div></details>'
   + '<details><summary>Can customers order from my site?</summary><div class="a">Yes. Every product gets an "Order" button that opens a WhatsApp chat with your shop and the item pre-typed, so customers order in the app they already use. No checkout system needed.</div></details>'
-  + '<details><summary>Can I change my site later?</summary><div class="a">Yes. Every storefront has a small "Update this page" link at the bottom that re-opens your details. Change anything and share the new link.</div></details>'
+  + '<details><summary>Can I print a QR code for my shop?</summary><div class="a">Yes. After publishing, tap "Get QR code" for a printable code that opens your storefront. Stick it on your counter or window.</div></details>'
   + '</div></div></div>'
-  + '<div class="sec"><div class="wrap center"><h2>Your shop, online, in a minute</h2>'
-  + '<p class="lead" style="margin-left:auto;margin-right:auto;">Join the shops that stopped saying "sorry, we don\'t have a website".</p>'
-  + '<a class="btn btn-accent" href="#/build">Build my site, free</a></div></div>'
+  /* ---------- final CTA ---------- */
+  + '<div class="sec"><div class="wrap"><div class="cta-panel">'
+  + '<h2>Your shop could be online before your coffee cools</h2>'
+  + '<p>Describe it in a few lines. Share the link everywhere. Take orders tonight.</p>'
+  + '<a class="btn btn-accent btn-lg" href="#/build">Build my site, free</a>'
+  + '</div></div></div>'
   + footer();
 }
+function afterHome(){
+  const link = location.origin + location.pathname + "#/s/" + encodeSite(SAMPLE);
+  const paint = (id, size) => {
+    const el = document.getElementById(id);
+    if(!el || !window.QRCode) return;
+    el.innerHTML = "";
+    try{ new QRCode(el, {text:link, width:size, height:size, correctLevel:QRCode.CorrectLevel.M}); }catch(e){}
+  };
+  paint("heroQr", 118); paint("bentoQr", 132);
+}
+
 /* ============================== builder ============================== */
 function stageBar(){
   const s = state.step;
@@ -513,6 +765,7 @@ function router(){
     render(buildView()); wireBuild();
   } else {
     render(homeView());
+    afterHome();
   }
   window.scrollTo(0,0);
 }
