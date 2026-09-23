@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TalkShop — Describe your shop. Get it online.</title>
+<title>TalkShop: Describe your shop. Get it online.</title>
 <meta name="description" content="TalkShop turns a few lines about your shop into a mobile storefront you can share anywhere. Free, no account needed.">
-<meta property="og:title" content="TalkShop — Describe your shop. Get it online.">
+<meta property="og:title" content="TalkShop: Describe your shop. Get it online.">
 <meta property="og:description" content="Free mobile storefronts for small shops. Describe your shop, share the link anywhere. No account, no cost.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#175E3B">
@@ -56,8 +56,11 @@ img{display:block; max-width:100%;}
     radial-gradient(760px 520px at -12% 24%, #E2EBDA 0%, rgba(226,235,218,0) 55%),
     var(--paper);}
 .hero2-in{display:grid; grid-template-columns:1.02fr .98fr; gap:40px; align-items:center; padding:88px 0 100px;}
-.eyebrow{font-family:ui-monospace,Menlo,monospace; font-size:13px; letter-spacing:2.5px; color:var(--accent); margin-bottom:22px; font-weight:700;}
-.hero2 h1{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(46px,6.2vw,82px);
+.eyebrow{overflow-wrap:break-word; font-family:ui-monospace,Menlo,monospace; font-size:13px; letter-spacing:2.5px; color:var(--accent); margin-bottom:22px; font-weight:700;}
+h1,h2,h3{overflow-wrap:break-word;}
+html[lang|="ml"] .hero2 h1,html[lang|="hi"] .hero2 h1,html[lang|="ta"] .hero2 h1{font-size:clamp(40px,5.8vw,76px);}
+.hero-copy{min-width:0;}
+.hero2 h1{overflow-wrap:break-word; font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(46px,6.2vw,82px);
   line-height:1.02; letter-spacing:-2px; margin-bottom:24px; font-weight:700;}
 .hero2 h1 em{font-style:italic; color:var(--accent);}
 .hero2 p.sub{font-size:20px; color:var(--ink2); max-width:31em; margin-bottom:34px;}
@@ -278,6 +281,10 @@ textarea.typebox{width:100%; border:1px solid var(--line); border-radius:12px; p
   .stats{grid-template-columns:1fr 1fr; padding:48px 40px;}
 }
 @media(max-width:760px){
+  .mast-in{flex-wrap:wrap; height:auto; padding:10px 0; gap:8px;}
+  .mast nav{display:contents;}
+  .mast nav a.btn{order:2; margin-left:auto;}
+  .mast nav select.langsel{order:3; flex:1 1 120px; min-width:0; margin-left:0;}
   .grid2{grid-template-columns:1fr;}
   .card{padding:26px 20px;}
   .mast nav a.nl{display:none;}
@@ -298,11 +305,42 @@ textarea.typebox{width:100%; border:1px solid var(--line); border-radius:12px; p
   .cta-panel{padding:72px 24px;}
   .sec{padding:64px 0;}
 }
+/* ============ fluid wide-screen layout: fill 16:9 and ultrawide ============ */
+@media(min-width:1440px){
+  .wrap{max-width:1420px; padding:0 40px;}
+  .hero2-in{gap:64px; padding:110px 0 120px;}
+  .hero2 h1{font-size:clamp(56px,5.6vw,104px);}
+  .hero-visual{min-height:680px;}
+  .hv-photo{height:560px;}
+  .shopgrid{gap:28px;}
+  .bento{gap:24px;}
+  .stats{padding:72px 80px;}
+  .sec{padding:110px 0;}
+}
+@media(min-width:1800px){
+  .wrap{max-width:1660px;}
+  .hero2-in{grid-template-columns:1fr 1.12fr; gap:80px; padding:130px 0 140px;}
+  .hero2 h1{font-size:clamp(64px,5.2vw,118px);}
+  .hero-visual{min-height:740px;}
+  .hv-photo{height:620px; width:78%;}
+  .phone{width:340px;}
+  .fc-wa{width:300px;}
+  .stats{padding:80px 96px;}
+}
+@media(min-width:2200px){
+  .wrap{max-width:1920px; padding:0 56px;}
+}
 @media(prefers-reduced-motion:reduce){
   .mq-track{animation:none;}
   html{scroll-behavior:auto;}
 }
 
+html[dir="rtl"] body{direction:rtl}
+.langsel{background:transparent;border:1px solid var(--line);border-radius:99px;padding:8px 10px;font:inherit;font-size:13px;color:var(--ink);margin-left:10px;cursor:pointer}
+.loc-banner{position:fixed;left:16px;right:16px;bottom:16px;z-index:200;background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 50px rgba(20,20,30,.25);padding:16px 18px;display:flex;gap:14px;align-items:center;justify-content:space-between;max-width:660px;margin:0 auto}
+.loc-msg{font-size:14px;color:var(--ink)}
+.loc-btns{display:flex;gap:8px;flex-shrink:0}
+@media(max-width:560px){.loc-banner{flex-direction:column;align-items:stretch;text-align:center}.loc-btns{justify-content:center}}
 </style>
 </head>
 <body>
@@ -328,16 +366,973 @@ function b64urlDecode(s){
 function encodeSite(d){ return b64urlEncode(JSON.stringify({v:1, d})); }
 function decodeSite(p){ try{ const o = JSON.parse(b64urlDecode(p)); return (o && o.v===1 && o.d) ? o.d : null; }catch(e){ return null; } }
 function cleanPhone(p){ return String(p||"").replace(/[^\d+]/g,""); }
-/* ============================== sample ============================== */
+
+/* ============================== i18n ============================== */
+const STR = { en: {
+  meta_title:"TalkShop: Describe your shop. Get it online.",
+  nav_how:"How it works", nav_sample:"See a sample", nav_start:"Start free",
+  foot_tag:"Describe your shop. Get it online.<br>Free, no account, no app.",
+  foot_product:"PRODUCT", foot_help:"HELP",
+  foot_build:"Build your site", foot_sample:"See a sample shop", foot_features:"Features", foot_how:"How it works",
+  foot_faq:"Questions", foot_update:"Update my page",
+  foot_rights:"\u00a9 2026 TalkShop",
+  foot_note:"Free  ·  No account  ·  Made for small shops everywhere",
+  hero_eyebrow:"FOR SMALL SHOPS, EVERYWHERE",
+  hero_h1a:"Describe your shop. ", hero_h1b:"Get it online.",
+  hero_sub:"Type a few lines about your shop, or just talk, and TalkShop turns it into a clean mobile storefront. Share it on WhatsApp, print it as a QR code, take orders straight from the page.",
+  hero_cta1:"Build my site, free", hero_cta2:"See a sample shop",
+  meta_free:"Free", meta_noaccount:"No account", meta_noapp:"No app", meta_browser:"Works in any browser",
+  mini_kicker:"NOW OPEN ONLINE",
+  sample_tagline:"Fresh bread, cakes and pastries baked every morning.",
+  prod1:"Sourdough loaf", prod2:"Butter croissant", prod3:"Chocolate cake",
+  sp1:"Sourdough loaf", sp2:"Butter croissant", sp3:"Chocolate cake (whole)", sp4:"Cinnamon rolls (4 pack)", sp5:"Custom birthday cakes",
+  order:"Order", call_us:"Call us", wa_label:"WhatsApp",
+  sale_tag:"SALE", sale_text:"Festival sale: 20% off this week",
+  wa_online:"online",
+  wa_bubble:"Hi {name}! I would like to order: {item} ({price})",
+  qr_cap:"Scan to visit the shop",
+  mq_label:"MADE FOR EVERY KIND OF SHOP",
+  mq_t1:"Bakeries", mq_s1:"Pre-orders on WhatsApp before the morning rush.",
+  mq_t2:"Tailors", mq_s2:"Your price list and timings, one tap away.",
+  mq_t3:"Barbershops", mq_s3:"Let customers see services and book a chair.",
+  mq_t4:"Cafes", mq_s4:"Menus that update in seconds, QR on every table.",
+  mq_t5:"Florists", mq_s5:"One link for wedding clients and daily orders.",
+  mq_t6:"Corner groceries", mq_s6:"Daily prices and offers, always current.",
+  how_eyebrow:"HOW IT WORKS", how_h2:"From words to website in about a minute",
+  how_lead:"If you can describe your shop to a customer, you can put it online. Here is the whole process.",
+  how1_h:"Describe it like you would to a friend",
+  how1_p:"Type a few lines: your shop name, what you sell, your hours, your phone number, where you are. Prefer talking? Tap the mic and dictate instead, in 21 languages.",
+  how1_tag:"YOU TYPE OR TALK",
+  how1_mock:"My shop is called Sunrise Bakery. We sell sourdough, croissants and birthday cakes. Open Monday to Saturday 7am to 7pm. Call 555 014 2288. Find us at 14 Market Street.",
+  how1_mic:"\u25c9 Tap to dictate",
+  how2_h:"Review it, then publish",
+  how2_p:"TalkShop lays everything out for you to check. Fix anything, add prices, add a sale banner, then hit publish. It takes seconds, and you can change it anytime.",
+  how2_tag:"YOUR STOREFRONT, INSTANTLY",
+  how3_h:"Share it everywhere",
+  how3_p:"Get a link to your storefront. Send it on WhatsApp, put it in your Instagram bio, print it as a QR code for your counter. Customers tap, browse, and order.",
+  how3_tag:"ONE LINK, EVERYWHERE",
+  b_eyebrow:"WHAT YOU GET", b_h2:"Everything a small shop needs. Nothing it doesn\u2019t.",
+  b_lead:"Four things that actually bring customers in, built in from the start.",
+  b1_k:"ORDERS", b1_h:"Customers order on WhatsApp, straight from your page",
+  b1_p:"Every product gets an Order button. One tap opens a WhatsApp chat with your shop and the item pre-typed. No checkout system, no commission, no new app to learn.",
+  b1_c1:"Hi! Do you have the chocolate cake today?",
+  b1_c2:"Yes! One whole cake is {price}. Shall I pack it for 5pm?",
+  b2_k:"QR CODES", b2_h:"A QR code for your counter",
+  b2_p:"Print it, stick it on your window or counter. Every scan opens your shop.",
+  b2_cap:"Generated free,<br>ready to print.",
+  b3_k:"ANNOUNCEMENTS", b3_h:"Shout about a sale",
+  b3_p:"Add a banner for festivals, discounts or new arrivals. It sits right on top of your page.",
+  b3_m1:"Diwali sweets are here", b3_m2:"Fresh batches every morning this week",
+  b4_k:"ALWAYS EDITABLE", b4_h:"Changed your prices? Update in seconds",
+  b4_p:"Every storefront has an \u201cUpdate this page\u201d link at the bottom. Reopen your details, change anything, share the new link. No developer, no waiting.",
+  b4_before:"BEFORE", b4_after:"AFTER",
+  b4_b1:"Sourdough loaf: {p1}", b4_b2:"Open till 6pm",
+  b4_a1:"Sourdough loaf: {p1}", b4_a2:"Open till 8pm \u2713",
+  s_eyebrow:"WHO IT\u2019S FOR", s_h2:"Made for shops like yours",
+  s_lead:"The corner bakery, the tailor down the lane, the phone repair counter, the salon with no website. If customers ask \u201cdo you have a website\u201d, this is the answer.",
+  sc1k:"BAKERIES", sc1p:"Take pre-orders on WhatsApp before the morning rush. No app for customers to install.",
+  sc2k:"TAILORS", sc2p:"Put your price list, timings and address on one page customers can forward.",
+  sc3k:"BARBERSHOPS", sc3p:"Show services and prices. Regulars share your link for you.",
+  sc4k:"CAFES", sc4p:"A menu that updates in seconds, plus a QR code for every table.",
+  sc5k:"FLORISTS", sc5p:"One link for wedding enquiries, daily orders and festival rushes.",
+  sc6k:"CORNER GROCERIES", sc6p:"Daily prices and offers on a page that is always current.",
+  st1l:"from description to a live storefront", st2l:"to build and share, no account needed",
+  st3l:"languages for voice input, type in any", st4l:"apps to install, for you or your customers",
+  min_unit:"min",
+  faq_eyebrow:"QUESTIONS", faq_h2:"Straight answers",
+  q1:"Is it really free?",
+  a1:"Yes. You can build and share your storefront free, with no account. Paid extras like custom domains may come later, but the core site stays free.",
+  q2:"Do I need an account or an app?",
+  a2:"No. Everything runs in your browser. Your site lives at a shareable link, so customers just tap and it opens.",
+  q3:"What if something is wrong on my page?",
+  a3:"You review everything before publishing, and every field is editable. Every storefront has an \u201cUpdate this page\u201d link at the bottom, so fix it in seconds.",
+  q4:"Which languages work?",
+  a4:"Voice input supports 21 languages including English, Spanish, Portuguese, French, Hindi, Malayalam, Arabic, Indonesian and Swahili. You can also just type in any language.",
+  q5:"Can customers order from my site?",
+  a5:"Yes. Every product gets an \u201cOrder\u201d button that opens a WhatsApp chat with your shop and the item pre-typed, so customers order in the app they already use. No checkout system needed.",
+  q6:"Can I print a QR code for my shop?",
+  a6:"Yes. After publishing, tap \u201cGet QR code\u201d for a printable code that opens your storefront. Stick it on your counter or window.",
+  cta_h2:"Your shop could be online before your coffee cools",
+  cta_p:"Describe it in a few lines. Share the link everywhere. Take orders tonight.",
+  stage1:"01 \u00b7 DESCRIBE", stage2:"02 \u00b7 REVIEW", stage3:"03 \u00b7 SHARE",
+  build_h1:"Build your storefront",
+  build_p:"Describe your shop naturally: its name, what you sell, your hours, your phone number, and where you are.",
+  f_describe:"Describe your shop",
+  ph_example:"Example: My shop is called Sunrise Bakery. We sell sourdough, croissants and birthday cakes. Open Monday to Saturday 7am to 7pm. Call 555 014 2288. Find us at 14 Market Street.",
+  mic_idle:"Prefer talking? Tap to dictate", mic_live:"Dictating\u2026 tap to stop", mic_more:"Tap to dictate more",
+  lang_label:"Language",
+  err_empty:"Say or type a little about your shop first, even one sentence.",
+  err_no_voice:"Voice input needs Chrome or Edge (desktop or Android). You can type your description in the box below instead.",
+  err_mic_blocked:"Microphone is blocked. Allow mic access in your browser, or type your description below instead.",
+  err_voice_start:"Could not start voice input. Please type instead.",
+  btn_review:"Continue to review \u2192",
+  rev_h2:"Check your details",
+  rev_p:"We filled this in from what you said. Fix anything, then publish.",
+  f_name:"Shop name", f_tagline:"One-line description", hint_opt:"(optional)",
+  f_announce:"Announcement",
+  announce_hint:"(optional, shown as a banner on your site, e.g. \u201cFestival sale: 20% off this week\u201d)",
+  f_products:"Products or services",
+  products_hint:"(one per line, add prices like \u201cSourdough - $4.50\u201d)",
+  f_hours:"Opening hours", f_phone:"Phone", f_whatsapp:"WhatsApp number",
+  wa_hint:"(usually same as phone)", f_address:"Address",
+  addr_hint:"(optional, used for directions)",
+  btn_back:"\u2190 Back", btn_publish:"Publish my site",
+  err_noname:"Give your shop a name so customers know whose site this is.",
+  sh_eyebrow:"YOUR SHOP IS ONLINE",
+  sh_note:"Share this link anywhere: WhatsApp, Instagram bio, SMS, a QR code on your counter. Anyone who taps it sees your storefront.",
+  btn_copy:"Copy link", copied:"Copied!", btn_open:"Open my site",
+  btn_sharewa:"Share on WhatsApp", btn_qr:"Get QR code", btn_edit:"Edit details",
+  qr_note:"Print this and stick it on your counter or window.",
+  btn_printqr:"Print QR code",
+  sh_tip:"Tip: print the QR code and stick it on your counter, so every customer can pull up your shop on their phone.",
+  wa_share:"Visit my shop online: ",
+  err_qr:"Could not generate the QR code. Please try again.",
+  sv_products:"What we sell", sv_products_sub:"Ask us about anything you don\u2019t see here.",
+  sv_hours:"Opening hours", sv_hours_sub:"Come by, we\u2019d love to see you.",
+  sv_find:"Find us", sv_find_sub:"Get in touch",
+  btn_dir:"Directions",
+  made_with_a:"Made free with", made_with_b:"Describe your shop. Get it online.",
+  update_link:"Own this shop? Update this page",
+  nf_h:"That link didn\u2019t open a shop.",
+  nf_p:"The link may be incomplete. Ask the shop owner to resend it.",
+  nf_cta:"Make your own shop site",
+  loc_visit:"Looks like you\u2019re visiting from {country}.",
+  loc_suggest:"Switch to {lang} \u00b7 prices in {cur}?",
+  loc_cur_only:"Switch prices to {cur}?",
+  loc_switch:"Switch", loc_keep:"Keep {lang}", loc_lang_only:"Switch to {lang}?", country_label:"Country",
+  loc_india_more:"\u0ba4\u0bae\u0bbf\u0bb4\u0bcd, \u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02 and more languages in the menu above."
+} };
+let uiLang = "en";
+try{ uiLang = localStorage.getItem("ts_ui") || "en"; }catch(e){}
+if(!STR[uiLang]) uiLang = "en";
+function t(k){
+  const d = STR[uiLang] || {};
+  if(d[k] != null) return d[k];
+  if(STR.en[k] != null) return STR.en[k];
+  return k;
+}
+STR.ml = {
+  "meta_title":"TalkShop: നിങ്ങളുടെ കടയെക്കുറിച്ച് പറയൂ. ഓൺലൈനിലാക്കൂ.",
+  "nav_how":"ഇത് എങ്ങനെ പ്രവർത്തിക്കുന്നു",
+  "nav_sample":"മാതൃക കാണൂ",
+  "nav_start":"സൗജന്യമായി തുടങ്ങൂ",
+  "foot_tag":"നിങ്ങളുടെ കടയെക്കുറിച്ച് പറയൂ. ഓൺലൈനിലാക്കൂ.<br>സൗജന്യം, അക്കൗണ്ട് വേണ്ട, ആപ്പ് വേണ്ട.",
+  "foot_product":"ഉൽപ്പന്നം",
+  "foot_help":"സഹായം",
+  "foot_build":"നിങ്ങളുടെ സൈറ്റ് ഉണ്ടാക്കൂ",
+  "foot_sample":"മാതൃകാ കട കാണൂ",
+  "foot_features":"സവിശേഷതകൾ",
+  "foot_how":"ഇത് എങ്ങനെ പ്രവർത്തിക്കുന്നു",
+  "foot_faq":"ചോദ്യങ്ങൾ",
+  "foot_update":"എന്റെ പേജ് പുതുക്കൂ",
+  "foot_rights":"© 2026 TalkShop",
+  "foot_note":"സൗജന്യം  ·  അക്കൗണ്ട് വേണ്ട  ·  എല്ലായിടത്തുമുള്ള ചെറുകടകൾക്കായി",
+  "hero_eyebrow":"എല്ലായിടത്തുമുള്ള ചെറുകടകൾക്കായി",
+  "hero_h1a":"നിങ്ങളുടെ കടയെക്കുറിച്ച് പറയൂ. ",
+  "hero_h1b":"ഓൺലൈനിൽ ആക്കൂ.",
+  "hero_sub":"നിങ്ങളുടെ കടയെക്കുറിച്ച് കുറച്ച് വരികൾ എഴുതൂ, അല്ലെങ്കിൽ പറഞ്ഞുതരൂ; TalkShop അതിനെ വൃത്തിയുള്ള ഒരു മൊബൈൽ സ്റ്റോർഫ്രണ്ടാക്കി മാറ്റും. WhatsApp-ൽ പങ്കിടൂ, QR കോഡായി പ്രിന്റ് ചെയ്യൂ, പേജിൽ നിന്ന് നേരിട്ട് ഓർഡറുകൾ സ്വീകരിക്കൂ.",
+  "hero_cta1":"എന്റെ സൈറ്റ് സൗജന്യമായി ഉണ്ടാക്കൂ",
+  "hero_cta2":"മാതൃകാ കട കാണൂ",
+  "meta_free":"സൗജന്യം",
+  "meta_noaccount":"അക്കൗണ്ട് വേണ്ട",
+  "meta_noapp":"ആപ്പ് വേണ്ട",
+  "meta_browser":"ഏത് ബ്രൗസറിലും പ്രവർത്തിക്കും",
+  "mini_kicker":"ഇപ്പോൾ ഓൺലൈനിൽ തുറന്നിരിക്കുന്നു",
+  "sample_tagline":"എല്ലാ ദിവസവും രാവിലെ ചുട്ടെടുക്കുന്ന ഫ്രഷ് ബ്രെഡ്, കേക്കുകൾ, പേസ്ട്രികൾ.",
+  "prod1":"സോർഡോ ബ്രെഡ്",
+  "prod2":"ബട്ടർ ക്രോസന്റ്",
+  "prod3":"ചോക്കലേറ്റ് കേക്ക്",
+  "sp1":"സോർഡോ ബ്രെഡ്",
+  "sp2":"ബട്ടർ ക്രോസന്റ്",
+  "sp3":"ചോക്കലേറ്റ് കേക്ക് (മുഴുവൻ)",
+  "sp4":"സിനമൺ റോളുകൾ (4 എണ്ണം)",
+  "sp5":"പ്രത്യേക ബർത്ത്ഡേ കേക്കുകൾ",
+  "order":"ഓർഡർ ചെയ്യൂ",
+  "call_us":"വിളിക്കൂ",
+  "wa_label":"WhatsApp",
+  "sale_tag":"സെയിൽ",
+  "sale_text":"ഉത്സവകാല സെയിൽ: ഈ ആഴ്ച വരെ 20% ഇളവ്",
+  "wa_online":"ഓൺലൈനിൽ",
+  "wa_bubble":"ഹായ് {name}! എനിക്ക് ഓർഡർ ചെയ്യണം: {item} ({price})",
+  "qr_cap":"കട സന്ദർശിക്കാൻ സ്കാൻ ചെയ്യൂ",
+  "mq_label":"എല്ലാത്തരം കടകൾക്കും വേണ്ടി",
+  "mq_t1":"ബേക്കറികൾ",
+  "mq_s1":"രാവിലെ തിരക്ക് തുടങ്ങും മുൻപ് WhatsApp-ൽ പ്രീ-ഓർഡറുകൾ.",
+  "mq_t2":"തയ്യൽക്കടകൾ",
+  "mq_s2":"വിലവിവരവും സമയവും ഒറ്റ ടാപ്പിൽ.",
+  "mq_t3":"ബാർബർ ഷോപ്പുകൾ",
+  "mq_s3":"സേവനങ്ങൾ കസ്റ്റമേഴ്സിനെ കാണിക്കൂ, സീറ്റ് ബുക്ക് ചെയ്യാൻ അനുവദിക്കൂ.",
+  "mq_t4":"കഫേകൾ",
+  "mq_s4":"സെക്കൻഡുകൾക്കുള്ളിൽ പുതുക്കുന്ന മെനുകൾ, എല്ലാ മേശയിലും QR.",
+  "mq_t5":"പൂക്കടകൾ",
+  "mq_s5":"കല്യാണ ക്ലയന്റുകൾക്കും ദൈനന്ദിന ഓർഡറുകൾക്കും ഒരൊറ്റ ലിങ്ക്.",
+  "mq_t6":"പലചരക്ക് കടകൾ",
+  "mq_s6":"ദൈനന്ദിന വിലകളും ഓഫറുകളും, എപ്പോഴും പുതിയത്.",
+  "how_eyebrow":"ഇത് എങ്ങനെ പ്രവർത്തിക്കുന്നു",
+  "how_h2":"വാക്കുകളിൽ നിന്ന് വെബ്സൈറ്റിലേക്ക്, ഏകദേശം ഒരു മിനിറ്റിൽ",
+  "how_lead":"ഒരു കസ്റ്റമറോട് നിങ്ങളുടെ കടയെക്കുറിച്ച് പറയാൻ കഴിയുമെങ്കിൽ, അത് ഓൺലൈനിലാക്കാനും കഴിയും. മുഴുവൻ പ്രക്രിയയും ഇതാ.",
+  "how1_h":"ഒരു സുഹൃത്തിനോട് പറയുന്നതുപോലെ വിവരിക്കൂ",
+  "how1_p":"കുറച്ച് വരികൾ എഴുതൂ: കടയുടെ പേര്, എന്താണ് വിൽക്കുന്നത്, സമയം, ഫോൺ നമ്പർ, സ്ഥലം. പറയാനാണ് ഇഷ്ടമെങ്കിൽ മൈക്ക് അമർത്തി 21 ഭാഷകളിൽ പറഞ്ഞുതരൂ.",
+  "how1_tag":"നിങ്ങൾ എഴുതൂ അല്ലെങ്കിൽ പറയൂ",
+  "how1_mock":"എന്റെ കടയുടെ പേര് സൺറൈസ് ബേക്കറി. സോർഡോ, ക്രോസന്റ്, ബർത്ത്ഡേ കേക്കുകൾ എന്നിവ വിൽക്കുന്നു. തിങ്കൾ മുതൽ ശനി വരെ രാവിലെ 7 മുതൽ വൈകിട്ട് 7 വരെ തുറന്നിരിക്കും. 555 014 2288 എന്ന നമ്പറിൽ വിളിക്കൂ. 14 മാർക്കറ്റ് സ്ട്രീറ്റിൽ കാണാം.",
+  "how1_mic":"◉ പറഞ്ഞുതരാൻ അമർത്തൂ",
+  "how2_h":"പരിശോധിച്ചിട്ട് പ്രസിദ്ധീകരിക്കൂ",
+  "how2_p":"പരിശോധിക്കാനായി TalkShop എല്ലാം അടുക്കി വെക്കും. തെറ്റുകൾ തിരുത്തൂ, വിലകൾ ചേർക്കൂ, സെയിൽ ബാനർ ചേർക്കൂ, എന്നിട്ട് പ്രസിദ്ധീകരിക്കൂ. സെക്കൻഡുകൾ മതി, എപ്പോൾ വേണമെങ്കിലും മാറ്റാം.",
+  "how2_tag":"നിങ്ങളുടെ സ്റ്റോർഫ്രണ്ട്, ഉടൻതന്നെ",
+  "how3_h":"എല്ലായിടത്തും പങ്കിടൂ",
+  "how3_p":"നിങ്ങളുടെ സ്റ്റോർഫ്രണ്ടിന്റെ ലിങ്ക് നേടൂ. WhatsApp-ൽ അയക്കൂ, Instagram ബയോയിൽ വെക്കൂ, കൗണ്ടറിൽ വെക്കാൻ QR കോഡായി പ്രിന്റ് ചെയ്യൂ. കസ്റ്റമേഴ്സ് ടാപ്പ് ചെയ്ത് കണ്ട് ഓർഡർ ചെയ്യും.",
+  "how3_tag":"ഒരൊറ്റ ലിങ്ക്, എല്ലായിടത്തും",
+  "b_eyebrow":"നിങ്ങൾക്ക് ലഭിക്കുന്നത്",
+  "b_h2":"ഒരു ചെറുകടയ്ക്ക് വേണ്ടതെല്ലാം. വേണ്ടാത്തൊന്നുമില്ല.",
+  "b_lead":"കസ്റ്റമേഴ്സിനെ യഥാർഥ്ഥമായി കൊണ്ടുവരുന്ന നാല് കാര്യങ്ങൾ, തുടക്കം മുതൽ ഉൾപ്പെടുത്തിയിരിക്കുന്നു.",
+  "b1_k":"ഓർഡറുകൾ",
+  "b1_h":"നിങ്ങളുടെ പേജിൽ നിന്ന് നേരിട്ട് WhatsApp-ൽ കസ്റ്റമേഴ്സ് ഓർഡർ ചെയ്യും",
+  "b1_p":"ഓരോ ഉൽപ്പന്നത്തിനും ഒരു ഓർഡർ ബട്ടൺ ലഭിക്കും. ഒറ്റ ടാപ്പിൽ നിങ്ങളുടെ കടയുമായി WhatsApp ചാറ്റ് തുറക്കും, സാധനം മുൻകൂട്ടി എഴുതിയിരിക്കും. ചെക്കൗട്ട് സിസ്റ്റം വേണ്ട, കമ്മീഷൻ ഇല്ല, പുതിയ ആപ്പ് പഠിക്കേണ്ട.",
+  "b1_c1":"ഹായ്! ഇന്ന് ചോക്കലേറ്റ് കേക്ക് ഉണ്ടോ?",
+  "b1_c2":"ഉണ്ട്! ഒരു മുഴുവൻ കേക്കിന് {price}. വൈകിട്ട് 5 മണിക്ക് പാക്ക് ചെയ്ത് വെക്കട്ടേ?",
+  "b2_k":"QR കോഡുകൾ",
+  "b2_h":"നിങ്ങളുടെ കൗണ്ടറിനായി ഒരു QR കോഡ്",
+  "b2_p":"പ്രിന്റ് ചെയ്ത് ജനലിലോ കൗണ്ടറിലോ ഒട്ടിക്കൂ. ഓരോ സ്കാനിലും നിങ്ങളുടെ കട തുറക്കും.",
+  "b2_cap":"സൗജന്യമായി ഉണ്ടാക്കിയത്,<br>പ്രിന്റ് ചെയ്യാൻ തയ്യാർ.",
+  "b3_k":"അറിയിപ്പുകൾ",
+  "b3_h":"സെയിലിനെക്കുറിച്ച് വിളിച്ചുപറയൂ",
+  "b3_p":"ഉത്സവങ്ങൾക്കും വിലക്കുറവിനും പുതിയ വരവുകൾക്കും ഒരു ബാനർ ചേർക്കൂ. നിങ്ങളുടെ പേജിന്റെ ഏറ്റവും മുകളിൽ അത് കാണും.",
+  "b3_m1":"ദീപാവലി മധുരപലഹാരങ്ങൾ എത്തി",
+  "b3_m2":"ഈ ആഴ്ച എല്ലാ ദിവസവും രാവിലെ ഫ്രഷ് ബാച്ചുകൾ",
+  "b4_k":"എപ്പോഴും തിരുത്താം",
+  "b4_h":"വിലകൾ മാറിയോ? സെക്കൻഡുകൾക്കുള്ളിൽ പുതുക്കൂ",
+  "b4_p":"എല്ലാ സ്റ്റോർഫ്രണ്ടിന്റെയും താഴെ “ഈ പേജ് പുതുക്കൂ” എന്ന ലിങ്കുണ്ട്. വിവരങ്ങൾ വീണ്ടും തുറന്ന് എന്തും മാറ്റൂ, പുതിയ ലിങ്ക് പങ്കിടൂ. ഡെവലപ്പർ വേണ്ട, കാത്തിരിക്കേണ്ട.",
+  "b4_before":"മുൻപ്",
+  "b4_after":"ശേഷം",
+  "b4_b1":"സോർഡോ ബ്രെഡ്: {p1}",
+  "b4_b2":"വൈകിട്ട് 6 വരെ തുറന്നിരിക്കും",
+  "b4_a1":"സോർഡോ ബ്രെഡ്: {p1}",
+  "b4_a2":"രാത്രി 8 വരെ തുറന്നിരിക്കും ✓",
+  "s_eyebrow":"ആർക്കുവേണ്ടി",
+  "s_h2":"നിങ്ങളുടേതുപോലുള്ള കടകൾക്കായി",
+  "s_lead":"മൂലയിലെ ബേക്കറി, തെരുവിലെ തയ്യൽക്കട, ഫോൺ റിപ്പയർ കട, വെബ്സൈറ്റില്ലാത്ത സലൂൺ. “നിങ്ങൾക്ക് വെബ്സൈറ്റുണ്ടോ” എന്ന് കസ്റ്റമേഴ്സ് ചോദിച്ചാൽ, ഇതാണ് ഉത്തരം.",
+  "sc1k":"ബേക്കറികൾ",
+  "sc1p":"രാവിലെ തിരക്കിന് മുൻപ് WhatsApp-ൽ പ്രീ-ഓർഡറുകൾ സ്വീകരിക്കൂ. കസ്റ്റമേഴ്സ് ആപ്പ് ഇൻസ്റ്റാൽ ചെയ്യേണ്ട.",
+  "sc2k":"തയ്യൽക്കടകൾ",
+  "sc2p":"വിലവിവരം, സമയം, വിലാസം എന്നിവ കസ്റ്റമേഴ്സിന് ഫോർവേഡ് ചെയ്യാവുന്ന ഒരൊറ്റ പേജിലാക്കൂ.",
+  "sc3k":"ബാർബർ ഷോപ്പുകൾ",
+  "sc3p":"സേവനങ്ങളും വിലകളും കാണിക്കൂ. സ്ഥിരക്കാർ നിങ്ങളുടെ ലിങ്ക് പങ്കിടും.",
+  "sc4k":"കഫേകൾ",
+  "sc4p":"സെക്കൻഡുകൾക്കുള്ളിൽ പുതുക്കുന്ന മെനു, എല്ലാ മേശയ്ക്കും ഒരു QR കോഡ്.",
+  "sc5k":"പൂക്കടകൾ",
+  "sc5p":"കല്യാണ അന്വേഷണങ്ങൾക്കും ദൈനന്ദിന ഓർഡറുകൾക്കും ഉത്സവ തിരക്കിനും ഒരൊറ്റ ലിങ്ക്.",
+  "sc6k":"പലചരക്ക് കടകൾ",
+  "sc6p":"എപ്പോഴും പുതിയതായ പേജിൽ ദൈനന്ദിന വിലകളും ഓഫറുകളും.",
+  "st1l":"വിവരണത്തിൽ നിന്ന് ലൈവ് സ്റ്റോർഫ്രണ്ടിലേക്ക്",
+  "st2l":"ഉണ്ടാക്കാനും പങ്കിടാനും, അക്കൗണ്ട് വേണ്ട",
+  "st3l":"വോയിസ് ഇൻപുട്ടിനുള്ള ഭാഷകൾ, ഏതിലും എഴുതാം",
+  "st4l":"ഇൻസ്റ്റാൽ ചെയ്യാൻ ആപ്പുകൾ, നിങ്ങൾക്കോ കസ്റ്റമേഴ്സിനോ",
+  "min_unit":"മിനിറ്റ്",
+  "faq_eyebrow":"ചോദ്യങ്ങൾ",
+  "faq_h2":"നേരിട്ടുള്ള ഉത്തരങ്ങൾ",
+  "q1":"ഇത് ശരിക്കും സൗജന്യമാണോ?",
+  "a1":"അതെ. അക്കൗണ്ടില്ലാതെ നിങ്ങളുടെ സ്റ്റോർഫ്രണ്ട് സൗജന്യമായി ഉണ്ടാക്കി പങ്കിടാം. കസ്റ്റം ഡൊമെയിൻ പോലുള്ള പെയ്ഡ് സൗകര്യങ്ങൾ പിന്നീട് വന്നേക്കാം, പക്ഷെ പ്രധാന സൈറ്റ് സൗജന്യമായി തുടരും.",
+  "q2":"എനിക്ക് അക്കൗണ്ടോ ആപ്പോ വേണോ?",
+  "a2":"വേണ്ട. എല്ലാം നിങ്ങളുടെ ബ്രൗസറിൽ പ്രവർത്തിക്കും. നിങ്ങളുടെ സൈറ്റ് പങ്കിടാവുന്ന ഒരു ലിങ്കിലാണ്, കസ്റ്റമേഴ്സ് ടാപ്പ് ചെയ്താൽ തുറക്കും.",
+  "q3":"എന്റെ പേജിൽ എന്തെങ്കിലും തെറ്റുണ്ടെങ്കിൽ?",
+  "a3":"പ്രസിദ്ധീകരിക്കുന്നതിന് മുൻപ് നിങ്ങൾ എല്ലാം പരിശോധിക്കും, എല്ലാ ഫീൽഡും തിരുത്താം. എല്ലാ സ്റ്റോർഫ്രണ്ടിന്റെയും താഴെ “ഈ പേജ് പുതുക്കൂ” എന്ന ലിങ്കുണ്ട്, സെക്കൻഡുകൾക്കുള്ളിൽ ശരിയാക്കാം.",
+  "q4":"ഏതൊക്കെ ഭാഷകൾ പ്രവർത്തിക്കും?",
+  "a4":"ഇംഗ്ലീഷ്, സ്പാനിഷ്, പോർച്ചുഗീസ്, ഫ്രഞ്ച്, ഹിന്ദി, മലയാളം, അറബിക്, ഇന്തോനേഷ്യൻ, സ്വാഹിലി എന്നിവയുൾപ്പെടെ 21 ഭാഷകളിൽ വോയിസ് ഇൻപുട്ട് പ്രവർത്തിക്കും. ഏത് ഭാഷയിലും എഴുതുകയും ചെയ്യാം.",
+  "q5":"എന്റെ സൈറ്റിൽ നിന്ന് കസ്റ്റമേഴ്സിന് ഓർഡർ ചെയ്യാമോ?",
+  "a5":"ചെയ്യാം. ഓരോ ഉൽപ്പന്നത്തിനും “ഓർഡർ” ബട്ടൺ ലഭിക്കും, അത് അമർത്തിയാൽ സാധനം മുൻകൂട്ടി എഴുതിയ WhatsApp ചാറ്റ് നിങ്ങളുടെ കടയുമായി തുറക്കും. കസ്റ്റമേഴ്സ് ഇപ്പോൾ ഉപയോഗിക്കുന്ന ആപ്പിൽ തന്നെ ഓർഡർ ചെയ്യും. ചെക്കൗട്ട് സിസ്റ്റം വേണ്ട.",
+  "q6":"എന്റെ കടയ്ക്ക് QR കോഡ് പ്രിന്റ് ചെയ്യാമോ?",
+  "a6":"ചെയ്യാം. പ്രസിദ്ധീകരിച്ച ശേഷം “QR കോഡ് നേടൂ” അമർത്തിയാൽ നിങ്ങളുടെ സ്റ്റോർഫ്രണ്ട് തുറക്കുന്ന പ്രിന്റ് ചെയ്യാവുന്ന കോഡ് ലഭിക്കും. കൗണ്ടറിലോ ജനലിലോ ഒട്ടിക്കൂ.",
+  "cta_h2":"നിങ്ങളുടെ കാപ്പി തണുക്കും മുൻപ് നിങ്ങളുടെ കട ഓൺലൈനിലാകും",
+  "cta_p":"കുറച്ച് വരികളിൽ വിവരിക്കൂ. ലിങ്ക് എല്ലായിടത്തും പങ്കിടൂ. ഇന്ന് രാത്രി തന്നെ ഓർഡറുകൾ സ്വീകരിക്കൂ.",
+  "stage1":"01 · വിവരിക്കൂ",
+  "stage2":"02 · പരിശോധിക്കൂ",
+  "stage3":"03 · പങ്കിടൂ",
+  "build_h1":"നിങ്ങളുടെ സ്റ്റോർഫ്രണ്ട് ഉണ്ടാക്കൂ",
+  "build_p":"നിങ്ങളുടെ കടയെ സ്വാഭാവികമായി വിവരിക്കൂ: പേര്, എന്താണ് വിൽക്കുന്നത്, സമയം, ഫോൺ നമ്പർ, സ്ഥലം.",
+  "f_describe":"നിങ്ങളുടെ കടയെക്കുറിച്ച് പറയൂ",
+  "ph_example":"ഉദാഹരണം: എന്റെ കടയുടെ പേര് സൺറൈസ് ബേക്കറി. സോർഡോ, ക്രോസന്റ്, ബർത്ത്ഡേ കേക്കുകൾ എന്നിവ വിൽക്കുന്നു. തിങ്കൾ മുതൽ ശനി വരെ രാവിലെ 7 മുതൽ വൈകിട്ട് 7 വരെ തുറന്നിരിക്കും. 555 014 2288 എന്ന നമ്പറിൽ വിളിക്കൂ. 14 മാർക്കറ്റ് സ്ട്രീറ്റിൽ കാണാം.",
+  "mic_idle":"പറയാനാണ് ഇഷ്ടമെങ്കിൽ? പറഞ്ഞുതരാൻ അമർത്തൂ",
+  "mic_live":"കേൾക്കുന്നു… നിർത്താൻ അമർത്തൂ",
+  "mic_more":"കൂടുതൽ പറഞ്ഞുതരാൻ അമർത്തൂ",
+  "lang_label":"ഭാഷ",
+  "err_empty":"ആദ്യം നിങ്ങളുടെ കടയെക്കുറിച്ച് കുറച്ച് പറയൂ അല്ലെങ്കിൽ എഴുതൂ, ഒരു വാചകം മതി.",
+  "err_no_voice":"വോയിസ് ഇൻപുട്ടിന് Chrome അല്ലെങ്കിൽ Edge വേണം (ഡെസ്ക്ടോപ്പ് അല്ലെങ്കിൽ Android). പകരം താഴെയുള്ള പെട്ടിയിൽ വിവരണം എഴുതൂ.",
+  "err_mic_blocked":"മൈക്രോഫോൺ ബ്ലോക്ക് ചെയ്തിരിക്കുന്നു. ബ്രൗസറിൽ മൈക്ക് അനുമതി നൽകൂ, അല്ലെങ്കിൽ താഴെ വിവരണം എഴുതൂ.",
+  "err_voice_start":"വോയിസ് ഇൻപുട്ട് തുടങ്ങാനായില്ല. ദയവായി എഴുതൂ.",
+  "btn_review":"പരിശോധനയിലേക്ക് തുടരൂ →",
+  "rev_h2":"വിവരങ്ങൾ പരിശോധിക്കൂ",
+  "rev_p":"നിങ്ങൾ പറഞ്ഞതിൽ നിന്ന് ഞങ്ങൾ ഇത് പൂരിപ്പിച്ചു. തെറ്റുകൾ തിരുത്തൂ, എന്നിട്ട് പ്രസിദ്ധീകരിക്കൂ.",
+  "f_name":"കടയുടെ പേര്",
+  "f_tagline":"ഒറ്റവരി വിവരണം",
+  "hint_opt":"(ഓപ്ഷണൽ)",
+  "f_announce":"അറിയിപ്പ്",
+  "announce_hint":"(ഓപ്ഷണൽ, നിങ്ങളുടെ സൈറ്റിൽ ബാനറായി കാണിക്കും, ഉദാ. “ഉത്സവകാല സെയിൽ: ഈ ആഴ്ച വരെ 20% ഇളവ്”)",
+  "f_products":"ഉൽപ്പന്നങ്ങളോ സേവനങ്ങളോ",
+  "products_hint":"(ഓരോ വരിയിലും ഒന്ന്, “സോർഡോ - $4.50” പോലെ വിലകൾ ചേർക്കൂ)",
+  "f_hours":"തുറന്നിരിക്കുന്ന സമയം",
+  "f_phone":"ഫോൺ",
+  "f_whatsapp":"WhatsApp നമ്പർ",
+  "wa_hint":"(സാധാരണയായി ഫോൺ നമ്പർ തന്നെ)",
+  "f_address":"വിലാസം",
+  "addr_hint":"(ഓപ്ഷണൽ, വഴി കാണിക്കാൻ ഉപയോഗിക്കും)",
+  "btn_back":"← തിരിച്ചുപോകൂ",
+  "btn_publish":"എന്റെ സൈറ്റ് പ്രസിദ്ധീകരിക്കൂ",
+  "err_noname":"ആരുടെ സൈറ്റാണെന്ന് കസ്റ്റമേഴ്സിന് മനസ്സിലാകാൻ നിങ്ങളുടെ കടയ്ക്ക് ഒരു പേര് നൽകൂ.",
+  "sh_eyebrow":"നിങ്ങളുടെ കട ഓൺലൈനിലായി",
+  "sh_note":"ഈ ലിങ്ക് എവിടെയും പങ്കിടൂ: WhatsApp, Instagram ബയോ, SMS, കൗണ്ടറിലെ QR കോഡ്. ടാപ്പ് ചെയ്യുന്നവർക്കെല്ലാം നിങ്ങളുടെ സ്റ്റോർഫ്രണ്ട് കാണാം.",
+  "btn_copy":"ലിങ്ക് പകർത്തൂ",
+  "copied":"പകർത്തി!",
+  "btn_open":"എന്റെ സൈറ്റ് തുറക്കൂ",
+  "btn_sharewa":"WhatsApp-ൽ പങ്കിടൂ",
+  "btn_qr":"QR കോഡ് നേടൂ",
+  "btn_edit":"വിവരങ്ങൾ തിരുത്തൂ",
+  "qr_note":"ഇത് പ്രിന്റ് ചെയ്ത് കൗണ്ടറിലോ ജനലിലോ ഒട്ടിക്കൂ.",
+  "btn_printqr":"QR കോഡ് പ്രിന്റ് ചെയ്യൂ",
+  "sh_tip":"ടിപ്പ്: QR കോഡ് പ്രിന്റ് ചെയ്ത് കൗണ്ടറിൽ ഒട്ടിക്കൂ, എല്ലാ കസ്റ്റമേഴ്സിനും ഫോണിൽ നിങ്ങളുടെ കട തുറക്കാം.",
+  "wa_share":"എന്റെ കട ഓൺലൈനിൽ സന്ദർശിക്കൂ: ",
+  "err_qr":"QR കോഡ് ഉണ്ടാക്കാനായില്ല. ദയവായി വീണ്ടും ശ്രമിക്കൂ.",
+  "sv_products":"ഞങ്ങൾ വിൽക്കുന്നത്",
+  "sv_products_sub":"ഇവിടെ കാണാത്ത എന്തിനെക്കുറിച്ചും ഞങ്ങളോട് ചോദിക്കൂ.",
+  "sv_hours":"തുറന്നിരിക്കുന്ന സമയം",
+  "sv_hours_sub":"വരൂ, നിങ്ങളെ കാണാൻ ഞങ്ങൾക്ക് സന്തോഷമേയുള്ളൂ.",
+  "sv_find":"ഞങ്ങളെ കണ്ടെത്തൂ",
+  "sv_find_sub":"ബന്ധപ്പെടൂ",
+  "btn_dir":"വഴി കാണൂ",
+  "made_with_a":"സൗജന്യമായി ഉണ്ടാക്കിയത്",
+  "made_with_b":"നിങ്ങളുടെ കടയെക്കുറിച്ച് പറയൂ. ഓൺലൈനിലാക്കൂ.",
+  "update_link":"ഈ കട നിങ്ങളുടേതാണോ? ഈ പേജ് പുതുക്കൂ",
+  "nf_h":"ആ ലിങ്കിൽ ഒരു കട തുറന്നില്ല.",
+  "nf_p":"ലിങ്ക് അപൂർണ്ണമായിരിക്കാം. കടയുടമയോട് വീണ്ടും അയക്കാൻ ആവശ്യപ്പെടൂ.",
+  "nf_cta":"നിങ്ങളുടെ സ്വന്തം കട സൈറ്റ് ഉണ്ടാക്കൂ",
+  "loc_visit":"നിങ്ങൾ {country}-ൽ നിന്നാണ് സന്ദർശിക്കുന്നതെന്ന് തോന്നുന്നു.",
+  "loc_suggest":"{lang}-ലേക്ക് മാറണോ · വിലകൾ {cur}-ൽ?",
+  "loc_cur_only":"വിലകൾ {cur}-ലേക്ക് മാറ്റണോ?",
+  "loc_switch":"മാറൂ",
+  "loc_keep":"{lang} തുടരൂ",
+  "loc_lang_only":"{lang}-ലേക്ക് മാറണോ?",
+  "country_label":"രാജ്യം",
+  "loc_india_more":"മുകളിലെ മെനുവിൽ हिन्ദी, தமிழ் എന്നിവയുൾപ്പെടെ കൂടുതൽ ഭാഷകൾ."
+};
+STR.hi = {
+  "meta_title":"TalkShop: अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।",
+  "nav_how":"यह कैसे काम करता है",
+  "nav_sample":"नमूना देखिए",
+  "nav_start":"मुफ़्त शुरू करें",
+  "foot_tag":"अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।<br>मुफ़्त, कोई अकाउंट नहीं, कोई ऐप नहीं।",
+  "foot_product":"उत्पाद",
+  "foot_help":"सहायता",
+  "foot_build":"अपनी साइट बनाइए",
+  "foot_sample":"नमूना दुकान देखिए",
+  "foot_features":"खूबियाँ",
+  "foot_how":"यह कैसे काम करता है",
+  "foot_faq":"सवाल",
+  "foot_update":"मेरा पेज अपडेट करें",
+  "foot_rights":"© 2026 TalkShop",
+  "foot_note":"मुफ़्त  ·  कोई अकाउंट नहीं  ·  हर जगह की छोटी दुकानों के लिए",
+  "hero_eyebrow":"हर जगह की छोटी दुकानों के लिए",
+  "hero_h1a":"अपनी दुकान के बारे में बताइए। ",
+  "hero_h1b":"ऑनलाइन लाइए।",
+  "hero_sub":"अपनी दुकान के बारे में कुछ लाइनें लिखिए, या बस बोलिए, और TalkShop उसे एक साफ़ मोबाइल स्टोरफ्रंट में बदल देगा। WhatsApp पर शेयर कीजिए, QR कोड प्रिंट कीजिए, पेज से सीधे ऑर्डर लीजिए।",
+  "hero_cta1":"मेरी साइट मुफ़्त बनाइए",
+  "hero_cta2":"नमूना दुकान देखिए",
+  "meta_free":"मुफ़्त",
+  "meta_noaccount":"कोई अकाउंट नहीं",
+  "meta_noapp":"कोई ऐप नहीं",
+  "meta_browser":"किसी भी ब्राउज़र में चले",
+  "mini_kicker":"अब ऑनलाइन खुला है",
+  "sample_tagline":"हर सुबह ताज़ा बेक की हुई ब्रेड, केक और पेस्ट्री।",
+  "prod1":"सॉरडो ब्रेड",
+  "prod2":"बटर क्रॉइसैन",
+  "prod3":"चॉकलेट केक",
+  "sp1":"सॉरडो ब्रेड",
+  "sp2":"बटर क्रॉइसैन",
+  "sp3":"चॉकलेट केक (पूरा)",
+  "sp4":"सिनेमन रोल (4 का पैक)",
+  "sp5":"कस्टम बर्थडे केक",
+  "order":"ऑर्डर करें",
+  "call_us":"कॉल करें",
+  "wa_label":"WhatsApp",
+  "sale_tag":"सेल",
+  "sale_text":"फ़ेस्टिवल सेल: इस हफ़्ते 20% छूट",
+  "wa_online":"ऑनलाइन",
+  "wa_bubble":"नमस्ते {name}! मुझे ऑर्डर करना है: {item} ({price})",
+  "qr_cap":"दुकान देखने के लिए स्कैन करें",
+  "mq_label":"हर तरह की दुकान के लिए",
+  "mq_t1":"बेकरी",
+  "mq_s1":"सुबह की भीड़ से पहले WhatsApp पर प्री-ऑर्डर।",
+  "mq_t2":"दर्ज़ी",
+  "mq_s2":"आपकी प्राइस लिस्ट और टाइमिंग, एक टैप पर।",
+  "mq_t3":"बार्बर शॉप",
+  "mq_s3":"ग्राहकों को सेवाएँ दिखाइए और कुर्सी बुक करने दीजिए।",
+  "mq_t4":"कैफ़े",
+  "mq_s4":"सेकंडों में अपडेट होने वाले मेन्यू, हर टेबल पर QR।",
+  "mq_t5":"फूलों की दुकानें",
+  "mq_s5":"शादी के ग्राहकों और रोज़ के ऑर्डर के लिए एक लिंक।",
+  "mq_t6":"किराना दुकानें",
+  "mq_s6":"रोज़ के भाव और ऑफ़र, हमेशा ताज़ा।",
+  "how_eyebrow":"यह कैसे काम करता है",
+  "how_h2":"शब्दों से वेबसाइट तक, लगभग एक मिनट में",
+  "how_lead":"अगर आप किसी ग्राहक को अपनी दुकान के बारे में बता सकते हैं, तो उसे ऑनलाइन भी ला सकते हैं। पूरी प्रक्रिया यह रही।",
+  "how1_h":"ऐसे बताइए जैसे किसी दोस्त को बताएँगे",
+  "how1_p":"कुछ लाइनें लिखिए: दुकान का नाम, क्या बेचते हैं, टाइमिंग, फ़ोन नंबर, पता। बोलना पसंद है? माइक दबाकर 21 भाषाओं में बोलिए।",
+  "how1_tag":"आप लिखिए या बोलिए",
+  "how1_mock":"मेरी दुकान का नाम सनराइज़ बेकरी है। हम सॉरडो, क्रॉइसैन और बर्थडे केक बेचते हैं। सोमवार से शनिवार सुबह 7 से शाम 7 बजे तक खुला। 555 014 2288 पर कॉल करें। 14 मार्केट स्ट्रीट पर मिलिए।",
+  "how1_mic":"◉ बोलने के लिए दबाइए",
+  "how2_h":"जाँचिए, फिर पब्लिश कीजिए",
+  "how2_p":"TalkShop सब कुछ जाँचने के लिए सजा देता है। ग़लतियाँ सुधारिए, क़ीमतें जोड़िए, सेल बैनर लगाइए, फिर पब्लिश दबाइए। सेकंडों का काम है, और कभी भी बदल सकते हैं।",
+  "how2_tag":"आपका स्टोरफ्रंट, तुरंत",
+  "how3_h":"हर जगह शेयर कीजिए",
+  "how3_p":"अपने स्टोरफ्रंट का लिंक पाइए। WhatsApp पर भेजिए, Instagram बायो में डालिए, काउंटर के लिए QR कोड प्रिंट कीजिए। ग्राहक टैप करेंगे, देखेंगे और ऑर्डर करेंगे।",
+  "how3_tag":"एक लिंक, हर जगह",
+  "b_eyebrow":"आपको क्या मिलता है",
+  "b_h2":"एक छोटी दुकान को जो चाहिए, सब कुछ। और जो नहीं चाहिए, वो कुछ भी नहीं।",
+  "b_lead":"वे चार चीज़ें जो ग्राहकों को वाक़ई में लाती हैं, पहले दिन से बनी-बनाई।",
+  "b1_k":"ऑर्डर",
+  "b1_h":"आपके पेज से सीधे ग्राहक WhatsApp में ऑर्डर करेंगे",
+  "b1_p":"हर उत्पाद को एक ऑर्डर बटन मिलता है। एक टैप पर आपकी दुकान के साथ एक WhatsApp चैट खुलता है, उत्पाद पहले से लिखा हुआ। कोई चेकआउट सिस्टम नहीं, कोई कमीशन नहीं, कोई नया ऐप सीखना नहीं।",
+  "b1_c1":"नमस्ते! क्या आज चॉकलेट केक उपलब्ध है?",
+  "b1_c2":"है! पूरे केक का {price}। शाम 5 बजे तक पैक कर दूं?",
+  "b2_k":"QR कोड",
+  "b2_h":"आपके काउंटर के लिए एक QR कोड",
+  "b2_p":"प्रिंट करके खिड़की या काउंटर पर चिपकाइए। हर स्कैन आपकी दुकान खोलता है।",
+  "b2_cap":"मुफ़्त में बना, <br>प्रिंट के लिए तैयार।",
+  "b3_k":"घोषणाएँ",
+  "b3_h":"सेल की घोषणा कीजिए",
+  "b3_p":"त्योहारों, छूट या नए स्टॉक के लिए एक बैनर जोड़िए। वह आपके पेज के सबसे ऊपर दिखता है।",
+  "b3_m1":"दिवाली मिठाई आ गई",
+  "b3_m2":"इस हफ़्ते रोज़ सुबह ताज़ा बैच",
+  "b4_k":"कभी भी अपडेट करें",
+  "b4_h":"क़ीमत बदली? सेकंडों में अपडेट करें",
+  "b4_p":"हर स्टोरफ्रंट के नीचे एक “इस पेज को अपडेट करें” लिंक होता है। कुछ भी बदलिए, नया लिंक शेयर कीजिए। कोई डेवलपर नहीं, कोई इंतजार नहीं।",
+  "b4_before":"पहले",
+  "b4_after":"बाद में",
+  "b4_b1":"सॉरडो ब्रेड: {p1}",
+  "b4_b2":"शाम 6 बजे तक खुला",
+  "b4_a1":"सॉरडो ब्रेड: {p1}",
+  "b4_a2":"रात 8 बजे तक खुला ✓",
+  "s_eyebrow":"किसके लिए है",
+  "s_h2":"आप जैसी दुकानों के लिए",
+  "s_lead":"गली की बेकरी, मुहल्ले का दर्ज़ी, फ़ोन रिपेयर की दुकान, सलून जिसकी कोई वेबसाइट नहीं। जब ग्राहक पूछे, “क्या आपकी वेबसाइट है?” तो यह है जवाब।",
+  "sc1k":"बेकरी",
+  "sc1p":"सुबह की भीड़ से पहले WhatsApp पर प्री-ऑर्डर लीजिए। ग्राहकों को कोई ऐप इंस्टॉल नहीं करना।",
+  "sc2k":"दर्ज़ी",
+  "sc2p":"ग्राहकों को फ़ॉर्वर्ड करने के लिए आपकी प्राइस लिस्ट और टाइमिंग एक पेज पर।",
+  "sc3k":"बार्बर शॉप",
+  "sc3p":"सेवाएँ और क़ीमतें दिखाइए। नियमित ग्राहक आपका लिंक शेयर करेंगे।",
+  "sc4k":"कैफ़े",
+  "sc4p":"सेकंडों में अपडेट होने वाला मेन्यू, हर टेबल पर एक QR।",
+  "sc5k":"फूलों की दुकानें",
+  "sc5p":"शादी के ग्राहकों और रोज़ के ऑर्डर के लिए त्योहार के मौसम में एक लिंक।",
+  "sc6k":"किराना दुकानें",
+  "sc6p":"हमेशा ताज़ा पेज पर रोज़ के भाव और ऑफ़र।",
+  "st1l":"विवरण से लाइव स्टोरफ्रंट तक",
+  "st2l":"बनाना और शेयर करना, कोई अकाउंट नहीं",
+  "st3l":"वोइस इनपुट की भाषाएँ, किसी में भी लिखें",
+  "st4l":"कोई ऐप इंस्टॉल नहीं, न आपके न ग्राहकों के",
+  "min_unit":"मिनट",
+  "faq_eyebrow":"सवाल",
+  "faq_h2":"सीधे जवाब",
+  "q1":"क्या यह सच में मुफ़्त है?",
+  "a1":"हां। बिना अकाउंट के आप अपना स्टोरफ्रंट मुफ़्त में बनाकर शेयर कर सकते हैं। कस्टम डोमेन जैसी पेड सुविधाएं बाद में आ सकती हैं, लेकिन मुख्य साइट मुफ़्त ही रहेगी।",
+  "q2":"क्या मुझे अकाउंट या ऐप चाहिए?",
+  "a2":"नहीं। सब कुछ आपके ब्राउज़र में चलता है। आपकी साइट एक लिंक है जो आप शेयर करते हैं, ग्राहक उसे टैप करके खोलते हैं।",
+  "q3":"अगर मेरे पेज में कुछ ग़लत हो, तो?",
+  "a3":"पब्लिश करने से पहले आप सब कुछ जाँचते हैं और हर फ़ील्ड सुधार सकते हैं। हर स्टोरफ्रंट के नीचे एक “इस पेज को अपडेट करें” लिंक होता है, सेकंडों में सुशोधित।",
+  "q4":"कौन-कौन सी भाषाएँ चलेंगी?",
+  "a4":"अंग्रेज़ी, स्पैनिश, पुर्तगाली, फ़्रेंच, हिंदी, मलयालम, अरबी, इंडोनेशियाई, स्वाहिली सहित 21 भाषाओं में वोइस इनपुट चलता है। किसी भी भाषा में लिखें।",
+  "q5":"क्या ग्राहक मेरी साइट से ऑर्डर कर सकते हैं?",
+  "a5":"हां। हर उत्पाद को एक “ऑर्डर” बटन मिलता है, जिसे दबाने पर उत्पाद पहले से लिखा हुआ आपकी दुकान के साथ एक WhatsApp चैट खुलता है। ग्राहक वही ऐप में ऑर्डर करते हैं जो वे पहले से इस्तेमाल करते हैं। कोई चेकआउट सिस्टम नहीं।",
+  "q6":"क्या मैं अपनी दुकान के लिए QR कोड प्रिंट कर सकता हूं?",
+  "a6":"हां। पब्लिश करने के बाद “QR कोड पाइएं” दबाइए और आपके स्टोरफ्रंट को खोलने वाला प्रिंट करने योग्य कोड पाइएं। काउंटर या खिड़की पर चिपकाइए।",
+  "cta_h2":"आपकी कॉफ़ी ठंडी होने से पहले आपकी दुकान ऑनलाइन होगी",
+  "cta_p":"कुछ लाइनों में वर्णन कीजिए। लिंक हर जगह शेयर कीजिए। आज रात से ही ऑर्डर लीजिए।",
+  "stage1":"01 · वर्णन करें",
+  "stage2":"02 · जांचिए",
+  "stage3":"03 · शेयर करें",
+  "build_h1":"अपना स्टोरफ्रंट बनाइए",
+  "build_p":"अपनी दुकान का स्वाभाविक रूप से वर्णन कीजिए: नाम, क्या बेचते हैं, टाइमिंग, फ़ोन नंबर, पता।",
+  "f_describe":"अपनी दुकान के बारे में बताइए",
+  "ph_example":"उदाहरण: मेरी दुकान का नाम सनराइज़ बेकरी है। हम सॉरडो, क्रॉइसैन और बर्थडे केक बेचते हैं। सोमवार से शनिवार सुबह 7 से शाम 7 बजे तक खुला। 555 014 2288 पर कॉल करें। 14 मार्केट स्ट्रीट पर मिलिए।",
+  "mic_idle":"बोलना पसंद करेंगे? बोलने के लिए दबाइए",
+  "mic_live":"सुन रहे हैं… रोकने के लिए दबाइए",
+  "mic_more":"और बोलने के लिए दबाइए",
+  "lang_label":"भाषा",
+  "err_empty":"पहले अपनी दुकान के बारे में कुछ कहिए या लिखिए, एक वाक्य ही सही।",
+  "err_no_voice":"वोइस इनपुट के लिए Chrome या Edge चाहिए (डेस्कटॉप या Android)। बजाय नीचे दिए गए बॉक्स में विवरण लिखिए।",
+  "err_mic_blocked":"माइक ब्लॉक किया गया है। ब्राउज़र में माइक की अनुमति दीजिए, या नीचे विवरण लिखिए।",
+  "err_voice_start":"वोइस इनपुट शुरू नहीं हुआ। कृपया लिखिए।",
+  "btn_review":"जांच के लिए आगे बढ़ें →",
+  "rev_h2":"विवरण जाँचिए",
+  "rev_p":"आपने जो कहा, उसी से हमने यह भरा। ग़लतियाँ सुधारिए, फिर पब्लिश कीजिए।",
+  "f_name":"दुकान का नाम",
+  "f_tagline":"एक पंक्ति का विवरण",
+  "hint_opt":"(वैकल्पिक)",
+  "f_announce":"घोषणा",
+  "announce_hint":"(वैकल्पिक, आपकी साइट पर बैनर के रूप में दिखेगा, जैसे “फ़ेस्टिवल सेल: इस हफ़्ते 20% छूट”)",
+  "f_products":"उत्पाद या सेवाएँ",
+  "products_hint":"(हर पंक्ति में एक, “सॉरडो - $4.50” जैसे क़ीमतें जोड़ें)",
+  "f_hours":"खुलने का समय",
+  "f_phone":"फ़ोन",
+  "f_whatsapp":"WhatsApp नंबर",
+  "wa_hint":"(आम तौर पर फ़ोन नंबर ही)",
+  "f_address":"पता",
+  "addr_hint":"(वैकल्पिक, रास्ता दिखाने के लिए उपयोग होगा)",
+  "btn_back":"← वापस जाइए",
+  "btn_publish":"मेरी साइट पब्लिश करें",
+  "err_noname":"ग्राहकों को पता चले यह किसकी साइट है, इसलिए अपनी दुकान को एक नाम दीजिए।",
+  "sh_eyebrow":"आपकी दुकान ऑनलाइन हो गई",
+  "sh_note":"यह लिंक हर जगह शेयर कीजिए: WhatsApp, Instagram बायो, SMS, काउंटर का QR कोड। टैप करने वाला हर कोई आपका स्टोरफ्रंट देखेगा।",
+  "btn_copy":"लिंक कॉपी करें",
+  "copied":"कॉपी हुआ!",
+  "btn_open":"मेरी साइट खोलिए",
+  "btn_sharewa":"WhatsApp पर शेयर करें",
+  "btn_qr":"QR कोड पाइएं",
+  "btn_edit":"विवरण संशोधित करें",
+  "qr_note":"इसे प्रिंट करके काउंटर या खिड़की पर चिपकाइए।",
+  "btn_printqr":"QR कोड प्रिंट करें",
+  "sh_tip":"सुझाव: QR कोड प्रिंट करके काउंटर पर चिपकाइएं, हर ग्राहक अपने फ़ोन में आपकी दुकान खोल सकता है।",
+  "wa_share":"मेरी दुकान ऑनलाइन देखिए: ",
+  "err_qr":"QR कोड नहीं बन पाया। कृपया फिर कोशिश करें।",
+  "sv_products":"हम क्या बेचते हैं",
+  "sv_products_sub":"जो यहाँ नहीं दिख रहा, उसके बारे में हमसे पूछिए।",
+  "sv_hours":"खुलने का समय",
+  "sv_hours_sub":"आइए, आपसे मिलकर हमें खुशी होगी।",
+  "sv_find":"हमें खोजिए",
+  "sv_find_sub":"संपर्क करें",
+  "btn_dir":"रास्ता देखिए",
+  "made_with_a":"मुफ़्त में बनाया गया",
+  "made_with_b":"अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।",
+  "update_link":"क्या यह दुकान आपकी है? इस पेज को अपडेट करें",
+  "nf_h":"इस लिंक में कोई दुकान नहीं खुली।",
+  "nf_p":"लिंक अधुरा हो सकता है। दुकान वाले से दुबारा भेजने को कहें।",
+  "nf_cta":"अपनी दुकान की साइट बनाइए",
+  "loc_visit":"आप {country} से देख रहे हैं, ऐसा लगता है।",
+  "loc_suggest":"{lang} में बदलें · क़ीमतें {cur} में?",
+  "loc_cur_only":"कीमतें {cur} में बदलें?",
+  "loc_switch":"बदलें",
+  "loc_keep":"{lang} जारी रखें",
+  "loc_lang_only":"{lang} में बदलें?",
+  "country_label":"देश",
+  "loc_india_more":"ऊपर के मेनू में मलयालम, तमिल सहित और भाषाएँ भी हैं।"
+};
+STR.ta = {
+  "meta_title":"TalkShop: உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.",
+  "nav_how":"இது எப்படி வேலை செய்கிறது",
+  "nav_sample":"மாதிரி பாருங்கள்",
+  "nav_start":"இலவசமாக தொடங்குங்கள்",
+  "foot_tag":"உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.<br>இலவசம், கணக்கு இல்லை, செயலி இல்லை.",
+  "foot_product":"தயாரிப்பு",
+  "foot_help":"உதவி",
+  "foot_build":"உங்கள் தளம் உருவாக்குங்கள்",
+  "foot_sample":"மாதிரி கடை பாருங்கள்",
+  "foot_features":"சிறப்பம்சங்கள்",
+  "foot_how":"இது எப்படி வேலை செய்கிறது",
+  "foot_faq":"கேள்விகள்",
+  "foot_update":"என் பக்கத்தை புதுப்பிக்கவும்",
+  "foot_rights":"© 2026 TalkShop",
+  "foot_note":"இலவசம்  ·  கணக்கு இல்லை  ·  எல்லா இடங்களிலும் உள்ள சிறு கடைகளுக்காக",
+  "hero_eyebrow":"எல்லா இடங்களிலும் உள்ள சிறு கடைகளுக்காக",
+  "hero_h1a":"உங்கள் கடை பற்றி சொல்லுங்கள். ",
+  "hero_h1b":"ஆன்லைனில் செல்லுங்கள்.",
+  "hero_sub":"உங்கள் கடை பற்றி சில வரிகள் எழுதுங்கள் அல்லது சொல்லுங்கள்; TalkShop அதை ஒரு சுத்தமான மொபைல் ஸ்டோர்ப்ரண்ட்டாக மாற்றும். WhatsApp-இல் பகிர்ங்கள், QR குறியீடை அச்சிடுங்கள், பக்கத்திலிருந்தே ஆர்டர் செய்யுங்கள்.",
+  "hero_cta1":"என் தளத்தை இலவசமாக உருவாக்குங்கள்",
+  "hero_cta2":"மாதிரி கடை பாருங்கள்",
+  "meta_free":"இலவசம்",
+  "meta_noaccount":"கணக்கு இல்லை",
+  "meta_noapp":"செயலி இல்லை",
+  "meta_browser":"எந்த உலாவியிலும் வேலை செய்யும்",
+  "mini_kicker":"இப்போது ஆன்லைனில் திறந்திருக்கிறது",
+  "sample_tagline":"ஒவ்வொரு காலையும் சுடுகிற பிரெட், கேக் மற்றும் பேஸ்ட்ரி.",
+  "prod1":"சோர்டோ பிரெட்",
+  "prod2":"பட்டர் க்ரொசன்ட்",
+  "prod3":"சாக்லேட் கேக்",
+  "sp1":"சோர்டோ பிரெட்",
+  "sp2":"பட்டர் க்ரொசன்ட்",
+  "sp3":"சாக்லேட் கேக் (முழுது)",
+  "sp4":"சின்னமன் ரோல் (4 எண்ணிக்கை)",
+  "sp5":"தனிப்பயன் பிறந்தநாள் கேக்குகள்",
+  "order":"ஆர்டர் செய்யுங்கள்",
+  "call_us":"அழைக்கவும்",
+  "wa_label":"WhatsApp",
+  "sale_tag":"விற்பனை",
+  "sale_text":"திருவிழா விற்பனை: இந்த வாரம் வரை 20% தள்ளுபடி",
+  "wa_online":"ஆன்லைனில்",
+  "wa_bubble":"வணக்கம் {name}! எனக்கு ஆர்டர் செய்ய வேண்டும்: {item} ({price})",
+  "qr_cap":"கடையைப் பார்க்க ஸ்கான் செய்யுங்கள்",
+  "mq_label":"எல்லா வகை கடைகளுக்கும்",
+  "mq_t1":"பேக்கரிகள்",
+  "mq_s1":"காலை கூட்டத்துக்கு முன் அன்றே WhatsApp-இல் முன்-ஆர்டர்கள்.",
+  "mq_t2":"தையல்காரர்கள்",
+  "mq_s2":"உங்கள் விலை பட்டியலும் நேரமும் ஒரே தட்டலில்.",
+  "mq_t3":"பார்பர் கடைகள்",
+  "mq_s3":"வாடிக்கையாளர்களுக்கு சேவைகளைக் காட்டுங்கள், இருக்கை முன்பதிவு செய்ய அனுமதியுங்கள்.",
+  "mq_t4":"காபி கடைகள்",
+  "mq_s4":"நொடிகளில் புதுப்பிக்கும் மெனுக்கள், எல்லா மேசையிலும் QR.",
+  "mq_t5":"பூக்கடைகள்",
+  "mq_s5":"கல்யாண வாடிக்கையாளர்களுக்கும் தினசரி ஆர்டர்களுக்கும் ஒரு இணைப்பு.",
+  "mq_t6":"மளிகைக் கடைகள்",
+  "mq_s6":"தினசரி விலைகளும் சலுகைகளும், எப்போதும் புதிது.",
+  "how_eyebrow":"இது எப்படி வேலை செய்கிறது",
+  "how_h2":"வார்த்தைகளிலிருந்து வலைத்தளம் வரை, ஏறக்குறைய ஒரு நிமிடத்தில்",
+  "how_lead":"ஒரு வாடிக்கையாளரிடம் உங்கள் கடை பற்றி சொல்ல முடிந்தால், அதை ஆன்லைனிலும் செல்ல முடியும். முழு செயல்முறையும் இதுதான்.",
+  "how1_h":"ஒரு நண்பரிடம் சொல்வது போல் விவரியுங்கள்",
+  "how1_p":"சில வரிகள் எழுதுங்கள்: கடையின் பெயர், என்ன விற்கிறீர்கள், நேரம், போன் எண், இடம். சொல்ல விரும்பினால் மைக் அழுத்தி 21 மொழிகளில் சொல்லுங்கள்.",
+  "how1_tag":"நீங்கள் எழுதுங்கள் அல்லது சொல்லுங்கள்",
+  "how1_mock":"என் கடையின் பெயர் சன்ரைஸ் பேக்கரி. சோர்டோ, க்ரொசன்ட் மற்றும் பிறந்தநாள் கேக்குகள் விற்கிறோம். திங்கள் முதல் சனி வரை காலை 7 முதல் மாலை 7 வரை திறந்திருக்கும். 555 014 2288 எண்ணில் அழைக்கவும். 14 மார்க்கெட் தெருவில் சந்தியுங்கள்.",
+  "how1_mic":"◉ சொல்ல அழுத்துங்கள்",
+  "how2_h":"சரிபார்த்து வெளியிடுங்கள்",
+  "how2_p":"TalkShop எல்லாவற்றையும் சரிபார்க்க அடுக்கி வைக்கும். தவறுகளைத் திருத்துங்கள், விலைகளைச் சேர்க்கவும், விற்பனை பானர் சேர்க்கவும், பின் வெளியிடுங்கள். நொடிகள் போதும், எப்போது வேண்டுமானாலும் மாற்றலாம்.",
+  "how2_tag":"உங்கள் ஸ்டோர்ப்ரண்ட், உடனடியாக",
+  "how3_h":"எல்லா இடங்களிலும் பகிர்ங்கள்",
+  "how3_p":"உங்கள் ஸ்டோர்ப்ரண்ட்டின் இணைப்பைப் பெறுங்கள். WhatsApp-இல் அனுப்புங்கள், Instagram பயோவில் வையுங்கள், கவுண்டருக்காக QR குறியீடை அச்சிடுங்கள். வாடிக்கையாளர்கள் தட்டி, பார்த்து ஆர்டர் செய்வார்கள்.",
+  "how3_tag":"ஒரு இணைப்பு, எல்லா இடமும்",
+  "b_eyebrow":"உங்களுக்கு கிடைக்கும்",
+  "b_h2":"ஒரு சிறு கடைக்கு தேவையானது அனைத்தும். தேவையில்லாதது ஒன்றும் இல்லை.",
+  "b_lead":"வாடிக்கையாளர்களை உண்மையாகக் கொண்டுவரும் நான்கு விஷயங்கள், தொடக்கம் முதல் உள்ளிடச் செர்ந்து.",
+  "b1_k":"ஆர்டர்கள்",
+  "b1_h":"உங்கள் பக்கத்திலிருந்தே வாடிக்கையாளர்கள் WhatsApp-இல் ஆர்டர் செய்வார்",
+  "b1_p":"ஒவ்வொரு தயாரிப்பிற்கும் ஒரு ஆர்டர் பொத்தான் கிடைக்கும். ஒரு தட்டலில் உங்கள் கடையுடன் WhatsApp அரட்டை திறக்கும், தயாரிப்பு முன்கூட்டியே எழுதப்பட்டிருக்கும். செக்அயுட் அமைப்பு தேவையில்லை, கமிஷன் இல்லை, புதிய செயலி கற்றுக்கொள்ள தேவையில்லை.",
+  "b1_c1":"வணக்கம்! இன்று சாக்லேட் கேக் இருக்கிறதா?",
+  "b1_c2":"இருக்கிறது! ஒரு முழு கேக் {price}. மாலை 5 மணிக்கு பாக் செய்து வைக்கட்டுமா?",
+  "b2_k":"QR குறியீடுகள்",
+  "b2_h":"உங்கள் கவுண்டருக்காக ஒரு QR குறியீடு",
+  "b2_p":"அச்சிட்டு ஜன்னலில் அல்லது கவுண்டரில் ஒட்டுங்கள். ஒவ்வொரு ஸ்கானும் உங்கள் கடையைத் திறக்கும்.",
+  "b2_cap":"இலவசமாக உருவாக்கப்பட்டது,<br>அச்சிடுவதற்கு தயார்.",
+  "b3_k":"அறிவிப்புகள்",
+  "b3_h":"விற்பனையை அறிவியுங்கள்",
+  "b3_p":"திருவிழாக்கள், தள்ளுபடி மற்றும் புதிய வரவுகளுக்கு ஒரு பானர் சேர்க்கவும். அது உங்கள் பக்கத்தின் மேல் தெரியும்.",
+  "b3_m1":"தீபாவளி பலகாரம் வந்துவிட்டது",
+  "b3_m2":"இந்த வாரம் தினமும் காலை சுடுகிற பாச்",
+  "b4_k":"எப்போதும் புதுப்பிக்கவும்",
+  "b4_h":"விலை மாறியதா? நொடிகளில் புதுப்பியுங்கள்",
+  "b4_p":"ஒவ்வொரு ஸ்டோர்ப்ரண்ட்டிலும் கீழே “இந்த பக்கத்தைப் புதுப்பிக்கவும்” என்ற இணைப்பு இருக்கிறது. எதையும் மாற்றி, புதிய இணைப்பைப் பகிர்ங்கள். டெவலப்பர் தேவையில்லை, காத்திருக்க தேவையில்லை.",
+  "b4_before":"முன்",
+  "b4_after":"பின்",
+  "b4_b1":"சோர்டோ பிரெட்: {p1}",
+  "b4_b2":"மாலை 6 வரை திறந்திருக்கும்",
+  "b4_a1":"சோர்டோ பிரெட்: {p1}",
+  "b4_a2":"இரவு 8 வரை திறந்திருக்கும் ✓",
+  "s_eyebrow":"யாருக்காக",
+  "s_h2":"உங்களைப் போன்ற கடைகளுக்காக",
+  "s_lead":"தெரு பேக்கரி, முகலை தையல்காரர், போன் ரிப்பேர் கடை, வலைத்தளம் இல்லாத சலூன். வாடிக்கையாளர் கேட்டால், “உங்களுக்கு வலைத்தளம் இருக்கிறதா?” இதுதான் பதில்.",
+  "sc1k":"பேக்கரிகள்",
+  "sc1p":"காலை கூட்டத்துக்கு முன் அன்றே WhatsApp-இல் முன்-ஆர்டர்களை ஏற்கவும். வாடிக்கையாளர்கள் செயலி நிறுவத் தேவையில்லை.",
+  "sc2k":"தையல்காரர்கள்",
+  "sc2p":"வாடிக்கையாளர்கள் பகிர ஆர்வர் உங்கள் விலை பட்டியல் மற்றும் நேரம் ஒரு பக்கத்தில்.",
+  "sc3k":"பார்பர் கடைகள்",
+  "sc3p":"சேவைகளையும் விலைகளையும் காட்டுங்கள். நிலையான வாடிக்கையாளர்கள் உங்கள் இணைப்பைப் பகிர்வார்.",
+  "sc4k":"காபி கடைகள்",
+  "sc4p":"நொடிகளில் புதுப்பிக்கும் மெனு, எல்லா மேசையிலும் ஒரு QR.",
+  "sc5k":"பூக்கடைகள்",
+  "sc5p":"கல்யாண வாடிக்கையாளர்களுக்கும் தினசரி ஆர்டர்களுக்கும் திருவிழா காலத்தில் ஒரு இணைப்பு.",
+  "sc6k":"மளிகைக் கடைகள்",
+  "sc6p":"எப்போதும் புதிதாக பக்கத்தில் தினசரி விலைகளும் சலுகைகளும்.",
+  "st1l":"விவரணத்திலிருந்து லைவ் ஸ்டோர்ப்ரண்ட் வரை",
+  "st2l":"உருவாக்குதல் மற்றும் பகிர்தல், கணக்கு இல்லை",
+  "st3l":"குரல் உள்ளீடு மொழிகள், எதிலும் எழுதலாம்",
+  "st4l":"செயலி நிறுவ தேவையில்லை, உங்களுக்கும் வாடிக்கையாளர்களுக்கும்",
+  "min_unit":"நிமிடம்",
+  "faq_eyebrow":"கேள்விகள்",
+  "faq_h2":"நேரடியான பதில்கள்",
+  "q1":"இது உண்மையிலேயே இலவசமா?",
+  "a1":"ஆம். கணக்கின்றி உங்கள் ஸ்டோர்ப்ரண்ட்டை இலவசமாக உருவாக்கிப் பகிரலாம். தனிப்பயன் டொமைன் போன்ற கட்டண வசதிகள் பின்னாள் வரலாம், ஆனால் முக்கிய தளம் இலவசமாகவே நீடிக்கும்.",
+  "q2":"எனக்கு கணக்கு அல்லது செயலி தேவையா?",
+  "a2":"தேவையில்லை. எல்லாம் உங்கள் உலாவியில் வேலை செய்கிறது. உங்கள் தளம் நீங்கள் பகிரும் ஒரு இணைப்பு, வாடிக்கையாளர்கள் அதைத் தட்டித் திறப்பார்கள்.",
+  "q3":"என் பக்கத்தில் ஏதாவது தவறாக இருந்தால்?",
+  "a3":"வெளியிடுவதற்கு முன் நீங்கள் அனைத்தையும் சரிபார்த்து, எல்லா புலங்களையும் திருத்தலாம். ஒவ்வொரு ஸ்டோர்ப்ரண்ட்டிலும் கீழே “இந்த பக்கத்தைப் புதுப்பிக்கவும்” என்ற இணைப்பு இருக்கிறது, நொடிகளில் திருத்தலாம்.",
+  "q4":"எந்த மொழிகள் வேலை செய்யும்?",
+  "a4":"ஆங்கிலம், ஸ்பெயின், போர்ச்சுகீஸ், பிரெஞ்ச், இந்தி, மலையாளம், அரபி, இந்தோனேஷியன், ஸ்வாஹிலி உள்பட 21 மொழிகளில் குரல் உள்ளீடு வேலை செய்கிறது. எந்த மொழியிலும் எழுதலாம்.",
+  "q5":"வாடிக்கையாளர்கள் என் தளத்திலிருந்து ஆர்டர் செய்ய முடியுமா?",
+  "a5":"முடியும். ஒவ்வொரு தயாரிப்பிற்கும் “ஆர்டர்” பொத்தான் கிடைக்கும், அதை அழுத்தினால் தயாரிப்பு முன்கூட்டியே எழுதப்பட்ட WhatsApp அரட்டை உங்கள் கடையுடன் திறக்கும். வாடிக்கையாளர்கள் இப்போதே பயன்படுத்தும் செயலியில் ஆர்டர் செய்வார்கள். செக்அயுட் அமைப்பு தேவையில்லை.",
+  "q6":"என் கடைக்காக QR குறியீடு அச்சிடலாமா?",
+  "a6":"செய்யலாம். வெளியிட்ட பின் “QR குறியீடு பெறுங்கள்” அழுத்தினால் உங்கள் ஸ்டோர்ப்ரண்ட்டைத் திறக்கும் அச்சிடுவதற்குரிய குறியீடு கிடைக்கும். கவுண்டரில் அல்லது ஜன்னலில் ஒட்டுங்கள்.",
+  "cta_h2":"உங்கள் காபி ஆறவதற்கு முன் உங்கள் கடை ஆன்லைனில் இருக்கும்",
+  "cta_p":"சில வரிகளில் விவரியுங்கள். இணைப்பை எல்லா இடங்களிலும் பகிர்ங்கள். இன்று இரவே ஆர்டர்களை ஏற்கவும்.",
+  "stage1":"01 · விவரியுங்கள்",
+  "stage2":"02 · சரிபார்க்கவும்",
+  "stage3":"03 · பகிர்ங்கள்",
+  "build_h1":"உங்கள் ஸ்டோர்ப்ரண்ட்டை உருவாக்குங்கள்",
+  "build_p":"உங்கள் கடையை இயல்பாக விவரியுங்கள்: பெயர், என்ன விற்கிறீர்கள், நேரம், போன் எண், இடம்.",
+  "f_describe":"உங்கள் கடை பற்றி சொல்லுங்கள்",
+  "ph_example":"உதாரணம்: என் கடையின் பெயர் சன்ரைஸ் பேக்கரி. சோர்டோ, க்ரொசன்ட் மற்றும் பிறந்தநாள் கேக்குகள் விற்கிறோம். திங்கள் முதல் சனி வரை காலை 7 முதல் மாலை 7 வரை திறந்திருக்கும். 555 014 2288 எண்ணில் அழைக்கவும். 14 மார்க்கெட் தெருவில் சந்தியுங்கள்.",
+  "mic_idle":"சொல்ல விரும்புகிறீர்களா? சொல்ல அழுத்துங்கள்",
+  "mic_live":"கேட்கிறேன்… நிறுத்த அழுத்துங்கள்",
+  "mic_more":"மேலும் சொல்ல அழுத்துங்கள்",
+  "lang_label":"மொழி",
+  "err_empty":"முதலில் உங்கள் கடை பற்றி சிறிது சொல்லுங்கள் அல்லது எழுதுங்கள், ஒரு வாக்கியம் போதும்.",
+  "err_no_voice":"குரல் உள்ளீட்டிற்கு Chrome அல்லது Edge தேவை (டெஸ்க்டாப் அல்லது Android). பதிலாக கீழே உள்ள பெட்டியில் விவரணத்தை எழுதுங்கள்.",
+  "err_mic_blocked":"மைக் தடுக்கப்பட்டுள்ளது. உலாவியில் மைக் அனுமதி அளியுங்கள் அல்லது கீழே விவரணம் எழுதுங்கள்.",
+  "err_voice_start":"குரல் உள்ளீடு தொடங்கவில்லை. தயவுசெய்து எழுதுங்கள்.",
+  "btn_review":"சரிபார்ப்பதற்குத் தொடருங்கள் →",
+  "rev_h2":"விவரங்களைச் சரிபார்க்கவும்",
+  "rev_p":"நீங்கள் சொன்னதிலிருந்து நாங்கள் இதை நிரப்பியுள்ளோம். தவறுகளைத் திருத்துங்கள், பின் வெளியிடுங்கள்.",
+  "f_name":"கடையின் பெயர்",
+  "f_tagline":"ஒரு வரி விவரணம்",
+  "hint_opt":"(விருப்பம்)",
+  "f_announce":"அறிவிப்பு",
+  "announce_hint":"(விருப்பம், உங்கள் தளத்தில் பானராகத் தெரியும், எ.கா. “திருவிழா விற்பனை: இந்த வாரம் வரை 20% தள்ளுபடி”)",
+  "f_products":"தயாரிப்புகள் அல்லது சேவைகள்",
+  "products_hint":"(ஒவ்வொரு வரியிலும் ஒன்று, “சோர்டோ - $4.50” போல் விலைகளைச் சேர்க்கவும்)",
+  "f_hours":"திறந்திருக்கும் நேரம்",
+  "f_phone":"போன்",
+  "f_whatsapp":"WhatsApp எண்",
+  "wa_hint":"(வழக்கமாக போன் எண்ணே)",
+  "f_address":"முகவரி",
+  "addr_hint":"(விருப்பம், வழி காட்ட பயன்படும்)",
+  "btn_back":"← திரும்புங்கள்",
+  "btn_publish":"என் தளத்தை வெளியிடுங்கள்",
+  "err_noname":"வாடிக்கையாளர்களுக்கு யாருடைய தளம் என்பது தெரிய, உங்கள் கடைக்கு ஒரு பெயர் கொடுங்கள்.",
+  "sh_eyebrow":"உங்கள் கடை ஆன்லைனில் வந்துவிட்டது",
+  "sh_note":"இந்த இணைப்பை எங்கும் பகிர்ங்கள்: WhatsApp, Instagram பயோ, SMS, கவுண்டர் QR குறியீடு. தட்டுபவர் அனைவரும் உங்கள் ஸ்டோர்ப்ரண்ட்டைப் பார்ப்பார்.",
+  "btn_copy":"இணைப்பை நகலெடுங்கள்",
+  "copied":"நகலெடுக்கப்பட்டது!",
+  "btn_open":"என் தளத்தைத் திறங்கள்",
+  "btn_sharewa":"WhatsApp-இல் பகிர்ங்கள்",
+  "btn_qr":"QR குறியீடு பெறுங்கள்",
+  "btn_edit":"விவரங்களைத் திருத்துங்கள்",
+  "qr_note":"இதை அச்சிட்டு கவுண்டரில் அல்லது ஜன்னலில் ஒட்டுங்கள்.",
+  "btn_printqr":"QR குறியீடை அச்சிடுங்கள்",
+  "sh_tip":"குறிப்பு: QR குறியீடை அச்சிட்டு கவுண்டரில் ஒட்டுங்கள், எல்லா வாடிக்கையாளர்களும் தங்கள் போனில் உங்கள் கடையைத் திறக்கலாம்.",
+  "wa_share":"என் கடை ஆன்லைனில் பாருங்கள்: ",
+  "err_qr":"QR குறியீடு உருவாக்க முடியவில்லை. மீண்டும் முயற்சியுங்கள்.",
+  "sv_products":"நாங்கள் என்ன விற்கிறோம்",
+  "sv_products_sub":"இங்கு காணாத எதைப் பற்றியும் எங்களிடம் கேளுங்கள்.",
+  "sv_hours":"திறந்திருக்கும் நேரம்",
+  "sv_hours_sub":"வாருங்கள், உங்களைச் சந்திப்பதில் எங்களுக்கு மகிழ்ச்சி.",
+  "sv_find":"எங்களைக் கண்டுபிடியுங்கள்",
+  "sv_find_sub":"தொடர்பு கொள்ளுங்கள்",
+  "btn_dir":"வழி பாருங்கள்",
+  "made_with_a":"இலவசமாக உருவாக்கப்பட்டது",
+  "made_with_b":"உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.",
+  "update_link":"இந்த கடை உங்களுடையதா? இந்த பக்கத்தைப் புதுப்பிக்கவும்",
+  "nf_h":"இந்த இணைப்பில் ஒரு கடை திறக்கவில்லை.",
+  "nf_p":"இணைப்பு முழுமையாக இருக்கலாம். கடை உரிமையாளரிடம் மீண்டும் அனுப்பும்படி சொல்லுங்கள்.",
+  "nf_cta":"உங்கள் சொந்த கடை தளத்தை உருவாக்குங்கள்",
+  "loc_visit":"நீங்கள் {country}-இலிருந்து பார்க்கிறீர்கள் என்று தெரிகிறது.",
+  "loc_suggest":"{lang}-க்கு மாறவா? · விலைகள் {cur}-இல்?",
+  "loc_cur_only":"விலைகள் {cur}-க்கு மாற்றவா?",
+  "loc_switch":"மாற்று",
+  "loc_keep":"{lang} தொடருங்கள்",
+  "loc_lang_only":"{lang}-க்கு மாறவா?",
+  "country_label":"நாடு",
+  "loc_india_more":"மேலே உள்ள மெனுவில் மலையாளம், இந்தி உள்பட மேலும் மொழிகள் உள்ளன."
+};
+
+
+/* ============================== locale: country + currency ============================== */
+const LANG_NAMES = { en:"English", hi:"\u0939\u093f\u0928\u094d\u0926\u0940", ta:"\u0ba4\u0bae\u0bbf\u0bb4\u0bcd", ml:"\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02" };
+const LOCALE_TAG = { en:"en", hi:"hi-IN", ta:"ta-IN", ml:"ml-IN" };
+const LANG_DIR = { en:"ltr", hi:"ltr", ta:"ltr", ml:"ltr" };
+const COUNTRY = {
+  IN:{lang:"hi", cur:"INR", name:"India", more:"ta_ml"},
+  CN:{lang:null, cur:"CNY", name:"China"},
+  US:{lang:null, cur:"USD", name:"United States"}, GB:{lang:null, cur:"GBP", name:"United Kingdom"},
+  CA:{lang:null, cur:"CAD", name:"Canada"}, AU:{lang:null, cur:"AUD", name:"Australia"},
+  SG:{lang:null, cur:"SGD", name:"Singapore"}, AE:{lang:null, cur:"AED", name:"UAE"},
+  BR:{lang:null, cur:"BRL", name:"Brazil"}, PT:{lang:null, cur:"EUR", name:"Portugal"},
+  ES:{lang:null, cur:"EUR", name:"Spain"}, MX:{lang:null, cur:"MXN", name:"Mexico"},
+  AR:{lang:null, cur:"ARS", name:"Argentina"}, CL:{lang:null, cur:"CLP", name:"Chile"},
+  CO:{lang:null, cur:"COP", name:"Colombia"}, PE:{lang:null, cur:"PEN", name:"Peru"},
+  FR:{lang:null, cur:"EUR", name:"France"}, DE:{lang:null, cur:"EUR", name:"Germany"},
+  IT:{lang:null, cur:"EUR", name:"Italy"}, NL:{lang:null, cur:"EUR", name:"Netherlands"},
+  JP:{lang:null, cur:"JPY", name:"Japan"}, KR:{lang:null, cur:"KRW", name:"South Korea"},
+  ID:{lang:null, cur:"IDR", name:"Indonesia"}, MY:{lang:null, cur:"MYR", name:"Malaysia"},
+  PH:{lang:null, cur:"PHP", name:"Philippines"}, TH:{lang:null, cur:"THB", name:"Thailand"},
+  VN:{lang:null, cur:"VND", name:"Vietnam"}, BD:{lang:null, cur:"BDT", name:"Bangladesh"},
+  PK:{lang:null, cur:"PKR", name:"Pakistan"}, LK:{lang:null, cur:"LKR", name:"Sri Lanka"},
+  NP:{lang:null, cur:"NPR", name:"Nepal"}, ZA:{lang:null, cur:"ZAR", name:"South Africa"},
+  NG:{lang:null, cur:"NGN", name:"Nigeria"}, KE:{lang:null, cur:"KES", name:"Kenya"},
+  EG:{lang:null, cur:"EGP", name:"Egypt"}, SA:{lang:null, cur:"SAR", name:"Saudi Arabia"},
+  IL:{lang:null, cur:"ILS", name:"Israel"}, TR:{lang:null, cur:"TRY", name:"Turkey"},
+  RU:{lang:null, cur:"RUB", name:"Russia"}, SE:{lang:null, cur:"SEK", name:"Sweden"},
+  NO:{lang:null, cur:"NOK", name:"Norway"}, CH:{lang:null, cur:"CHF", name:"Switzerland"},
+  NZ:{lang:null, cur:"NZD", name:"New Zealand"}
+};
+const FX_FALLBACK = { USD:1, CNY:7.15, INR:88.6, GBP:0.79, EUR:0.92, CAD:1.38, AUD:1.52, SGD:1.29, AED:3.67, BRL:5.45, MXN:18.6, JPY:155, KRW:1380, ARS:1340, CLP:950, COP:4400, PEN:3.75, IDR:16200, MYR:4.45, PHP:58.5, THB:33.5, VND:25400, BDT:120, PKR:278, LKR:300, NPR:140, ZAR:17.8, NGN:1550, KES:129, EGP:48.5, SAR:3.75, ILS:3.7, TRY:34, RUB:95, SEK:10.5, NOK:10.8, CHF:0.88, NZD:1.65 };
+let fxCur = "USD", fxRate = 1;
+try{ const s = JSON.parse(localStorage.getItem("ts_fx") || "null"); if(s && s.cur){ fxCur = s.cur; fxRate = s.rate || FX_FALLBACK[s.cur] || 1; } }catch(e){}
+function fmt(usd){
+  try{ return new Intl.NumberFormat(LOCALE_TAG[uiLang] || "en", { style:"currency", currency: fxCur }).format(usd * fxRate); }
+  catch(e){ return fxCur + " " + (usd * fxRate).toFixed(2); }
+}
+async function setCurrency(cur){
+  fxCur = cur;
+  try{
+    const r = await fetch("https://api.frankfurter.app/latest?from=USD&to=" + cur);
+    const j = await r.json();
+    fxRate = (j.rates && j.rates[cur]) ? j.rates[cur] : (FX_FALLBACK[cur] || 1);
+  }catch(e){ fxRate = FX_FALLBACK[cur] || 1; }
+  try{ localStorage.setItem("ts_fx", JSON.stringify({ cur: fxCur, rate: fxRate })); }catch(e){}
+}
+function flag(cc){
+  return String(cc || "").toUpperCase().replace(/./g, c => String.fromCodePoint(127397 + c.charCodeAt(0)));
+}
+/* ---- privacy-safe country guess: device timezone first, then browser language region.
+   No network, no permission, never precise location. Only a suggestion, never forced. ---- */
+const TZ_COUNTRY = {
+  "Asia/Kolkata":"IN","Asia/Calcutta":"IN",
+  "America/New_York":"US","America/Detroit":"US","America/Kentucky/Louisville":"US","America/Kentucky/Monticello":"US","America/Indiana/Indianapolis":"US","America/Indiana/Vincennes":"US","America/Indiana/Winamac":"US","America/Indiana/Marengo":"US","America/Indiana/Petersburg":"US","America/Indiana/Vevay":"US","America/Chicago":"US","America/Indiana/Tell_City":"US","America/Indiana/Knox":"US","America/Menominee":"US","America/North_Dakota/Center":"US","America/North_Dakota/New_Salem":"US","America/North_Dakota/Beulah":"US","America/Denver":"US","America/Boise":"US","America/Phoenix":"US","America/Los_Angeles":"US","America/Anchorage":"US","America/Juneau":"US","America/Sitka":"US","America/Metlakatla":"US","America/Yakutat":"US","America/Nome":"US","America/Adak":"US","Pacific/Honolulu":"US",
+  "Europe/London":"GB","Europe/Belfast":"GB","Europe/Guernsey":"GB","Europe/Jersey":"GB","Europe/Isle_of_Man":"GB",
+  "Asia/Shanghai":"CN","Asia/Chongqing":"CN","Asia/Harbin":"CN","Asia/Urumqi":"CN","Asia/Kashgar":"CN",
+  "America/Toronto":"CA","America/Vancouver":"CA","America/Edmonton":"CA","America/Winnipeg":"CA","America/Halifax":"CA","America/St_Johns":"CA","America/Montreal":"CA","America/Regina":"CA","America/Swift_Current":"CA","America/Goose_Bay":"CA","America/Moncton":"CA","America/Glace_Bay":"CA","America/Blanc-Sablon":"CA","America/Atikokan":"CA","America/Creston":"CA","America/Dawson_Creek":"CA","America/Fort_Nelson":"CA","America/Cambridge_Bay":"CA","America/Dawson":"CA","America/Whitehorse":"CA","America/Inuvik":"CA","America/Iqaluit":"CA","America/Pangnirtung":"CA","America/Rankin_Inlet":"CA","America/Resolute":"CA",
+  "Australia/Sydney":"AU","Australia/Melbourne":"AU","Australia/Brisbane":"AU","Australia/Perth":"AU","Australia/Adelaide":"AU","Australia/Darwin":"AU","Australia/Hobart":"AU","Australia/Canberra":"AU","Australia/Broken_Hill":"AU","Australia/Lord_Howe":"AU","Australia/Lindeman":"AU","Australia/Currie":"AU","Australia/Eucla":"AU",
+  "Asia/Singapore":"SG","Asia/Dubai":"AE",
+  "America/Sao_Paulo":"BR","America/Rio_Branco":"BR","America/Manaus":"BR","America/Belem":"BR","America/Fortaleza":"BR","America/Recife":"BR","America/Bahia":"BR","America/Noronha":"BR","America/Campo_Grande":"BR","America/Cuiaba":"BR","America/Santarem":"BR","America/Porto_Velho":"BR","America/Boa_Vista":"BR","America/Araguaina":"BR","America/Maceio":"BR",
+  "Europe/Lisbon":"PT","Atlantic/Madeira":"PT","Atlantic/Azores":"PT",
+  "Europe/Madrid":"ES","Atlantic/Canary":"ES","Africa/Ceuta":"ES",
+  "America/Mexico_City":"MX","America/Cancun":"MX","America/Tijuana":"MX","America/Chihuahua":"MX","America/Mazatlan":"MX","America/Monterrey":"MX","America/Merida":"MX","America/Hermosillo":"MX",
+  "America/Argentina/Buenos_Aires":"AR","America/Argentina/Cordoba":"AR","America/Argentina/Mendoza":"AR","America/Argentina/Rosario":"AR",
+  "America/Santiago":"CL","Pacific/Easter":"CL",
+  "America/Bogota":"CO","America/Lima":"PE",
+  "Europe/Paris":"FR","Europe/Berlin":"DE","Europe/Rome":"IT","Europe/Amsterdam":"NL",
+  "Asia/Tokyo":"JP","Asia/Seoul":"KR",
+  "Asia/Jakarta":"ID","Asia/Makassar":"ID","Asia/Jayapura":"ID","Asia/Pontianak":"ID",
+  "Asia/Kuala_Lumpur":"MY","Asia/Kuching":"MY",
+  "Asia/Manila":"PH","Asia/Bangkok":"TH","Asia/Ho_Chi_Minh":"VN","Asia/Saigon":"VN",
+  "Asia/Dhaka":"BD","Asia/Karachi":"PK","Asia/Colombo":"LK","Asia/Kathmandu":"NP","Asia/Katmandu":"NP",
+  "Africa/Johannesburg":"ZA","Africa/Lagos":"NG","Africa/Nairobi":"KE","Africa/Cairo":"EG",
+  "Asia/Riyadh":"SA","Asia/Jerusalem":"IL","Asia/Tel_Aviv":"IL","Asia/Gaza":"IL","Asia/Hebron":"IL",
+  "Europe/Istanbul":"TR","Asia/Istanbul":"TR",
+  "Europe/Moscow":"RU","Europe/Kaliningrad":"RU","Europe/Samara":"RU","Europe/Volgograd":"RU","Asia/Yekaterinburg":"RU","Asia/Omsk":"RU","Asia/Novosibirsk":"RU","Asia/Krasnoyarsk":"RU","Asia/Irkutsk":"RU","Asia/Yakutsk":"RU","Asia/Vladivostok":"RU","Asia/Magadan":"RU","Asia/Sakhalin":"RU","Asia/Kamchatka":"RU","Asia/Anadyr":"RU",
+  "Europe/Stockholm":"SE","Europe/Oslo":"NO","Europe/Zurich":"CH",
+  "Pacific/Auckland":"NZ","Pacific/Chatham":"NZ"
+};
+function guessCountry(){
+  try{
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if(tz && TZ_COUNTRY[tz]) return TZ_COUNTRY[tz];
+  }catch(e){}
+  try{
+    const parts = String(navigator.language || "").split(/[-_]/);
+    if(parts.length > 1){ const cc = parts[1].toUpperCase(); if(COUNTRY[cc]) return cc; }
+  }catch(e){}
+  return null;
+}
+function browserLang(){
+  try{ return String(navigator.language || "en").split(/[-_]/)[0].toLowerCase(); }catch(e){ return "en"; }
+}
+function suggestLangFor(cc){
+  // Prefer the browser's own language when we ship a translation for it,
+  // otherwise the country's default language. null = no translation available.
+  const bl = browserLang();
+  if(bl !== uiLang && STR[bl]) return bl;
+  const cfg = COUNTRY[cc];
+  if(cfg && cfg.lang && cfg.lang !== uiLang && STR[cfg.lang]) return cfg.lang;
+  return null;
+}
+
+/* ============================== locale UI ============================== */
+function waMsg(name, item, price){
+  const m = t("wa_bubble").replace("{name}", name).replace("{item}", item);
+  return price ? m.replace("{price}", price) : m.replace(" ({price})", "");
+}
+function applyLangHead(){
+  document.documentElement.lang = LOCALE_TAG[uiLang] || "en";
+  document.documentElement.dir = LANG_DIR[uiLang] || "ltr";
+  try{ document.title = t("meta_title"); }catch(e){}
+}
+function wireLangSel(){
+  const sel = document.getElementById("uiLangSel");
+  if(!sel) return;
+  sel.innerHTML = Object.keys(LANG_NAMES).map(l=>'<option value="'+l+'"'+(l===uiLang?' selected':'')+'>'+LANG_NAMES[l]+'</option>').join("");
+  sel.onchange = ()=> setLang(sel.value);
+}
+function wireCountrySel(){
+  const sel = document.getElementById("countrySel");
+  if(!sel) return;
+  const codes = Object.keys(COUNTRY).sort((a,b)=>COUNTRY[a].name.localeCompare(COUNTRY[b].name));
+  sel.innerHTML = '<option value="">&#127760; '+t("country_label")+'</option>'
+    + codes.map(c=>'<option value="'+c+'"'+(c===state.cc?' selected':'')+'>'+flag(c)+' '+COUNTRY[c].name+'</option>').join("");
+  sel.onchange = ()=>{ if(sel.value) setCountry(sel.value); sel.blur(); };
+}
+async function setCountry(cc){
+  const cfg = COUNTRY[cc]; if(!cfg) return;
+  state.cc = cc;
+  await setCurrency(cfg.cur);
+  persistLocale();
+  router();
+  const sl = suggestLangFor(cc);
+  if(sl) showLangBanner(sl);
+}
+function persistLocale(){
+  try{ localStorage.setItem("ts_locale", JSON.stringify({ lang:uiLang, cur:fxCur, cc:state.cc||null, dismissed:true })); }catch(e){}
+}
+function setLang(l, silent){
+  if(!STR[l]) l = "en";
+  uiLang = l;
+  try{ localStorage.setItem("ts_ui", l); }catch(e){}
+  let cur = fxCur, cc = null, dismissed = false;
+  try{ const s = JSON.parse(localStorage.getItem("ts_locale")||"null"); if(s){ cur = s.cur||cur; cc = s.cc||null; dismissed = !!s.dismissed; } }catch(e){}
+  if(state.cc) cc = state.cc;
+  try{ localStorage.setItem("ts_locale", JSON.stringify({ lang:l, cur:cur, cc:cc, dismissed:dismissed })); }catch(e){}
+  applyLangHead();
+  if(!silent) router();
+}
+function showLangBanner(langCode){
+  if(document.getElementById("locBanner")) return;
+  const el = document.createElement("div");
+  el.id = "locBanner"; el.className = "loc-banner";
+  el.innerHTML = '<div class="loc-msg">'+t("loc_lang_only").replace("{lang}", LANG_NAMES[langCode])+'</div>'
+    + '<div class="loc-btns"><button class="btn btn-sm btn-solid" id="locYes">'+t("loc_switch")+'</button>'
+    + '<button class="btn btn-sm" id="locNo">'+t("loc_keep").replace("{lang}", LANG_NAMES[uiLang]||"English")+'</button></div>';
+  document.body.appendChild(el);
+  document.getElementById("locYes").onclick = ()=>{ setLang(langCode); persistLocale(); el.remove(); };
+  document.getElementById("locNo").onclick = ()=>{ el.remove(); };
+}
+function showLocaleBanner(cc, cfg, suggestLang){
+  if(document.getElementById("locBanner")) return;
+  const el = document.createElement("div");
+  el.id = "locBanner"; el.className = "loc-banner";
+  const langName = suggestLang ? LANG_NAMES[suggestLang] : null;
+  let msg = t("loc_visit").replace("{country}", flag(cc)+" "+cfg.name) + " ";
+  if(langName && cfg.cur !== fxCur) msg += t("loc_suggest").replace("{lang}", langName).replace("{cur}", cfg.cur);
+  else if(langName) msg += t("loc_lang_only").replace("{lang}", langName);
+  else msg += t("loc_cur_only").replace("{cur}", cfg.cur);
+  if(cfg.more) msg += " " + t("loc_india_more");
+  el.innerHTML = '<div class="loc-msg">'+msg+'</div>'
+    + '<div class="loc-btns"><button class="btn btn-sm btn-solid" id="locYes">'+t("loc_switch")+'</button>'
+    + '<button class="btn btn-sm" id="locNo">'+t("loc_keep").replace("{lang}", LANG_NAMES[uiLang]||"English")+'</button></div>';
+  document.body.appendChild(el);
+  document.getElementById("locYes").onclick = async ()=>{
+    if(suggestLang) setLang(suggestLang, true);
+    await setCurrency(cfg.cur);
+    state.cc = cc;
+    persistLocale();
+    el.remove(); router();
+  };
+  document.getElementById("locNo").onclick = ()=>{
+    persistLocale();
+    el.remove();
+  };
+}
+function initLocale(){
+  let saved = null;
+  try{ saved = JSON.parse(localStorage.getItem("ts_locale")||"null"); }catch(e){}
+  if(saved && saved.dismissed){
+    if(saved.lang && STR[saved.lang]) uiLang = saved.lang;
+    if(saved.cc && COUNTRY[saved.cc]) state.cc = saved.cc;
+    if(saved.cur){ fxCur = saved.cur; fxRate = FX_FALLBACK[saved.cur]||1; setCurrency(saved.cur).then(()=>{ try{ router(); }catch(e){} }); }
+    applyLangHead();
+    return;
+  }
+  const cc = guessCountry();
+  const cfg = cc && COUNTRY[cc];
+  if(!cfg) return;
+  const sl = suggestLangFor(cc);
+  if(!sl && cfg.cur === fxCur) return;
+  showLocaleBanner(cc, cfg, sl);
+}
+/* ============================== sample */
 const SAMPLE = {
   name:"Sunrise Bakery",
-  tagline:"Fresh bread, cakes and pastries baked every morning since 2009.",
+  taglineKey:"sample_tagline",
+  announce:"Festival sale: 20% off this week",
   products:[
-    {name:"Sourdough loaf", price:"$4.50"},
-    {name:"Butter croissant", price:"$2.00"},
-    {name:"Chocolate cake (whole)", price:"$28"},
-    {name:"Cinnamon rolls (4 pack)", price:"$9"},
-    {name:"Custom birthday cakes", price:"from $35"}
+    {k:"sp1", usd:4.50},
+    {k:"sp2", usd:2.00},
+    {k:"sp3", usd:28},
+    {k:"sp4", usd:9},
+    {k:"sp5", usd:35}
   ],
   hours:"Monday to Saturday, 7am to 7pm. Sundays 8am to 1pm.",
   phone:"+1 555-014-2288", whatsapp:"+1 555-014-2288",
@@ -362,7 +1357,7 @@ function parseTranscript(raw){
     d.products = prod.split(/,|\s+and\s+/).map(s=>s.trim()).filter(s=>s && s.length<60).slice(0,24)
       .map(item=>{
         const pm = item.match(/^(.*?)\s*(?:for\s*)?(\$\s?[\d.,]+(?:\s?(?:each|a piece))?)\s*$/);
-        return pm ? {name:pm[1].trim(), price:pm[2].trim()} : {name:item, price:""};
+        return pm ? {name:pm[1].trim().replace(/[:\u2013\u2014]\s*$/, ""), price:pm[2].trim()} : {name:item, price:""};
       }).filter(p=>p.name);
   }
   // hours
@@ -384,24 +1379,24 @@ function parseTranscript(raw){
   return d;
 }
 /* ============================== state ============================== */
-const state = { step:1, lang:"en-US", transcript:"", listening:false, rec:null, recStart:0, data:null, link:"" };
-const LANGS = [["en-US","English (US)"],["en-GB","English (UK)"],["en-IN","English (India)"],["es-ES","Spanish"],["es-MX","Spanish (Mexico)"],["pt-BR","Portuguese (Brazil)"],["fr-FR","French"],["de-DE","German"],["hi-IN","Hindi"],["ar-SA","Arabic"],["id-ID","Indonesian"],["ms-MY","Malay"],["tl-PH","Filipino"],["ur-PK","Urdu"],["bn-IN","Bengali"],["ta-IN","Tamil"],["te-IN","Telugu"],["sw-KE","Swahili"],["nl-NL","Dutch"],["it-IT","Italian"]];
+const state = { step:1, lang:"en-US", transcript:"", listening:false, rec:null, recStart:0, data:null, link:"", cc:null };
+const LANGS = [["en-US","English (US)"],["en-GB","English (UK)"],["en-IN","English (India)"],["es-ES","Spanish"],["es-MX","Spanish (Mexico)"],["pt-BR","Portuguese (Brazil)"],["fr-FR","French"],["de-DE","German"],["hi-IN","Hindi"],["ar-SA","Arabic"],["id-ID","Indonesian"],["ms-MY","Malay"],["tl-PH","Filipino"],["ur-PK","Urdu"],["bn-IN","Bengali"],["ta-IN","Tamil"],["te-IN","Telugu"],["ml-IN","Malayalam"],["sw-KE","Swahili"],["nl-NL","Dutch"],["it-IT","Italian"]];
 /* ============================== chrome ============================== */
 function header(){
   return '<div class="mast"><div class="wrap mast-in">'
     + '<a class="wordmark" href="#/">Talk<span>Shop</span></a>'
-    + '<nav><a class="nl" href="#how">How it works</a><a class="nl sample-link" href="#/">See a sample</a>'
-    + '<a class="btn btn-sm btn-solid" href="#/build">Start free</a></nav></div></div>';
+    + '<nav><a class="nl" href="#how">'+t("nav_how")+'</a><a class="nl sample-link" href="#/">'+t("nav_sample")+'</a>'
+    + '<a class="btn btn-sm btn-solid" href="#/build" onclick="freshBuild()">'+t("nav_start")+'</a><select id="countrySel" class="langsel" aria-label="Country"></select><select id="uiLangSel" class="langsel" aria-label="Language"></select></nav></div></div>';
 }
 function footer(){
   return '<footer><div class="wrap"><div class="foot">'
     + '<div><span class="brand">Talk<span>Shop</span></span>'
-    + '<div>Describe your shop. Get it online.<br>Free, no account, no app.</div></div>'
-    + '<div><h5>PRODUCT</h5><a href="#/build">Build your site</a><a class="sample-link" href="#/">See a sample shop</a><a href="#features">Features</a><a href="#how">How it works</a></div>'
-    + '<div><h5>HELP</h5><a href="#faq">Questions</a><a href="#/build">Update my page</a></div>'
-    + '</div><div class="foot-bottom"><div>© 2026 TalkShop</div><div>Free &nbsp;·&nbsp; No account &nbsp;·&nbsp; Made for small shops everywhere</div></div></div></footer>';
+    + '<div>'+t("foot_tag")+'</div></div>'
+    + '<div><h5>'+t("foot_product")+'</h5><a href="#/build" onclick="freshBuild()">'+t("foot_build")+'</a><a class="sample-link" href="#/">'+t("foot_sample")+'</a><a href="#features">'+t("foot_features")+'</a><a href="#how">'+t("foot_how")+'</a></div>'
+    + '<div><h5>'+t("foot_help")+'</h5><a href="#faq">'+t("foot_faq")+'</a><a href="#/build" onclick="freshBuild()">'+t("foot_update")+'</a></div>'
+    + '</div><div class="foot-bottom"><div>'+t("foot_rights")+'</div><div>'+t("foot_note")+'</div></div></div></footer>';
 }
-function render(html){ $("#view").innerHTML = html; wireSampleLinks(); }
+function render(html){ $("#view").innerHTML = html; wireSampleLinks(); wireCountrySel(); wireLangSel(); }
 function wireSampleLinks(){
   const href = "#/s/" + encodeSite(SAMPLE);
   document.querySelectorAll(".sample-link").forEach(a => a.href = href);
@@ -409,126 +1404,126 @@ function wireSampleLinks(){
 /* ============================== home ============================== */
 function homeView(){
   const mqCards = [
-    ["assets/shop-bakery.jpg","Bakeries","Pre-orders on WhatsApp before the morning rush."],
-    ["assets/shop-tailor.jpg","Tailors","Your price list and timings, one tap away."],
-    ["assets/shop-barber.jpg","Barbershops","Let customers see services and book a chair."],
-    ["assets/shop-cafe.jpg","Cafes","Menus that update in seconds, QR on every table."],
-    ["assets/shop-flowers.jpg","Florists","One link for wedding clients and daily orders."],
-    ["assets/shop-grocery.jpg","Corner groceries","Daily prices and offers, always current."]
+    ["assets/shop-bakery.jpg",t("mq_t1"),t("mq_s1")],
+    ["assets/shop-tailor.jpg",t("mq_t2"),t("mq_s2")],
+    ["assets/shop-barber.jpg",t("mq_t3"),t("mq_s3")],
+    ["assets/shop-cafe.jpg",t("mq_t4"),t("mq_s4")],
+    ["assets/shop-flowers.jpg",t("mq_t5"),t("mq_s5")],
+    ["assets/shop-grocery.jpg",t("mq_t6"),t("mq_s6")]
   ].map(c=>'<div class="mq-card"><img src="'+c[0]+'" alt="'+c[1]+'" loading="lazy"><div class="t">'+c[1]+'</div><div class="s">'+c[2]+'</div></div>').join("");
   const shopCards = [
-    ["assets/shop-bakery.jpg","BAKERIES","Take pre-orders on WhatsApp before the morning rush. No app for customers to install."],
-    ["assets/shop-tailor.jpg","TAILORS","Put your price list, timings and address on one page customers can forward."],
-    ["assets/shop-barber.jpg","BARBERSHOPS","Show services and prices. Regulars share your link for you."],
-    ["assets/shop-cafe.jpg","CAFES","A menu that updates in seconds, plus a QR code for every table."],
-    ["assets/shop-flowers.jpg","FLORISTS","One link for wedding enquiries, daily orders and festival rushes."],
-    ["assets/shop-grocery.jpg","CORNER GROCERIES","Daily prices and offers on a page that is always current."]
+    ["assets/shop-bakery.jpg",t("sc1k"),t("sc1p")],
+    ["assets/shop-tailor.jpg",t("sc2k"),t("sc2p")],
+    ["assets/shop-barber.jpg",t("sc3k"),t("sc3p")],
+    ["assets/shop-cafe.jpg",t("sc4k"),t("sc4p")],
+    ["assets/shop-flowers.jpg",t("sc5k"),t("sc5p")],
+    ["assets/shop-grocery.jpg",t("sc6k"),t("sc6p")]
   ].map(c=>'<div class="shopcard"><img src="'+c[0]+'" alt="'+c[1]+'" loading="lazy"><div class="b"><div class="k">'+c[1]+'</div><p>'+c[2]+'</p></div></div>').join("");
   return header()
   /* ---------- hero ---------- */
   + '<div class="hero2"><div class="wrap hero2-in">'
   + '<div class="hero-copy">'
-  + '<div class="eyebrow">FOR SMALL SHOPS, EVERYWHERE</div>'
-  + '<h1>Describe your shop. <em>Get it online.</em></h1>'
-  + '<p class="sub">Type a few lines about your shop, or just talk, and TalkShop turns it into a clean mobile storefront. Share it on WhatsApp, print it as a QR code, take orders straight from the page.</p>'
-  + '<div class="cta-row"><a class="btn btn-accent btn-lg" href="#/build">Build my site, free</a>'
-  + '<a class="btn btn-lg sample-link" href="#/">See a sample shop</a></div>'
-  + '<div class="meta-row"><b>Free</b> &nbsp;·&nbsp; <b>No account</b> &nbsp;·&nbsp; <b>No app</b> &nbsp;·&nbsp; Works in any browser</div>'
+  + '<div class="eyebrow">'+t("hero_eyebrow")+'</div>'
+  + '<h1>'+t("hero_h1a")+'<em>'+t("hero_h1b")+'</em></h1>'
+  + '<p class="sub">'+t("hero_sub")+'</p>'
+  + '<div class="cta-row"><a class="btn btn-accent btn-lg" href="#/build" onclick="freshBuild()">'+t("hero_cta1")+'</a>'
+  + '<a class="btn btn-lg sample-link" href="#/">'+t("hero_cta2")+'</a></div>'
+  + '<div class="meta-row"><b>'+t("meta_free")+'</b>  ·  <b>'+t("meta_noaccount")+'</b>  ·  <b>'+t("meta_noapp")+'</b>  ·  '+t("meta_browser")+'</div>'
   + '</div>'
   + '<div class="hero-visual">'
   + '<div class="hv-glow"></div>'
   + '<img class="hv-photo" src="assets/shop-bakery.jpg" alt="A neighborhood bakery">'
   + '<div class="phone"><div class="phone-notch"><i></i></div><div class="mini-shop">'
-  + '<div class="mini-kicker">NOW OPEN ONLINE</div><h4>Sunrise Bakery</h4>'
-  + '<div class="tag">Fresh bread, cakes and pastries baked every morning.</div>'
-  + '<div class="mini-prod"><span>Sourdough loaf</span><span class="mp">$4.50</span><span class="mini-order">Order</span></div>'
-  + '<div class="mini-prod"><span>Butter croissant</span><span class="mp">$2.00</span><span class="mini-order">Order</span></div>'
-  + '<div class="mini-prod"><span>Chocolate cake</span><span class="mp">$28</span><span class="mini-order">Order</span></div>'
-  + '<div class="mini-foot"><span class="a">Call us</span><span class="b">WhatsApp</span></div>'
+  + '<div class="mini-kicker">'+t("mini_kicker")+'</div><h4>Sunrise Bakery</h4>'
+  + '<div class="tag">'+t("sample_tagline")+'</div>'
+  + '<div class="mini-prod"><span>'+t("prod1")+'</span><span class="mp">'+fmt(4.50)+'</span><span class="mini-order">'+t("order")+'</span></div>'
+  + '<div class="mini-prod"><span>'+t("prod2")+'</span><span class="mp">'+fmt(2.00)+'</span><span class="mini-order">'+t("order")+'</span></div>'
+  + '<div class="mini-prod"><span>'+t("prod3")+'</span><span class="mp">'+fmt(28)+'</span><span class="mini-order">'+t("order")+'</span></div>'
+  + '<div class="mini-foot"><span class="a">'+t("call_us")+'</span><span class="b">'+t("wa_label")+'</span></div>'
   + '</div></div>'
-  + '<div class="float fc-sale"><i>SALE</i>Festival sale: 20% off this week</div>'
-  + '<div class="float fc-wa"><div class="wa-head"><div class="wa-dot">✆</div><div>Sunrise Bakery<small>online</small></div></div>'
-  + '<div class="bubble">Hi Sunrise Bakery! I would like to order: Sourdough loaf ($4.50)<span class="tick">✓✓ 9:41</span></div></div>'
-  + '<div class="float fc-qr"><div id="heroQr"></div><div class="cap">Scan to visit the shop</div></div>'
+  + '<div class="float fc-sale"><i>'+t("sale_tag")+'</i>'+t("sale_text")+'</div>'
+  + '<div class="float fc-wa"><div class="wa-head"><div class="wa-dot">✆</div><div>Sunrise Bakery<small>'+t("wa_online")+'</small></div></div>'
+  + '<div class="bubble">'+t("wa_bubble").replace("{name}","Sunrise Bakery").replace("{item}",t("prod1")).replace("{price}",fmt(4.50))+'<span class="tick">✓✓ 9:41</span></div></div>'
+  + '<div class="float fc-qr"><div id="heroQr"></div><div class="cap">'+t("qr_cap")+'</div></div>'
   + '</div>'
   + '</div></div>'
   /* ---------- marquee ---------- */
-  + '<div class="marquee"><div class="mq-label">MADE FOR EVERY KIND OF SHOP</div>'
+  + '<div class="marquee"><div class="mq-label">'+t("mq_label")+'</div>'
   + '<div class="mq-view"><div class="mq-track">'+mqCards+mqCards+'</div></div></div>'
   /* ---------- how it works ---------- */
   + '<div class="sec" id="how"><div class="wrap">'
-  + '<div class="sec-head"><div class="eyebrow">HOW IT WORKS</div><h2>From words to website in about a minute</h2>'
-  + '<p class="lead">If you can describe your shop to a customer, you can put it online. Here is the whole process.</p></div>'
-  + '<div class="how-row"><div class="how-copy"><div class="how-num">01</div><h3>Describe it like you would to a friend</h3>'
-  + '<p>Type a few lines: your shop name, what you sell, your hours, your phone number, where you are. Prefer talking? Tap the mic and dictate instead, in 18 languages.</p></div>'
-  + '<div class="how-vis"><div class="tag">YOU TYPE OR TALK</div>'
-  + '<div class="mock-type">My shop is called Sunrise Bakery. We sell sourdough, croissants and birthday cakes. Open Monday to Saturday 7am to 7pm. Call 555 014 2288. Find us at 14 Market Street.</div>'
-  + '<span class="mock-mic">◉ Tap to dictate</span></div></div>'
-  + '<div class="how-row flip"><div class="how-copy"><div class="how-num">02</div><h3>Review it, then publish</h3>'
-  + '<p>TalkShop lays everything out for you to check. Fix anything, add prices, add a sale banner, then hit publish. It takes seconds, and you can change it anytime.</p></div>'
-  + '<div class="how-vis"><div class="tag">YOUR STOREFRONT, INSTANTLY</div>'
-  + '<div class="mock-site"><div class="mock-banner">Festival sale: 20% off this week</div><div class="ms-body"><h5>Sunrise Bakery</h5>'
-  + '<div class="ms-prod"><span>Sourdough loaf</span><span>$4.50</span></div>'
-  + '<div class="ms-prod"><span>Butter croissant</span><span>$2.00</span></div>'
-  + '<div class="ms-prod"><span>Chocolate cake</span><span>$28</span></div>'
+  + '<div class="sec-head"><div class="eyebrow">'+t("how_eyebrow")+'</div><h2>'+t("how_h2")+'</h2>'
+  + '<p class="lead">'+t("how_lead")+'</p></div>'
+  + '<div class="how-row"><div class="how-copy"><div class="how-num">01</div><h3>'+t("how1_h")+'</h3>'
+  + '<p>'+t("how1_p")+'</p></div>'
+  + '<div class="how-vis"><div class="tag">'+t("how1_tag")+'</div>'
+  + '<div class="mock-type">'+t("how1_mock")+'</div>'
+  + '<span class="mock-mic">'+t("how1_mic")+'</span></div></div>'
+  + '<div class="how-row flip"><div class="how-copy"><div class="how-num">02</div><h3>'+t("how2_h")+'</h3>'
+  + '<p>'+t("how2_p")+'</p></div>'
+  + '<div class="how-vis"><div class="tag">'+t("how2_tag")+'</div>'
+  + '<div class="mock-site"><div class="mock-banner">'+t("sale_text")+'</div><div class="ms-body"><h5>Sunrise Bakery</h5>'
+  + '<div class="ms-prod"><span>'+t("prod1")+'</span><span>'+fmt(4.50)+'</span></div>'
+  + '<div class="ms-prod"><span>'+t("prod2")+'</span><span>'+fmt(2.00)+'</span></div>'
+  + '<div class="ms-prod"><span>'+t("prod3")+'</span><span>'+fmt(28)+'</span></div>'
   + '</div></div></div></div>'
-  + '<div class="how-row"><div class="how-copy"><div class="how-num">03</div><h3>Share it everywhere</h3>'
-  + '<p>Get a link to your storefront. Send it on WhatsApp, put it in your Instagram bio, print it as a QR code for your counter. Customers tap, browse, and order.</p></div>'
-  + '<div class="how-vis"><div class="tag">ONE LINK, EVERYWHERE</div>'
-  + '<div class="mock-qr-row"><div class="qr-ph"></div><div class="mock-share-btns"><span class="solid">Copy link</span><span>Share on WhatsApp</span><span>Get QR code</span></div></div>'
+  + '<div class="how-row"><div class="how-copy"><div class="how-num">03</div><h3>'+t("how3_h")+'</h3>'
+  + '<p>'+t("how3_p")+'</p></div>'
+  + '<div class="how-vis"><div class="tag">'+t("how3_tag")+'</div>'
+  + '<div class="mock-qr-row"><div class="qr-ph"></div><div class="mock-share-btns"><span class="solid">'+t("btn_copy")+'</span><span>'+t("btn_sharewa")+'</span><span>'+t("btn_qr")+'</span></div></div>'
   + '</div></div>'
   + '</div></div>'
   /* ---------- bento features ---------- */
   + '<div class="sec" id="features"><div class="wrap">'
-  + '<div class="sec-head"><div class="eyebrow">WHAT YOU GET</div><h2>Everything a small shop needs. Nothing it doesn\'t.</h2>'
-  + '<p class="lead">Four things that actually bring customers in, built in from the start.</p></div>'
+  + '<div class="sec-head"><div class="eyebrow">'+t("b_eyebrow")+'</div><h2>'+t("b_h2")+'</h2>'
+  + '<p class="lead">'+t("b_lead")+'</p></div>'
   + '<div class="bento">'
-  + '<div class="b-card dark span2"><div class="k">ORDERS</div><h3>Customers order on WhatsApp, straight from your page</h3>'
-  + '<p>Every product gets an Order button. One tap opens a WhatsApp chat with your shop and the item pre-typed. No checkout system, no commission, no new app to learn.</p>'
+  + '<div class="b-card dark span2"><div class="k">'+t("b1_k")+'</div><h3>'+t("b1_h")+'</h3>'
+  + '<p>'+t("b1_p")+'</p>'
   + '<div class="b-visual"><div class="chat-mock">'
-  + '<div class="bubble">Hi! Do you have the chocolate cake today?<span class="tick">✓✓ 9:38</span></div>'
-  + '<div class="bubble out">Yes! One whole cake is $28. Shall I pack it for 5pm?<span class="tick">✓✓ 9:39</span></div>'
+  + '<div class="bubble">'+t("b1_c1")+'<span class="tick">✓✓ 9:38</span></div>'
+  + '<div class="bubble out">'+t("b1_c2").replace("{price}",fmt(28))+'<span class="tick">✓✓ 9:39</span></div>'
   + '</div></div></div>'
-  + '<div class="b-card"><div class="k">QR CODES</div><h3>A QR code for your counter</h3>'
-  + '<p>Print it, stick it on your window or counter. Every scan opens your shop.</p>'
-  + '<div class="b-visual"><div class="qr-mock"><div id="bentoQr"></div><div class="t">Generated free,<br>ready to print.</div></div></div></div>'
-  + '<div class="b-card"><div class="k">ANNOUNCEMENTS</div><h3>Shout about a sale</h3>'
-  + '<p>Add a banner for festivals, discounts or new arrivals. It sits right on top of your page.</p>'
-  + '<div class="b-visual"><div class="banner-mock">Diwali sweets are here<small>Fresh batches every morning this week</small></div></div></div>'
-  + '<div class="b-card span2"><div class="k">ALWAYS EDITABLE</div><h3>Changed your prices? Update in seconds</h3>'
-  + '<p>Every storefront has an "Update this page" link at the bottom. Reopen your details, change anything, share the new link. No developer, no waiting.</p>'
+  + '<div class="b-card"><div class="k">'+t("b2_k")+'</div><h3>'+t("b2_h")+'</h3>'
+  + '<p>'+t("b2_p")+'</p>'
+  + '<div class="b-visual"><div class="qr-mock"><div id="bentoQr"></div><div class="t">'+t("b2_cap")+'</div></div></div></div>'
+  + '<div class="b-card"><div class="k">'+t("b3_k")+'</div><h3>'+t("b3_h")+'</h3>'
+  + '<p>'+t("b3_p")+'</p>'
+  + '<div class="b-visual"><div class="banner-mock">'+t("b3_m1")+'<small>'+t("b3_m2")+'</small></div></div></div>'
+  + '<div class="b-card span2"><div class="k">'+t("b4_k")+'</div><h3>'+t("b4_h")+'</h3>'
+  + '<p>'+t("b4_p")+'</p>'
   + '<div class="b-visual"><div class="edit-mock">'
-  + '<div class="em"><div class="ek">BEFORE</div>Sourdough loaf — $4.00<br><span style="color:var(--ink2)">Open till 6pm</span></div>'
-  + '<div class="em new"><div class="ek">AFTER</div>Sourdough loaf — $4.50<br><span style="color:var(--accent);font-weight:700;">Open till 8pm ✓</span></div>'
+  + '<div class="em"><div class="ek">'+t("b4_before")+'</div>'+t("b4_b1").replace("{p1}",fmt(4.00))+'<br><span style="color:var(--ink2)">'+t("b4_b2")+'</span></div>'
+  + '<div class="em new"><div class="ek">'+t("b4_after")+'</div>'+t("b4_a1").replace("{p1}",fmt(4.50))+'<br><span style="color:var(--accent);font-weight:700;">'+t("b4_a2")+'</span></div>'
   + '</div></div></div>'
   + '</div></div></div>'
   /* ---------- shop grid ---------- */
   + '<div class="sec"><div class="wrap">'
-  + '<div class="sec-head"><div class="eyebrow">WHO IT\'S FOR</div><h2>Made for shops like yours</h2>'
-  + '<p class="lead">The corner bakery, the tailor down the lane, the phone repair counter, the salon with no website. If customers ask "do you have a website", this is the answer.</p></div>'
+  + '<div class="sec-head"><div class="eyebrow">'+t("s_eyebrow")+'</div><h2>'+t("s_h2")+'</h2>'
+  + '<p class="lead">'+t("s_lead")+'</p></div>'
   + '<div class="shopgrid">'+shopCards+'</div>'
   + '</div></div>'
   /* ---------- stats ---------- */
   + '<div class="sec"><div class="wrap"><div class="stats">'
-  + '<div class="stat"><div class="n">~<em>1</em> min</div><div class="l">from description to a live storefront</div></div>'
-  + '<div class="stat"><div class="n"><em>$0</em></div><div class="l">to build and share, no account needed</div></div>'
-  + '<div class="stat"><div class="n"><em>18</em></div><div class="l">languages for voice input, type in any</div></div>'
-  + '<div class="stat"><div class="n"><em>0</em></div><div class="l">apps to install, for you or your customers</div></div>'
+  + '<div class="stat"><div class="n">~<em>1</em> '+t("min_unit")+'</div><div class="l">'+t("st1l")+'</div></div>'
+  + '<div class="stat"><div class="n"><em>'+fmt(0)+'</em></div><div class="l">'+t("st2l")+'</div></div>'
+  + '<div class="stat"><div class="n"><em>21</em></div><div class="l">'+t("st3l")+'</div></div>'
+  + '<div class="stat"><div class="n"><em>0</em></div><div class="l">'+t("st4l")+'</div></div>'
   + '</div></div></div>'
   /* ---------- faq ---------- */
-  + '<div class="sec" id="faq"><div class="wrap"><div class="sec-head"><div class="eyebrow">QUESTIONS</div><h2>Straight answers</h2></div><div class="faq">'
-  + '<details><summary>Is it really free?</summary><div class="a">Yes. You can build and share your storefront free, with no account. Paid extras like custom domains may come later, but the core site stays free.</div></details>'
-  + '<details><summary>Do I need an account or an app?</summary><div class="a">No. Everything runs in your browser. Your site lives at a shareable link, so customers just tap and it opens.</div></details>'
-  + '<details><summary>What if something is wrong on my page?</summary><div class="a">You review everything before publishing, and every field is editable. Every storefront has an "Update this page" link at the bottom, so fix it in seconds.</div></details>'
-  + '<details><summary>Which languages work?</summary><div class="a">Voice input supports 18 languages including English, Spanish, Portuguese, French, Hindi, Arabic, Indonesian and Swahili. You can also just type in any language.</div></details>'
-  + '<details><summary>Can customers order from my site?</summary><div class="a">Yes. Every product gets an "Order" button that opens a WhatsApp chat with your shop and the item pre-typed, so customers order in the app they already use. No checkout system needed.</div></details>'
-  + '<details><summary>Can I print a QR code for my shop?</summary><div class="a">Yes. After publishing, tap "Get QR code" for a printable code that opens your storefront. Stick it on your counter or window.</div></details>'
+  + '<div class="sec" id="faq"><div class="wrap"><div class="sec-head"><div class="eyebrow">'+t("faq_eyebrow")+'</div><h2>'+t("faq_h2")+'</h2></div><div class="faq">'
+  + '<details><summary>'+t("q1")+'</summary><div class="a">'+t("a1")+'</div></details>'
+  + '<details><summary>'+t("q2")+'</summary><div class="a">'+t("a2")+'</div></details>'
+  + '<details><summary>'+t("q3")+'</summary><div class="a">'+t("a3")+'</div></details>'
+  + '<details><summary>'+t("q4")+'</summary><div class="a">'+t("a4")+'</div></details>'
+  + '<details><summary>'+t("q5")+'</summary><div class="a">'+t("a5")+'</div></details>'
+  + '<details><summary>'+t("q6")+'</summary><div class="a">'+t("a6")+'</div></details>'
   + '</div></div></div>'
   /* ---------- final CTA ---------- */
   + '<div class="sec"><div class="wrap"><div class="cta-panel">'
-  + '<h2>Your shop could be online before your coffee cools</h2>'
-  + '<p>Describe it in a few lines. Share the link everywhere. Take orders tonight.</p>'
-  + '<a class="btn btn-accent btn-lg" href="#/build">Build my site, free</a>'
+  + '<h2>'+t("cta_h2")+'</h2>'
+  + '<p>'+t("cta_p")+'</p>'
+  + '<a class="btn btn-accent btn-lg" href="#/build" onclick="freshBuild()">'+t("hero_cta1")+'</a>'
   + '</div></div></div>'
   + footer();
 }
@@ -547,14 +1542,14 @@ function afterHome(){
 function stageBar(){
   const s = state.step;
   return '<div class="stages">'
-    + '<div class="stage'+(s>=1?' on':'')+'">01 · DESCRIBE</div>'
-    + '<div class="stage'+(s>=2?' on':'')+'">02 · REVIEW</div>'
-    + '<div class="stage'+(s>=3?' on':'')+'">03 · SHARE</div></div>';
+    + '<div class="stage'+(s>=1?' on':'')+'">'+t("stage1")+'</div>'
+    + '<div class="stage'+(s>=2?' on':'')+'">'+t("stage2")+'</div>'
+    + '<div class="stage'+(s>=3?' on':'')+'">'+t("stage3")+'</div></div>';
 }
 function buildView(){
   return header()
-  + '<div class="wrap"><div class="builder-head"><h1>Build your storefront</h1>'
-  + '<p>Describe your shop naturally: its name, what you sell, your hours, your phone number, and where you are.</p></div>'
+  + '<div class="wrap"><div class="builder-head"><h1>'+t("build_h1")+'</h1>'
+  + '<p>'+t("build_p")+'</p></div>'
   + stageBar()
   + '<div class="card" id="buildCard">'+ buildStepHtml() +'</div></div>'
   + footer();
@@ -567,49 +1562,49 @@ function buildStepHtml(){
 function stepSpeakHtml(){
   const opts = LANGS.map(l=>'<option value="'+l[0]+'"'+(l[0]===state.lang?' selected':'')+'>'+l[1]+'</option>').join("");
   return '<div class="type-first">'
-  + '<div class="field"><label>Describe your shop</label>'
-  + '<textarea class="typebox" id="typeBox" placeholder="Example: My shop is called Sunrise Bakery. We sell sourdough, croissants and birthday cakes. Open Monday to Saturday 7am to 7pm. Call 555 014 2288. Find us at 14 Market Street.">'+esc(state.transcript)+'</textarea></div>'
+  + '<div class="field"><label>'+t("f_describe")+'</label>'
+  + '<textarea class="typebox" id="typeBox" placeholder="'+esc(t("ph_example"))+'">'+esc(state.transcript)+'</textarea></div>'
   + '<div class="mic-row">'
   + '<button class="mic-btn'+(state.listening?' live':'')+'" id="micBtn" aria-label="Dictate by voice">'
   + '<svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/></svg></button>'
-  + '<div><div class="mic-label" id="micLabel">'+(state.listening?"Dictating… tap to stop":"Prefer talking? Tap to dictate")+'</div>'
-  + '<div class="lang-row"><label for="langSel">Language</label><select id="langSel">'+opts+'</select></div></div>'
+  + '<div><div class="mic-label" id="micLabel">'+(state.listening?t("mic_live"):t("mic_idle"))+'</div>'
+  + '<div class="lang-row"><label for="langSel">'+t("lang_label")+'</label><select id="langSel">'+opts+'</select></div></div>'
   + '</div>'
   + '<div id="errBox"></div>'
-  + '<div class="center" style="margin-top:24px;"><button class="btn btn-accent" id="toReview">Continue to review →</button></div>'
+  + '<div class="center" style="margin-top:24px;"><button class="btn btn-accent" id="toReview">'+t("btn_review")+'</button></div>'
   + '</div>';
 }
 function stepReviewHtml(){
   const d = state.data;
   const prodText = d.products.map(p=>p.name + (p.price ? " - " + p.price : "")).join("\n");
-  return '<h2 class="serif" style="font-size:26px;margin-bottom:8px;">Check your details</h2>'
-  + '<p style="color:var(--ink2);margin-bottom:26px;">We filled this in from what you said. Fix anything, then publish.</p>'
-  + '<div class="field"><label>Shop name</label><input type="text" id="f_name" value="'+esc(d.name)+'"></div>'
-  + '<div class="field"><label>One-line description <span class="hint">(optional)</span></label><input type="text" id="f_tagline" value="'+esc(d.tagline)+'"></div>'
-  + '<div class="field"><label>Announcement <span class="hint">(optional, shown as a banner on your site, e.g. "Festival sale: 20% off this week")</span></label><input type="text" id="f_announce" value="'+esc(d.announce)+'"></div>'
-  + '<div class="field"><label>Products or services <span class="hint">(one per line, add prices like "Sourdough - $4.50")</span></label>'
+  return '<h2 class="serif" style="font-size:26px;margin-bottom:8px;">'+t("rev_h2")+'</h2>'
+  + '<p style="color:var(--ink2);margin-bottom:26px;">'+t("rev_p")+'</p>'
+  + '<div class="field"><label>'+t("f_name")+'</label><input type="text" id="f_name" value="'+esc(d.name)+'"></div>'
+  + '<div class="field"><label>'+t("f_tagline")+' <span class="hint">'+t("hint_opt")+'</span></label><input type="text" id="f_tagline" value="'+esc(d.tagline)+'"></div>'
+  + '<div class="field"><label>'+t("f_announce")+' <span class="hint">'+t("announce_hint")+'</span></label><input type="text" id="f_announce" value="'+esc(d.announce)+'"></div>'
+  + '<div class="field"><label>'+t("f_products")+' <span class="hint">'+t("products_hint")+'</span></label>'
   + '<textarea id="f_products" style="min-height:130px;">'+esc(prodText)+'</textarea></div>'
-  + '<div class="field"><label>Opening hours</label><textarea id="f_hours">'+esc(d.hours)+'</textarea></div>'
-  + '<div class="grid2"><div class="field"><label>Phone</label><input type="tel" id="f_phone" value="'+esc(d.phone)+'"></div>'
-  + '<div class="field"><label>WhatsApp number <span class="hint">(usually same as phone)</span></label><input type="tel" id="f_whatsapp" value="'+esc(d.whatsapp)+'"></div></div>'
-  + '<div class="field"><label>Address <span class="hint">(optional, used for directions)</span></label><input type="text" id="f_address" value="'+esc(d.address)+'"></div>'
+  + '<div class="field"><label>'+t("f_hours")+'</label><textarea id="f_hours">'+esc(d.hours)+'</textarea></div>'
+  + '<div class="grid2"><div class="field"><label>'+t("f_phone")+'</label><input type="tel" id="f_phone" value="'+esc(d.phone)+'"></div>'
+  + '<div class="field"><label>'+t("f_whatsapp")+' <span class="hint">'+t("wa_hint")+'</span></label><input type="tel" id="f_whatsapp" value="'+esc(d.whatsapp)+'"></div></div>'
+  + '<div class="field"><label>'+t("f_address")+' <span class="hint">'+t("addr_hint")+'</span></label><input type="text" id="f_address" value="'+esc(d.address)+'"></div>'
   + '<div id="errBox"></div>'
-  + '<div class="center" style="margin-top:10px;"><button class="btn" id="backSpeak" style="margin-right:10px;">← Back</button>'
-  + '<button class="btn btn-accent" id="publishBtn">Publish my site</button></div>';
+  + '<div class="center" style="margin-top:10px;"><button class="btn" id="backSpeak" style="margin-right:10px;">'+t("btn_back")+'</button>'
+  + '<button class="btn btn-accent" id="publishBtn">'+t("btn_publish")+'</button></div>';
 }
 function stepShareHtml(){
-  const wa = "https://wa.me/?text=" + encodeURIComponent("Visit my shop online: " + state.link);
-  return '<div class="share-panel"><div class="eyebrow">YOUR SHOP IS ONLINE</div>'
+  const wa = "https://wa.me/?text=" + encodeURIComponent(t("wa_share") + state.link);
+  return '<div class="share-panel"><div class="eyebrow">'+t("sh_eyebrow")+'</div>'
   + '<h2 class="serif" style="font-size:32px;margin-bottom:10px;">'+esc(state.data.name)+'</h2>'
-  + '<p class="note">Share this link anywhere: WhatsApp, Instagram bio, SMS, a QR code on your counter. Anyone who taps it sees your storefront.</p>'
+  + '<p class="note">'+t("sh_note")+'</p>'
   + '<div class="share-link"><input type="text" id="shareUrl" readonly value="'+esc(state.link)+'">'
-  + '<button class="btn btn-solid btn-sm" id="copyBtn" style="padding:12px 22px;">Copy link</button></div>'
-  + '<div class="share-btns"><a class="btn btn-accent" id="openSite" href="'+esc(state.link)+'" target="_blank" rel="noopener">Open my site</a>'
-  + '<a class="btn" href="'+wa+'" target="_blank" rel="noopener">Share on WhatsApp</a>'
-  + '<button class="btn" id="qrBtn">Get QR code</button>'
-  + '<button class="btn" id="editBtn">Edit details</button></div>'
+  + '<button class="btn btn-solid btn-sm" id="copyBtn" style="padding:12px 22px;">'+t("btn_copy")+'</button></div>'
+  + '<div class="share-btns"><a class="btn btn-accent" id="openSite" href="'+esc(state.link)+'" target="_blank" rel="noopener">'+t("btn_open")+'</a>'
+  + '<a class="btn" href="'+wa+'" target="_blank" rel="noopener">'+t("btn_sharewa")+'</a>'
+  + '<button class="btn" id="qrBtn">'+t("btn_qr")+'</button>'
+  + '<button class="btn" id="editBtn">'+t("btn_edit")+'</button></div>'
   + '<div id="qrBox" class="hidden" style="margin-top:18px;"></div>'
-  + '<p class="note">Tip: print the QR code and stick it on your counter, so every customer can pull up your shop on their phone.</p>'
+  + '<p class="note">'+t("sh_tip")+'</p>'
   + '</div>';
 }
 function showErr(msg){
@@ -618,7 +1613,8 @@ function showErr(msg){
 }
 function parseProductsText(txt){
   return String(txt||"").split("\n").map(l=>l.trim()).filter(Boolean).slice(0,30).map(line=>{
-    const pm = line.match(/^(.*?)\s+[-–:]\s+(.+)$/);
+    // relaxed: "Cake - $4.50", "Cake: $28" (colon without spaces), but not "9:30"
+    const pm = line.match(/^(.*?)\s+[-–:]\s+(.+)$/) || line.match(/^(.*\D)[-–:]\s*(.+)$/);
     if(pm && /^[$€£₹\d]/.test(pm[2].trim())) return {name:pm[1].trim(), price:pm[2].trim()};
     return {name:line, price:""};
   }).filter(p=>p.name);
@@ -635,6 +1631,7 @@ function collectForm(){
     address: $("#f_address").value.trim()
   };
 }
+function freshBuild(){ if(state.step===3){ state.step=1; state.transcript=""; state.data=null; state.link=""; const h=location.hash.replace(/^#\/?/,""); if(h.indexOf("build")===0){ render(buildView()); wireBuild(); window.scrollTo(0,0); } } }
 function goStep(n){ state.step = n; const c = $("#buildCard"); if(c){ c.innerHTML = buildStepHtml(); wireBuild(); } const st = $(".stages"); if(st) st.outerHTML = stageBar(); window.scrollTo(0,0); }
 /* ---- speech ---- */
 function stopRec(silent){
@@ -646,11 +1643,11 @@ function updateMicUI(){
   const b = $("#micBtn"), l = $("#micLabel");
   if(!b) return;
   b.classList.toggle("live", state.listening);
-  if(l) l.textContent = state.listening ? "Dictating… tap to stop" : (state.transcript ? "Tap to dictate more" : "Prefer talking? Tap to dictate");
+  if(l) l.textContent = state.listening ? t("mic_live") : (state.transcript ? t("mic_more") : t("mic_idle"));
 }
 function toggleMic(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){ showErr("Voice input needs Chrome or Edge (desktop or Android). You can type your description in the box below instead."); return; }
+  if(!SR){ showErr(t("err_no_voice")); return; }
   if(state.listening){ stopRec(); return; }
   const rec = new SR();
   rec.lang = state.lang; rec.continuous = true; rec.interimResults = true;
@@ -663,7 +1660,7 @@ function toggleMic(){
   };
   rec.onerror = e => {
     if(e.error==="not-allowed" || e.error==="service-not-allowed"){
-      showErr("Microphone is blocked. Allow mic access in your browser, or type your description below instead.");
+      showErr(t("err_mic_blocked"));
       stopRec();
     }
   };
@@ -672,7 +1669,7 @@ function toggleMic(){
     else if(state.listening){ stopRec(); }
   };
   state.rec = rec; state.listening = true; state.recStart = Date.now();
-  try{ rec.start(); }catch(e){ stopRec(); showErr("Could not start voice input. Please type instead."); return; }
+  try{ rec.start(); }catch(e){ stopRec(); showErr(t("err_voice_start")); return; }
   updateMicUI();
 }
 function wireBuild(){
@@ -682,7 +1679,7 @@ function wireBuild(){
   const toR = $("#toReview");
   if(toR) toR.onclick = () => {
     const typed = $("#typeBox"); if(typed && typed.value.trim()) state.transcript = typed.value.trim();
-    if(!state.transcript.trim()){ showErr("Say or type a little about your shop first, even one sentence."); return; }
+    if(!state.transcript.trim()){ showErr(t("err_empty")); return; }
     stopRec(true);
     state.data = parseTranscript(state.transcript);
     goStep(2);
@@ -691,7 +1688,7 @@ function wireBuild(){
   const pub = $("#publishBtn");
   if(pub) pub.onclick = () => {
     collectForm();
-    if(!state.data.name){ showErr("Give your shop a name so customers know whose site this is."); $("#f_name").focus(); return; }
+    if(!state.data.name){ showErr(t("err_noname")); $("#f_name").focus(); return; }
     const payload = encodeSite(state.data);
     state.link = location.origin + location.pathname + "#/s/" + payload;
     goStep(3);
@@ -699,7 +1696,7 @@ function wireBuild(){
   const copy = $("#copyBtn");
   if(copy) copy.onclick = () => {
     const inp = $("#shareUrl"); inp.select();
-    const done = () => { copy.textContent = "Copied!"; setTimeout(()=>copy.textContent="Copy link", 1800); };
+    const done = () => { copy.textContent = t("copied"); setTimeout(()=>copy.textContent="Copy link", 1800); };
     if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(state.link).then(done).catch(()=>{ document.execCommand("copy"); done(); }); }
     else { document.execCommand("copy"); done(); }
   };
@@ -708,13 +1705,13 @@ function wireBuild(){
   if(qr) qr.onclick = () => {
     const box = $("#qrBox");
     box.classList.remove("hidden");
-    box.innerHTML = '<p class="note" style="margin-bottom:12px;">Print this and stick it on your counter or window.</p><div id="qrCanvas" class="center"></div><div style="margin-top:12px;"><button class="btn btn-sm" id="printQr">Print QR code</button></div>';
+    box.innerHTML = '<p class="note" style="margin-bottom:12px;">'+t("qr_note")+'</p><div id="qrCanvas" class="center"></div><div style="margin-top:12px;"><button class="btn btn-sm" id="printQr">'+t("btn_printqr")+'</button></div>';
     const render = () => {
       try{
         const slot = $("#qrCanvas"); if(!slot) return;
         slot.innerHTML = "";
         new QRCode(slot, { text: state.link, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
-      }catch(e){ showErr("Could not draw the QR code. Your link above still works, copy it."); }
+      }catch(e){ showErr(t("err_qr")); }
     };
     render();
     $("#printQr").onclick = () => window.print();
@@ -725,29 +1722,29 @@ function siteView(d, payload){
   const waNum = cleanPhone(d.whatsapp).replace(/^\+/,"");
   const prods = (d.products||[]).map(p=>{
     const order = waNum
-      ? '<a class="order-btn" href="https://wa.me/'+esc(waNum)+'?text='+encodeURIComponent("Hi "+d.name+"! I would like to order: "+p.name+(p.price?" ("+p.price+")":""))+'" target="_blank" rel="noopener">Order</a>'
+      ? '<a class="order-btn" href="https://wa.me/'+esc(waNum)+'?text='+encodeURIComponent(waMsg(d.name, p.k?t(p.k):p.name, p.usd!=null?fmt(p.usd):(p.price||"")))+'" target="_blank" rel="noopener">'+t("order")+'</a>'
       : "";
-    return '<div class="prod"><div class="pn">'+esc(p.name)+'</div><div class="prod-right">'+(p.price?'<div class="pp">'+esc(p.price)+'</div>':"")+order+'</div></div>';
+    return '<div class="prod"><div class="pn">'+(p.k?t(p.k):esc(p.name))+'</div><div class="prod-right">'+((p.usd!=null||p.price)?'<div class="pp">'+(p.usd!=null?fmt(p.usd):esc(p.price))+'</div>':"")+order+'</div></div>';
   }).join("");
   const hoursHtml = esc(d.hours).split(/\n|;\s*/).filter(Boolean).map(h=>'<div class="hours-row"><span>'+h+'</span></div>').join("");
   const btns = [];
-  if(d.phone) btns.push('<a class="btn btn-accent" href="tel:'+esc(cleanPhone(d.phone))+'">Call us</a>');
-  if(waNum) btns.push('<a class="btn" href="https://wa.me/'+esc(waNum)+'" target="_blank" rel="noopener">WhatsApp</a>');
-  if(d.address) btns.push('<a class="btn" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.address)+'" target="_blank" rel="noopener">Directions</a>');
+  if(d.phone) btns.push('<a class="btn btn-accent" href="tel:'+esc(cleanPhone(d.phone))+'">'+t("call_us")+'</a>');
+  if(waNum) btns.push('<a class="btn" href="https://wa.me/'+esc(waNum)+'" target="_blank" rel="noopener">'+t("wa_label")+'</a>');
+  if(d.address) btns.push('<a class="btn" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.address)+'" target="_blank" rel="noopener">'+t("btn_dir")+'</a>');
   return (d.announce ? '<div class="banner">'+esc(d.announce)+'</div>' : "")
-  + '<div class="wrap"><div class="shop-mast"><div class="kicker">NOW OPEN ONLINE</div>'
-  + '<h1>'+esc(d.name)+'</h1>' + (d.tagline?'<p>'+esc(d.tagline)+'</p>':"") + '</div>'
-  + (prods ? '<div class="shop-sec"><h2>What we sell</h2><div class="sub">Ask us about anything you don\'t see here.</div>'+prods+'</div>' : "")
-  + (d.hours ? '<div class="shop-sec"><h2>Opening hours</h2><div class="sub">Come by, we\'d love to see you.</div>'+hoursHtml+'</div>' : "")
-  + ((btns.length||d.address) ? '<div class="shop-sec"><h2>Find us</h2><div class="sub">'+(d.address?esc(d.address):"Get in touch")+'</div><div class="contact-btns">'+btns.join("")+'</div></div>' : "")
-  + '<div class="shop-foot">Made free with <a href="#/">TalkShop</a> · Describe your shop. Get it online.'
-  + (payload ? '<br><a class="update-link" href="#/edit/'+payload+'">Own this shop? Update this page</a>' : "")
+  + '<div class="wrap"><div class="shop-mast"><div class="kicker">'+t("mini_kicker")+'</div>'
+  + '<h1>'+esc(d.name)+'</h1>' + ((d.tagline||d.taglineKey)?'<p>'+(d.taglineKey?t(d.taglineKey):esc(d.tagline))+'</p>':"") + '</div>'
+  + (prods ? '<div class="shop-sec"><h2>'+t("sv_products")+'</h2><div class="sub">'+t("sv_products_sub")+'</div>'+prods+'</div>' : "")
+  + (d.hours ? '<div class="shop-sec"><h2>'+t("sv_hours")+'</h2><div class="sub">'+t("sv_hours_sub")+'</div>'+hoursHtml+'</div>' : "")
+  + ((btns.length||d.address) ? '<div class="shop-sec"><h2>'+t("sv_find")+'</h2><div class="sub">'+(d.address?esc(d.address):t("sv_find_sub"))+'</div><div class="contact-btns">'+btns.join("")+'</div></div>' : "")
+  + '<div class="shop-foot">'+t("made_with_a")+' <a href="#/">TalkShop</a> · '+t("made_with_b")+'.'
+  + (payload ? '<br><a class="update-link" href="#/edit/'+payload+'">'+t("update_link")+'</a>' : "")
   + '</div></div>';
 }
 function notFoundView(){
-  return header() + '<div class="wrap center" style="padding:90px 0;"><h2 class="serif">That link didn\'t open a shop.</h2>'
-  + '<p style="color:var(--ink2);margin:12px 0 26px;">The link may be incomplete. Ask the shop owner to resend it.</p>'
-  + '<a class="btn btn-accent" href="#/build">Make your own shop site</a></div>' + footer();
+  return header() + '<div class="wrap center" style="padding:90px 0;"><h2 class="serif">'+t("nf_h")+'</h2>'
+  + '<p style="color:var(--ink2);margin:12px 0 26px;">'+t("nf_p")+'</p>'
+  + '<a class="btn btn-accent" href="#/build" onclick="freshBuild()">'+t("nf_cta")+'</a></div>' + footer();
 }
 /* ============================== router ============================== */
 function router(){
@@ -770,7 +1767,10 @@ function router(){
   window.scrollTo(0,0);
 }
 window.addEventListener("hashchange", router);
+applyLangHead();
 router();
+wireLangSel();
+initLocale();
 </script>
 </body>
 </html>
