@@ -346,6 +346,22 @@ html[dir="rtl"] body{direction:rtl}
 .loc-x{position:absolute;top:6px;right:8px;border:0;background:none;font-size:22px;line-height:1;color:var(--ink2);cursor:pointer;padding:8px}
 .loc-x:hover{color:var(--ink)}
 @media(max-width:560px){.loc-banner{flex-direction:column;align-items:stretch;text-align:center}.loc-btns{justify-content:center}}
+/* ---- locale chooser (Apple-style) ---- */
+.loc-back{display:inline-block;margin-bottom:14px;color:var(--ink2);text-decoration:none;font-size:15px}
+.loc-sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin:30px 0 10px;font-weight:700}
+.loc-list{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.loc-row{display:flex;align-items:center;gap:14px;width:100%;padding:14px 18px;background:#fff;border:0;border-bottom:1px solid var(--line);font:inherit;color:var(--ink);cursor:pointer;text-align:left}
+.loc-row:last-child{border-bottom:0}
+.loc-row .fl{font-size:22px;line-height:1}
+.loc-row .tt{flex:1;min-width:0}
+.loc-row .tt b{display:block;font-size:16px;font-weight:600}
+.loc-row .tt small{color:var(--ink2);font-size:13px}
+.loc-row .ck{color:var(--accent);font-weight:800;font-size:18px;visibility:hidden}
+.loc-row.on .ck{visibility:visible}
+.loc-note{background:var(--amber-soft);border:1px solid var(--line);border-radius:16px;padding:16px 18px;color:var(--ink2);font-size:15px;line-height:1.6}
+.foot-loc{display:inline-flex;align-items:center;gap:6px;color:var(--ink2);text-decoration:none;font-size:14px;margin-top:12px}
+.foot-loc:hover{color:var(--ink)}
+.shop-loc{display:inline-block;margin-top:10px;color:var(--ink2);font-size:13px;text-decoration:none}
 </style>
 </head>
 <body>
@@ -531,7 +547,13 @@ const STR = { en: {
   "tos_c3t":"Acceptable use",
   "tos_c3b":"Do not abuse the service: no attempts to disrupt the site, scrape it at abusive rates, or misrepresent your shop to customers. We may block misuse to keep the service running for everyone.",
   "tos_c4t":"Liability",
-  "tos_c4b":"To the fullest extent permitted by law, TalkShop is not liable for any loss arising from your use of the service, including lost orders or business. Your use of third-party services (such as WhatsApp) is governed by their own terms."
+  "tos_c4b":"To the fullest extent permitted by law, TalkShop is not liable for any loss arising from your use of the service, including lost orders or business. Your use of third-party services (such as WhatsApp) is governed by their own terms.",
+  "locale_title":"Language &amp; Region",
+  "locale_note":"Choose the language and region used across TalkShop.",
+  "locale_lang":"Language",
+  "locale_country":"Country or Region",
+  "locale_back":"Back",
+  "locale_shopnote":"Prices on this shop are shown in the shop's currency ({flag} {cur})."
 } };
 let uiLang = "en";
 try{ uiLang = localStorage.getItem("ts_ui") || "en"; }catch(e){}
@@ -767,7 +789,13 @@ STR.ml = {
   "tos_c3t":"സ്വീകാര്യമായ ഉപയോഗം",
   "tos_c3b":"സേവനം ദുരുപയോഗം ചെയ്യരുത്: സൈറ്റ് തടസ്സപ്പെടുത്താനോ, അമിത നിരക്കിൽ സ്ക്രേപ്പ് ചെയ്യാനോ, ഉപഭോക്താക്കളെ തെറ്റിദ്ധരിപ്പിക്കാനോ ശ്രമിക്കരുത്. എല്ലാവർക്കും സേവനം പ്രവർത്തിക്കാൻ ദുരുപയോഗം തടയാൻ ഞങ്ങൾക്ക് കഴിയും.",
   "tos_c4t":"ബാധ്യത",
-  "tos_c4b":"നിയമം അനുവദിക്കുന്ന പരമാവധി പരിധിവരെ, സേവനത്തിന്റെ ഉപയോഗത്തിൽ നിന്നുണ്ടാകുന്ന ഏതൊരു നഷ്ടത്തിനും (നഷ്ടപ്പെട്ട ഓർഡറുകളോ ബിസിനസോ ഉൾപ്പെടെ) TalkShop ബാധ്യസ്ഥമല്ല. മൂന്നാം കക്ഷി സേവനങ്ങളുടെ (WhatsApp പോലുള്ളവ) നിങ്ങളുടെ ഉപയോഗം അവരുടെ സ്വന്തം നിബന്ധനകൾക്ക് വിധേയമാണ്."
+  "tos_c4b":"നിയമം അനുവദിക്കുന്ന പരമാവധി പരിധിവരെ, സേവനത്തിന്റെ ഉപയോഗത്തിൽ നിന്നുണ്ടാകുന്ന ഏതൊരു നഷ്ടത്തിനും (നഷ്ടപ്പെട്ട ഓർഡറുകളോ ബിസിനസോ ഉൾപ്പെടെ) TalkShop ബാധ്യസ്ഥമല്ല. മൂന്നാം കക്ഷി സേവനങ്ങളുടെ (WhatsApp പോലുള്ളവ) നിങ്ങളുടെ ഉപയോഗം അവരുടെ സ്വന്തം നിബന്ധനകൾക്ക് വിധേയമാണ്.",
+  "locale_title":"ഭാഷയും പ്രദേശവും",
+  "locale_note":"TalkShop-ൽ ഉപയോഗിക്കുന്ന ഭാഷയും പ്രദേശവും തിരഞ്ഞെടുക്കുക.",
+  "locale_lang":"ഭാഷ",
+  "locale_country":"രാജ്യം അല്ലെങ്കിൽ പ്രദേശം",
+  "locale_back":"തിരികെ",
+  "locale_shopnote":"ഈ കടയിലെ വിലകൾ കടയുടെ കറൻസിയിൽ ({flag} {cur}) ആണ് കാണിക്കുന്നത്."
 };
 STR.hi = {
   "meta_title":"TalkShop: अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।",
@@ -995,7 +1023,13 @@ STR.hi = {
   "tos_c3t":"स्वीकार्य उपयोग",
   "tos_c3b":"सेवा का दुरुपयोग न करें: साइट को बाधित करने, गलत तरीके से स्क्रैप करने, या ग्राहकों को गुमराह करने की कोशिश न करें। सेवा सबके लिए चालू रखने हेतु हम दुरुपयोग को रोक सकते हैं।",
   "tos_c4t":"दायित्व",
-  "tos_c4b":"कानून द्वारा अनुमत अधिकतम सीमा तक, सेवा के इस्तेमाल से होने वाले किसी भी नुकसान के लिए TalkShop ज़िम्मेदार नहीं है, जिसमें खोए हुए ऑर्डर या व्यापार भी शामिल है। तीसरे पक्ष की सेवाओं (जैसे WhatsApp) का आपका इस्तेमाल उनकी अपनी शर्तों से नियंत्रित होता है।"
+  "tos_c4b":"कानून द्वारा अनुमत अधिकतम सीमा तक, सेवा के इस्तेमाल से होने वाले किसी भी नुकसान के लिए TalkShop ज़िम्मेदार नहीं है, जिसमें खोए हुए ऑर्डर या व्यापार भी शामिल है। तीसरे पक्ष की सेवाओं (जैसे WhatsApp) का आपका इस्तेमाल उनकी अपनी शर्तों से नियंत्रित होता है।",
+  "locale_title":"भाषा और क्षेत्र",
+  "locale_note":"TalkShop में इस्तेमाल होने वाली भाषा और क्षेत्र चुनें।",
+  "locale_lang":"भाषा",
+  "locale_country":"देश या क्षेत्र",
+  "locale_back":"वापस",
+  "locale_shopnote":"इस दुकान की कीमतें दुकान की मुद्रा ({flag} {cur}) में दिखाई जाती हैं।"
 };
 STR.ta = {
   "meta_title":"TalkShop: உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.",
@@ -1223,7 +1257,13 @@ STR.ta = {
   "tos_c3t":"ஏற்கத்தக்க பயன்",
   "tos_c3b":"சேவையைத் தவறாகப் பயன்படுத்த வேண்டாம்: தளத்தைச் சீர்குலைக்கவோ, அதிக விகிதத்தில் தரவெடுக்கவோ, வாடிக்கையாளர்களை ஏமாற்றவோ முயற்சிக்க வேண்டாம். அனைவருக்கும் சேவை இயங்க தவறான பயன்பாட்டைத் தடுக்கலாம்.",
   "tos_c4t":"பொறுப்பு",
-  "tos_c4b":"சட்டம் அனுமதிக்கும் அதிகபட்ச அளவில், சேவையைப் பயன்படுத்துவதால் ஏற்படும் எந்த இழப்புக்கும் (இழந்த ஆர்டர்கள் அல்லது வணிகம் உட்பட) TalkShop பொறுப்பல்ல. மூன்றாம் தரப்புச் சேவைகளை (WhatsApp போன்றவை) நீங்கள் பயன்படுத்துவது அவர்களின் சொந்த விதிமுறைகளுக்கு உட்பட்டது."
+  "tos_c4b":"சட்டம் அனுமதிக்கும் அதிகபட்ச அளவில், சேவையைப் பயன்படுத்துவதால் ஏற்படும் எந்த இழப்புக்கும் (இழந்த ஆர்டர்கள் அல்லது வணிகம் உட்பட) TalkShop பொறுப்பல்ல. மூன்றாம் தரப்புச் சேவைகளை (WhatsApp போன்றவை) நீங்கள் பயன்படுத்துவது அவர்களின் சொந்த விதிமுறைகளுக்கு உட்பட்டது.",
+  "locale_title":"மொழி மற்றும் பகுதி",
+  "locale_note":"TalkShop-இல் பயன்படுத்தப்படும் மொழியையும் பகுதியையும் தேர்வு செய்க.",
+  "locale_lang":"மொழி",
+  "locale_country":"நாடு அல்லது பகுதி",
+  "locale_back":"பின் செல்",
+  "locale_shopnote":"இந்தக் கடையின் விலைகள் கடையின் நாணயத்தில் ({flag} {cur}) காட்டப்படும்."
 };
 STR.es = {
   "meta_title":"TalkShop: Describe tu tienda. Ponla en línea.",
@@ -1452,7 +1492,13 @@ STR.es = {
   "tos_c3t":"Uso aceptable",
   "tos_c3b":"No abuses del servicio: no intentes interrumpir el sitio, extraerlo a ritmos abusivos ni engañar a tus clientes. Podemos bloquear el uso indebido para que el servicio siga funcionando para todos.",
   "tos_c4t":"Responsabilidad",
-  "tos_c4b":"En la máxima medida permitida por la ley, TalkShop no se hace responsable de ninguna pérdida derivada del uso del servicio, incluidos pedidos o negocios perdidos. Tu uso de servicios de terceros (como WhatsApp) se rige por sus propios términos."
+  "tos_c4b":"En la máxima medida permitida por la ley, TalkShop no se hace responsable de ninguna pérdida derivada del uso del servicio, incluidos pedidos o negocios perdidos. Tu uso de servicios de terceros (como WhatsApp) se rige por sus propios términos.",
+  "locale_title":"Idioma y región",
+  "locale_note":"Elige el idioma y la región que se usarán en TalkShop.",
+  "locale_lang":"Idioma",
+  "locale_country":"País o región",
+  "locale_back":"Atrás",
+  "locale_shopnote":"Los precios de esta tienda se muestran en la moneda de la tienda ({flag} {cur})."
 };
 
 
@@ -1492,14 +1538,15 @@ function fmt(usd){
   try{ return new Intl.NumberFormat(LOCALE_TAG[uiLang] || "en", { style:"currency", currency: fxCur }).format(usd * fxRate); }
   catch(e){ return fxCur + " " + (usd * fxRate).toFixed(2); }
 }
-async function setCurrency(cur){
+async function setCurrency(cur, save){
+  if(save === undefined) save = true;
   fxCur = cur;
   try{
     const r = await fetch("https://api.frankfurter.app/latest?from=USD&to=" + cur);
     const j = await r.json();
     fxRate = (j.rates && j.rates[cur]) ? j.rates[cur] : (FX_FALLBACK[cur] || 1);
   }catch(e){ fxRate = FX_FALLBACK[cur] || 1; }
-  try{ localStorage.setItem("ts_fx", JSON.stringify({ cur: fxCur, rate: fxRate })); }catch(e){}
+  if(save){ try{ localStorage.setItem("ts_fx", JSON.stringify({ cur: fxCur, rate: fxRate })); }catch(e){} }
 }
 function flag(cc){
   return String(cc || "").toUpperCase().replace(/./g, c => String.fromCodePoint(127397 + c.charCodeAt(0)));
@@ -1542,29 +1589,6 @@ function applyLangHead(){
   document.documentElement.lang = LOCALE_TAG[uiLang] || "en";
   document.documentElement.dir = LANG_DIR[uiLang] || "ltr";
   try{ document.title = t("meta_title"); }catch(e){}
-}
-function wireLangSel(){
-  const sel = document.getElementById("uiLangSel");
-  if(!sel) return;
-  sel.innerHTML = Object.keys(LANG_NAMES).map(l=>'<option value="'+l+'"'+(l===uiLang?' selected':'')+'>'+LANG_NAMES[l]+'</option>').join("");
-  sel.onchange = ()=> setLang(sel.value);
-}
-function wireCountrySel(){
-  const sel = document.getElementById("countrySel");
-  if(!sel) return;
-  const codes = Object.keys(COUNTRY).sort((a,b)=>COUNTRY[a].name.localeCompare(COUNTRY[b].name));
-  sel.innerHTML = '<option value="">&#127760; '+t("country_label")+'</option>'
-    + codes.map(c=>'<option value="'+c+'"'+(c===state.cc?' selected':'')+'>'+flag(c)+' '+COUNTRY[c].name+'</option>').join("");
-  sel.onchange = ()=>{ if(sel.value) setCountry(sel.value); sel.blur(); };
-}
-async function setCountry(cc){
-  const cfg = COUNTRY[cc]; if(!cfg) return;
-  state.cc = cc;
-  await setCurrency(cfg.cur);
-  persistLocale();
-  router();
-  const sl = suggestLangFor(cc);
-  if(sl) showLangBanner(sl);
 }
 function persistLocale(){
   try{ localStorage.setItem("ts_locale", JSON.stringify({ lang:uiLang, cur:fxCur, cc:state.cc||null, dismissed:true })); }catch(e){}
@@ -1628,6 +1652,7 @@ function showLocaleBanner(cc, cfg, suggestLang){
   el.querySelector(".loc-x").onclick = no;
 }
 async function initLocale(){
+  if(state.isShop){ applyLangHead(); return; }
   let saved = null;
   try{ saved = JSON.parse(localStorage.getItem("ts_locale")||"null"); }catch(e){}
   if(saved && saved.dismissed){
@@ -1708,7 +1733,7 @@ function header(){
   return '<div class="mast"><div class="wrap mast-in">'
     + '<a class="wordmark" href="#/">Talk<span>Shop</span></a>'
     + '<nav><a class="nl" href="#how">'+t("nav_how")+'</a><a class="nl sample-link" href="#/">'+t("nav_sample")+'</a>'
-    + '<a class="btn btn-sm btn-solid" href="#/build" onclick="freshBuild()">'+t("nav_start")+'</a><select id="countrySel" class="langsel" aria-label="Country"></select><select id="uiLangSel" class="langsel" aria-label="Language"></select></nav></div></div>';
+    + '<a class="btn btn-sm btn-solid" href="#/build" onclick="freshBuild()">'+t("nav_start")+'</a></nav></div></div>';
 }
 function footer(){
   return '<footer><div class="wrap"><div class="foot">'
@@ -1717,9 +1742,10 @@ function footer(){
     + '<div><h5>'+t("foot_product")+'</h5><a href="#/build" onclick="freshBuild()">'+t("foot_build")+'</a><a class="sample-link" href="#/">'+t("foot_sample")+'</a><a href="#features">'+t("foot_features")+'</a><a href="#how">'+t("foot_how")+'</a></div>'
     + '<div><h5>'+t("foot_help")+'</h5><a href="#faq">'+t("foot_faq")+'</a><a href="#/build" onclick="freshBuild()">'+t("foot_update")+'</a></div>'
     + '<div><h5>'+t("foot_legal")+'</h5><a href="#/privacy">'+t("foot_privacy")+'</a><a href="#/terms">'+t("foot_terms")+'</a></div>'
-    + '</div><div class="foot-bottom"><div>'+t("foot_rights")+'</div><div>'+t("foot_note")+'</div></div></div></footer>';
+    + '</div><div class="foot-bottom"><div>'+t("foot_rights")+'</div><div>'+t("foot_note")+'</div></div>'
+    + '<a class="foot-loc" href="#/locale" onclick="goLocale()">&#127760; '+footLocLabel()+'</a></div></footer>';
 }
-function render(html){ $("#view").innerHTML = html; wireSampleLinks(); wireCountrySel(); wireLangSel(); }
+function render(html){ $("#view").innerHTML = html; wireSampleLinks(); }
 function wireSampleLinks(){
   const href = "#/s/" + encodeSite(SAMPLE);
   document.querySelectorAll(".sample-link").forEach(a => a.href = href);
@@ -2012,6 +2038,9 @@ function wireBuild(){
   if(pub) pub.onclick = () => {
     collectForm();
     if(!state.data.name){ showErr(t("err_noname")); $("#f_name").focus(); return; }
+    let scc = state.cc || _ipcc || "US";
+    if(!COUNTRY[scc]) scc = "US";
+    state.data.loc = { cc: scc, lang: uiLang };
     const payload = encodeSite(state.data);
     state.link = location.origin + location.pathname + "#/s/" + payload;
     goStep(3);
@@ -2061,6 +2090,7 @@ function siteView(d, payload){
   + (d.hours ? '<div class="shop-sec"><h2>'+t("sv_hours")+'</h2><div class="sub">'+t("sv_hours_sub")+'</div>'+hoursHtml+'</div>' : "")
   + ((btns.length||d.address) ? '<div class="shop-sec"><h2>'+t("sv_find")+'</h2><div class="sub">'+(d.address?esc(d.address):t("sv_find_sub"))+'</div><div class="contact-btns">'+btns.join("")+'</div></div>' : "")
   + '<div class="shop-foot">'+t("made_with_a")+' <a href="#/">TalkShop</a> · '+t("made_with_b")+'.'
+  + '<br><a class="shop-loc" href="#/locale" onclick="goLocale()">&#127760; '+(LANG_NAMES[uiLang]||"English")+'</a>'
   + (payload ? '<br><a class="update-link" href="#/edit/'+payload+'">'+t("update_link")+'</a>' : "")
   + '</div></div>';
 }
@@ -2092,14 +2122,120 @@ function termsView(){
     [t("tos_c3t"), t("tos_c3b")], [t("tos_c4t"), t("tos_c4b")]
   ]);
 }
+/* ============================== locale chooser ============================== */
+function goLocale(){ try{ sessionStorage.setItem("ts_loc_back", location.hash); }catch(e){} }
+function footLocLabel(){
+  const lang = LANG_NAMES[uiLang] || "English";
+  const cc = (state.cc && COUNTRY[state.cc]) ? " \u00b7 " + COUNTRY[state.cc].name : "";
+  return lang + cc;
+}
+function localeBack(){
+  let b = "#/";
+  try{ b = sessionStorage.getItem("ts_loc_back") || "#/"; }catch(e){}
+  if(!b || b === "#/locale") b = "#/";
+  return b;
+}
+const LANG_ENGLISH_NAMES = { en:"English", es:"Spanish", hi:"Hindi", ta:"Tamil", ml:"Malayalam" };
+function localeView(){
+  const back = localeBack();
+  const isShop = back.replace(/^#\/?/,"").indexOf("s/")===0;
+  const langRows = Object.keys(LANG_NAMES).map(l=>
+    '<button class="loc-row'+(l===uiLang?' on':'')+'" data-lang="'+l+'"><span class="tt"><b>'+LANG_NAMES[l]+'</b><small>'+LANG_ENGLISH_NAMES[l]+'</small></span><span class="ck">\u2713</span></button>'
+  ).join("");
+  let ccBlock;
+  if(isShop){
+    let scc = null;
+    try{ const d = decodeSite(back.replace(/^#\/?/,"").slice(2)); if(d && d.loc && d.loc.cc && COUNTRY[d.loc.cc]) scc = d.loc.cc; }catch(e){}
+    const cur = scc ? COUNTRY[scc].cur : fxCur;
+    const fl = scc ? flag(scc) : "";
+    ccBlock = '<div class="loc-sec">'+t("locale_country")+'</div><div class="loc-note">'
+      + t("locale_shopnote").replace("{flag}", fl).replace("{cur}", cur) + '</div>';
+  } else {
+    const codes = Object.keys(COUNTRY).sort((a,b)=>COUNTRY[a].name.localeCompare(COUNTRY[b].name));
+    ccBlock = '<div class="loc-sec">'+t("locale_country")+'</div><div class="loc-list">'
+      + codes.map(c=>'<button class="loc-row'+(c===state.cc?' on':'')+'" data-cc="'+c+'"><span class="fl">'+flag(c)+'</span><span class="tt"><b>'+COUNTRY[c].name+'</b><small>'+COUNTRY[c].cur+'</small></span><span class="ck">\u2713</span></button>').join("")
+      + '</div>';
+  }
+  return header()
+    + '<div class="wrap" style="padding:40px 22px 90px;max-width:720px;">'
+    + '<a class="loc-back" href="'+back+'">\u2039 '+t("locale_back")+'</a>'
+    + '<h1 class="serif" style="font-size:clamp(30px,5vw,44px);margin:0 0 6px;">'+t("locale_title")+'</h1>'
+    + '<p style="color:var(--ink2);font-size:16px;margin:0;">'+t("locale_note")+'</p>'
+    + '<div class="loc-sec">'+t("locale_lang")+'</div><div class="loc-list">'+langRows+'</div>'
+    + ccBlock
+    + '</div>' + footer();
+}
+function wireLocale(){
+  const back = localeBack();
+  const backPayload = back.replace(/^#\/?/,"").indexOf("s/")===0 ? back.replace(/^#\/?/,"").slice(2) : null;
+  document.querySelectorAll('.loc-row[data-lang]').forEach(b=>{
+    b.onclick = ()=>{
+      const l = b.getAttribute("data-lang");
+      if(backPayload){ try{ sessionStorage.setItem("ts_shop_lang", JSON.stringify({ ref: backPayload, lang: l })); }catch(e){} }
+      setLang(l);
+    };
+  });
+  document.querySelectorAll('.loc-row[data-cc]').forEach(b=>{
+    b.onclick = ()=> pickCountry(b.getAttribute("data-cc"));
+  });
+}
+async function pickCountry(cc){
+  const cfg = COUNTRY[cc]; if(!cfg) return;
+  state.cc = cc;
+  await setCurrency(cfg.cur);
+  persistLocale();
+  router();
+}
 /* ============================== router ============================== */
+/* Locale precedence on a storefront: explicit viewer override (this tab) >
+   shop's baked-in language > saved preference > browser language > English.
+   Currency always follows the shop. Viewer overrides never touch the hash,
+   so shared links always carry the shop's original locale. */
+async function applyShopLocale(d, payload){
+  let lang = null;
+  try{ const o = JSON.parse(sessionStorage.getItem("ts_shop_lang")||"null"); if(o && o.ref===payload && STR[o.lang]) lang = o.lang; }catch(e){}
+  const loc = d.loc || {};
+  if(!lang) lang = (loc.lang && STR[loc.lang]) ? loc.lang : null;
+  if(!lang){ try{ const sv = localStorage.getItem("ts_ui"); if(sv && STR[sv]) lang = sv; }catch(e){} }
+  if(!lang){ const bl = String(navigator.language||"en").slice(0,2).toLowerCase(); lang = STR[bl] ? bl : "en"; }
+  uiLang = lang; applyLangHead();
+  const shopCC = (loc.cc && COUNTRY[loc.cc]) ? loc.cc : null;
+  state.cc = shopCC;
+  if(shopCC){
+    const cur = COUNTRY[shopCC].cur;
+    if(cur !== fxCur){ fxCur = cur; fxRate = FX_FALLBACK[cur]||1; }
+  }
+  render(siteView(d, payload));
+  window.scrollTo(0,0);
+  if(shopCC){
+    const cur = COUNTRY[shopCC].cur;
+    try{
+      const r = await fetch("https://api.frankfurter.app/latest?from=USD&to=" + cur);
+      const j = await r.json();
+      const rate = (j.rates && j.rates[cur]) ? j.rates[cur] : (FX_FALLBACK[cur]||1);
+      if(rate !== fxRate && location.hash.replace(/^#\/?/,"").indexOf("s/")===0){ fxRate = rate; render(siteView(d, payload)); }
+    }catch(e){}
+  }
+}
 function router(){
   stopRec(true);
   const h = location.hash.replace(/^#\/?/, "");
-  if(h.indexOf("s/")===0){
+  const wasShop = !!state.isShop;
+  state.isShop = (h.indexOf("s/")===0);
+  if(wasShop && !state.isShop){
+    // leaving a storefront: restore the viewer's own currency preference
+    let sc = null;
+    try{ sc = (JSON.parse(localStorage.getItem("ts_locale")||"null")||{}).cur; }catch(e){}
+    if(sc && FX_FALLBACK[sc] && sc !== fxCur){
+      fxCur = sc; fxRate = FX_FALLBACK[sc];
+      setCurrency(sc).then(()=>{ try{ router(); }catch(e){} });
+    }
+  }
+  if(state.isShop){
     const payload = h.slice(2);
     const d = decodeSite(payload);
-    render(d ? siteView(d, payload) : notFoundView());
+    if(d){ applyShopLocale(d, payload); return; }
+    render(notFoundView());
   } else if(h.indexOf("edit/")===0){
     const d = decodeSite(h.slice(5));
     if(d){ state.data = d; state.step = 2; state.transcript = ""; render(buildView()); wireBuild(); }
@@ -2108,6 +2244,8 @@ function router(){
     render(privacyView());
   } else if(h==="terms"){
     render(termsView());
+  } else if(h==="locale"){
+    render(localeView()); wireLocale();
   } else if(h==="build" || h.indexOf("build")===0){
     render(buildView()); wireBuild();
   } else {
@@ -2120,7 +2258,6 @@ window.addEventListener("hashchange", router);
 if(!STR[uiLang]) uiLang = "en";
 applyLangHead();
 router();
-wireLangSel();
 initLocale();
 </script>
 </body>
