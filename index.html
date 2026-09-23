@@ -3300,9 +3300,8 @@ function localeView(){
     ccBlock = '<div class="loc-sec">'+t("locale_country")+'</div><div class="loc-note">'
       + t("locale_shopnote").replace("{cur}", cur) + '</div>';
   } else {
-    const mine = (state.cc && REGION_OF[state.cc]) ? REGION_OF[state.cc] : null;
     const pills = REGION_KEYS.map(r=>
-      '<button class="loc-pill'+(r===mine?' mine':'')+'" data-jump="'+r+'">'+t(REGION_KEY[r])+'</button>'
+      '<button class="loc-pill" data-jump="'+r+'">'+t(REGION_KEY[r])+'</button>'
     ).join("");
     const sections = REGION_KEYS.map(r=>{
       const codes = Object.keys(COUNTRY).filter(c=>REGION_OF[c]===r)
@@ -3356,8 +3355,25 @@ function wireLocale(){
     };
     const inp = document.getElementById("locSearch");
     const none = document.getElementById("locNone");
+    const regionsEl = document.getElementById("locRegions");
+    let activeRegion = null;
+    const applyRegionFilter = ()=>{
+      document.querySelectorAll(".loc-pill").forEach(x=>{
+        x.classList.toggle("mine", x.getAttribute("data-jump")===activeRegion);
+      });
+      document.querySelectorAll(".loc-region").forEach(sec=>{
+        const show = !activeRegion || sec.id === "locR-" + activeRegion;
+        sec.style.display = show ? "" : "none";
+      });
+      if(none) none.style.display = "none";
+      setStick();
+    };
     const filter = ()=>{
       const q = foldStr(inp.value.trim());
+      if(q && activeRegion){
+        activeRegion = null;
+        document.querySelectorAll(".loc-pill").forEach(x=>x.classList.remove("mine"));
+      }
       let any = false;
       document.querySelectorAll(".loc-region").forEach(sec=>{
         let vis = 0;
@@ -3379,8 +3395,16 @@ function wireLocale(){
     document.querySelectorAll(".loc-pill").forEach(p=>{
       p.onclick = ()=>{
         const r = p.getAttribute("data-jump");
-        const sec = document.getElementById("locR-" + r);
-        if(sec) sec.scrollIntoView({ behavior:"smooth", block:"start" });
+        activeRegion = (activeRegion === r) ? null : r;
+        if(inp) inp.value = "";
+        document.querySelectorAll(".loc-region .loc-row[data-cc]").forEach(row=>{ row.style.display = ""; });
+        applyRegionFilter();
+        if(activeRegion && regionsEl){
+          const y = regionsEl.getBoundingClientRect().top + window.scrollY - (stick.offsetHeight + 78);
+          window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
       };
     });
     setStick();
