@@ -711,6 +711,10 @@ const SHOPS_KEY = "talkshop_my_shops";
 function readShops(){ try{ const a=JSON.parse(localStorage.getItem(SHOPS_KEY)||"[]"); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
 function writeShops(a){ try{ localStorage.setItem(SHOPS_KEY, JSON.stringify(a)); }catch(e){} }
 function shopLinkOf(payload){ return location.origin + location.pathname + "#/s/" + payload; }
+// Server-issued shop IDs: 8 chars from 23456789ABCDEFGHJKLMNPQRSTUVWXYZ (no 0/O, 1/I/L).
+// A "#/s/" segment matching this is fetched from /api/shops; anything else is a legacy payload link.
+const SHOP_ID_RE = /^[2-9A-HJ-NP-Z]{8}$/;
+function shopIdLinkOf(id){ return location.origin + location.pathname + "#/s/" + id; }
 function saveShopToRegistry(payload){
   const shops = readShops();
   const name = (state.data && state.data.name) || "";
@@ -723,6 +727,38 @@ function saveShopToRegistry(payload){
   writeShops(shops);
   state.editShopId = null;
   return id;
+}
+function setRegistryServerId(regId, serverId){
+  const shops = readShops();
+  const ix = shops.findIndex(s=>s.id===regId);
+  if(ix>=0){ shops[ix].serverId = serverId; writeShops(shops); }
+}
+// POST the shop to /api/shops for a short server-side ID. On success the
+// share screen's primary link becomes #/s/<id>; on any failure the full
+// payload link stays as the share link (it always works).
+function issueShopId(payload, regId){
+  let done = false;
+  const finish = (ok, id)=>{
+    if(done) return; done = true;
+    if(state.step !== 3) return; // user moved on; the payload link fallback still works
+    state.idState = ok ? "ok" : "fail";
+    if(ok && id){
+      state.shortId = id;
+      state.link = shopIdLinkOf(id);
+      setRegistryServerId(regId, id);
+      const qrc = $("#qrCanvas");
+      if(qrc){ qrc.innerHTML = ""; try{ new QRCode(qrc, { text: state.link, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M }); }catch(e){} }
+    }
+    const box = $("#idLinkBox");
+    if(box){ box.innerHTML = idLinkRowsHtml(); wireIdRows(); }
+  };
+  try{
+    fetch("/api/shops", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ payload: decodeSite(payload) }) })
+      .then(r=>{ if(!r.ok) throw new Error("api"); return r.json(); })
+      .then(j=>{ const id = j && j.id; if(typeof id !== "string" || !SHOP_ID_RE.test(id)) throw new Error("bad id"); finish(true, id); })
+      .catch(()=>finish(false));
+  }catch(e){ finish(false); }
+  setTimeout(()=>finish(false), 15000);
 }
 function cleanPhone(p){ return String(p||"").replace(/[^\d+]/g,""); }
 
@@ -1036,7 +1072,12 @@ const STR = { en: {
   "dash_copy":"Copy link",
   "dash_del":"Delete",
   "dash_confirm":"Delete this shop? This cannot be undone.",
-  "dash_nprods":"{n} products"
+  "dash_nprods":"{n} products",
+  "id_saving":"Saving your shop online...",
+  "id_fail":"Could not save online, so here is the full link. It works the same.",
+  "sh_id_label":"Short link",
+  "sh_full_label":"Full link (backup)",
+  "s_loading":"Loading shop..."
 } };
 STR.te = {
   "meta_title":"TalkShop: మీ దుకాణం గురించి చెప్పండి. ఆన్‌లైన్‌లోకి తీసుకురండి.",
@@ -1412,7 +1453,12 @@ STR.te = {
   "dash_copy":"లింక్ కాపీ చేయి",
   "dash_del":"తొలగించు",
   "dash_confirm":"ఈ దుకాణాన్ని తొలగించాలా? దీన్ని తిరిగి పొందలేరు.",
-  "dash_nprods":"{n} ఉత్పత్తులు"
+  "dash_nprods":"{n} ఉత్పత్తులు",
+  "id_saving":"మీ షాప్ ఆన్‌లైన్‌లో సేవ్ అవుతోంది...",
+  "id_fail":"ఆన్‌లైన్‌లో సేవ్ చేయలేకపోయాం, కాబట్టి పూర్తి లింక్ ఇదిగో. ఇది అలాగే పనిచేస్తుంది.",
+  "sh_id_label":"చిన్న లింక్",
+  "sh_full_label":"పూర్తి లింక్ (బ్యాకప్)",
+  "s_loading":"షాప్ లోడ్ అవుతోంది..."
 };
 STR.bn = {
   "meta_title":"TalkShop: আপনার দোকানের কথা বলুন। অনলাইনে আসুন।",
@@ -1788,7 +1834,12 @@ STR.bn = {
   "dash_copy":"লিংক কপি করুন",
   "dash_del":"মুছুন",
   "dash_confirm":"এই দোকানটি মুছবেন? এটি ফেরানো যাবে না।",
-  "dash_nprods":"{n}টি পণ্য"
+  "dash_nprods":"{n}টি পণ্য",
+  "id_saving":"আপনার দোকান অনলাইনে সংরক্ষণ করা হচ্ছে...",
+  "id_fail":"অনলাইনে সংরক্ষণ করা যায়নি, তাই পুরো লিংকটি রইল। এটি একইভাবে কাজ করবে।",
+  "sh_id_label":"ছোট লিংক",
+  "sh_full_label":"পুরো লিংক (ব্যাকআপ)",
+  "s_loading":"দোকান লোড হচ্ছে..."
 };
 STR.kn = {
   "meta_title":"TalkShop: ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ವಿವರಿಸಿ. ಅದನ್ನು ಆನ್‌ಲೈನ್‌ಗೆ ತನ್ನಿ.",
@@ -2164,7 +2215,12 @@ STR.kn = {
   "dash_copy":"ಲಿಂಕ್ ನಕಲಿಸಿ",
   "dash_del":"ಅಳಿಸಿ",
   "dash_confirm":"ಈ ಅಂಗಡಿಯನ್ನು ಅಳಿಸಬೇಕೇ? ಇದನ್ನು ಹಿಂಪಡೆಯಲಾಗುವುದಿಲ್ಲ.",
-  "dash_nprods":"{n} ಉತ್ಪನ್ನಗಳು"
+  "dash_nprods":"{n} ಉತ್ಪನ್ನಗಳು",
+  "id_saving":"ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಉಳಿಸಲಾಗುತ್ತಿದೆ...",
+  "id_fail":"ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ, ಆದ್ದರಿಂದ ಪೂರ್ಣ ಲಿಂಕ್ ಇಲ್ಲಿದೆ. ಅದು ಅದೇ ರೀತಿ ಕೆಲಸ ಮಾಡುತ್ತದೆ.",
+  "sh_id_label":"ಚಿಕ್ಕ ಲಿಂಕ್",
+  "sh_full_label":"ಪೂರ್ಣ ಲಿಂಕ್ (ಬ್ಯಾಕಪ್)",
+  "s_loading":"ಅಂಗಡಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ..."
 };
 STR.mr = {
   "meta_title":"TalkShop: तुमच्या दुकानाबद्दल सांगा. ते ऑनलाइन न्या.",
@@ -2540,7 +2596,12 @@ STR.mr = {
   "dash_copy":"लिंक कॉपी करा",
   "dash_del":"हटवा",
   "dash_confirm":"हे दुकान हटवायचे? हे परत मिळवता येणार नाही.",
-  "dash_nprods":"{n} उत्पादने"
+  "dash_nprods":"{n} उत्पादने",
+  "id_saving":"तुमचे दुकान ऑनलाइन जतन होत आहे...",
+  "id_fail":"ऑनलाइन जतन करता आले नाही, म्हणून हा पूर्ण लिंक. तो तसाच काम करेल.",
+  "sh_id_label":"लहान लिंक",
+  "sh_full_label":"पूर्ण लिंक (बॅकअप)",
+  "s_loading":"दुकान लोड होत आहे..."
 };
 STR.zh = {
   "meta_title":"TalkShop：描述您的小店，轻松上线。",
@@ -2916,7 +2977,12 @@ STR.zh = {
   "dash_copy":"复制链接",
   "dash_del":"删除",
   "dash_confirm":"删除这家店铺吗？此操作无法撤销。",
-  "dash_nprods":"{n} 件商品"
+  "dash_nprods":"{n} 件商品",
+  "id_saving":"正在将您的店铺保存到网上...",
+  "id_fail":"无法在线保存，这是完整链接，效果一样。",
+  "sh_id_label":"短链接",
+  "sh_full_label":"完整链接（备用）",
+  "s_loading":"正在加载店铺..."
 };
 STR.ja = {
   "meta_title":"TalkShop：お店を紹介して、オンラインに。",
@@ -3292,7 +3358,12 @@ STR.ja = {
   "dash_copy":"リンクをコピー",
   "dash_del":"削除",
   "dash_confirm":"このショップを削除しますか？元に戻せません。",
-  "dash_nprods":"商品{n}点"
+  "dash_nprods":"商品{n}点",
+  "id_saving":"ショップをオンラインに保存しています...",
+  "id_fail":"オンライン保存できませんでした。こちらがフルリンクです。同じように使えます。",
+  "sh_id_label":"短縮リンク",
+  "sh_full_label":"フルリンク（バックアップ）",
+  "s_loading":"ショップを読み込み中..."
 };
 STR.fr = {
   "meta_title":"TalkShop : Décrivez votre boutique. Mettez-la en ligne.",
@@ -3668,7 +3739,12 @@ STR.fr = {
   "dash_copy":"Copier le lien",
   "dash_del":"Supprimer",
   "dash_confirm":"Supprimer cette boutique ? Cette action est irréversible.",
-  "dash_nprods":"{n} produits"
+  "dash_nprods":"{n} produits",
+  "id_saving":"Enregistrement de votre boutique en ligne...",
+  "id_fail":"Enregistrement en ligne impossible, voici le lien complet. Il fonctionne de la même façon.",
+  "sh_id_label":"Lien court",
+  "sh_full_label":"Lien complet (secours)",
+  "s_loading":"Chargement de la boutique..."
 };
 STR.de = {
   "meta_title":"TalkShop: Beschreiben Sie Ihr Geschäft. Bringen Sie es online.",
@@ -4044,7 +4120,12 @@ STR.de = {
   "dash_copy":"Link kopieren",
   "dash_del":"Löschen",
   "dash_confirm":"Diesen Shop löschen? Das kann nicht rückgängig gemacht werden.",
-  "dash_nprods":"{n} Produkte"
+  "dash_nprods":"{n} Produkte",
+  "id_saving":"Dein Shop wird online gespeichert...",
+  "id_fail":"Online-Speichern fehlgeschlagen, hier ist der volle Link. Er funktioniert genauso.",
+  "sh_id_label":"Kurzer Link",
+  "sh_full_label":"Voller Link (Backup)",
+  "s_loading":"Shop wird geladen..."
 };
 STR.pt = {
   "meta_title":"TalkShop: Descreva sua loja. Coloque-a online.",
@@ -4420,7 +4501,12 @@ STR.pt = {
   "dash_copy":"Copiar link",
   "dash_del":"Excluir",
   "dash_confirm":"Excluir esta loja? Isso não pode ser desfeito.",
-  "dash_nprods":"{n} produtos"
+  "dash_nprods":"{n} produtos",
+  "id_saving":"Salvando sua loja online...",
+  "id_fail":"Não foi possível salvar online, então aqui está o link completo. Funciona do mesmo jeito.",
+  "sh_id_label":"Link curto",
+  "sh_full_label":"Link completo (reserva)",
+  "s_loading":"Carregando loja..."
 };
 STR.ar = {
   "meta_title":"TalkShop: صف متجرك. وانشره على الإنترنت.",
@@ -4796,7 +4882,12 @@ STR.ar = {
   "dash_copy":"نسخ الرابط",
   "dash_del":"حذف",
   "dash_confirm":"حذف هذا المتجر؟ لا يمكن التراجع عن ذلك.",
-  "dash_nprods":"{n} منتجات"
+  "dash_nprods":"{n} منتجات",
+  "id_saving":"جارٍ حفظ متجرك على الإنترنت...",
+  "id_fail":"تعذّر الحفظ على الإنترنت، لذا هذا هو الرابط الكامل. يعمل بالطريقة نفسها.",
+  "sh_id_label":"رابط مختصر",
+  "sh_full_label":"الرابط الكامل (احتياطي)",
+  "s_loading":"جارٍ تحميل المتجر..."
 };
 let uiLang = "en";
 try{ uiLang = localStorage.getItem("ts_ui") || "en"; }catch(e){}
@@ -5181,7 +5272,12 @@ STR.ml = {
   "dash_copy":"ലിങ്ക് പകർത്തുക",
   "dash_del":"മായ്ക്കുക",
   "dash_confirm":"ഈ കട മായ്ക്കണോ? ഇത് തിരിച്ചെടുക്കാനാവില്ല.",
-  "dash_nprods":"{n} ഉൽപ്പന്നങ്ങൾ"
+  "dash_nprods":"{n} ഉൽപ്പന്നങ്ങൾ",
+  "id_saving":"നിങ്ങളുടെ കട ഓൺലൈനിൽ സേവ് ചെയ്യുന്നു...",
+  "id_fail":"ഓൺലൈനിൽ സേവ് ചെയ്യാനായില്ല, അതിനാൽ പൂർണ്ണ ലിങ്ക് ഇതാ. അത് അതുപോലെ പ്രവർത്തിക്കും.",
+  "sh_id_label":"ചെറിയ ലിങ്ക്",
+  "sh_full_label":"പൂർണ്ണ ലിങ്ക് (ബാക്കപ്പ്)",
+  "s_loading":"കട ലോഡ് ചെയ്യുന്നു..."
 };
 STR.hi = {
   "meta_title":"TalkShop: अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।",
@@ -5557,7 +5653,12 @@ STR.hi = {
   "dash_copy":"लिंक कॉपी करें",
   "dash_del":"हटाएं",
   "dash_confirm":"क्या यह दुकान हटाएं? यह वापस नहीं होगा।",
-  "dash_nprods":"{n} उत्पाद"
+  "dash_nprods":"{n} उत्पाद",
+  "id_saving":"आपकी दुकान ऑनलाइन सहेजी जा रही है...",
+  "id_fail":"ऑनलाइन सहेजा नहीं जा सका, इसलिए यह रहा पूरा लिंक। यह वैसे ही काम करता है।",
+  "sh_id_label":"छोटा लिंक",
+  "sh_full_label":"पूरा लिंक (बैकअप)",
+  "s_loading":"दुकान लोड हो रही है..."
 };
 STR.ta = {
   "meta_title":"TalkShop: உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.",
@@ -5933,7 +6034,12 @@ STR.ta = {
   "dash_copy":"இணைப்பை நகலெடு",
   "dash_del":"நீக்கு",
   "dash_confirm":"இந்தக் கடையை நீக்கவா? இதை மீட்க முடியாது.",
-  "dash_nprods":"{n} பொருட்கள்"
+  "dash_nprods":"{n} பொருட்கள்",
+  "id_saving":"உங்கள் கடை ஆன்லைனில் சேமிக்கப்படுகிறது...",
+  "id_fail":"ஆன்லைனில் சேமிக்க முடியவில்லை, எனவே இதோ முழு இணைப்பு. அது அதேபோல் செயல்படும்.",
+  "sh_id_label":"குறுகிய இணைப்பு",
+  "sh_full_label":"முழு இணைப்பு (காப்பு)",
+  "s_loading":"கடை ஏற்றப்படுகிறது..."
 };
 STR.es = {
   "meta_title":"TalkShop: Describe tu tienda. Ponla en línea.",
@@ -6310,7 +6416,12 @@ STR.es = {
   "dash_copy":"Copiar enlace",
   "dash_del":"Eliminar",
   "dash_confirm":"¿Eliminar esta tienda? No se puede deshacer.",
-  "dash_nprods":"{n} productos"
+  "dash_nprods":"{n} productos",
+  "id_saving":"Guardando tu tienda en línea...",
+  "id_fail":"No se pudo guardar en línea, así que aquí está el enlace completo. Funciona igual.",
+  "sh_id_label":"Enlace corto",
+  "sh_full_label":"Enlace completo (respaldo)",
+  "s_loading":"Cargando tienda..."
 };
 
 
@@ -6589,7 +6700,7 @@ function parseTranscript(raw){
   return d;
 }
 /* ============================== state ============================== */
-const state = { step:1, lang:"en-US", transcript:"", data:null, link:"", cc:null };
+const state = { step:1, lang:"en-US", transcript:"", data:null, link:"", cc:null, fullLink:"", shortId:"", idState:"", regId:null };
 const LANGS = [["en-US","English (US)"],["en-GB","English (UK)"],["en-IN","English (India)"],["es-ES","Spanish"],["es-MX","Spanish (Mexico)"],["pt-BR","Portuguese (Brazil)"],["fr-FR","French"],["de-DE","German"],["hi-IN","Hindi"],["ar-SA","Arabic"],["id-ID","Indonesian"],["ms-MY","Malay"],["tl-PH","Filipino"],["ur-PK","Urdu"],["bn-IN","Bengali"],["ta-IN","Tamil"],["te-IN","Telugu"],["ml-IN","Malayalam"],["sw-KE","Swahili"],["nl-NL","Dutch"],["it-IT","Italian"]];
 /* ============================== chrome ============================== */
 function header(){
@@ -7052,12 +7163,42 @@ function stepReviewHtml(){
   + '<div class="center" style="margin-top:10px;"><button class="link-btn" id="backSpeak">'+t("btn_back")+'</button></div>'
   + '<div class="center" style="margin-top:4px;"><button class="btn btn-accent" id="publishBtn">'+t("btn_publish")+'</button></div>';
 }
+function idLinkRowsHtml(){
+  const saving = state.idState === "saving";
+  const ok = state.idState === "ok" && state.shortId;
+  let h = '<p class="note" style="margin:0 0 6px;">'+t("sh_id_label")+'</p>'
+    + '<div class="share-link" style="margin-top:0;"><input type="text" id="shareUrl" readonly value="'+esc(saving ? t("id_saving") : state.link)+'"'+(saving?' disabled':"")+'>'
+    + '<button class="btn btn-solid btn-sm" id="copyBtn" style="padding:12px 22px;"'+(saving?' disabled':"")+'>'+t("btn_copy")+'</button></div>';
+  if(saving){
+    h += '<p class="note" id="idNote">'+esc(t("id_saving"))+'</p>';
+  } else if(ok){
+    h += '<p class="note" style="margin:10px 0 6px;">'+t("sh_full_label")+'</p>'
+      + '<div class="share-link" style="margin-top:0;"><input type="text" id="fullUrl" readonly value="'+esc(state.fullLink)+'">'
+      + '<button class="btn btn-sm" id="copyFullBtn" style="padding:12px 22px;">'+t("btn_copy")+'</button></div>';
+  } else {
+    h += '<p class="note" id="idNote">'+esc(t("id_fail"))+'</p>';
+  }
+  return h;
+}
+function wireIdRows(){
+  const cp = (inpId, btnId)=>{
+    const btn = $(btnId); if(!btn) return;
+    btn.onclick = ()=>{
+      const inp = $(inpId); if(inp) inp.select();
+      const txt = inp ? inp.value : state.link;
+      const done = ()=>{ const o = btn.textContent; btn.textContent = t("copied"); setTimeout(()=>{ btn.textContent = o; },1800); };
+      if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done).catch(()=>{ document.execCommand("copy"); done(); });
+      else { document.execCommand("copy"); done(); }
+    };
+  };
+  cp("#shareUrl", "#copyBtn");
+  cp("#fullUrl", "#copyFullBtn");
+}
 function stepShareHtml(){
   return '<div class="share-panel"><div class="eyebrow">'+t("sh_eyebrow")+'</div>'
   + '<h2 class="serif" style="font-size:32px;margin-bottom:10px;">'+esc(state.data.name)+'</h2>'
   + '<p class="note">'+t("sh_note")+'</p>'
-  + '<div class="share-link"><input type="text" id="shareUrl" readonly value="'+esc(state.link)+'">'
-  + '<button class="btn btn-solid btn-sm" id="copyBtn" style="padding:12px 22px;">'+t("btn_copy")+'</button></div>'
+  + '<div id="idLinkBox">'+idLinkRowsHtml()+'</div>'
   + '<div class="short-row"><button class="btn btn-sm" id="shortBtn">'+t("btn_short")+'</button></div>'
   + '<div id="shortBox"></div>'
   + '<div id="qrBox" style="margin-top:18px;"><p class="note" style="margin-bottom:12px;">'+t("qr_note")+'</p><div id="qrCanvas" class="center"></div>'
@@ -7179,7 +7320,7 @@ function collectForm(){
   // theme: keep any saved custom theme; new shops default to forest
   if(!d.theme || !THEMES[d.theme]) d.theme = "forest";
 }
-function freshBuild(){ if(state.step===3){ state.step=1; state.transcript=""; state.data=null; state.link=""; state.editShopId=null; const h=location.hash.replace(/^#\/?/,""); if(h.indexOf("build")===0){ render(buildView()); wireBuild(); window.scrollTo(0,0); } } }
+function freshBuild(){ if(state.step===3){ state.step=1; state.transcript=""; state.data=null; state.link=""; state.fullLink=""; state.shortId=""; state.idState=""; state.regId=null; state.editShopId=null; const h=location.hash.replace(/^#\/?/,""); if(h.indexOf("build")===0){ render(buildView()); wireBuild(); window.scrollTo(0,0); } } }
 function goStep(n){ state.step = n; const c = $("#buildCard"); if(c){ c.innerHTML = buildStepHtml(); wireBuild(); } const st = $(".bdots"); if(st) st.outerHTML = stageBar(); window.scrollTo(0,0); }
 function wireBuild(){
   const lang = $("#langSel"); if(lang) lang.onchange = e => { state.lang = e.target.value; };
@@ -7216,17 +7357,15 @@ function wireBuild(){
     if(!COUNTRY[scc]) scc = "US";
     state.data.loc = { cc: scc, lang: uiLang };
     const payload = encodeSite(state.data);
-    state.link = location.origin + location.pathname + "#/s/" + payload;
-    saveShopToRegistry(payload);
+    state.fullLink = location.origin + location.pathname + "#/s/" + payload;
+    state.link = state.fullLink; // provisional; replaced by the #/s/<id> link when the server issues one
+    state.shortId = ""; state.idState = "saving";
+    state.regId = saveShopToRegistry(payload);
     goStep(3);
+    issueShopId(payload, state.regId);
   };
   const copy = $("#copyBtn");
-  if(copy) copy.onclick = () => {
-    const inp = $("#shareUrl"); inp.select();
-    const done = () => { copy.textContent = t("copied"); setTimeout(()=>copy.textContent="Copy link", 1800); };
-    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(state.link).then(done).catch(()=>{ document.execCommand("copy"); done(); }); }
-    else { document.execCommand("copy"); done(); }
-  };
+  if(copy) wireIdRows();
   const edit = $("#editBtn"); if(edit) edit.onclick = () => goStep(2);
   const shb = $("#shortBtn");
   if(shb) shb.onclick = () => {
@@ -8457,6 +8596,23 @@ function notFoundView(){
   + '<p style="color:var(--ink2);margin:12px 0 26px;">'+t("nf_p")+'</p>'
   + '<a class="btn btn-accent" href="#/build" onclick="freshBuild()">'+t("nf_cta")+'</a></div>' + footer();
 }
+function shopLoadingView(){
+  return header() + '<div class="wrap center" style="padding:90px 0;"><p style="color:var(--ink2);font-size:17px;">'+esc(t("s_loading"))+'</p></div>' + footer();
+}
+// Fetch a server-saved shop by its short ID, then render the normal storefront.
+// The fetched data is re-encoded to a canonical payload string so checkout
+// and back-links keep working exactly like payload links.
+function fetchShopById(id, h){
+  fetch("/api/shops?id="+encodeURIComponent(id))
+    .then(r=>{ if(!r.ok) throw new Error("nf"); return r.json(); })
+    .then(j=>{
+      if(location.hash.replace(/^#\/?/,"") !== h) return; // user moved on
+      const d = j && j.payload;
+      if(!d || typeof d !== "object" || Array.isArray(d)){ render(notFoundView()); return; }
+      applyShopLocale(d, encodeSite(d));
+    })
+    .catch(()=>{ if(location.hash.replace(/^#\/?/,"") === h) render(notFoundView()); });
+}
 function legalView(title, intro, sections){
   let h = header() + '<div class="wrap" style="padding:64px 22px 90px;max-width:760px;">'
     + '<h1 class="serif" style="font-size:clamp(32px,5vw,52px);margin:0 0 8px;">'+title+'</h1>'
@@ -8713,9 +8869,9 @@ function wireDash(){
     const s = shops.find(x=>x.id===id); if(!s) return;
     const act = b.getAttribute("data-dact");
     if(act==="edit"){ location.hash = "#/edit/"+s.payload; }
-    else if(act==="view"){ window.open(shopLinkOf(s.payload), "_blank"); }
+    else if(act==="view"){ window.open(s.serverId ? shopIdLinkOf(s.serverId) : shopLinkOf(s.payload), "_blank"); }
     else if(act==="copy"){
-      const link = shopLinkOf(s.payload);
+      const link = s.serverId ? shopIdLinkOf(s.serverId) : shopLinkOf(s.payload);
       const done = ()=>{ const o=b.textContent; b.textContent=t("copied"); setTimeout(()=>{ b.textContent=o; },1500); };
       if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done).catch(done);
       else done();
@@ -8744,7 +8900,9 @@ function router(){
     if(d){ startCheckout(d, payload); return; }
     render(notFoundView());
   } else if(h.indexOf("s/")===0){
-    const payload = h.slice(2);
+    const seg = h.slice(2);
+    if(SHOP_ID_RE.test(seg)){ render(shopLoadingView()); fetchShopById(seg, h); return; }
+    const payload = seg;
     const d = decodeSite(payload);
     if(d){ applyShopLocale(d, payload); return; }
     render(notFoundView());
