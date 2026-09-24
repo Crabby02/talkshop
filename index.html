@@ -434,6 +434,16 @@ html[dir="rtl"] body{direction:rtl}
 .pf-var .pf-vname{flex:1;}
 .pf-var .pf-vprice{flex:0 0 100px;}
 .pf-vardel{flex:none;width:34px;border:1px solid var(--line);background:#fff;border-radius:8px;cursor:pointer;color:var(--ink2);}
+.pf-pricewrap{position:relative;flex:0 0 120px;display:flex;min-width:0;}
+.pf-grid .pf-pricewrap .pf-price{flex:1 1 auto;width:100%;padding-inline-start:26px;min-width:0;}
+.pf-cur{position:absolute;inset-inline-start:10px;top:50%;transform:translateY(-50%);color:var(--ink2);font-size:15px;pointer-events:none;}
+.pf-dup{flex:none;border:0;background:none;color:var(--s-accent,var(--accent));font-size:13px;font-weight:700;cursor:pointer;padding:0 2px;white-space:nowrap;}
+.pf-err{color:#b3261e;font-size:13px;margin:-2px 0 10px;}
+.pf-bad{border-color:#b3261e !important;}
+.imp-vars,.imp-stock{font-size:13px;color:var(--ink2);margin-bottom:6px;}
+.okmsg{background:#e6f4ea;color:#137333;border-radius:8px;padding:10px 12px;font-size:14px;}
+.paste-toggle{background:none;border:1px dashed var(--line);border-radius:8px;color:var(--ink2);font-size:14px;padding:8px 12px;cursor:pointer;}
+#pasteBox{margin-bottom:14px;}
 .pf-addvar{background:none;border:0;color:var(--s-accent,var(--accent));font-weight:700;font-size:14px;cursor:pointer;padding:8px 0;}
 .pf-oos{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink2);margin-top:8px;cursor:pointer;}
 .pf-oos input{width:18px;height:18px;accent-color:var(--s-accent,var(--accent));}
@@ -526,7 +536,7 @@ html[dir="rtl"] body{direction:rtl}
 .cline .cn small{color:var(--ink2);font-size:13px;}
 .cline .lt{font-family:ui-monospace,Menlo,monospace;font-size:14px;white-space:nowrap;}
 .stepper{display:flex;align-items:center;gap:10px;flex:none;}
-.stepper button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:18px;cursor:pointer;line-height:1;color:var(--ink);}
+.stepper button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:18px;cursor:pointer;line-height:1;color:var(--ink);}
 .stepper b{min-width:20px;text-align:center;}
 .trow{display:flex;justify-content:space-between;gap:12px;padding:6px 0;font-size:15px;}
 .trow.grand{font-weight:800;font-size:18px;border-top:1px solid var(--line);margin-top:8px;padding-top:12px;}
@@ -872,7 +882,17 @@ const STR = { en: {
   "bp_price":"Price",
   "ck_more":"More options",
   "ck_next":"The shop will confirm your order on WhatsApp shortly.",
-  "n_items":"{n} items"
+  "n_items":"{n} items",
+  "cart_one":"{n} item",
+  "cart_other":"{n} items",
+  "bp_paste":"Paste your menu",
+  "bp_paste_ph":"One product per line, for example:\nCake - 4.50\nCoffee $3\n#Drinks",
+  "bp_import":"Import",
+  "bp_imported":"{n} products added",
+  "bp_import_none":"No products found. Try lines like: Cake - 4.50",
+  "bp_confirm":"Add products",
+  "bp_dup":"Duplicate",
+  "bp_price_err":"Enter a price above 0"
 } };
 STR.te = {
   "meta_title":"TalkShop: మీ దుకాణం గురించి చెప్పండి. ఆన్‌లైన్‌లోకి తీసుకురండి.",
@@ -1214,7 +1234,17 @@ STR.te = {
   "bp_price":"ధర",
   "ck_more":"మరిన్ని ఎంపికలు",
   "ck_next":"షాపు త్వరలో WhatsAppలో మీ ఆర్డర్‌ను నిర్ధారిస్తుంది.",
-  "n_items":"{n} వస్తువులు"
+  "n_items":"{n} వస్తువులు",
+  "cart_one":"{n} వస్తువు",
+  "cart_other":"{n} వస్తువులు",
+  "bp_paste":"మీ మెనూను అతికించండి",
+  "bp_paste_ph":"ప్రతి లైన్‌లో ఒక ఉత్పత్తి, ఉదాహరణ:\nకేక్ - 4.50\nకాఫీ $3\n#పానీయాలు",
+  "bp_import":"దిగుమతి",
+  "bp_imported":"{n} ఉత్పత్తులు జోడించబడ్డాయి",
+  "bp_import_none":"ఉత్పత్తులేవీ కనబడలేదు. ఇలా రాయండి: కేక్ - 4.50",
+  "bp_confirm":"ఉత్పత్తులను జోడించండి",
+  "bp_dup":"నకలు తీయండి",
+  "bp_price_err":"0 కంటే ఎక్కువ ధర నమోదు చేయండి"
 };
 STR.bn = {
   "meta_title":"TalkShop: আপনার দোকানের কথা বলুন। অনলাইনে আসুন।",
@@ -1556,7 +1586,17 @@ STR.bn = {
   "bp_price":"দাম",
   "ck_more":"আরও অপশন",
   "ck_next":"দোকান শীঘ্রই WhatsApp-এ আপনার অর্ডার নিশ্চিত করবে।",
-  "n_items":"{n}টি পণ্য"
+  "n_items":"{n}টি পণ্য",
+  "cart_one":"{n}টি পণ্য",
+  "cart_other":"{n}টি পণ্য",
+  "bp_paste":"আপনার মেনু পেস্ট করুন",
+  "bp_paste_ph":"প্রতি লাইনে একটি পণ্য, যেমন:\nকেক - 4.50\nকফি $3\n#পানীয়",
+  "bp_import":"ইমপোর্ট করুন",
+  "bp_imported":"{n}টি পণ্য যোग করা হয়েছে",
+  "bp_import_none":"কোনো পণ্য পাওয়া যায়নি। এভাবে লিখুন: কেক - 4.50",
+  "bp_confirm":"পণ্য যোग করুন",
+  "bp_dup":"ডুপ্লিকেট করুন",
+  "bp_price_err":"0-এর বেশি দাম লিখুন"
 };
 STR.kn = {
   "meta_title":"TalkShop: ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ವಿವರಿಸಿ. ಅದನ್ನು ಆನ್‌ಲೈನ್‌ಗೆ ತನ್ನಿ.",
@@ -1898,7 +1938,17 @@ STR.kn = {
   "bp_price":"ಬೆಲೆ",
   "ck_more":"ಇನ್ನಷ್ಟು ಆಯ್ಕೆಗಳು",
   "ck_next":"ಅಂಗಡಿ ಶೀಘ್ರದಲ್ಲೇ WhatsApp ನಲ್ಲಿ ನಿಮ್ಮ ಆರ್ಡರ್ ದೃಢೀಕರಿಸುತ್ತದೆ.",
-  "n_items":"{n} ವಸ್ತುಗಳು"
+  "n_items":"{n} ವಸ್ತುಗಳು",
+  "cart_one":"{n} ವಸ್ತು",
+  "cart_other":"{n} ವಸ್ತುಗಳು",
+  "bp_paste":"ನಿಮ್ಮ ಮೆನು ಅಂಟಿಸಿ",
+  "bp_paste_ph":"ಪ್ರತಿ ಸಾಲಿಗೆ ಒಂದು ಉತ್ಪನ್ನ, ಉದಾಹರಣೆ:\nಕೇಕ್ - 4.50\nಕಾಫಿ $3\n#ಪಾನೀಯಗಳು",
+  "bp_import":"ಆಮದು",
+  "bp_imported":"{n} ಉತ್ಪನ್ನಗಳನ್ನು ಸೇರಿಸಲಾಗಿದೆ",
+  "bp_import_none":"ಯಾವುದೇ ಉತ್ಪನ್ನಗಳು ಕಂಡುಬಂದಿಲ್ಲ. ಹೀಗೆ ಬರೆಯಿರಿ: ಕೇಕ್ - 4.50",
+  "bp_confirm":"ಉತ್ಪನ್ನಗಳನ್ನು ಸೇರಿಸಿ",
+  "bp_dup":"ನಕಲು ಮಾಡಿ",
+  "bp_price_err":"0 ಕ್ಕಿಂತ ಹೆಚ್ಚಿನ ಬೆಲೆ ನಮೂದಿಸಿ"
 };
 STR.mr = {
   "meta_title":"TalkShop: तुमच्या दुकानाबद्दल सांगा. ते ऑनलाइन न्या.",
@@ -2240,7 +2290,17 @@ STR.mr = {
   "bp_price":"किंमत",
   "ck_more":"अधिक पर्याय",
   "ck_next":"दुकान लवकरच WhatsApp वर तुमच्या ऑर्डरची पुष्टी करेल.",
-  "n_items":"{n} उत्पादने"
+  "n_items":"{n} उत्पादने",
+  "cart_one":"{n} उत्पादन",
+  "cart_other":"{n} उत्पादने",
+  "bp_paste":"तुमचा मेनू पेस्ट करा",
+  "bp_paste_ph":"प्रत्येक ओळीत एक उत्पादन, उदा.:\nकेक - 4.50\nकॉफी $3\n#पेये",
+  "bp_import":"इम्पोर्ट करा",
+  "bp_imported":"{n} उत्पादने जोडली",
+  "bp_import_none":"कोणतीही उत्पादने सापडली नाहीत. असे लिहा: केक - 4.50",
+  "bp_confirm":"उत्पादने जोडा",
+  "bp_dup":"डुप्लिकेट करा",
+  "bp_price_err":"0 पेक्षा जास्त किंमत टाका"
 };
 STR.zh = {
   "meta_title":"TalkShop：描述您的小店，轻松上线。",
@@ -2582,7 +2642,17 @@ STR.zh = {
   "bp_price":"价格",
   "ck_more":"更多选项",
   "ck_next":"商家将很快在 WhatsApp 上确认您的订单。",
-  "n_items":"{n} 件商品"
+  "n_items":"{n} 件商品",
+  "cart_one":"{n} 件商品",
+  "cart_other":"{n} 件商品",
+  "bp_paste":"粘贴您的菜单",
+  "bp_paste_ph":"每行一件商品，例如：\n蛋糕 - 4.50\n咖啡 $3\n#饮料",
+  "bp_import":"导入",
+  "bp_imported":"已添加 {n} 件商品",
+  "bp_import_none":"未找到商品。请按此格式输入：蛋糕 - 4.50",
+  "bp_confirm":"添加商品",
+  "bp_dup":"复制",
+  "bp_price_err":"请输入大于 0 的价格"
 };
 STR.ja = {
   "meta_title":"TalkShop：お店を紹介して、オンラインに。",
@@ -2924,7 +2994,17 @@ STR.ja = {
   "bp_price":"価格",
   "ck_more":"その他のオプション",
   "ck_next":"店舗がまもなく WhatsApp でご注文を確認します。",
-  "n_items":"{n} 点"
+  "n_items":"{n} 点",
+  "cart_one":"{n} 点",
+  "cart_other":"{n} 点",
+  "bp_paste":"メニューを貼り付けてください",
+  "bp_paste_ph":"1行に1商品、例：\nケーキ - 4.50\nコーヒー $3\n#ドリンク",
+  "bp_import":"インポート",
+  "bp_imported":"{n} 点の商品を追加しました",
+  "bp_import_none":"商品が見つかりません。例：ケーキ - 4.50 のように入力してください",
+  "bp_confirm":"商品を追加",
+  "bp_dup":"複製",
+  "bp_price_err":"0より大きい価格を入力してください"
 };
 STR.fr = {
   "meta_title":"TalkShop : Décrivez votre boutique. Mettez-la en ligne.",
@@ -3266,7 +3346,17 @@ STR.fr = {
   "bp_price":"Prix",
   "ck_more":"Plus d'options",
   "ck_next":"La boutique confirmera votre commande sur WhatsApp sous peu.",
-  "n_items":"{n} articles"
+  "n_items":"{n} articles",
+  "cart_one":"{n} article",
+  "cart_other":"{n} articles",
+  "bp_paste":"Collez votre menu",
+  "bp_paste_ph":"Un article par ligne, par exemple :\nGâteau - 4.50\nCafé $3\n#Boissons",
+  "bp_import":"Importer",
+  "bp_imported":"{n} articles ajoutés",
+  "bp_import_none":"Aucun article trouvé. Essayez des lignes comme : Gâteau - 4.50",
+  "bp_confirm":"Ajouter les articles",
+  "bp_dup":"Dupliquer",
+  "bp_price_err":"Saisissez un prix supérieur à 0"
 };
 STR.de = {
   "meta_title":"TalkShop: Beschreiben Sie Ihr Geschäft. Bringen Sie es online.",
@@ -3608,7 +3698,17 @@ STR.de = {
   "bp_price":"Preis",
   "ck_more":"Weitere Optionen",
   "ck_next":"Der Shop wird Ihre Bestellung in Kürze per WhatsApp bestätigen.",
-  "n_items":"{n} Artikel"
+  "n_items":"{n} Artikel",
+  "cart_one":"{n} Artikel",
+  "cart_other":"{n} Artikel",
+  "bp_paste":"Menü einfügen",
+  "bp_paste_ph":"Ein Artikel pro Zeile, zum Beispiel:\nKuchen - 4.50\nKaffee $3\n#Getränke",
+  "bp_import":"Importieren",
+  "bp_imported":"{n} Artikel hinzugefügt",
+  "bp_import_none":"Keine Artikel gefunden. Versuchen Sie Zeilen wie: Kuchen - 4.50",
+  "bp_confirm":"Artikel hinzufügen",
+  "bp_dup":"Duplizieren",
+  "bp_price_err":"Geben Sie einen Preis über 0 ein"
 };
 STR.pt = {
   "meta_title":"TalkShop: Descreva sua loja. Coloque-a online.",
@@ -3950,7 +4050,17 @@ STR.pt = {
   "bp_price":"Preço",
   "ck_more":"Mais opções",
   "ck_next":"A loja confirmará seu pedido no WhatsApp em breve.",
-  "n_items":"{n} itens"
+  "n_items":"{n} itens",
+  "cart_one":"{n} item",
+  "cart_other":"{n} itens",
+  "bp_paste":"Cole seu cardápio",
+  "bp_paste_ph":"Um item por linha, por exemplo:\nBolo - 4.50\nCafé $3\n#Bebidas",
+  "bp_import":"Importar",
+  "bp_imported":"{n} itens adicionados",
+  "bp_import_none":"Nenhum item encontrado. Tente linhas como: Bolo - 4.50",
+  "bp_confirm":"Adicionar itens",
+  "bp_dup":"Duplicar",
+  "bp_price_err":"Digite um preço maior que 0"
 };
 STR.ar = {
   "meta_title":"TalkShop: صف متجرك. وانشره على الإنترنت.",
@@ -4292,7 +4402,17 @@ STR.ar = {
   "bp_price":"السعر",
   "ck_more":"خيارات أكثر",
   "ck_next":"سيؤكد المتجر طلبك على واتساب قريبًا.",
-  "n_items":"{n} منتجات"
+  "n_items":"{n} منتجات",
+  "cart_one":"{n} منتج",
+  "cart_other":"{n} منتجات",
+  "bp_paste":"الصق قائمتك",
+  "bp_paste_ph":"منتج واحد في كل سطر، مثال:\nكعكة - 4.50\nقهوة $3\n#مشروبات",
+  "bp_import":"استيراد",
+  "bp_imported":"تمت إضافة {n} منتجات",
+  "bp_import_none":"لم يتم العثور على منتجات. جرّب سطورًا مثل: كعكة - 4.50",
+  "bp_confirm":"إضافة المنتجات",
+  "bp_dup":"تكرار",
+  "bp_price_err":"أدخل سعرًا أكبر من 0"
 };
 let uiLang = "en";
 try{ uiLang = localStorage.getItem("ts_ui") || "en"; }catch(e){}
@@ -4643,7 +4763,17 @@ STR.ml = {
   "bp_price":"വില",
   "ck_more":"കൂടുതൽ ഓപ്ഷനുകൾ",
   "ck_next":"കട ഉടൻ WhatsApp-ൽ നിങ്ങളുടെ ഓർഡർ സ്ഥിരീകരിക്കും.",
-  "n_items":"{n} ഇനങ്ങൾ"
+  "n_items":"{n} ഇനങ്ങൾ",
+  "cart_one":"{n} ഇനം",
+  "cart_other":"{n} ഇനങ്ങൾ",
+  "bp_paste":"നിങ്ങളുടെ മെനു ഒട്ടിക്കുക",
+  "bp_paste_ph":"ഒരു വരിയിൽ ഒരു ഉൽപ്പന്നം, ഉദാഹരണം:\nകേക്ക് - 4.50\nകാപ്പി $3\n#പാനീയങ്ങൾ",
+  "bp_import":"ഇറക്കുമതി ചെയ്യുക",
+  "bp_imported":"{n} ഉൽപ്പന്നങ്ങൾ ചേർത്തു",
+  "bp_import_none":"ഉൽപ്പന്നങ്ങൾൊന്നും കണ്ടെത്തിയില്ല. ഇങ്ങനെ എഴുതുക: കേക്ക് - 4.50",
+  "bp_confirm":"ഉൽപ്പന്നങ്ങൾ ചേർക്കുക",
+  "bp_dup":"പകർത്തുക",
+  "bp_price_err":"0-ൽ കൂടുതലുള്ള വില നൽകുക"
 };
 STR.hi = {
   "meta_title":"TalkShop: अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।",
@@ -4985,7 +5115,17 @@ STR.hi = {
   "bp_price":"कीमत",
   "ck_more":"और विकल्प",
   "ck_next":"दुकान जल्द ही WhatsApp पर आपके ऑर्डर की पुष्टि करेगी।",
-  "n_items":"{n} आइटम"
+  "n_items":"{n} आइटम",
+  "cart_one":"{n} आइटम",
+  "cart_other":"{n} आइटम",
+  "bp_paste":"अपना मेन्यू पेस्ट करें",
+  "bp_paste_ph":"हर लाइन में एक उत्पाद, जैसे:\nकेक - 4.50\nकॉफ़ी $3\n#पेय",
+  "bp_import":"इम्पोर्ट करें",
+  "bp_imported":"{n} उत्पाद जोड़े गए",
+  "bp_import_none":"कोई उत्पाद नहीं मिला। ऐसे लिखें: केक - 4.50",
+  "bp_confirm":"उत्पाद जोड़ें",
+  "bp_dup":"डुप्लिकेट करें",
+  "bp_price_err":"0 से ज़्यादा कीमत डालें"
 };
 STR.ta = {
   "meta_title":"TalkShop: உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.",
@@ -5327,7 +5467,17 @@ STR.ta = {
   "bp_price":"விலை",
   "ck_more":"மேலும் விருப்பங்கள்",
   "ck_next":"கடை விரைவில் WhatsApp-இல் உங்கள் ஆர்டரை உறுதிப்படுத்தும்.",
-  "n_items":"{n} பொருட்கள்"
+  "n_items":"{n} பொருட்கள்",
+  "cart_one":"{n} பொருள்",
+  "cart_other":"{n} பொருட்கள்",
+  "bp_paste":"உங்கள் மெனுவை ஒட்டவும்",
+  "bp_paste_ph":"ஒரு வரிக்கு ஒரு பொருள், எடுத்துக்காட்டு:\nகேக் - 4.50\nகாபி $3\n#பானங்கள்",
+  "bp_import":"இறக்குமதி",
+  "bp_imported":"{n} பொருட்கள் சேர்க்கப்பட்டன",
+  "bp_import_none":"பொருட்கள் எதுவும் கிடைக்கவில்லை. இப்படி எழுதவும்: கேக் - 4.50",
+  "bp_confirm":"பொருட்களைச் சேர்க்கவும்",
+  "bp_dup":"நகலெடு",
+  "bp_price_err":"0-ஐ விட அதிக விலையை உள்ளிடவும்"
 };
 STR.es = {
   "meta_title":"TalkShop: Describe tu tienda. Ponla en línea.",
@@ -5670,7 +5820,17 @@ STR.es = {
   "bp_price":"Precio",
   "ck_more":"Más opciones",
   "ck_next":"La tienda confirmará tu pedido por WhatsApp en breve.",
-  "n_items":"{n} artículos"
+  "n_items":"{n} artículos",
+  "cart_one":"{n} artículo",
+  "cart_other":"{n} artículos",
+  "bp_paste":"Pega tu menú",
+  "bp_paste_ph":"Un producto por línea, por ejemplo:\nPastel - 4.50\nCafé $3\n#Bebidas",
+  "bp_import":"Importar",
+  "bp_imported":"{n} productos añadidos",
+  "bp_import_none":"No se encontraron productos. Prueba con líneas como: Pastel - 4.50",
+  "bp_confirm":"Añadir productos",
+  "bp_dup":"Duplicar",
+  "bp_price_err":"Ingresa un precio mayor a 0"
 };
 
 
@@ -6131,6 +6291,54 @@ function builderCur(){
   const bcc = state.cc || _ipcc || "US";
   return ((COUNTRY[bcc]||{}).cur) || "USD";
 }
+function curSymbol(code){
+  try{
+    const ps=new Intl.NumberFormat(LOCALE_TAG[uiLang]||"en",{style:"currency",currency:code}).formatToParts(0);
+    for(const p of ps){ if(p.type==="currency"&&p.value) return p.value; }
+  }catch(e){}
+  return code;
+}
+function normPrice(s){
+  let t=String(s==null?"":s);
+  if(/[-–]/.test(t)) return null;
+  t=t.replace(/[$€£₹¥,\s]/g,"");
+  const v=parseNum(t);
+  return (v==null||v<=0)?null:String(Math.round(v*100)/100);
+}
+function cartCountStr(n){ return t(n===1?"cart_one":"cart_other").replace("{n}",n); }
+let importList=[];
+function parseMenuImport(txt){
+  const out=[]; let curCat="";
+  String(txt||"").split("\n").forEach(raw=>{
+    const line=raw.trim();
+    if(!line) return;
+    const hm=line.match(/^#\s*(.+)$/);
+    if(hm){ curCat=hm[1].trim(); return; }
+    const ps=parseProductsText(line);
+    if(!ps.length) return;
+    const p=ps[0];
+    if(!p.cat&&curCat) p.cat=curCat;
+    const np=normPrice(p.price); p.price=np==null?"":np;
+    (p.variants||[]).forEach(v=>{ const nvp=normPrice(v.p); v.p=nvp==null?"":nvp; });
+    out.push(p);
+  });
+  return out.slice(0,50);
+}
+function renderImportPreview(){
+  const box=$("#pastePrev"); if(!box) return;
+  if(!importList.length){ box.innerHTML=""; return; }
+  const sym=esc(curSymbol(builderCur()));
+  box.innerHTML='<div class="imp-list">'+importList.map((p,i)=>
+    '<div class="pf-row" data-imp-row="'+i+'">'
+    +'<div class="pf-top"><input data-ip="cat" data-ii="'+i+'" placeholder="'+t("bp_cat")+'" value="'+esc(p.cat||"")+'" aria-label="'+t("bp_cat")+'">'
+    +'<button type="button" class="pf-del" data-ipdel="'+i+'" aria-label="'+t("bp_del")+'">&times;</button></div>'
+    +'<div class="pf-grid"><input data-ip="name" data-ii="'+i+'" placeholder="'+t("bp_name")+'" value="'+esc(p.name||"")+'" aria-label="'+t("bp_name")+'">'
+    +'<span class="pf-pricewrap"><span class="pf-cur" aria-hidden="true">'+sym+'</span><input class="pf-price" data-ip="price" data-ii="'+i+'" placeholder="'+t("bp_price")+'" inputmode="decimal" value="'+esc(p.price||"")+'" aria-label="'+t("bp_price")+'"></span></div>'
+    +(p.variants&&p.variants.length?'<div class="imp-vars">'+esc(p.variants.map(v=>v.n+(v.p?": "+v.p:"")).join(", "))+'</div>':"")
+    +(p.stock?'<div class="imp-stock">'+esc(p.stock==="out"?t("stock_out"):t("stock_low"))+'</div>':"")
+    +'</div>').join("")
+    +'<div style="margin:4px 0 12px;"><button type="button" class="btn btn-sm btn-accent" id="pasteConfirm">'+t("bp_confirm")+' ('+importList.length+')</button></div></div>';
+}
 
 /* ============================== builder ============================== */
 function stageBar(){
@@ -6177,11 +6385,13 @@ function prodFieldRow(p, i){
   return '<div class="pf-row" data-pf-row="'+i+'">'
     + '<div class="pf-top"><select class="pf-cat" data-pf="cat" data-i="'+i+'">'+opts+'</select>'
     + '<input class="pf-newcat hidden" data-pf="newcat" data-i="'+i+'" placeholder="'+t("bp_addcat")+'">'
+    + '<button type="button" class="pf-dup" data-pfdup="'+i+'">'+t("bp_dup")+'</button>'
     + '<button type="button" class="pf-del" data-pfdel="'+i+'" aria-label="'+t("bp_del")+'">&times;</button></div>'
     + '<div class="pf-grid"><input data-pf="name" data-i="'+i+'" placeholder="'+t("bp_name")+'" value="'+esc(p.name||"")+'">'
-    + '<input class="pf-price" data-pf="price" data-i="'+i+'" placeholder="'+t("bp_price")+'" inputmode="decimal" value="'+esc(p.price||"")+'"></div>'
+    + '<span class="pf-pricewrap"><span class="pf-cur" aria-hidden="true">'+esc(curSymbol(builderCur()))+'</span><input class="pf-price" data-pf="price" data-i="'+i+'" placeholder="'+t("bp_price")+'" inputmode="decimal" value="'+esc(p.price||"")+'"></span></div>'
     + '<div class="pf-vars" data-pf-vars="'+i+'">'+vars+'<button type="button" class="pf-addvar" data-pfaddvar="'+i+'">+ '+t("bp_addvar")+'</button></div>'
     + '<label class="pf-oos"><input type="checkbox" data-pf="oos" data-i="'+i+'"'+(p.stock==="out"?" checked":"")+'> '+t("bp_oos")+'</label>'
+    + '<div class="pf-err hidden" data-pf-err></div>'
     + '</div>';
 }
 function renderProdRows(){
@@ -6238,6 +6448,10 @@ function stepReviewHtml(){
   + '<div class="sec-label">'+t("f_products")+'</div>'
   + '<div id="prodRows"></div>'
   + '<button type="button" class="btn btn-sm" id="addProdBtn" style="margin-bottom:6px;">+ '+t("bp_addprod")+'</button>'
+  + '<div style="margin:2px 0 10px;"><button type="button" class="paste-toggle" id="pasteToggle">+ '+t("bp_paste")+'</button></div>'
+  + '<div id="pasteBox" class="hidden"><div class="field" style="margin-bottom:8px;"><textarea id="pasteArea" style="min-height:110px;" placeholder="'+t("bp_paste_ph")+'"></textarea></div>'
+  + '<div id="pasteMsg" style="margin-bottom:8px;"></div><div id="pastePrev"></div>'
+  + '<button type="button" class="btn btn-sm" id="pasteImport">'+t("bp_import")+'</button></div>'
   + '<div class="sec-label" style="margin-top:26px;">'+t("f_hours")+'</div><div class="sec-sub">'+t("sv_hours_sub")+'</div>'
   + hrsRows
   + '<div class="field" style="margin-top:14px;"><label>'+t("f_hours_note")+' <span class="hint">'+t("hours_note_hint")+'</span></label><input type="text" id="f_hours_note" value="'+esc(hrsNote)+'"></div>'
@@ -6307,6 +6521,11 @@ function parseProductsText(txt){
     const pm = s.match(/^(.*?)\s+[-–:]\s+(.+)$/) || s.match(/^(.*\D)[-–:]\s*(.+)$/);
     let name=s, price="";
     if(pm && /^[$€£₹\d]/.test(pm[2].trim())){ name=pm[1].trim(); price=pm[2].trim(); }
+    // bare price: "Coffee $3", "Samosa 15", "Cake 4.50" (name, space, number at end)
+    if(!price){
+      const pm3=s.match(/^(.*?)\s+([$€£₹]?\s*\d[\d,]*(?:\.\d+)?)\s*$/);
+      if(pm3 && pm3[1].trim().length>=2){ name=pm3[1].trim(); price=pm3[2].trim(); }
+    }
     const p={name:name, price:price};
     if(cat) p.cat=cat;
     if(stock) p.stock=stock;
@@ -6418,6 +6637,10 @@ function wireBuild(){
   const pub = $("#publishBtn");
   if(pub) pub.onclick = () => {
     collectForm();
+    const badPrice=(state.data.products||[]).some(p=>
+      (p.price&&String(p.price).trim()&&normPrice(p.price)==null) ||
+      ((p.variants||[]).some(v=>v.p&&String(v.p).trim()&&normPrice(v.p)==null)));
+    if(badPrice){ showErr(t("bp_price_err")); return; }
     if(!state.data.name){ showErr(t("err_noname")); $("#f_name").focus(); return; }
     let scc = state.cc || _ipcc || "US";
     if(!COUNTRY[scc]) scc = "US";
@@ -6471,6 +6694,15 @@ function wireBuild(){
     });
     card.addEventListener("input", e=>{
       if(!state.data) return;
+      const ip=e.target.closest("[data-ip]");
+      if(ip){
+        const ii=+ip.getAttribute("data-ii"), p=importList[ii]; if(!p) return;
+        const k=ip.getAttribute("data-ip");
+        if(k==="name") p.name=ip.value;
+        else if(k==="price") p.price=ip.value;
+        else if(k==="cat") p.cat=ip.value;
+        return;
+      }
       const el=e.target.closest("[data-pf]"); if(!el) return;
       const i=+el.getAttribute("data-i"), p=state.data.products[i]; if(!p) return;
       const k=el.getAttribute("data-pf"), vi=el.getAttribute("data-vi");
@@ -6482,10 +6714,65 @@ function wireBuild(){
       else return;
       renderPreview();
     });
+    card.addEventListener("focusout", e=>{
+      if(!state.data) return;
+      const el=e.target.closest('[data-pf="price"],[data-pf="vprice"]'); if(!el) return;
+      const row=el.closest(".pf-row"), err=row?row.querySelector("[data-pf-err]"):null;
+      const raw=el.value, nv=raw.trim()?normPrice(raw):"";
+      const bad=!!(raw.trim()&&nv==null);
+      el.classList.toggle("pf-bad",bad);
+      if(err){ err.textContent=bad?t("bp_price_err"):""; err.classList.toggle("hidden",!bad); }
+      if(!bad&&raw.trim()&&nv!==raw){
+        el.value=nv;
+        const i=+el.getAttribute("data-i"), p=state.data.products[i]; if(!p) return;
+        const k=el.getAttribute("data-pf"), vi=el.getAttribute("data-vi");
+        if(k==="price") p.price=nv;
+        else if(k==="vprice"&&p.variants&&p.variants[+vi]) p.variants[+vi].p=nv;
+        renderPreview();
+      }
+    });
     card.addEventListener("click", e=>{
       if(!state.data) return;
       if(e.target.closest("#addProdBtn")){
-        state.data.products.push({cat:"",name:"",price:"",variants:[],stock:null});
+        const ps=state.data.products;
+        const lastCat=ps.length?(ps[ps.length-1].cat||""):"";
+        ps.push({cat:lastCat,name:"",price:"",variants:[],stock:null});
+        renderProdRows(); renderPreview();
+        const rows=document.querySelectorAll('[data-pf-row]');
+        const last=rows[rows.length-1];
+        if(last){ const nm=last.querySelector('[data-pf="name"]'); if(nm){ nm.focus(); try{nm.scrollIntoView({block:"nearest"});}catch(_){} } }
+        return;
+      }
+      if(e.target.closest("#pasteToggle")){
+        const b=$("#pasteBox"); if(b) b.classList.toggle("hidden");
+        return;
+      }
+      if(e.target.closest("#pasteImport")){
+        const ta=$("#pasteArea"), msg=$("#pasteMsg");
+        importList=parseMenuImport(ta?ta.value:"");
+        if(!importList.length){
+          if(msg) msg.innerHTML='<div class="err">'+esc(t("bp_import_none"))+'</div>';
+          renderImportPreview(); return;
+        }
+        if(msg) msg.innerHTML="";
+        renderImportPreview(); return;
+      }
+      const ipd=e.target.closest("[data-ipdel]");
+      if(ipd){ importList.splice(+ipd.getAttribute("data-ipdel"),1); renderImportPreview(); return; }
+      if(e.target.closest("#pasteConfirm")){
+        const n=importList.length;
+        state.data.products=state.data.products.concat(importList);
+        importList=[];
+        const ta=$("#pasteArea"); if(ta) ta.value="";
+        const msg=$("#pasteMsg");
+        if(msg) msg.innerHTML='<div class="okmsg">'+esc(t("bp_imported").replace("{n}",n))+'</div>';
+        renderImportPreview(); renderProdRows(); renderPreview(); return;
+      }
+      const dup=e.target.closest("[data-pfdup]");
+      if(dup){
+        const di=+dup.getAttribute("data-pfdup"), p=state.data.products[di];
+        if(p) state.data.products.splice(di+1,0,{cat:p.cat||"",name:p.name||"",price:p.price||"",
+          variants:(p.variants||[]).map(v=>({n:v.n||"",p:v.p||""})),stock:null});
         renderProdRows(); renderPreview(); return;
       }
       const del=e.target.closest("[data-pfdel]");
@@ -6668,7 +6955,7 @@ function renderCartBar(pop){
   const n=shopRT.cart.reduce((a,l)=>a+l.qty,0);
   if(!n){ w.innerHTML=""; return; }
   const tt=cartTotals();
-  w.innerHTML='<div class="cartbar'+(pop?" pop":"")+'"><button class="cartbar-btn" id="cartOpenBtn"><span>'+t("view_cart")+' · '+t("n_items").replace("{n}",n)+'</span><b>'+esc(shopMoney(tt.total))+'</b></button></div>';
+  w.innerHTML='<div class="cartbar'+(pop?" pop":"")+'"><button class="cartbar-btn" id="cartOpenBtn"><span>'+t("view_cart")+' · '+cartCountStr(n)+'</span><b>'+esc(shopMoney(tt.total))+'</b></button></div>';
   document.getElementById("cartOpenBtn").onclick=openDrawer;
 }
 function openDrawer(){
@@ -7003,7 +7290,7 @@ function ckSummaryWrap(tt){
   if(ck.sumOpen==null) ck.sumOpen = (window.innerWidth>=860);
   const n=shopRT.cart.reduce((a,l)=>a+l.qty,0);
   return '<div class="ck-sumwrap"><button type="button" class="ck-sumtoggle" id="ckSumToggle">'
-    +'<span>'+t("ck_summary")+' &middot; '+t("n_items").replace("{n}",n)+'</span>'
+    +'<span>'+t("ck_summary")+' &middot; '+cartCountStr(n)+'</span>'
     +'<span>'+esc(shopMoney(tt.total))+'</span></button>'
     +'<div class="ck-sumbody'+(ck.sumOpen?"":" hidden")+'" id="ckSumBody">'+ckSummaryHtml(tt)+'</div></div>';
 }
