@@ -195,6 +195,16 @@ html[lang|="ml"] .hero2 h1,html[lang|="hi"] .hero2 h1,html[lang|="ta"] .hero2 h1
 .faq summary::-webkit-details-marker{display:none;}
 .faq summary::after{content:"+"; float:right; color:var(--accent); font-weight:400; font-size:22px; line-height:1;}
 .faq details[open] summary::after{content:"–";}
+/* builder: review accordions for optional sections (native details, no JS) */
+.rv-acc{border:1px solid var(--line); border-radius:14px; margin:14px 0; background:#fff;}
+.rv-acc>summary{cursor:pointer; padding:14px 16px; font-weight:700; font-size:16px; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:12px;}
+.rv-acc>summary::-webkit-details-marker{display:none;}
+.rv-acc>summary::marker{display:none;}
+.rv-acc>summary::after{content:"+"; font-size:22px; font-weight:400; line-height:1; color:var(--ink2); transition:transform .18s ease; flex:none;}
+.rv-acc[open]>summary::after{transform:rotate(45deg);}
+.rv-acc .rv-body{padding:2px 16px 18px;}
+.rv-acc .rv-body .hrs-row:first-child{margin-top:2px;}
+.rv-acc .rv-body .field:last-child{margin-bottom:0;}
 .faq .a{padding:0 24px 22px; color:var(--ink2);}
 /* footer */
 footer{padding:56px 0 60px;}
@@ -7184,6 +7194,15 @@ function stepReviewHtml(){
   const hrsNote = d.hrsNote || (!d.hrs && d.hours ? d.hours : "");
   const dlv = d.dlv || {};
   const pay = d.pay || {};
+  // review accordions: optional sections collapse behind their existing labels; auto-open when holding data
+  const accOpen = (key, open)=>'<details class="rv-acc"'+(open?" open":"")+'><summary>'+t(key)+'</summary><div class="rv-body">';
+  const accClose = '</div></details>';
+  const hasHours = !!((hrsNote||"").trim() || (d.hrs && d.hrs.some(h=>h)));
+  const hasDlv = !!d.dlv;
+  const hasSlots = !!((d.slots||[]).length);
+  const hasCoupons = !!(d.coupons && Object.keys(d.coupons).length);
+  const hasPay = !!(pay.payout||pay.cod||pay.upi||pay.bank||pay.paypal||pay.store||pay.custom||pay.card===false);
+  const hasContact = !!(((d.phone||"").trim())||((d.whatsapp||"").trim())||((d.address||"").trim()));
   return '<h2 class="serif" style="font-size:26px;margin-bottom:8px;">'+t("rev_h2")+'</h2>'
   + '<p style="color:var(--ink2);margin-bottom:26px;">'+t("rev_p")+'</p>'
   + '<div class="pv-frame"><div id="livePreview"></div></div>'
@@ -7200,18 +7219,22 @@ function stepReviewHtml(){
   + '<div id="pasteBox" class="hidden"><div class="field" style="margin-bottom:8px;"><textarea id="pasteArea" style="min-height:110px;" placeholder="'+t("bp_paste_ph")+'"></textarea></div>'
   + '<div id="pasteMsg" style="margin-bottom:8px;"></div><div id="pastePrev"></div>'
   + '<button type="button" class="btn btn-sm" id="pasteImport">'+t("bp_import")+'</button></div>'
-  + '<div class="sec-label" style="margin-top:26px;">'+t("f_hours")+'</div><div class="sec-sub">'+t("sv_hours_sub")+'</div>'
+  + accOpen("f_hours", hasHours)+'<div class="sec-sub">'+t("sv_hours_sub")+'</div>'
   + hrsRows
   + '<div class="field" style="margin-top:14px;"><label>'+t("f_hours_note")+' <span class="hint">'+t("hours_note_hint")+'</span></label><input type="text" id="f_hours_note" value="'+esc(hrsNote)+'"></div>'
-  + '<div class="sec-label">'+t("f_delivery")+'</div>'
+  + accClose
+  + accOpen("f_delivery", hasDlv)
   + '<div class="grid2"><div class="field"><label>'+t("f_dlv_fee")+' ('+cur+') <span class="hint">'+t("hint_opt")+'</span></label><input type="text" inputmode="decimal" id="f_dlv_fee" value="'+(dlv.fee!=null?esc(dlv.fee):"")+'"></div>'
   + '<div class="field"><label>'+t("f_dlv_free")+' ('+cur+') <span class="hint">'+t("hint_opt")+'</span></label><input type="text" inputmode="decimal" id="f_dlv_free" value="'+(dlv.freeAbove!=null?esc(dlv.freeAbove):"")+'"></div></div>'
   + '<div class="field"><label>'+t("f_dlv_min")+' ('+cur+') <span class="hint">'+t("hint_opt")+'</span></label><input type="text" inputmode="decimal" id="f_dlv_min" value="'+(dlv.min!=null?esc(dlv.min):"")+'"></div>'
-  + '<div class="sec-label">'+t("f_slots")+'</div>'
+  + accClose
+  + accOpen("f_slots", hasSlots)
   + '<div class="field"><span class="hint">'+t("f_slots_hint")+'</span><textarea id="f_slots" style="min-height:80px;">'+esc((d.slots||[]).join("\n"))+'</textarea></div>'
-  + '<div class="sec-label">'+t("f_coupons")+'</div>'
+  + accClose
+  + accOpen("f_coupons", hasCoupons)
   + '<div class="field"><span class="hint">'+t("f_coupons_hint")+'</span><textarea id="f_coupons" style="min-height:80px;">'+esc(couponsToText(d.coupons))+'</textarea></div>'
-  + '<div class="sec-label">'+t("f_pay")+'</div><div class="sec-sub">'+t("f_pay_hint")+'</div>'
+  + accClose
+  + accOpen("f_pay", hasPay)+'<div class="sec-sub">'+t("f_pay_hint")+'</div>'
   + '<div id="payTestNote"></div>'
   + '<div class="pay-check"><input type="checkbox" id="pay_card"'+(pay.card!==false?" checked":"")+'><label for="pay_card"><b>'+t("ck_card")+'</b></label></div>'
   + '<div class="field"><label>'+t("ck_payout")+' <span class="hint">'+t("hint_opt")+'</span></label><input type="text" id="pay_payout" placeholder="'+t("ck_payout_ph")+'" value="'+esc(pay.payout||"")+'"></div>'
@@ -7224,10 +7247,12 @@ function stepReviewHtml(){
   + '<div class="pay-detail"><div class="field" style="margin:0;"><label>'+t("f_paypal")+'</label><input type="text" id="pay_paypal" value="'+esc(pay.paypal||"")+'"></div></div>'
   + '<div class="pay-check"><input type="checkbox" id="pay_store"'+(pay.store?" checked":"")+'><label for="pay_store"><b>'+t("pay_store")+'</b></label></div>'
   + '<div class="field"><label>'+t("f_custompay")+' <span class="hint">'+t("hint_opt")+'</span></label><input type="text" id="pay_custom" value="'+esc(pay.custom||"")+'"></div>'
-  + '<div class="sec-label">'+t("sv_find")+'</div>'
+  + accClose
+  + accOpen("sv_find", hasContact)
   + '<div class="grid2"><div class="field"><label>'+t("f_phone")+'</label><input type="tel" id="f_phone" value="'+esc(d.phone)+'"></div>'
   + '<div class="field"><label>'+t("f_whatsapp")+' <span class="hint">'+t("wa_hint")+'</span></label><input type="tel" id="f_whatsapp" value="'+esc(d.whatsapp)+'"></div></div>'
   + '<div class="field"><label>'+t("f_address")+' <span class="hint">'+t("addr_hint")+'</span></label><input type="text" id="f_address" value="'+esc(d.address)+'"></div>'
+  + accClose
   + '<div id="errBox"></div>'
   + '<div class="center" style="margin-top:10px;"><button class="link-btn" id="backSpeak">'+t("btn_back")+'</button></div>'
   + '<div class="center" style="margin-top:4px;"><button class="btn btn-accent" id="publishBtn">'+t("btn_publish")+'</button></div>';
@@ -7422,6 +7447,7 @@ function wireBuild(){
       ((p.variants||[]).some(v=>v.p&&String(v.p).trim()&&normPrice(v.p)==null)));
     if(badPrice){ showErr(t("bp_price_err")); return; }
     if(!state.data.name){ showErr(t("err_noname")); $("#f_name").focus(); return; }
+    clearDraft();
     let scc = state.cc || _ipcc || "US";
     if(!COUNTRY[scc]) scc = "US";
     state.data.loc = { cc: scc, lang: uiLang };
@@ -7674,6 +7700,42 @@ function saveCustomer(f){
     const prof={name:(f.name||"").trim(), phone:(f.phone||"").trim(), addr:(f.addr||"").trim()};
     if(prof.name||prof.phone||prof.addr) localStorage.setItem("ts_customer", JSON.stringify(prof));
   }catch(e){}
+}
+/* ---- builder draft autosave: persists state.data + typed description, silent resume on #/build ----
+   Debounced on every builder input/change; cleared on successful publish. No UI, no new strings. */
+const DRAFT_KEY="ts_builder_draft";
+let draftT=null;
+function draftHasContent(w){
+  if(!w||typeof w!=="object") return false;
+  if((w.transcript||"").trim()) return true;
+  const d=w.data; if(!d||typeof d!=="object") return false;
+  if((d.name||"").trim()) return true;
+  const ps=d.products||[];
+  for(let i=0;i<ps.length;i++){ const p=ps[i]; if(p&&((p.name||"").trim()||((p.variants||[]).length))) return true; }
+  return false;
+}
+function saveDraftNow(){
+  try{
+    if(state.step===2 && state.data && $("#f_name")) collectForm();
+    const w={v:1, savedAt:Date.now(), transcript:(state.transcript||""), data:(state.data||null)};
+    if(!draftHasContent(w)) return;
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(w));
+  }catch(e){}
+}
+function saveDraftSoon(){ clearTimeout(draftT); draftT=setTimeout(saveDraftNow,900); }
+function clearDraft(){ try{ localStorage.removeItem(DRAFT_KEY); }catch(e){} }
+function readDraft(){
+  try{
+    const raw=localStorage.getItem(DRAFT_KEY); if(!raw) return null;
+    const w=JSON.parse(raw);
+    if(!w||typeof w!=="object"||w.v!==1) return null;
+    return draftHasContent(w)?w:null;
+  }catch(e){ return null; }
+}
+function restoreDraft(){
+  const w=readDraft(); if(!w) return;
+  if((w.transcript||"").trim() && !state.transcript) state.transcript=w.transcript;
+  if(w.data){ state.data=w.data; state.step=2; }
 }
 function clearCustomer(){
   try{ localStorage.removeItem("ts_customer"); }catch(e){}
@@ -9107,6 +9169,7 @@ function router(){
   } else if(h==="shops"){
     render(dashView()); wireDash();
   } else if(h==="build" || h.indexOf("build")===0){
+    if(state.step===1 && !state.data) restoreDraft();
     render(buildView()); wireBuild();
   } else {
     render(homeView());
@@ -9115,6 +9178,15 @@ function router(){
   window.scrollTo(0,0);
 }
 window.addEventListener("hashchange", router);
+// builder draft autosave: debounced save on any builder input/change (buildCard covers step 2, typeBox covers step 1)
+document.addEventListener("input", e=>{
+  const t=e.target; if(!t||!t.closest) return;
+  if(t.closest("#buildCard")||t.id==="typeBox") saveDraftSoon();
+});
+document.addEventListener("change", e=>{
+  const t=e.target; if(!t||!t.closest) return;
+  if(t.closest("#buildCard")) saveDraftSoon();
+});
 if(!STR[uiLang]) uiLang = "en";
 applyLangHead();
 router();
