@@ -459,6 +459,29 @@ html[dir="rtl"] body{direction:rtl}
 /* ---- storefront: product cards ---- */
 .pc{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);}
 .pc-img{width:88px;height:88px;border-radius:12px;background:#E7E4DA;flex:none;}
+.pc-img{overflow:hidden;}
+.pc-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.pv-img{overflow:hidden;}
+.pv-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.shop-banner{aspect-ratio:3/1;overflow:hidden;background:#E7E4DA;}
+.shop-banner img{width:100%;height:100%;object-fit:cover;display:block;}
+.pf-img{margin-top:10px;}
+.pf-imglab{font-size:12px;font-weight:700;color:var(--ink2);display:block;margin-bottom:6px;}
+.pf-imgtop{display:flex;align-items:center;gap:10px;}
+.pf-thumb{width:52px;height:52px;border-radius:10px;background:#E7E4DA;flex:none;overflow:hidden;border:1px solid var(--line);}
+.pf-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.pf-bthumb{width:100%;max-width:280px;aspect-ratio:3/1;border-radius:10px;background:#E7E4DA;overflow:hidden;border:1px solid var(--line);}
+.pf-bthumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.pf-imgbtns{display:flex;gap:6px;flex-wrap:wrap;}
+.pf-imgbtn{font-size:12.5px;font-weight:700;padding:8px 12px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--ink);}
+.pf-imgbtn.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.pf-catgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:10px;}
+.pf-catgrid button{aspect-ratio:1/1;border-radius:10px;overflow:hidden;border:2px solid var(--line);background:#F0EDE3;padding:0;cursor:pointer;}
+.pf-catgrid button.on{border-color:var(--accent);}
+.pf-catgrid img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;}
+.pf-urlrow{margin-top:10px;}
+.pf-urlrow input{width:100%;}
+.pf-imgerr{color:#B3261E;font-size:12.5px;margin-top:6px;}
 .pc-mid{flex:1;min-width:0;}
 .pc-name{font-weight:700;font-size:16px;line-height:1.35;}
 .pc-price{font-weight:800;font-size:17px;margin-top:4px;}
@@ -892,7 +915,14 @@ const STR = { en: {
   "bp_import_none":"No products found. Try lines like: Cake - 4.50",
   "bp_confirm":"Add products",
   "bp_dup":"Duplicate",
-  "bp_price_err":"Enter a price above 0"
+  "bp_price_err":"Enter a price above 0",
+  "img_title":"Image",
+  "img_none":"No image",
+  "img_catalog":"Catalog",
+  "img_url":"Link",
+  "img_url_ph":"https://... image link",
+  "img_url_err":"Use an https:// image link",
+  "img_banner":"Banner image"
 } };
 STR.te = {
   "meta_title":"TalkShop: మీ దుకాణం గురించి చెప్పండి. ఆన్‌లైన్‌లోకి తీసుకురండి.",
@@ -1244,7 +1274,14 @@ STR.te = {
   "bp_import_none":"ఉత్పత్తులేవీ కనబడలేదు. ఇలా రాయండి: కేక్ - 4.50",
   "bp_confirm":"ఉత్పత్తులను జోడించండి",
   "bp_dup":"నకలు తీయండి",
-  "bp_price_err":"0 కంటే ఎక్కువ ధర నమోదు చేయండి"
+  "bp_price_err":"0 కంటే ఎక్కువ ధర నమోదు చేయండి",
+  "img_title":"చిత్రం",
+  "img_none":"చిత్రం లేదు",
+  "img_catalog":"కేటలాగ్",
+  "img_url":"లింక్",
+  "img_url_ph":"https://... చిత్ర లింక్",
+  "img_url_err":"https:// చిత్ర లింక్ వాడండి",
+  "img_banner":"బ్యానర్ చిత్రం"
 };
 STR.bn = {
   "meta_title":"TalkShop: আপনার দোকানের কথা বলুন। অনলাইনে আসুন।",
@@ -1596,7 +1633,14 @@ STR.bn = {
   "bp_import_none":"কোনো পণ্য পাওয়া যায়নি। এভাবে লিখুন: কেক - 4.50",
   "bp_confirm":"পণ্য যোग করুন",
   "bp_dup":"ডুপ্লিকেট করুন",
-  "bp_price_err":"0-এর বেশি দাম লিখুন"
+  "bp_price_err":"0-এর বেশি দাম লিখুন",
+  "img_title":"ছবি",
+  "img_none":"ছবি নেই",
+  "img_catalog":"ক্যাটালগ",
+  "img_url":"লিংক",
+  "img_url_ph":"https://... ছবির লিংক",
+  "img_url_err":"https:// ছবির লিংক ব্যবহার করুন",
+  "img_banner":"ব্যানার ছবি"
 };
 STR.kn = {
   "meta_title":"TalkShop: ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ವಿವರಿಸಿ. ಅದನ್ನು ಆನ್‌ಲೈನ್‌ಗೆ ತನ್ನಿ.",
@@ -1948,7 +1992,14 @@ STR.kn = {
   "bp_import_none":"ಯಾವುದೇ ಉತ್ಪನ್ನಗಳು ಕಂಡುಬಂದಿಲ್ಲ. ಹೀಗೆ ಬರೆಯಿರಿ: ಕೇಕ್ - 4.50",
   "bp_confirm":"ಉತ್ಪನ್ನಗಳನ್ನು ಸೇರಿಸಿ",
   "bp_dup":"ನಕಲು ಮಾಡಿ",
-  "bp_price_err":"0 ಕ್ಕಿಂತ ಹೆಚ್ಚಿನ ಬೆಲೆ ನಮೂದಿಸಿ"
+  "bp_price_err":"0 ಕ್ಕಿಂತ ಹೆಚ್ಚಿನ ಬೆಲೆ ನಮೂದಿಸಿ",
+  "img_title":"ಚಿತ್ರ",
+  "img_none":"ಚಿತ್ರವಿಲ್ಲ",
+  "img_catalog":"ಕ್ಯಾಟಲಾಗ್",
+  "img_url":"ಲಿಂಕ್",
+  "img_url_ph":"https://... ಚಿತ್ರ ಲಿಂಕ್",
+  "img_url_err":"https:// ಚಿತ್ರ ಲಿಂಕ್ ಬಳಸಿ",
+  "img_banner":"ಬ್ಯಾನರ್ ಚಿತ್ರ"
 };
 STR.mr = {
   "meta_title":"TalkShop: तुमच्या दुकानाबद्दल सांगा. ते ऑनलाइन न्या.",
@@ -2300,7 +2351,14 @@ STR.mr = {
   "bp_import_none":"कोणतीही उत्पादने सापडली नाहीत. असे लिहा: केक - 4.50",
   "bp_confirm":"उत्पादने जोडा",
   "bp_dup":"डुप्लिकेट करा",
-  "bp_price_err":"0 पेक्षा जास्त किंमत टाका"
+  "bp_price_err":"0 पेक्षा जास्त किंमत टाका",
+  "img_title":"प्रतिमा",
+  "img_none":"प्रतिमा नाही",
+  "img_catalog":"कॅटलॉग",
+  "img_url":"लिंक",
+  "img_url_ph":"https://... प्रतिमा लिंक",
+  "img_url_err":"https:// प्रतिमा लिंक वापरा",
+  "img_banner":"बॅनर प्रतिमा"
 };
 STR.zh = {
   "meta_title":"TalkShop：描述您的小店，轻松上线。",
@@ -2652,7 +2710,14 @@ STR.zh = {
   "bp_import_none":"未找到商品。请按此格式输入：蛋糕 - 4.50",
   "bp_confirm":"添加商品",
   "bp_dup":"复制",
-  "bp_price_err":"请输入大于 0 的价格"
+  "bp_price_err":"请输入大于 0 的价格",
+  "img_title":"图片",
+  "img_none":"无图片",
+  "img_catalog":"图库",
+  "img_url":"链接",
+  "img_url_ph":"https://... 图片链接",
+  "img_url_err":"请使用 https:// 图片链接",
+  "img_banner":"横幅图片"
 };
 STR.ja = {
   "meta_title":"TalkShop：お店を紹介して、オンラインに。",
@@ -3004,7 +3069,14 @@ STR.ja = {
   "bp_import_none":"商品が見つかりません。例：ケーキ - 4.50 のように入力してください",
   "bp_confirm":"商品を追加",
   "bp_dup":"複製",
-  "bp_price_err":"0より大きい価格を入力してください"
+  "bp_price_err":"0より大きい価格を入力してください",
+  "img_title":"画像",
+  "img_none":"画像なし",
+  "img_catalog":"カタログ",
+  "img_url":"リンク",
+  "img_url_ph":"https://... 画像リンク",
+  "img_url_err":"https:// の画像リンクを使用",
+  "img_banner":"バナー画像"
 };
 STR.fr = {
   "meta_title":"TalkShop : Décrivez votre boutique. Mettez-la en ligne.",
@@ -3356,7 +3428,14 @@ STR.fr = {
   "bp_import_none":"Aucun article trouvé. Essayez des lignes comme : Gâteau - 4.50",
   "bp_confirm":"Ajouter les articles",
   "bp_dup":"Dupliquer",
-  "bp_price_err":"Saisissez un prix supérieur à 0"
+  "bp_price_err":"Saisissez un prix supérieur à 0",
+  "img_title":"Image",
+  "img_none":"Aucune image",
+  "img_catalog":"Catalogue",
+  "img_url":"Lien",
+  "img_url_ph":"Lien image https://...",
+  "img_url_err":"Utilisez un lien image https://",
+  "img_banner":"Image de bannière"
 };
 STR.de = {
   "meta_title":"TalkShop: Beschreiben Sie Ihr Geschäft. Bringen Sie es online.",
@@ -3708,7 +3787,14 @@ STR.de = {
   "bp_import_none":"Keine Artikel gefunden. Versuchen Sie Zeilen wie: Kuchen - 4.50",
   "bp_confirm":"Artikel hinzufügen",
   "bp_dup":"Duplizieren",
-  "bp_price_err":"Geben Sie einen Preis über 0 ein"
+  "bp_price_err":"Geben Sie einen Preis über 0 ein",
+  "img_title":"Bild",
+  "img_none":"Kein Bild",
+  "img_catalog":"Katalog",
+  "img_url":"Link",
+  "img_url_ph":"https://... Bildlink",
+  "img_url_err":"Bitte https://-Bildlink verwenden",
+  "img_banner":"Bannerbild"
 };
 STR.pt = {
   "meta_title":"TalkShop: Descreva sua loja. Coloque-a online.",
@@ -4060,7 +4146,14 @@ STR.pt = {
   "bp_import_none":"Nenhum item encontrado. Tente linhas como: Bolo - 4.50",
   "bp_confirm":"Adicionar itens",
   "bp_dup":"Duplicar",
-  "bp_price_err":"Digite um preço maior que 0"
+  "bp_price_err":"Digite um preço maior que 0",
+  "img_title":"Imagem",
+  "img_none":"Sem imagem",
+  "img_catalog":"Catálogo",
+  "img_url":"Link",
+  "img_url_ph":"Link de imagem https://...",
+  "img_url_err":"Use um link de imagem https://",
+  "img_banner":"Imagem do banner"
 };
 STR.ar = {
   "meta_title":"TalkShop: صف متجرك. وانشره على الإنترنت.",
@@ -4412,7 +4505,14 @@ STR.ar = {
   "bp_import_none":"لم يتم العثور على منتجات. جرّب سطورًا مثل: كعكة - 4.50",
   "bp_confirm":"إضافة المنتجات",
   "bp_dup":"تكرار",
-  "bp_price_err":"أدخل سعرًا أكبر من 0"
+  "bp_price_err":"أدخل سعرًا أكبر من 0",
+  "img_title":"صورة",
+  "img_none":"بدون صورة",
+  "img_catalog":"الكتالوج",
+  "img_url":"رابط",
+  "img_url_ph":"رابط صورة https://...",
+  "img_url_err":"استخدم رابط صورة https://",
+  "img_banner":"صورة الغلاف"
 };
 let uiLang = "en";
 try{ uiLang = localStorage.getItem("ts_ui") || "en"; }catch(e){}
@@ -4773,7 +4873,14 @@ STR.ml = {
   "bp_import_none":"ഉൽപ്പന്നങ്ങൾൊന്നും കണ്ടെത്തിയില്ല. ഇങ്ങനെ എഴുതുക: കേക്ക് - 4.50",
   "bp_confirm":"ഉൽപ്പന്നങ്ങൾ ചേർക്കുക",
   "bp_dup":"പകർത്തുക",
-  "bp_price_err":"0-ൽ കൂടുതലുള്ള വില നൽകുക"
+  "bp_price_err":"0-ൽ കൂടുതലുള്ള വില നൽകുക",
+  "img_title":"ചിത്രം",
+  "img_none":"ചിത്രമില്ല",
+  "img_catalog":"കാറ്റലോഗ്",
+  "img_url":"ലിങ്ക്",
+  "img_url_ph":"https://... ചിത്ര ലിങ്ക്",
+  "img_url_err":"https:// ചിത്ര ലിങ്ക് ഉപയോഗിക്കുക",
+  "img_banner":"ബാനർ ചിത്രം"
 };
 STR.hi = {
   "meta_title":"TalkShop: अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।",
@@ -5125,7 +5232,14 @@ STR.hi = {
   "bp_import_none":"कोई उत्पाद नहीं मिला। ऐसे लिखें: केक - 4.50",
   "bp_confirm":"उत्पाद जोड़ें",
   "bp_dup":"डुप्लिकेट करें",
-  "bp_price_err":"0 से ज़्यादा कीमत डालें"
+  "bp_price_err":"0 से ज़्यादा कीमत डालें",
+  "img_title":"तस्वीर",
+  "img_none":"कोई तस्वीर नहीं",
+  "img_catalog":"कैटलॉग",
+  "img_url":"लिंक",
+  "img_url_ph":"https://... तस्वीर लिंक",
+  "img_url_err":"https:// तस्वीर लिंक इस्तेमाल करें",
+  "img_banner":"बैनर तस्वीर"
 };
 STR.ta = {
   "meta_title":"TalkShop: உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.",
@@ -5477,7 +5591,14 @@ STR.ta = {
   "bp_import_none":"பொருட்கள் எதுவும் கிடைக்கவில்லை. இப்படி எழுதவும்: கேக் - 4.50",
   "bp_confirm":"பொருட்களைச் சேர்க்கவும்",
   "bp_dup":"நகலெடு",
-  "bp_price_err":"0-ஐ விட அதிக விலையை உள்ளிடவும்"
+  "bp_price_err":"0-ஐ விட அதிக விலையை உள்ளிடவும்",
+  "img_title":"படம்",
+  "img_none":"படம் இல்லை",
+  "img_catalog":"பட்டியல்",
+  "img_url":"இணைப்பு",
+  "img_url_ph":"https://... பட இணைப்பு",
+  "img_url_err":"https:// பட இணைப்பைப் பயன்படுத்தவும்",
+  "img_banner":"பேனர் படம்"
 };
 STR.es = {
   "meta_title":"TalkShop: Describe tu tienda. Ponla en línea.",
@@ -5830,7 +5951,14 @@ STR.es = {
   "bp_import_none":"No se encontraron productos. Prueba con líneas como: Pastel - 4.50",
   "bp_confirm":"Añadir productos",
   "bp_dup":"Duplicar",
-  "bp_price_err":"Ingresa un precio mayor a 0"
+  "bp_price_err":"Ingresa un precio mayor a 0",
+  "img_title":"Imagen",
+  "img_none":"Sin imagen",
+  "img_catalog":"Catálogo",
+  "img_url":"Enlace",
+  "img_url_ph":"Enlace de imagen https://...",
+  "img_url_err":"Usa un enlace de imagen https://",
+  "img_banner":"Imagen de portada"
 };
 
 
@@ -6272,6 +6400,35 @@ function afterHome(){
 
 /* ============================== shared shop helpers ============================== */
 const THEMES = { forest:"#175E3B", ocean:"#1E5AAF", plum:"#7A2E5E", sunset:"#B4531F", char:"#3A3A35" };
+/* image catalog: flat single-hue SVG illustrations, served as data URIs */
+const CAT = {
+  chai:{n:"Tea",svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="#F0EDE3"/><path d="M30 42h30v12c0 10-6.8 17-15 17s-15-7-15-17V42z" fill="#175E3B"/><path d="M60 45h5a8 8 0 0 1 0 16h-6" fill="none" stroke="#175E3B" stroke-width="5"/><path d="M41 33c0-5 5-5 5-10M51 33c0-5 5-5 5-10" stroke="#0C3D27" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="26" y="75" width="44" height="5" rx="2.5" fill="#0C3D27"/></svg>'},
+  coffee:{n:"Coffee",svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="#F0EDE3"/><rect x="30" y="36" width="28" height="32" rx="5" fill="#175E3B"/><path d="M58 41h4a8 8 0 0 1 0 16h-5" fill="none" stroke="#175E3B" stroke-width="5"/><ellipse cx="44" cy="36" rx="14" ry="4" fill="#0C3D27"/><rect x="26" y="74" width="44" height="5" rx="2.5" fill="#0C3D27"/></svg>'},
+  bread:{n:"Bakery",svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="#F0EDE3"/><path d="M24 62c0-12 10-22 24-22s24 10 24 22v6H24v-6z" fill="#175E3B"/><path d="M38 52l6-6M48 52l6-6M58 52l6-6" stroke="#F0EDE3" stroke-width="4" stroke-linecap="round"/><rect x="20" y="70" width="56" height="5" rx="2.5" fill="#0C3D27"/></svg>'},
+  cake:{n:"Cake",svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="#F0EDE3"/><path d="M28 66L64 30v36H28z" fill="#175E3B"/><path d="M28 66h36" stroke="#0C3D27" stroke-width="4"/><circle cx="58" cy="25" r="6" fill="#0C3D27"/><path d="M38 58l14-14" stroke="#F0EDE3" stroke-width="4" stroke-linecap="round"/></svg>'},
+  samosa:{n:"Snacks",svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="#F0EDE3"/><path d="M48 26L74 70H22L48 26z" fill="#175E3B"/><path d="M40 52l5 8 7-10" stroke="#F0EDE3" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'},
+  drinks:{n:"Drinks",svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="#F0EDE3"/><path d="M40 26h16v8l6 8v30a6 6 0 0 1-6 6H40a6 6 0 0 1-6-6V42l6-8v-8z" fill="#175E3B"/><rect x="40" y="18" width="16" height="8" rx="2" fill="#0C3D27"/><rect x="38" y="52" width="20" height="10" fill="#F0EDE3"/></svg>'},
+  meals:{n:"Meals",svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="#F0EDE3"/><path d="M24 52h48c0 12-10 20-24 20s-24-8-24-20z" fill="#175E3B"/><path d="M34 52c2-8 8-12 14-12s12 4 14 12" fill="#F0EDE3"/><rect x="44" y="72" width="8" height="6" fill="#0C3D27"/></svg>'},
+  sweets:{n:"Sweets",svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="#F0EDE3"/><ellipse cx="48" cy="66" rx="26" ry="7" fill="#0C3D27"/><circle cx="48" cy="50" r="15" fill="#175E3B"/><circle cx="43" cy="46" r="2.5" fill="#F0EDE3"/><circle cx="53" cy="46" r="2.5" fill="#F0EDE3"/><circle cx="48" cy="55" r="2.5" fill="#F0EDE3"/></svg>'},
+  grocery:{n:"Groceries",svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="#F0EDE3"/><path d="M26 44h44l-6 28H32l-6-28z" fill="#175E3B"/><path d="M34 44l4 28M48 44v28M62 44l-4 28" stroke="#F0EDE3" stroke-width="3.5"/><path d="M30 36c8-10 28-10 36 0" stroke="#0C3D27" stroke-width="5" fill="none" stroke-linecap="round"/></svg>'},
+  clothes:{n:"Clothing",svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="#F0EDE3"/><path d="M36 28l-14 10 8 10 6-4v30h24V44l6 4 8-10-14-10c-2 4-6 6-12 6s-10-2-12-6z" fill="#175E3B"/></svg>'},
+  beauty:{n:"Beauty",svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="#F0EDE3"/><rect x="30" y="44" width="36" height="28" rx="6" fill="#175E3B"/><rect x="34" y="30" width="28" height="12" rx="4" fill="#0C3D27"/><rect x="36" y="54" width="24" height="8" rx="4" fill="#F0EDE3"/></svg>'},
+  parcel:{n:"Parcel",svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="#F0EDE3"/><path d="M28 40l20-12 20 12v28l-20 12-20-12V40z" fill="#175E3B"/><path d="M28 40l20 12 20-12M48 52v28" stroke="#F0EDE3" stroke-width="4" fill="none"/><path d="M48 28v12" stroke="#0C3D27" stroke-width="4"/></svg>'},
+};
+function catSrc(id){ const c=CAT[id]; return c?("data:image/svg+xml;utf8,"+encodeURIComponent(c.svg)):""; }
+/* image value: "cat:<id>" or "https://..." ; anything else renders as no image */
+function imgSrc(v){
+  if(!v) return "";
+  if(v.indexOf("cat:")===0) return catSrc(v.slice(4));
+  if(/^https:\/\//i.test(v)) return v;
+  return "";
+}
+/* broken images fall back to the neutral box, never a broken-image icon */
+function imgFail(el){ try{ el.onerror=null; el.remove(); }catch(e){} }
+function bannerHtml(d){
+  const src=imgSrc(d && d.banner); if(!src) return "";
+  return '<div class="shop-banner"><img src="'+esc(src)+'" loading="lazy" alt="'+esc((d&&d.name)||"")+'" onerror="imgFail(this)"></div>';
+}
 function dayName(dd){
   // dd: 0=Sunday .. 6=Saturday. 2026-09-27 is a Sunday.
   try{ return new Intl.DateTimeFormat(LOCALE_TAG[uiLang]||"en",{weekday:"long"}).format(new Date(2026,8,27+dd)); }
@@ -6372,6 +6529,42 @@ function stepSpeakHtml(){
   + '</div>';
 }
 function prodCatsOf(ps){ const s=[]; (ps||[]).forEach(p=>{ if(p.cat && s.indexOf(p.cat)<0) s.push(p.cat); }); return s; }
+const imgTabs = {};
+function imgCtlInner(key, val, wide){
+  const src = imgSrc(val);
+  const tab = imgTabs[key] || "";
+  const isCat = !!val && val.indexOf("cat:") === 0;
+  const isUrl = !!val && !isCat;
+  const thCls = wide ? "pf-bthumb" : "pf-thumb";
+  let h = '<span class="pf-imglab">' + t(wide ? "img_banner" : "img_title") + '</span>'
+    + '<div class="pf-imgtop"><div class="' + thCls + '">' + (src ? '<img src="' + esc(src) + '" alt="" onerror="imgFail(this)">' : "") + '</div>'
+    + '<div class="pf-imgbtns">'
+    + '<button type="button" class="pf-imgbtn' + (!val ? " on" : "") + '" data-imgtab="' + key + ':none">' + t("img_none") + '</button>'
+    + '<button type="button" class="pf-imgbtn' + (isCat ? " on" : "") + '" data-imgtab="' + key + ':cat">' + t("img_catalog") + '</button>'
+    + '<button type="button" class="pf-imgbtn' + (isUrl ? " on" : "") + '" data-imgtab="' + key + ':url">' + t("img_url") + '</button>'
+    + '</div></div>';
+  if(tab === "cat"){
+    h += '<div class="pf-catgrid">' + Object.keys(CAT).map(function(id){
+      return '<button type="button" data-catpick="' + key + ':' + id + '" class="' + (val === "cat:" + id ? "on" : "") + '" title="' + esc(CAT[id].n) + '" aria-label="' + esc(CAT[id].n) + '"><img src="' + esc(catSrc(id)) + '" alt=""></button>';
+    }).join("") + '</div>';
+  }
+  if(tab === "url"){
+    h += '<div class="pf-urlrow"><input type="url" inputmode="url" data-imgurl="' + key + '" placeholder="' + esc(t("img_url_ph")) + '" value="' + esc(isUrl ? val : "") + '"></div>'
+      + '<div class="pf-imgerr hidden" data-imgerr="' + key + '"></div>';
+  }
+  return h;
+}
+function refreshImgCtl(key){
+  const bc = document.querySelector('[data-imgctl="' + key + '"]'); if(!bc || !state.data) return;
+  if(key === "b") bc.innerHTML = imgCtlInner("b", state.data.banner, true);
+  else { const i = +key.slice(1); const p = state.data.products[i]; if(p) bc.innerHTML = imgCtlInner(key, p.image, false); }
+}
+function setImgVal(key, v){
+  if(!state.data) return;
+  if(key === "b"){ state.data.banner = v || ""; refreshImgCtl("b"); }
+  else { const i = +key.slice(1); const p = state.data.products[i]; if(!p) return; p.image = v || ""; renderProdRows(); }
+  renderPreview();
+}
 function prodFieldRow(p, i){
   const cats = prodCatsOf(state.data.products);
   const opts = ['<option value="">'+t("bp_cat")+'</option>']
@@ -6391,7 +6584,8 @@ function prodFieldRow(p, i){
     + '<span class="pf-pricewrap"><span class="pf-cur" aria-hidden="true">'+esc(curSymbol(builderCur()))+'</span><input class="pf-price" data-pf="price" data-i="'+i+'" placeholder="'+t("bp_price")+'" inputmode="decimal" value="'+esc(p.price||"")+'"></span></div>'
     + '<div class="pf-vars" data-pf-vars="'+i+'">'+vars+'<button type="button" class="pf-addvar" data-pfaddvar="'+i+'">+ '+t("bp_addvar")+'</button></div>'
     + '<label class="pf-oos"><input type="checkbox" data-pf="oos" data-i="'+i+'"'+(p.stock==="out"?" checked":"")+'> '+t("bp_oos")+'</label>'
-    + '<div class="pf-err hidden" data-pf-err></div>'
+    + '<div class="pf-img" data-imgctl="p'+i+'">'+imgCtlInner("p"+i, p.image, false)+'</div>'
+    + '<div class="pf-err hidden" data-pf-err></div>' 
     + '</div>';
 }
 function renderProdRows(){
@@ -6405,13 +6599,15 @@ function previewHtml(d){
   const cards = prods.map(p=>{
     const out = p.stock==="out";
     const price = p.price || ((p.variants && p.variants[0] && p.variants[0].p) || "");
-    return '<div class="pv-card"><div class="pv-img"></div><div>'
+    const pim = imgSrc(p.image);
+    return '<div class="pv-card"><div class="pv-img">'+(pim?'<img src="'+esc(pim)+'" alt="" onerror="imgFail(this)">':"")+'</div><div>' 
       + '<div class="pv-nm">'+esc(p.name)+(out?' <span class="stk stk-out">'+t("stock_out")+'</span>':"")+'</div>'
       + '<div class="pv-pr">'+esc(price)+'</div>'
       + '<span class="pv-add">'+t("add")+'</span></div></div>';
   }).join("");
   return '<div class="shoptheme theme-'+theme+'">'
     + (d.announce ? '<div class="banner">'+esc(d.announce)+'</div>' : "")
+    + bannerHtml(d)
     + '<div class="shop-mast"><h1>'+esc(d.name||"…")+'</h1>'+(d.tagline?'<p>'+esc(d.tagline)+'</p>':"")+'</div>'
     + '<div class="pv-shop">'+cards+'</div>'
     + '</div>';
@@ -6444,7 +6640,8 @@ function stepReviewHtml(){
   + '<div class="pv-frame"><div id="livePreview"></div></div>'
   + '<div class="field"><label>'+t("f_name")+'</label><input type="text" id="f_name" value="'+esc(d.name)+'"></div>'
   + '<div class="field"><label>'+t("f_tagline")+' <span class="hint">'+t("hint_opt")+'</span></label><input type="text" id="f_tagline" value="'+esc(d.tagline)+'"></div>'
-  + '<div class="field"><label>'+t("f_announce")+' <span class="hint">'+t("announce_hint")+'</span></label><input type="text" id="f_announce" value="'+esc(d.announce)+'"></div>'
+  + '<div class="field"><label>'+t("f_announce")+' <span class="hint">'+t("announce_hint")+'</span></label><input type="text" id="f_announce" value="'+esc(d.announce)+'"></div>' 
+  + '<div class="field"><div class="pf-img" id="bannerCtl" data-imgctl="b">'+imgCtlInner("b", d.banner, true)+'</div></div>' 
   + '<div class="sec-label">'+t("f_products")+'</div>'
   + '<div id="prodRows"></div>'
   + '<button type="button" class="btn btn-sm" id="addProdBtn" style="margin-bottom:6px;">+ '+t("bp_addprod")+'</button>'
@@ -6691,6 +6888,18 @@ function wireBuild(){
         const p=state.data.products[+oos.getAttribute("data-i")]; if(!p) return;
         p.stock=oos.checked?"out":null; renderPreview(); return;
       }
+      const iu=e.target.closest("[data-imgurl]");
+      if(iu){
+        const key=iu.getAttribute("data-imgurl");
+        const v=iu.value.trim();
+        const err=card.querySelector('[data-imgerr="'+key+'"]');
+        if(!v){ setImgVal(key,""); return; }
+        if(!/^https:\/\//i.test(v)){
+          if(err){ err.textContent=t("img_url_err"); err.classList.remove("hidden"); }
+          iu.classList.add("pf-bad"); return;
+        }
+        setImgVal(key,v); return;
+      }
     });
     card.addEventListener("input", e=>{
       if(!state.data) return;
@@ -6772,7 +6981,7 @@ function wireBuild(){
       if(dup){
         const di=+dup.getAttribute("data-pfdup"), p=state.data.products[di];
         if(p) state.data.products.splice(di+1,0,{cat:p.cat||"",name:p.name||"",price:p.price||"",
-          variants:(p.variants||[]).map(v=>({n:v.n||"",p:v.p||""})),stock:null});
+          image:p.image||"",variants:(p.variants||[]).map(v=>({n:v.n||"",p:v.p||""})),stock:null});
         renderProdRows(); renderPreview(); return;
       }
       const del=e.target.closest("[data-pfdel]");
@@ -6784,6 +6993,20 @@ function wireBuild(){
         const parts=vd.getAttribute("data-pfvardel").split(":");
         state.data.products[+parts[0]].variants.splice(+parts[1],1);
         renderProdRows(); renderPreview(); return;
+      }
+      const it=e.target.closest("[data-imgtab]");
+      if(it){
+        const kv=it.getAttribute("data-imgtab").split(":");
+        if(kv[1]==="none"){ imgTabs[kv[0]]=""; setImgVal(kv[0],""); }
+        else { imgTabs[kv[0]]=(imgTabs[kv[0]]===kv[1])?"":kv[1]; refreshImgCtl(kv[0]); }
+        return;
+      }
+      const cp=e.target.closest("[data-catpick]");
+      if(cp){
+        const kv=cp.getAttribute("data-catpick").split(":");
+        imgTabs[kv[0]]="";
+        setImgVal(kv[0],"cat:"+kv[1]);
+        return;
       }
     });
   }
@@ -6899,12 +7122,13 @@ function prodRow(p, i){
         }).join("")+'</select>';
   }
   const qty=cartQty(i, vi);
+  const pim=imgSrc(p.image);
   const askBtn=shopRT.waNum?'<button class="ask-btn" data-ask="'+i+'">'+t("ask")+'</button>':"";
   let act;
   if(out) act='<button class="pc-add" disabled>'+t("stock_out")+'</button>';
   else if(qty===0) act='<button class="pc-add" data-add="'+i+'">'+t("add")+'</button>';
   else act='<div class="pc-step"><button data-pdec="'+i+'" aria-label="&minus;">&minus;</button><b>'+qty+'</b><button data-pinc="'+i+'" aria-label="+">+</button></div>';
-  return '<div class="pc"><div class="pc-img" aria-hidden="true"></div><div class="pc-mid">'
+  return '<div class="pc"><div class="pc-img"'+(pim?"":' aria-hidden="true"')+'>'+(pim?'<img src="'+esc(pim)+'" loading="lazy" alt="'+esc(name)+'" onerror="imgFail(this)">':"")+'</div><div class="pc-mid">' 
     + '<div class="pc-name">'+esc(name)+badge+'</div>'
     + '<div class="pc-price">'+esc(priceLabel(p,vi))+'</div>'
     + varSel
@@ -7556,6 +7780,7 @@ function siteView(d, payload){
     : "";
   return '<div class="shoptheme theme-'+theme+'">'
   + (d.announce ? '<div class="banner">'+esc(d.announce)+'</div>' : "")
+  + bannerHtml(d)
   + '<div class="wrap shopview"><div class="shop-mast"><div class="kicker">'+t("mini_kicker")+'</div>'
   + '<h1>'+esc(d.name)+'</h1>' + ((d.tagline||d.taglineKey)?'<p>'+(d.taglineKey?t(d.taglineKey):esc(d.tagline))+'</p>':"") + openBadge + '</div>'
   + prodsSec + hoursSec
