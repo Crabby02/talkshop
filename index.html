@@ -396,8 +396,15 @@ html[dir="rtl"] body{direction:rtl}
 .swatch.on{border-color:#fff;box-shadow:0 0 0 2px var(--ink);}
 [dir="rtl"] .swatch-row{direction:rtl;}
 /* ---- shop: search, categories, products ---- */
-.shop-tools{margin-bottom:4px;}
+.shop-tools{margin-bottom:4px;position:relative;}
 .shop-search{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px;background:#fff;font-size:16px;}
+.sr-count{font-size:13px;color:var(--ink2);padding:2px 2px 10px;}
+mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
+.sr-panel{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--line);border-radius:12px;margin-top:2px;box-shadow:0 12px 32px rgba(0,0,0,.14);z-index:60;overflow:hidden;}
+.sr-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 2px;font-size:11px;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em;}
+.sr-clear{background:none;border:0;color:var(--ink2);font-size:13px;text-transform:none;letter-spacing:0;cursor:pointer;padding:4px 0;}
+.sr-item{display:block;width:100%;text-align:start;background:none;border:0;border-top:1px solid var(--line);padding:12px 14px;font-size:15px;color:var(--ink);cursor:pointer;}
+.sr-item:hover{background:#f6f6f6;}
 .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:8px;-webkit-overflow-scrolling:touch;}
 .chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 18px;font-size:14px;cursor:pointer;color:var(--ink);}
 .chip.on{background:var(--s-accent);border-color:var(--s-accent);color:#fff;font-weight:700;}
@@ -529,7 +536,7 @@ html[dir="rtl"] body{direction:rtl}
 .msh-badge{flex:none;}
 .msh-badge .openbadge{margin-top:0;padding:6px 12px;font-size:12px;gap:6px;white-space:nowrap;max-width:40vw;overflow:hidden;text-overflow:ellipsis;}
 .msh-sbtn{flex:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:19px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.msh-searchrow{display:none;padding:10px 14px;background:var(--paper);border-bottom:1px solid var(--line);}
+.msh-searchrow{display:none;position:relative;padding:10px 14px;background:var(--paper);border-bottom:1px solid var(--line);}
 .msh-searchrow.open{display:block;}
 .msh-searchrow .shop-search{margin-bottom:0;}
 .msh-rail{position:sticky;top:58px;z-index:54;background:var(--paper);padding:10px 14px;border-bottom:1px solid var(--line);}
@@ -833,6 +840,11 @@ const STR = { en: {
   "locale_back":"Back",
   "locale_shopnote":"Prices on this shop are shown in the shop's currency ({cur}).",
   "search_ph":"Search items...",
+  "search_recent":"Recent searches",
+  "search_clear":"Clear",
+  "search_one":"{n} result",
+  "search_other":"{n} results",
+  "search_none":"No items match your search.",
   "cat_all":"All",
   "add":"Add",
   "ask":"Ask",
@@ -1193,6 +1205,11 @@ STR.te = {
   "locale_back":"వెనుకకు",
   "locale_shopnote":"ఈ దుకాణంలో ధరలు దుకాణ కరెన్సీ ({cur})లో చూపబడతాయి.",
   "search_ph":"వస్తువులను వెతకండి...",
+  "search_recent":"ఇటీవలి శోధనలు",
+  "search_clear":"తొలగించు",
+  "search_one":"{n} ఫలితం",
+  "search_other":"{n} ఫలితాలు",
+  "search_none":"మీ శోధనకు ఏ వస్తువూ సరిపోలలేదు.",
   "cat_all":"అన్నీ",
   "add":"జోడించండి",
   "ask":"అడగండి",
@@ -1553,6 +1570,11 @@ STR.bn = {
   "locale_back":"পেছনে",
   "locale_shopnote":"এই দোকানের দাম দোকানের নিজস্ব মুদ্রায় ({cur}) দেখানো হচ্ছে।",
   "search_ph":"জিনিস খুঁজুন...",
+  "search_recent":"সাম্প্রতিক অনুসন্ধান",
+  "search_clear":"মুছুন",
+  "search_one":"{n}টি ফলাফল",
+  "search_other":"{n}টি ফলাফল",
+  "search_none":"আপনার অনুসন্ধানের সাথে কোনো পণ্য মেলেনি।",
   "cat_all":"সব",
   "add":"যোগ করুন",
   "ask":"জিজ্ঞেস করুন",
@@ -1913,6 +1935,11 @@ STR.kn = {
   "locale_back":"ಹಿಂದೆ",
   "locale_shopnote":"ಈ ಅಂಗಡಿಯ ಬೆಲೆಗಳನ್ನು ಅಂಗಡಿಯ ಕರೆನ್ಸಿಯಲ್ಲಿ ({cur}) ತೋರಿಸಲಾಗಿದೆ.",
   "search_ph":"ವಸ್ತುಗಳನ್ನು ಹುಡುಕಿ...",
+  "search_recent":"ಇತ್ತೀಚಿನ ಹುಡುಕಾಟಗಳು",
+  "search_clear":"ತೆರವುಗೊಳಿಸಿ",
+  "search_one":"{n} ಫಲಿತಾಂಶ",
+  "search_other":"{n} ಫಲಿತಾಂಶಗಳು",
+  "search_none":"ನಿಮ್ಮ ಹುಡುಕಾಟಕ್ಕೆ ಯಾವುದೇ ವಸ್ತು ಹೊಂದಿಕೆಯಾಗಲಿಲ್ಲ.",
   "cat_all":"ಎಲ್ಲಾ",
   "add":"ಸೇರಿಸಿ",
   "ask":"ಕೇಳಿ",
@@ -2273,6 +2300,11 @@ STR.mr = {
   "locale_back":"मागे",
   "locale_shopnote":"या दुकानाच्या किमती दुकानाच्या चलनात ({cur}) दाखवल्या जातात.",
   "search_ph":"वस्तू शोधा...",
+  "search_recent":"अलीकडील शोध",
+  "search_clear":"साफ करा",
+  "search_one":"{n} निकाल",
+  "search_other":"{n} निकाल",
+  "search_none":"तुमच्या शोधाशी कोणताही पदार्थ जुळला नाही.",
   "cat_all":"सर्व",
   "add":"जोडा",
   "ask":"विचारा",
@@ -2633,6 +2665,11 @@ STR.zh = {
   "locale_back":"返回",
   "locale_shopnote":"这家店的价格以店铺货币（{cur}）显示。",
   "search_ph":"搜索商品…",
+  "search_recent":"最近搜索",
+  "search_clear":"清除",
+  "search_one":"{n} 个结果",
+  "search_other":"{n} 个结果",
+  "search_none":"没有与您的搜索匹配的商品。",
   "cat_all":"全部",
   "add":"加入",
   "ask":"咨询",
@@ -2993,6 +3030,11 @@ STR.ja = {
   "locale_back":"戻る",
   "locale_shopnote":"このお店の価格は、お店の通貨（{cur}）で表示されます。",
   "search_ph":"商品を検索…",
+  "search_recent":"最近の検索",
+  "search_clear":"クリア",
+  "search_one":"{n} 件の結果",
+  "search_other":"{n} 件の結果",
+  "search_none":"検索に一致する商品がありません。",
   "cat_all":"すべて",
   "add":"追加",
   "ask":"質問する",
@@ -3353,6 +3395,11 @@ STR.fr = {
   "locale_back":"Retour",
   "locale_shopnote":"Les prix de cette boutique sont affichés dans la devise de la boutique ({cur}).",
   "search_ph":"Rechercher des articles…",
+  "search_recent":"Recherches récentes",
+  "search_clear":"Effacer",
+  "search_one":"{n} résultat",
+  "search_other":"{n} résultats",
+  "search_none":"Aucun article ne correspond à votre recherche.",
   "cat_all":"Tout",
   "add":"Ajouter",
   "ask":"Question",
@@ -3713,6 +3760,11 @@ STR.de = {
   "locale_back":"Zurück",
   "locale_shopnote":"Preise in diesem Shop werden in der Währung des Ladens ({cur}) angezeigt.",
   "search_ph":"Artikel suchen...",
+  "search_recent":"Letzte Suchanfragen",
+  "search_clear":"Löschen",
+  "search_one":"{n} Ergebnis",
+  "search_other":"{n} Ergebnisse",
+  "search_none":"Keine Artikel für Ihre Suche gefunden.",
   "cat_all":"Alle",
   "add":"Dazu",
   "ask":"Fragen",
@@ -4073,6 +4125,11 @@ STR.pt = {
   "locale_back":"Voltar",
   "locale_shopnote":"Os preços desta loja são mostrados na moeda da loja ({cur}).",
   "search_ph":"Buscar itens...",
+  "search_recent":"Pesquisas recentes",
+  "search_clear":"Limpar",
+  "search_one":"{n} resultado",
+  "search_other":"{n} resultados",
+  "search_none":"Nenhum item corresponde à sua pesquisa.",
   "cat_all":"Todos",
   "add":"Adicionar",
   "ask":"Perguntar",
@@ -4433,6 +4490,11 @@ STR.ar = {
   "locale_back":"رجوع",
   "locale_shopnote":"أسعار هذا المتجر معروضة بعملة المتجر ({cur}).",
   "search_ph":"ابحث في الأصناف...",
+  "search_recent":"عمليات بحث سابقة",
+  "search_clear":"مسح",
+  "search_one":"نتيجة واحدة",
+  "search_other":"{n} نتائج",
+  "search_none":"لا توجد أصناف مطابقة لبحثك.",
   "cat_all":"الكل",
   "add":"أضف",
   "ask":"اسأل",
@@ -4802,6 +4864,11 @@ STR.ml = {
   "locale_back":"തിരികെ",
   "locale_shopnote":"ഈ കടയിലെ വിലകൾ കടയുടെ കറൻസിയിൽ ({cur}) ആണ് കാണിക്കുന്നത്.",
   "search_ph":"സാധനങ്ങൾ തിരയൂ...",
+  "search_recent":"സമീപകാല തിരച്ചിലുകൾ",
+  "search_clear":"മായ്ക്കുക",
+  "search_one":"{n} ഫലം",
+  "search_other":"{n} ഫലങ്ങൾ",
+  "search_none":"നിങ്ങളുടെ തിരച്ചിലിന് അനുയോജ്യമായ സാധനങ്ങളൊന്നുമില്ല.",
   "cat_all":"എല്ലാം",
   "add":"ചേർക്കൂ",
   "ask":"ചോദിക്കൂ",
@@ -5162,6 +5229,11 @@ STR.hi = {
   "locale_back":"वापस",
   "locale_shopnote":"इस दुकान की कीमतें दुकान की मुद्रा ({cur}) में दिखाई जाती हैं।",
   "search_ph":"आइटम खोजें...",
+  "search_recent":"हाल की खोजें",
+  "search_clear":"साफ़ करें",
+  "search_one":"{n} परिणाम",
+  "search_other":"{n} परिणाम",
+  "search_none":"आपकी खोज से कोई आइटम मेल नहीं खाता।",
   "cat_all":"सभी",
   "add":"जोड़ें",
   "ask":"पूछें",
@@ -5522,6 +5594,11 @@ STR.ta = {
   "locale_back":"பின் செல்",
   "locale_shopnote":"இந்தக் கடையின் விலைகள் கடையின் நாணயத்தில் ({cur}) காட்டப்படும்.",
   "search_ph":"பொருட்களைத் தேடுக...",
+  "search_recent":"சமீபத்திய தேடல்கள்",
+  "search_clear":"அழி",
+  "search_one":"{n} முடிவு",
+  "search_other":"{n} முடிவுகள்",
+  "search_none":"உங்கள் தேடலுடன் பொருந்தும் பொருட்கள் எதுவும் இல்லை.",
   "cat_all":"அனைத்தும்",
   "add":"சேர்",
   "ask":"கேள்",
@@ -5883,6 +5960,11 @@ STR.es = {
   "locale_back":"Atrás",
   "locale_shopnote":"Los precios de esta tienda se muestran en la moneda de la tienda ({cur}).",
   "search_ph":"Buscar productos...",
+  "search_recent":"Búsquedas recientes",
+  "search_clear":"Borrar",
+  "search_one":"{n} resultado",
+  "search_other":"{n} resultados",
+  "search_none":"Ningún producto coincide con tu búsqueda.",
   "cat_all":"Todo",
   "add":"Añadir",
   "ask":"Preguntar",
@@ -7178,6 +7260,137 @@ function cartTotals(){
   const min=(d.dlv&&d.dlv.min!=null)?(RT.usdShop?d.dlv.min*fxRate:d.dlv.min):null;
   return {sub:sub, disc:disc, fee:fee, total:total, min:min, okMin:(min==null||after>=min), code:c?c.code:null};
 }
+/* ============================== typo-tolerant shop search ============================== */
+function sNorm(s){ return foldStr(s); }
+function sEdit(a,b){
+  const m=a.length,n=b.length;
+  if(!m) return n; if(!n) return m;
+  let prev=new Array(n+1),cur=new Array(n+1),tmp;
+  for(let j=0;j<=n;j++) prev[j]=j;
+  for(let i=1;i<=m;i++){
+    cur[0]=i; const ca=a.charCodeAt(i-1);
+    for(let j=1;j<=n;j++){
+      const c=ca===b.charCodeAt(j-1)?0:1;
+      const d=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+c);
+      cur[j]=d;
+    }
+    tmp=prev;prev=cur;cur=tmp;
+  }
+  return prev[n];
+}
+function sTol(nqLen){ return nqLen<=3?0:(nqLen<=5?1:2); }
+function sWordScore(nq, w){
+  if(!w) return 0;
+  if(w.indexOf(nq)===0) return 3;
+  const tol=sTol(nq.length);
+  if(tol<=0) return 0;
+  let best=99;
+  const c1=w.slice(0,nq.length);
+  if(c1) best=Math.min(best,sEdit(nq,c1));
+  if(Math.abs(w.length-nq.length)<=2) best=Math.min(best,sEdit(nq,w));
+  if(best<=tol) return 2.4-best*0.7;
+  return 0;
+}
+function sFieldScore(nq, text){
+  const nt=sNorm(text);
+  if(!nt||!nq) return 0;
+  const ix=nt.indexOf(nq);
+  if(ix>=0) return 4+(nq.length/Math.max(nt.length,1))-Math.min(ix,20)*0.02;
+  const words=nt.split(/\s+/);
+  let best=0;
+  for(let i=0;i<words.length;i++){
+    const s=sWordScore(nq,words[i]);
+    if(s>best) best=s;
+  }
+  const qw=nq.split(/\s+/).filter(w=>w.length>=2);
+  if(qw.length>1){
+    for(let qi=0;qi<qw.length;qi++) for(let i=0;i<words.length;i++){
+      const s=sWordScore(qw[qi],words[i])*0.9;
+      if(s>best) best=s;
+    }
+  }
+  return best;
+}
+function prodName(p){ return p.k?t(p.k):(p.name||""); }
+function prodSearchScore(nq, p){
+  let s=sFieldScore(nq,prodName(p))*3;
+  if(p.cat) s=Math.max(s,sFieldScore(nq,p.cat)*1.5);
+  if(p.variants) for(let i=0;i<p.variants.length;i++) s=Math.max(s,sFieldScore(nq,p.variants[i].n||"")*1.2);
+  return s;
+}
+function sHiName(nm, nqRaw){
+  const s=String(nm==null?"":nm);
+  const nq=String(nqRaw==null?"":nqRaw).trim().toLowerCase();
+  if(!nq) return esc(s);
+  const low=s.toLowerCase();
+  const ix=low.indexOf(nq);
+  if(ix>=0) return esc(s.slice(0,ix))+"<mark>"+esc(s.slice(ix,ix+nq.length))+"</mark>"+esc(s.slice(ix+nq.length));
+  const nqn=sNorm(nq);
+  const qws=nqn.split(/\s+/).filter(w=>w.length>=2);
+  const parts=s.split(/(\s+)/);
+  let bi=-1,bs=0;
+  for(let i=0;i<parts.length;i+=2){
+    const wn=sNorm(parts[i]);
+    let sc=sWordScore(nqn,wn);
+    for(let qi=0;qi<qws.length;qi++) sc=Math.max(sc,sWordScore(qws[qi],wn));
+    if(sc>bs){ bs=sc; bi=i; }
+  }
+  if(bi<0) return esc(s);
+  return parts.map((w,i)=>i===bi?"<mark>"+esc(w)+"</mark>":esc(w)).join("");
+}
+function srGet(){
+  try{
+    const a=JSON.parse(localStorage.getItem("ts_recent")||"[]");
+    return Array.isArray(a)?a.filter(x=>typeof x==="string").slice(0,5):[];
+  }catch(e){ return []; }
+}
+function srAdd(q){
+  q=String(q==null?"":q).trim();
+  if(q.length<2) return;
+  const low=q.toLowerCase();
+  const a=srGet().filter(x=>x.toLowerCase()!==low);
+  a.unshift(q);
+  try{ localStorage.setItem("ts_recent",JSON.stringify(a.slice(0,5))); }catch(e){}
+}
+function srClear(){ try{ localStorage.removeItem("ts_recent"); }catch(e){} }
+function srPanelHtml(){
+  const a=srGet();
+  if(!a.length) return "";
+  return '<div class="sr-head"><span>'+esc(t("search_recent"))+'</span><button class="sr-clear" id="srClearBtn" type="button">'+esc(t("search_clear"))+'</button></div>'
+    + a.map(x=>'<button class="sr-item" type="button" data-srq="'+esc(x)+'">'+esc(x)+'</button>').join("");
+}
+function srShowPanel(){
+  const p=$("#srPanel");
+  if(!p) return;
+  const html=srPanelHtml();
+  if(!html){ p.hidden=true; return; }
+  p.innerHTML=html;
+  p.hidden=false;
+  const cb=$("#srClearBtn");
+  if(cb) cb.onmousedown=function(e){ e.preventDefault(); };
+  if(cb) cb.onclick=function(e){ e.stopPropagation(); srClear(); p.hidden=true; };
+  const items=p.querySelectorAll(".sr-item");
+  items.forEach(function(b){
+    b.onmousedown=function(e){ e.preventDefault(); };
+    b.onclick=function(){
+      const v=b.getAttribute("data-srq")||"";
+      const si=$("#shopSearch");
+      if(si) si.value=v;
+      shopRT.q=v;
+      srAdd(v);
+      renderProds();
+      p.hidden=true;
+    };
+  });
+}
+function srHidePanel(){ const p=$("#srPanel"); if(p) p.hidden=true; }
+if(!window._srDoc){
+  window._srDoc=true;
+  document.addEventListener("click",function(e){
+    const p=$("#srPanel");
+    if(p&&!p.hidden&&!e.target.closest("#srPanel")&&!e.target.closest("#shopSearch")) p.hidden=true;
+  });
+}
 function prodCats(d){
   const s=[];
   (d.products||[]).forEach(p=>{ if(p.cat && s.indexOf(p.cat)<0) s.push(p.cat); });
@@ -7192,7 +7405,7 @@ function selViOf(p, i){
   const s=shopRT.sel[i];
   return (s!=null && s<p.variants.length) ? s : 0;
 }
-function prodRow(p, i){
+function prodRow(p, i, hlName){
   const name=p.k?t(p.k):(p.name||"");
   const out=p.stock==="out";
   let badge="";
@@ -7216,14 +7429,14 @@ function prodRow(p, i){
   else act='<div class="pc-step"><button data-pdec="'+i+'" aria-label="&minus;">&minus;</button><b>'+qty+'</b><button data-pinc="'+i+'" aria-label="+">+</button></div>';
   if(isMobileUI()){
     return '<div class="msh-card"><div class="msh-img"'+(pim?"":' aria-hidden="true"')+'>'+(pim?'<img src="'+esc(pim)+'" loading="lazy" alt="'+esc(name)+'" onerror="imgFail(this)">':"")+'</div><div class="msh-mid">'
-    + '<div class="pc-name">'+esc(name)+badge+'</div>'
+    + '<div class="pc-name">'+(hlName||esc(name))+badge+'</div>'
     + '<div class="pc-price">'+esc(priceLabel(p,vi))+'</div>'
     + varSel
     + '<div class="pc-act">'+act+askBtn+'</div>'
     + '</div></div>';
   }
   return '<div class="pc"><div class="pc-img"'+(pim?"":' aria-hidden="true"')+'>'+(pim?'<img src="'+esc(pim)+'" loading="lazy" alt="'+esc(name)+'" onerror="imgFail(this)">':"")+'</div><div class="pc-mid">' 
-    + '<div class="pc-name">'+esc(name)+badge+'</div>'
+    + '<div class="pc-name">'+(hlName||esc(name))+badge+'</div>'
     + '<div class="pc-price">'+esc(priceLabel(p,vi))+'</div>'
     + varSel
     + '<div class="pc-act">'+act+askBtn+'</div>'
@@ -7236,20 +7449,25 @@ function renderProds(){
   const rail=$("#mRail");
   if(!box&&!rail) return;
   const cats=prodCats(d);
-  const q=RT.q.trim().toLowerCase();
+  const q=RT.q.trim();
+  const nq=sNorm(q);
   let html="";
   if(cats.length){
     html+='<div class="chips"><button class="chip'+(RT.cat==="all"?" on":"")+'" data-cat="all">'+t("cat_all")+'</button>'
       + cats.map(c=>'<button class="chip'+(RT.cat===c?" on":"")+'" data-cat="'+esc(c)+'">'+esc(c)+'</button>').join("")+'</div>';
   }
-  const rows=(d.products||[]).map((p,i)=>({p:p,i:i})).filter(o=>{
-    if(RT.cat!=="all" && o.p.cat!==RT.cat) return false;
-    if(q){
-      const nm=(o.p.k?t(o.p.k):(o.p.name||"")).toLowerCase();
-      if(nm.indexOf(q)<0) return false;
-    }
-    return true;
-  }).map(o=>prodRow(o.p,o.i)).join("");
+  let items=(d.products||[]).map((p,i)=>({p:p,i:i,s:0}));
+  if(nq){
+    items=items.map(o=>{ o.s=prodSearchScore(nq,o.p); return o; })
+      .filter(o=>o.s>=0.75)
+      .sort((a,b)=>b.s-a.s);
+  }
+  items=items.filter(o=>RT.cat==="all"||o.p.cat===RT.cat);
+  let rows=items.map(o=>prodRow(o.p,o.i,nq?sHiName(prodName(o.p),q):null)).join("");
+  if(nq){
+    const lbl=items.length===0?t("search_none"):t(items.length===1?"search_one":"search_other").replace("{n}",items.length);
+    rows='<div class="sr-count" role="status">'+esc(lbl)+'</div>'+rows;
+  }
   if(mob&&rail){
     rail.innerHTML=html;
     rail.style.display=cats.length?"":"none";
@@ -7864,7 +8082,28 @@ function shopListChange(e){
 function wireShop(){
   renderProds(); renderCartBar();
   const si=$("#shopSearch");
-  if(si){ si.value=shopRT.q||""; si.oninput=function(e){ shopRT.q=e.target.value; renderProds(); }; }
+  if(si){
+    si.value=shopRT.q||"";
+    let dt=null;
+    si.oninput=function(e){
+      srHidePanel();
+      clearTimeout(dt);
+      const v=e.target.value;
+      dt=setTimeout(function(){ shopRT.q=v; renderProds(); },150);
+    };
+    si.onfocus=function(){ if(!si.value.trim()) srShowPanel(); };
+    si.onblur=function(){ if(si.value.trim().length>=2) srAdd(si.value); };
+    si.onkeydown=function(e){
+      if(e.key==="Enter"){
+        clearTimeout(dt);
+        shopRT.q=si.value;
+        srAdd(si.value);
+        renderProds();
+        srHidePanel();
+        si.blur();
+      }
+    };
+  }
   ["#prodList","#mRail"].forEach(function(sel){
     const pl=$(sel);
     if(pl){ pl.addEventListener("click",shopListClick); pl.addEventListener("change",shopListChange); }
@@ -7937,7 +8176,7 @@ function siteView(d, payload){
   const theme=(d.theme&&THEMES[d.theme])?d.theme:"forest";
   const prodsSec=(d.products&&d.products.length)
     ? '<div class="shop-sec"><h2>'+t("sv_products")+'</h2><div class="sub">'+t("sv_products_sub")+'</div>'
-      +'<div class="shop-tools"><input class="shop-search" id="shopSearch" placeholder="'+esc(t("search_ph"))+'"></div>'
+      +'<div class="shop-tools"><input class="shop-search" id="shopSearch" placeholder="'+esc(t("search_ph"))+'"><div class="sr-panel" id="srPanel" hidden></div></div>'
       +'<div id="prodList"></div></div>'
     : "";
   return '<div class="shoptheme theme-'+theme+'" data-uimode="desktop">'
@@ -7967,7 +8206,7 @@ function siteViewMobile(d, payload){
   + '<div class="msh-badge">'+shopOpenBadge(d)+'</div>'
   + (hasProds?'<button class="msh-sbtn" id="mshSearchBtn" aria-label="'+esc(t("search_ph"))+'">\u2315</button>':"")
   + '</div></div>'
-  + (hasProds?'<div class="msh-searchrow" id="mshSearchRow"><input class="shop-search" id="shopSearch" placeholder="'+esc(t("search_ph"))+'"></div>':"")
+  + (hasProds?'<div class="msh-searchrow" id="mshSearchRow"><input class="shop-search" id="shopSearch" placeholder="'+esc(t("search_ph"))+'"><div class="sr-panel" id="srPanel" hidden></div></div>':"")
   + '<div class="msh-rail" id="mRail"></div>'
   + '<div class="msh-body">'
   + '<div class="msh-mast"><div class="kicker">'+t("mini_kicker")+'</div>'
