@@ -509,6 +509,37 @@ html[dir="rtl"] body{direction:rtl}
 .ck-next{color:var(--ink2);font-size:15px;margin:12px 0 4px;}
 .link-btn{background:none;border:0;color:var(--ink2);font-size:15px;font-weight:600;cursor:pointer;padding:12px 8px;text-decoration:underline;}
 
+/* ---- mobile storefront UI (isMobileUI) ---- */
+.msh-head{position:sticky;top:0;z-index:55;background:rgba(255,253,248,.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.msh-head-in{display:flex;align-items:center;gap:10px;height:58px;padding:0 14px;}
+.msh-name{flex:1;min-width:0;font-weight:800;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.msh-badge{flex:none;}
+.msh-badge .openbadge{margin-top:0;padding:6px 12px;font-size:12px;gap:6px;white-space:nowrap;max-width:40vw;overflow:hidden;text-overflow:ellipsis;}
+.msh-sbtn{flex:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:19px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.msh-searchrow{display:none;padding:10px 14px;background:var(--paper);border-bottom:1px solid var(--line);}
+.msh-searchrow.open{display:block;}
+.msh-searchrow .shop-search{margin-bottom:0;}
+.msh-rail{position:sticky;top:58px;z-index:54;background:var(--paper);padding:10px 14px;border-bottom:1px solid var(--line);}
+.msh-rail .chips{margin-bottom:0;padding-bottom:2px;}
+.msh-rail .chip{padding:10px 18px;font-size:14px;}
+.msh-body{padding:0 16px 140px;}
+.msh-mast{padding:18px 0 6px;}
+.msh-mast .kicker{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:3px;color:var(--s-accent);margin-bottom:8px;}
+.msh-mast p{color:var(--ink2);font-size:15px;margin:0;line-height:1.5;}
+.msh-sec{padding:24px 0;border-bottom:1px solid var(--line);}
+.msh-sec h2{font-family:"Iowan Old Style",Palatino,Georgia,serif;font-size:22px;letter-spacing:-.5px;margin:0 0 4px;}
+.msh-sec .sub{color:var(--ink2);font-size:14px;margin-bottom:14px;}
+.msh-card{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);align-items:flex-start;}
+.msh-card:last-child{border-bottom:0;}
+.msh-img{width:84px;height:84px;flex:none;border-radius:14px;background:#E7E4DA;overflow:hidden;}
+.msh-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.msh-mid{flex:1;min-width:0;}
+.msh .pc-act{margin-top:8px;}
+.msh .varsel{margin-top:8px;max-width:100%;}
+.msh .shop-foot{padding-bottom:40px;}
+.ck-wrap.mob{padding:20px 14px 120px;}
+.ck-wrap.mob .ck-panel{padding:18px;}
+
 /* ---- checkout page ---- */
 .ck-wrap{max-width:1020px;margin:0 auto;padding:26px 18px 90px;}
 .ck-backline{display:block;color:var(--ink2);text-decoration:none;font-size:14px;margin-bottom:10px;}
@@ -7128,6 +7159,14 @@ function prodRow(p, i){
   if(out) act='<button class="pc-add" disabled>'+t("stock_out")+'</button>';
   else if(qty===0) act='<button class="pc-add" data-add="'+i+'">'+t("add")+'</button>';
   else act='<div class="pc-step"><button data-pdec="'+i+'" aria-label="&minus;">&minus;</button><b>'+qty+'</b><button data-pinc="'+i+'" aria-label="+">+</button></div>';
+  if(isMobileUI()){
+    return '<div class="msh-card"><div class="msh-img"'+(pim?"":' aria-hidden="true"')+'>'+(pim?'<img src="'+esc(pim)+'" loading="lazy" alt="'+esc(name)+'" onerror="imgFail(this)">':"")+'</div><div class="msh-mid">'
+    + '<div class="pc-name">'+esc(name)+badge+'</div>'
+    + '<div class="pc-price">'+esc(priceLabel(p,vi))+'</div>'
+    + varSel
+    + '<div class="pc-act">'+act+askBtn+'</div>'
+    + '</div></div>';
+  }
   return '<div class="pc"><div class="pc-img"'+(pim?"":' aria-hidden="true"')+'>'+(pim?'<img src="'+esc(pim)+'" loading="lazy" alt="'+esc(name)+'" onerror="imgFail(this)">':"")+'</div><div class="pc-mid">' 
     + '<div class="pc-name">'+esc(name)+badge+'</div>'
     + '<div class="pc-price">'+esc(priceLabel(p,vi))+'</div>'
@@ -7137,8 +7176,10 @@ function prodRow(p, i){
 }
 function renderProds(){
   const RT=shopRT, d=RT.d;
+  const mob=isMobileUI();
   const box=$("#prodList");
-  if(!box) return;
+  const rail=$("#mRail");
+  if(!box&&!rail) return;
   const cats=prodCats(d);
   const q=RT.q.trim().toLowerCase();
   let html="";
@@ -7154,7 +7195,13 @@ function renderProds(){
     }
     return true;
   }).map(o=>prodRow(o.p,o.i)).join("");
-  box.innerHTML=html+rows;
+  if(mob&&rail){
+    rail.innerHTML=html;
+    rail.style.display=cats.length?"":"none";
+    if(box) box.innerHTML=rows;
+  }else if(box){
+    box.innerHTML=html+rows;
+  }
 }
 function saveShop(){
   if(shopRT) cartStore[shopRT.payload]={cart:shopRT.cart,coupon:shopRT.coupon,fulfillment:shopRT.fulfillment,slot:shopRT.slot,pay:shopRT.pay,form:shopRT.form};
@@ -7527,7 +7574,7 @@ function ckGoBtnHtml(tt){
 }
 function checkoutDoneHtml(d,tt,theme){
   const waBtn=shopRT.waNum?'<button class="btn btn-accent" id="ckWaBtn">'+t("order_wa")+'</button>':"";
-  return '<div class="shoptheme theme-'+theme+'"><div class="ck-wrap"><div class="ck-panel ck-success">'
+  return '<div class="shoptheme theme-'+theme+'"><div class="ck-wrap'+(isMobileUI()?' mob':'')+'" data-uimode="'+(isMobileUI()?'mobile':'desktop')+'"><div class="ck-panel ck-success">'
     +'<div class="ck-check">\u2713</div>'
     +'<h1 class="serif" style="font-size:clamp(28px,5vw,40px);margin:0 0 6px;">'+t("ck_confirmed")+'</h1>'
     +'<div><span class="ck-orderno">'+esc(t("ck_order_x").replace("{x}",ck.orderId))+'</span></div>'
@@ -7541,7 +7588,7 @@ function checkoutHtml(){
   const tt=cartTotals();
   if(ck.done) return checkoutDoneHtml(d,tt,theme);
   const del=shopRT.fulfillment==="delivery";
-  return '<div class="shoptheme theme-'+theme+'"><div class="ck-wrap">'
+  return '<div class="shoptheme theme-'+theme+'"><div class="ck-wrap'+(isMobileUI()?' mob':'')+'" data-uimode="'+(isMobileUI()?'mobile':'desktop')+'">'
     +'<a class="ck-backline" href="#/s/'+ck.payload+'">&larr; '+esc(d.name)+'</a>'
     +'<h1 class="serif" style="font-size:clamp(30px,5vw,44px);margin:0 0 18px;">'+t("ck_title")+'</h1>'
     +ckSummaryWrap(tt)
@@ -7689,6 +7736,92 @@ function ckWaSend(){
   const msg=buildOrderMsg(cartTotals(),ck.orderId);
   window.open("https://wa.me/"+shopRT.waNum+"?text="+encodeURIComponent(msg),"_blank");
 }
+/* ---- mobile vs desktop storefront UI ---- */
+function viewOverride(){
+  try{
+    const q=new URLSearchParams(location.search).get("view");
+    if(q==="mobile"||q==="desktop"){ try{ sessionStorage.setItem("ts_view",q); }catch(e){} return q; }
+    const s=sessionStorage.getItem("ts_view");
+    return (s==="mobile"||s==="desktop")?s:null;
+  }catch(e){ return null; }
+}
+function isMobileUI(){
+  const o=viewOverride();
+  if(o==="mobile") return true;
+  if(o==="desktop") return false;
+  try{
+    return window.matchMedia("(pointer:coarse)").matches && window.matchMedia("(max-width:820px)").matches;
+  }catch(e){ return false; }
+}
+let shopUIMode=null;
+function maybeSwitchShopUI(){
+  if(!shopRT||!state.isShop) return;
+  if(ck) return;
+  const m=isMobileUI()?"m":"d";
+  if(m===shopUIMode) return;
+  shopUIMode=m;
+  render(siteView(shopRT.d,shopRT.payload));
+  wireShop();
+}
+let _rsT=null;
+window.addEventListener("resize",function(){ clearTimeout(_rsT); _rsT=setTimeout(maybeSwitchShopUI,180); });
+window.addEventListener("orientationchange",function(){ setTimeout(maybeSwitchShopUI,300); });
+function shopListClick(e){
+  const chip=e.target.closest("[data-cat]");
+  if(chip){ shopRT.cat=chip.getAttribute("data-cat"); renderProds(); return; }
+  const askBtn=e.target.closest("[data-ask]");
+  if(askBtn){
+    const i=+askBtn.getAttribute("data-ask");
+    askAbout(i, selViOf(shopRT.d.products[i], i));
+    return;
+  }
+  const addBtn=e.target.closest("[data-add]");
+  if(addBtn && !addBtn.disabled){
+    const i=+addBtn.getAttribute("data-add");
+    addToCart(i, selViOf(shopRT.d.products[i], i));
+    renderProds(); renderCartBar(true);
+    return;
+  }
+  const inc=e.target.closest("[data-pinc]");
+  if(inc){
+    const i=+inc.getAttribute("data-pinc");
+    addToCart(i, selViOf(shopRT.d.products[i], i));
+    renderProds();
+    return;
+  }
+  const dec=e.target.closest("[data-pdec]");
+  if(dec){
+    const i=+dec.getAttribute("data-pdec");
+    const p=shopRT.d.products[i], vi=selViOf(p, i);
+    const l=shopRT.cart.find(l=>l.pi===i&&((l.vi==null&&vi==null)||l.vi===vi));
+    if(l){ l.qty--; if(l.qty<=0) shopRT.cart.splice(shopRT.cart.indexOf(l),1); saveShop(); }
+    renderProds(); renderCartBar();
+    return;
+  }
+}
+function shopListChange(e){
+  const s=e.target.closest(".varsel");
+  if(!s) return;
+  const i=+s.getAttribute("data-vi");
+  shopRT.sel[i]=+s.value;
+  renderProds();
+}
+function wireShop(){
+  renderProds(); renderCartBar();
+  const si=$("#shopSearch");
+  if(si){ si.value=shopRT.q||""; si.oninput=function(e){ shopRT.q=e.target.value; renderProds(); }; }
+  ["#prodList","#mRail"].forEach(function(sel){
+    const pl=$(sel);
+    if(pl){ pl.addEventListener("click",shopListClick); pl.addEventListener("change",shopListChange); }
+  });
+  const sb=$("#mshSearchBtn");
+  if(sb) sb.onclick=function(){
+    const r=$("#mshSearchRow");
+    if(!r) return;
+    r.classList.toggle("open");
+    if(r.classList.contains("open")){ const inp=$("#shopSearch"); if(inp) inp.focus(); }
+  };
+}
 function initShop(d, payload){
   const saved=cartStore[payload]||{};
   shopRT={
@@ -7699,98 +7832,96 @@ function initShop(d, payload){
     form:saved.form||{name:"",phone:"",addr:"",notes:""},
     ordered:false, usdShop:(d.products||[]).some(p=>p.usd!=null), sel:{}
   };
-  renderProds(); renderCartBar();
-  const si=$("#shopSearch");
-  if(si) si.oninput=e=>{ shopRT.q=e.target.value; renderProds(); };
-  const pl=$("#prodList");
-  if(pl){
-    pl.addEventListener("click", e=>{
-      const chip=e.target.closest("[data-cat]");
-      if(chip){ shopRT.cat=chip.getAttribute("data-cat"); renderProds(); return; }
-      const askBtn=e.target.closest("[data-ask]");
-      if(askBtn){
-        const i=+askBtn.getAttribute("data-ask");
-        askAbout(i, selViOf(shopRT.d.products[i], i));
-        return;
-      }
-      const addBtn=e.target.closest("[data-add]");
-      if(addBtn && !addBtn.disabled){
-        const i=+addBtn.getAttribute("data-add");
-        addToCart(i, selViOf(shopRT.d.products[i], i));
-        renderProds(); renderCartBar(true);
-        return;
-      }
-      const inc=e.target.closest("[data-pinc]");
-      if(inc){
-        const i=+inc.getAttribute("data-pinc");
-        addToCart(i, selViOf(shopRT.d.products[i], i));
-        renderProds();
-        return;
-      }
-      const dec=e.target.closest("[data-pdec]");
-      if(dec){
-        const i=+dec.getAttribute("data-pdec");
-        const p=shopRT.d.products[i], vi=selViOf(p, i);
-        const l=shopRT.cart.find(l=>l.pi===i&&((l.vi==null&&vi==null)||l.vi===vi));
-        if(l){ l.qty--; if(l.qty<=0) shopRT.cart.splice(shopRT.cart.indexOf(l),1); saveShop(); }
-        renderProds(); renderCartBar();
-        return;
-      }
-    });
-    pl.addEventListener("change", e=>{
-      const s=e.target.closest(".varsel");
-      if(!s) return;
-      const i=+s.getAttribute("data-vi");
-      shopRT.sel[i]=+s.value;
-      renderProds();
-    });
-  }
+  shopUIMode=isMobileUI()?"m":"d";
+  wireShop();
 }
 /* ============================== published site ============================== */
-function siteView(d, payload){
-  const waNum = cleanPhone(d.whatsapp||"").replace(/^\+/,"");
-  const shopFootCC = (d.loc && d.loc.cc && COUNTRY[d.loc.cc]) ? d.loc.cc : null;
-  const theme=(d.theme&&THEMES[d.theme])?d.theme:"forest";
+function shopOpenBadge(d){
   const ost=openStatus(d.hrs);
-  let openBadge="";
-  if(ost){
-    openBadge=ost.open
-      ? '<div class="openbadge ob-open"><span class="dot"></span>'+t("open_now")+'</div>'
-      : '<div class="openbadge ob-closed"><span class="dot"></span>'+t("closed_now")+(ost.time?' · '+esc(t("opens_at").replace("{t}",dayName(ost.day)+" "+fmtTime(ost.time))):"")+'</div>';
-  }
-  let hoursSec="";
+  if(!ost) return "";
+  return ost.open
+    ? '<div class="openbadge ob-open"><span class="dot"></span>'+t("open_now")+'</div>'
+    : '<div class="openbadge ob-closed"><span class="dot"></span>'+t("closed_now")+(ost.time?' · '+esc(t("opens_at").replace("{t}",dayName(ost.day)+" "+fmtTime(ost.time))):"")+'</div>';
+}
+function shopHoursSec(d, cls){
+  cls=cls||"shop-sec";
   if(d.hrs){
     const rows=[1,2,3,4,5,6,0].map(dd=>{
       const h=d.hrs[dd];
       return '<div class="hours-row"><span>'+dayName(dd)+'</span><span>'+(h?fmtTime(h.o)+" – "+fmtTime(h.c):t("day_closed"))+'</span></div>';
     }).join("");
-    hoursSec='<div class="shop-sec"><h2>'+t("sv_hours")+'</h2><div class="sub">'+(d.hrsNote?esc(d.hrsNote):t("sv_hours_sub"))+'</div>'+rows+'</div>';
-  } else if(d.hours){
-    const hoursHtml = esc(d.hours).split(/\n|;\s*/).filter(Boolean).map(h=>'<div class="hours-row"><span>'+h+'</span></div>').join("");
-    hoursSec='<div class="shop-sec"><h2>'+t("sv_hours")+'</h2><div class="sub">'+t("sv_hours_sub")+'</div>'+hoursHtml+'</div>';
+    return '<div class="'+cls+'"><h2>'+t("sv_hours")+'</h2><div class="sub">'+(d.hrsNote?esc(d.hrsNote):t("sv_hours_sub"))+'</div>'+rows+'</div>';
   }
+  if(d.hours){
+    const hoursHtml = esc(d.hours).split(/\n|;\s*/).filter(Boolean).map(h=>'<div class="hours-row"><span>'+h+'</span></div>').join("");
+    return '<div class="'+cls+'"><h2>'+t("sv_hours")+'</h2><div class="sub">'+t("sv_hours_sub")+'</div>'+hoursHtml+'</div>';
+  }
+  return "";
+}
+function shopContactSec(d, waNum, cls){
+  cls=cls||"shop-sec";
   const btns = [];
   if(d.phone) btns.push('<a class="btn btn-accent" href="tel:'+esc(cleanPhone(d.phone))+'">'+t("call_us")+'</a>');
   if(waNum) btns.push('<a class="btn" href="https://wa.me/'+esc(waNum)+'" target="_blank" rel="noopener">'+t("wa_label")+'</a>');
   if(d.address) btns.push('<a class="btn" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.address)+'" target="_blank" rel="noopener">'+t("btn_dir")+'</a>');
+  if(!(btns.length||d.address)) return "";
+  return '<div class="'+cls+'"><h2>'+t("sv_find")+'</h2><div class="sub">'+(d.address?esc(d.address):t("sv_find_sub"))+'</div><div class="contact-btns">'+btns.join("")+'</div></div>';
+}
+function shopFootSec(d, payload, shopFootCC){
+  return '<div class="shop-foot">'+t("made_with_a")+' <a href="#/">TalkShop</a> · '+t("made_with_b")+'.'
+  + '<br><span class="shop-loc"><a href="#/locale" onclick="goLocale()">'+(LANG_NAMES[uiLang]||"English")+'</a>'
+  + (shopFootCC ? ' &middot; <a href="#/locale" onclick="goLocale()">'+countryName(shopFootCC)+'. '+t("loc_foot_choose")+'</a>' : "")
+  + '</span>'
+  + (payload ? '<br><a class="update-link" href="#/edit/'+payload+'">'+t("update_link")+'</a>' : "")
+  + '</div>';
+}
+function siteView(d, payload){
+  if(isMobileUI()) return siteViewMobile(d, payload);
+  const waNum = cleanPhone(d.whatsapp||"").replace(/^\+/,"");
+  const shopFootCC = (d.loc && d.loc.cc && COUNTRY[d.loc.cc]) ? d.loc.cc : null;
+  const theme=(d.theme&&THEMES[d.theme])?d.theme:"forest";
   const prodsSec=(d.products&&d.products.length)
     ? '<div class="shop-sec"><h2>'+t("sv_products")+'</h2><div class="sub">'+t("sv_products_sub")+'</div>'
       +'<div class="shop-tools"><input class="shop-search" id="shopSearch" placeholder="'+esc(t("search_ph"))+'"></div>'
       +'<div id="prodList"></div></div>'
     : "";
-  return '<div class="shoptheme theme-'+theme+'">'
+  return '<div class="shoptheme theme-'+theme+'" data-uimode="desktop">'
   + (d.announce ? '<div class="banner">'+esc(d.announce)+'</div>' : "")
   + bannerHtml(d)
   + '<div class="wrap shopview"><div class="shop-mast"><div class="kicker">'+t("mini_kicker")+'</div>'
-  + '<h1>'+esc(d.name)+'</h1>' + ((d.tagline||d.taglineKey)?'<p>'+(d.taglineKey?t(d.taglineKey):esc(d.tagline))+'</p>':"") + openBadge + '</div>'
-  + prodsSec + hoursSec
-  + ((btns.length||d.address) ? '<div class="shop-sec"><h2>'+t("sv_find")+'</h2><div class="sub">'+(d.address?esc(d.address):t("sv_find_sub"))+'</div><div class="contact-btns">'+btns.join("")+'</div></div>' : "")
-  + '<div class="shop-foot">'+t("made_with_a")+' <a href="#/">TalkShop</a> · '+t("made_with_b")+'.'
-  + '<br><span class="shop-loc"><a href="#/locale" onclick="goLocale()">'+(LANG_NAMES[uiLang]||"English")+'</a>'
-  + (shopFootCC ? ' &middot; <a href="#/locale" onclick="goLocale()">'+countryName(shopFootCC)+'. '+t("loc_foot_choose")+'</a>' : "")
-  + '</span>'
-  + (payload ? '<br><a class="update-link" href="#/edit/'+payload+'">'+t("update_link")+'</a>' : "")
+  + '<h1>'+esc(d.name)+'</h1>' + ((d.tagline||d.taglineKey)?'<p>'+(d.taglineKey?t(d.taglineKey):esc(d.tagline))+'</p>':"") + shopOpenBadge(d) + '</div>'
+  + prodsSec + shopHoursSec(d)
+  + shopContactSec(d, waNum)
+  + shopFootSec(d, payload, shopFootCC)
+  + '</div>'
+  + '<div id="cartBarWrap"></div><div id="drawerWrap" class="drawer-wrap hidden"></div></div>';
+}
+function siteViewMobile(d, payload){
+  const waNum = cleanPhone(d.whatsapp||"").replace(/^\+/,"");
+  const shopFootCC = (d.loc && d.loc.cc && COUNTRY[d.loc.cc]) ? d.loc.cc : null;
+  const theme=(d.theme&&THEMES[d.theme])?d.theme:"forest";
+  const hasProds=!!(d.products&&d.products.length);
+  const prodsSec=hasProds
+    ? '<div class="msh-sec"><h2>'+t("sv_products")+'</h2><div class="sub">'+t("sv_products_sub")+'</div><div id="prodList"></div></div>'
+    : "";
+  return '<div class="shoptheme theme-'+theme+' msh" data-uimode="mobile">'
+  + (d.announce ? '<div class="banner">'+esc(d.announce)+'</div>' : "")
+  + bannerHtml(d)
+  + '<div class="msh-head"><div class="msh-head-in">'
+  + '<div class="msh-name">'+esc(d.name)+'</div>'
+  + '<div class="msh-badge">'+shopOpenBadge(d)+'</div>'
+  + (hasProds?'<button class="msh-sbtn" id="mshSearchBtn" aria-label="'+esc(t("search_ph"))+'">\u2315</button>':"")
   + '</div></div>'
+  + (hasProds?'<div class="msh-searchrow" id="mshSearchRow"><input class="shop-search" id="shopSearch" placeholder="'+esc(t("search_ph"))+'"></div>':"")
+  + '<div class="msh-rail" id="mRail"></div>'
+  + '<div class="msh-body">'
+  + '<div class="msh-mast"><div class="kicker">'+t("mini_kicker")+'</div>'
+  + ((d.tagline||d.taglineKey)?'<p>'+(d.taglineKey?t(d.taglineKey):esc(d.tagline))+'</p>':"")
+  + '</div>'
+  + prodsSec + shopHoursSec(d,"msh-sec")
+  + shopContactSec(d, waNum,"msh-sec")
+  + shopFootSec(d, payload, shopFootCC)
+  + '</div>'
   + '<div id="cartBarWrap"></div><div id="drawerWrap" class="drawer-wrap hidden"></div></div>';
 }
 function notFoundView(){
