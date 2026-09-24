@@ -373,15 +373,28 @@ html[dir="rtl"] body{direction:rtl}
 .shop-loc{display:inline-block;margin-top:10px;color:var(--ink2);font-size:13px;text-decoration:none}
 .shop-loc a{color:var(--ink2);text-decoration:none}
 /* ---- shop themes ---- */
-.shoptheme{--s-accent:var(--accent);--s-accent-deep:var(--accent-deep);}
-.theme-ocean{--s-accent:#1E5AAF;--s-accent-deep:#123F82;}
-.theme-plum{--s-accent:#7A2E5E;--s-accent-deep:#521D40;}
-.theme-sunset{--s-accent:#B4531F;--s-accent-deep:#7E3A12;}
-.theme-char{--s-accent:#3A3A35;--s-accent-deep:#23231F;}
+.shoptheme{--s-accent:var(--accent);--s-accent-deep:var(--accent-deep);--s-soft:#EEF3EE;}
+.theme-forest{--s-accent:#175E3B;--s-accent-deep:#0E4A2C;--s-soft:#E9F3ED;}
+.theme-ocean{--s-accent:#1E5AAF;--s-accent-deep:#15447F;--s-soft:#EAF0FA;}
+.theme-plum{--s-accent:#7A2E5E;--s-accent-deep:#521D40;--s-soft:#F7EAF2;}
+.theme-sunset{--s-accent:#B4531F;--s-accent-deep:#7E3A12;--s-soft:#FAF0E6;}
+.theme-char{--s-accent:#3A3A35;--s-accent-deep:#23231F;--s-soft:#EFEEE9;}
+.theme-cocoa{--s-accent:#7A4A2B;--s-accent-deep:#54301B;--s-soft:#F5ECE3;}
 .shoptheme .banner{background:var(--s-accent);}
+.shoptheme .shop-mast{background:var(--s-soft);border-bottom:3px solid var(--s-accent);}
 .shoptheme .shop-mast .kicker{color:var(--s-accent);}
+.shoptheme .shop-sec h2::after,.shoptheme .msh-sec h2::after{content:"";display:block;width:34px;height:3px;border-radius:2px;background:var(--s-accent);margin-top:9px;}
+.shoptheme .msh-mast{background:var(--s-soft);margin:0 -16px;padding:18px 16px 16px;border-bottom:1px solid var(--line);}
+.shoptheme .msh-mast .kicker{color:var(--s-accent);}
 .shoptheme .order-btn{background:var(--s-accent);}
+.shoptheme .order-btn:active{background:var(--s-accent-deep);}
+.shoptheme .pc-add:active{background:var(--s-accent-deep);}
 .shoptheme .shop-foot a{color:var(--s-accent);}
+/* ---- builder: theme swatches ---- */
+.swatch-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;}
+.swatch{width:56px;height:56px;border-radius:50%;border:3px solid transparent;box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0;flex:none;}
+.swatch.on{border-color:#fff;box-shadow:0 0 0 2px var(--ink);}
+[dir="rtl"] .swatch-row{direction:rtl;}
 /* ---- shop: search, categories, products ---- */
 .shop-tools{margin-bottom:4px;}
 .shop-search{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px;background:#fff;font-size:16px;}
@@ -760,6 +773,7 @@ const STR = { en: {
   f_announce:"Announcement",
   announce_hint:"(optional, shown as a banner on your site, e.g. \u201cFestival sale: 20% off this week\u201d)",
   f_products:"Products or services",
+  f_theme:"Shop theme",
   f_hours:"Opening hours", f_phone:"Phone", f_whatsapp:"WhatsApp number",
   wa_hint:"(usually same as phone)", f_address:"Address",
   addr_hint:"(optional, used for directions)",
@@ -1105,6 +1119,7 @@ STR.te = {
   "f_announce":"ప్రకటన",
   "announce_hint":"(ఐచ్ఛికం, మీ సైట్‌లో బ్యానర్‌గా చూపబడుతుంది, ఉదా. “పండుగ సేల్: ఈ వారం 20% తగ్గింపు”)",
   "f_products":"ఉత్పత్తులు లేదా సేవలు",
+  "f_theme":"దుకాణం థీమ్",
   "f_hours":"పనివేళలు",
   "f_phone":"ఫోన్",
   "f_whatsapp":"వాట్సాప్ నంబర్",
@@ -1464,6 +1479,7 @@ STR.bn = {
   "f_announce":"ঘোষণা",
   "announce_hint":"(ঐচ্ছিক, আপনার সাইটে ব্যানার হিসেবে দেখাবে, যেমন “উৎসবের সেল: এই সপ্তাহে ২০% ছাড়”)",
   "f_products":"পণ্য বা সার্ভিস",
+  "f_theme":"দোকানের থিম",
   "f_hours":"খোলার সময়",
   "f_phone":"ফোন",
   "f_whatsapp":"হোয়াটসঅ্যাপ নম্বর",
@@ -1823,6 +1839,7 @@ STR.kn = {
   "f_announce":"ಘೋಷಣೆ",
   "announce_hint":"(ಐಚ್ಛಿಕ, ನಿಮ್ಮ ಸೈಟ್‌ನಲ್ಲಿ ಬ್ಯಾನರ್ ಆಗಿ ಕಾಣಿಸುತ್ತದೆ, ಉದಾ: ಹಬ್ಬದ ಆಫರ್, ಈ ವಾರ 20% ರಿಯಾಯಿತಿ)",
   "f_products":"ಉತ್ಪನ್ನಗಳು ಅಥವಾ ಸೇವೆಗಳು",
+  "f_theme":"ಅಂಗಡಿ ಥೀಮ್",
   "f_hours":"ತೆರೆದಿರುವ ಸಮಯ",
   "f_phone":"ಫೋನ್",
   "f_whatsapp":"ವಾಟ್ಸಾಪ್ ಸಂಖ್ಯೆ",
@@ -2182,6 +2199,7 @@ STR.mr = {
   "f_announce":"घोषणा",
   "announce_hint":"(ऐच्छिक, तुमच्या साइटवर बॅनर म्हणून दिसते, उदा. “सणासुदीचा सेल: या आठवड्यात 20% सूट”)",
   "f_products":"उत्पादने किंवा सेवा",
+  "f_theme":"दुकानाची थीम",
   "f_hours":"उघडण्याच्या वेळा",
   "f_phone":"फोन",
   "f_whatsapp":"WhatsApp नंबर",
@@ -2541,6 +2559,7 @@ STR.zh = {
   "f_announce":"公告",
   "announce_hint":"（选填，会以横幅显示在您的网站上，例如“节日促销：本周八折”）",
   "f_products":"商品或服务",
+  "f_theme":"店铺主题",
   "f_hours":"营业时间",
   "f_phone":"电话",
   "f_whatsapp":"WhatsApp 号码",
@@ -2900,6 +2919,7 @@ STR.ja = {
   "f_announce":"お知らせ",
   "announce_hint":"（任意、サイトにバナーとして表示されます。例：“フェスティバルセール：今週20%オフ”）",
   "f_products":"商品・サービス",
+  "f_theme":"ショップのテーマ",
   "f_hours":"営業時間",
   "f_phone":"電話番号",
   "f_whatsapp":"WhatsApp 番号",
@@ -3259,6 +3279,7 @@ STR.fr = {
   "f_announce":"Annonce",
   "announce_hint":"(facultatif, affichée en bannière sur votre site, ex. « Promo de fête : -20 % cette semaine »)",
   "f_products":"Produits ou services",
+  "f_theme":"Thème de la boutique",
   "f_hours":"Horaires d'ouverture",
   "f_phone":"Téléphone",
   "f_whatsapp":"Numéro WhatsApp",
@@ -3618,6 +3639,7 @@ STR.de = {
   "f_announce":"Ankündigung",
   "announce_hint":"(optional, als Banner auf Ihrer Seite, z. B. „Festwochen-Angebot: 20 % Rabatt diese Woche“)",
   "f_products":"Produkte oder Leistungen",
+  "f_theme":"Shop-Theme",
   "f_hours":"Öffnungszeiten",
   "f_phone":"Telefon",
   "f_whatsapp":"WhatsApp-Nummer",
@@ -3977,6 +3999,7 @@ STR.pt = {
   "f_announce":"Aviso",
   "announce_hint":"(opcional, exibido como banner no seu site, ex. “Promoção: 20% de desconto esta semana”)",
   "f_products":"Produtos ou serviços",
+  "f_theme":"Tema da loja",
   "f_hours":"Horário de funcionamento",
   "f_phone":"Telefone",
   "f_whatsapp":"Número do WhatsApp",
@@ -4336,6 +4359,7 @@ STR.ar = {
   "f_announce":"إعلان",
   "announce_hint":"(اختياري، يُعرض كلافتة على موقعك، مثل «تخفيضات الموسم: خصم 20% هذا الأسبوع»)",
   "f_products":"المنتجات أو الخدمات",
+  "f_theme":"سمة المتجر",
   "f_hours":"ساعات العمل",
   "f_phone":"الهاتف",
   "f_whatsapp":"رقم واتساب",
@@ -4704,6 +4728,7 @@ STR.ml = {
   "f_announce":"അറിയിപ്പ്",
   "announce_hint":"(ഓപ്ഷണൽ, നിങ്ങളുടെ സൈറ്റിൽ ബാനറായി കാണിക്കും, ഉദാ. “ഉത്സവകാല സെയിൽ: ഈ ആഴ്ച വരെ 20% ഇളവ്”)",
   "f_products":"ഉൽപ്പന്നങ്ങളോ സേവനങ്ങളോ",
+  "f_theme":"കടയുടെ തീം",
   "f_hours":"തുറന്നിരിക്കുന്ന സമയം",
   "f_phone":"ഫോൺ",
   "f_whatsapp":"WhatsApp നമ്പർ",
@@ -5063,6 +5088,7 @@ STR.hi = {
   "f_announce":"घोषणा",
   "announce_hint":"(वैकल्पिक, आपकी साइट पर बैनर के रूप में दिखेगा, जैसे “फ़ेस्टिवल सेल: इस हफ़्ते 20% छूट”)",
   "f_products":"उत्पाद या सेवाएँ",
+  "f_theme":"दुकान की थीम",
   "f_hours":"खुलने का समय",
   "f_phone":"फ़ोन",
   "f_whatsapp":"WhatsApp नंबर",
@@ -5422,6 +5448,7 @@ STR.ta = {
   "f_announce":"அறிவிப்பு",
   "announce_hint":"(விருப்பம், உங்கள் தளத்தில் பானராகத் தெரியும், எ.கா. “திருவிழா விற்பனை: இந்த வாரம் வரை 20% தள்ளுபடி”)",
   "f_products":"தயாரிப்புகள் அல்லது சேவைகள்",
+  "f_theme":"கடை தோற்றம்",
   "f_hours":"திறந்திருக்கும் நேரம்",
   "f_phone":"போன்",
   "f_whatsapp":"WhatsApp எண்",
@@ -5781,6 +5808,7 @@ STR.es = {
   "f_announce":"Anuncio",
   "announce_hint":"(opcional, se muestra como banner en tu sitio, p. ej. “Oferta de festival: 20% de descuento esta semana”)",
   "f_products":"Productos o servicios",
+  "f_theme":"Tema de la tienda",
   "f_hours":"Horario de apertura",
   "f_phone":"Teléfono",
   "f_whatsapp":"Número de WhatsApp",
@@ -6430,7 +6458,18 @@ function afterHome(){
 }
 
 /* ============================== shared shop helpers ============================== */
-const THEMES = { forest:"#175E3B", ocean:"#1E5AAF", plum:"#7A2E5E", sunset:"#B4531F", char:"#3A3A35" };
+const THEMES = { forest:"#175E3B", ocean:"#1E5AAF", plum:"#7A2E5E", sunset:"#B4531F", char:"#3A3A35", cocoa:"#7A4A2B" };
+const THEME_NAMES = { forest:"Forest", ocean:"Ocean", plum:"Plum", sunset:"Sunset", char:"Charcoal", cocoa:"Cocoa" };
+/* suggest a theme from shop text; suggestion only, the merchant picks with one tap */
+function suggestTheme(d){
+  const txt = ((d.name||"")+" "+(d.products||[]).map(p=>(p.name||"")+" "+(p.cat||"")).join(" ")).toLowerCase();
+  const has = words => words.some(w=>txt.indexOf(w)>=0);
+  if(has(["cloth","fashion","wear","dress","boutique","beauty","salon","cosmetic","jewel","saree","kurti"])) return "plum";
+  if(has(["mobile","phone","laptop","computer","electronic","gadget","repair"])) return "ocean";
+  if(has(["grocery","mart","fresh","vegetable","fruit","farm","kirana","supermarket"])) return "forest";
+  if(has(["chai","coffee","tea","bakery","cake","sweet","snack","food","restaurant","cafe","pizza","burger","biryani","dosa","meal","juice","drink","kitchen","eat","dine","hotel","tiffin","mithai"])) return "cocoa";
+  return "forest";
+}
 /* image catalog: flat single-hue SVG illustrations, served as data URIs */
 const CAT = {
   chai:{n:"Tea",svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="#F0EDE3"/><path d="M30 42h30v12c0 10-6.8 17-15 17s-15-7-15-17V42z" fill="#175E3B"/><path d="M60 45h5a8 8 0 0 1 0 16h-6" fill="none" stroke="#175E3B" stroke-width="5"/><path d="M41 33c0-5 5-5 5-10M51 33c0-5 5-5 5-10" stroke="#0C3D27" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="26" y="75" width="44" height="5" rx="2.5" fill="#0C3D27"/></svg>'},
@@ -6651,6 +6690,12 @@ function renderPreview(){
 function stepReviewHtml(){
   const d = state.data;
   d.products = d.products || [];
+  // theme: keep saved choice; otherwise pre-select a suggestion (merchant can change it with one tap)
+  const themeNow = (d.theme && THEMES[d.theme]) ? d.theme : suggestTheme(d);
+  d.theme = themeNow;
+  const swatches = Object.keys(THEMES).map(k=>
+    '<button type="button" class="swatch'+(k===themeNow?" on":"")+'" data-theme="'+k+'" style="background:'+THEMES[k]+'" title="'+THEME_NAMES[k]+'" aria-label="'+THEME_NAMES[k]+' theme"></button>'
+  ).join("");
   const cur = builderCur();
   const hrs = d.hrs || null;
   const hrsRows = [1,2,3,4,5,6,0].map(dd=>{
@@ -6673,6 +6718,8 @@ function stepReviewHtml(){
   + '<div class="field"><label>'+t("f_tagline")+' <span class="hint">'+t("hint_opt")+'</span></label><input type="text" id="f_tagline" value="'+esc(d.tagline)+'"></div>'
   + '<div class="field"><label>'+t("f_announce")+' <span class="hint">'+t("announce_hint")+'</span></label><input type="text" id="f_announce" value="'+esc(d.announce)+'"></div>' 
   + '<div class="field"><div class="pf-img" id="bannerCtl" data-imgctl="b">'+imgCtlInner("b", d.banner, true)+'</div></div>' 
+  + '<div class="sec-label">'+t("f_theme")+'</div>'
+  + '<div class="swatch-row" id="themeRow">'+swatches+'</div>'
   + '<div class="sec-label">'+t("f_products")+'</div>'
   + '<div id="prodRows"></div>'
   + '<button type="button" class="btn btn-sm" id="addProdBtn" style="margin-bottom:6px;">+ '+t("bp_addprod")+'</button>'
@@ -6973,6 +7020,14 @@ function wireBuild(){
     });
     card.addEventListener("click", e=>{
       if(!state.data) return;
+      const sw=e.target.closest(".swatch");
+      if(sw){
+        card.querySelectorAll(".swatch").forEach(s=>s.classList.remove("on"));
+        sw.classList.add("on");
+        state.data.theme=sw.getAttribute("data-theme");
+        renderPreview();
+        return;
+      }
       if(e.target.closest("#addProdBtn")){
         const ps=state.data.products;
         const lastCat=ps.length?(ps[ps.length-1].cat||""):"";
