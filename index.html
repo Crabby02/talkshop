@@ -238,6 +238,16 @@ textarea.typebox{width:100%; border:1px solid var(--line); border-radius:12px; p
 .share-panel{text-align:center; padding:20px 0 6px;}
 .share-link{display:flex; gap:10px; margin:22px 0;}
 .share-link input{flex:1; border:1px solid var(--line); border-radius:10px; padding:13px 15px; background:var(--paper); font-size:14px;}
+.short-row{display:flex; gap:10px; justify-content:center; margin-top:2px;}
+.short-out{display:flex; gap:10px; margin-top:12px;}
+.short-out input{flex:1; border:1px solid var(--line); border-radius:10px; padding:13px 15px; background:var(--paper); font-size:14px;}
+/* ---------- merchant dashboard ---------- */
+.dash-list{display:flex; flex-direction:column; gap:12px; margin:22px 0;}
+.dash-row{display:flex; gap:12px; align-items:center; justify-content:space-between; border:1px solid var(--line); border-radius:14px; padding:14px 16px; background:var(--paper); flex-wrap:wrap;}
+.dash-meta{min-width:0; flex:1 1 180px;}
+.dash-name{font-weight:700; font-size:16px; margin-bottom:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.dash-sub{font-size:13px; color:var(--ink2);}
+.dash-actions{display:flex; gap:8px; flex-wrap:wrap;}
 .share-btns{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:26px;}
 .note{font-size:14px; color:var(--ink2); max-width:34em; margin:0 auto;}
 /* ---------- published shop ---------- */
@@ -678,6 +688,32 @@ function b64urlDecode(s){
 }
 function encodeSite(d){ return b64urlEncode(JSON.stringify({v:1, d})); }
 function decodeSite(p){ try{ const o = JSON.parse(b64urlDecode(p)); return (o && o.v===1 && o.d) ? o.d : null; }catch(e){ return null; } }
+// NOTE: is.gd is a free third-party URL shortener used as a stopgap.
+// If TalkShop ever gets its own backend, swap this for first-party short
+// links (e.g. ts.shop/xxxx) so we own the domain and the analytics.
+function shortenUrl(longUrl){
+  return fetch("https://is.gd/create.php?format=simple&url="+encodeURIComponent(longUrl))
+    .then(r=>{ if(!r.ok) throw new Error("shorten failed"); return r.text(); })
+    .then(s=>{ s=String(s||"").trim(); if(!/^https?:\/\//i.test(s)) throw new Error("bad short url"); return s; });
+}
+// ---------- merchant dashboard registry (localStorage, per-device) ----------
+const SHOPS_KEY = "talkshop_my_shops";
+function readShops(){ try{ const a=JSON.parse(localStorage.getItem(SHOPS_KEY)||"[]"); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function writeShops(a){ try{ localStorage.setItem(SHOPS_KEY, JSON.stringify(a)); }catch(e){} }
+function shopLinkOf(payload){ return location.origin + location.pathname + "#/s/" + payload; }
+function saveShopToRegistry(payload){
+  const shops = readShops();
+  const name = (state.data && state.data.name) || "";
+  const now = Date.now();
+  let id = state.editShopId || null;
+  let ix = id ? shops.findIndex(s=>s.id===id) : -1;
+  if(ix<0) ix = shops.findIndex(s=>s.payload===payload);
+  if(ix>=0){ shops[ix].name=name; shops[ix].payload=payload; shops[ix].savedAt=now; id=shops[ix].id; }
+  else { id="s"+now.toString(36)+Math.floor(Math.random()*1296).toString(36); shops.unshift({id:id,name:name,savedAt:now,payload:payload}); }
+  writeShops(shops);
+  state.editShopId = null;
+  return id;
+}
 function cleanPhone(p){ return String(p||"").replace(/[^\d+]/g,""); }
 
 /* ============================== i18n ============================== */
@@ -979,7 +1015,18 @@ const STR = { en: {
   "img_url":"Link",
   "img_url_ph":"https://... image link",
   "img_url_err":"Use an https:// image link",
-  "img_banner":"Banner image"
+  "img_banner":"Banner image",
+  "btn_short":"Get short link",
+  "short_loading":"Making your short link...",
+  "short_err":"Could not make a short link. Here is the full link instead.",
+  "dash_title":"My shops",
+  "dash_empty":"No shops saved here yet. Publish a shop and it will show up here.",
+  "dash_edit":"Edit",
+  "dash_view":"View",
+  "dash_copy":"Copy link",
+  "dash_del":"Delete",
+  "dash_confirm":"Delete this shop? This cannot be undone.",
+  "dash_nprods":"{n} products"
 } };
 STR.te = {
   "meta_title":"TalkShop: మీ దుకాణం గురించి చెప్పండి. ఆన్‌లైన్‌లోకి తీసుకురండి.",
@@ -1344,7 +1391,18 @@ STR.te = {
   "img_url":"లింక్",
   "img_url_ph":"https://... చిత్ర లింక్",
   "img_url_err":"https:// చిత్ర లింక్ వాడండి",
-  "img_banner":"బ్యానర్ చిత్రం"
+  "img_banner":"బ్యానర్ చిత్రం",
+  "btn_short":"చిన్న లింక్ పొందండి",
+  "short_loading":"మీ చిన్న లింక్ తయారవుతోంది...",
+  "short_err":"చిన్న లింక్ తయారు చేయలేకపోయాం. పూర్తి లింక్ ఇదిగో.",
+  "dash_title":"నా దుకాణాలు",
+  "dash_empty":"ఇంకా దుకాణాలేవీ సేవ్ చేయలేదు. ఒక దుకాణాన్ని ప్రచురించండి, అది ఇక్కడ కనిపిస్తుంది.",
+  "dash_edit":"సవరించు",
+  "dash_view":"చూడు",
+  "dash_copy":"లింక్ కాపీ చేయి",
+  "dash_del":"తొలగించు",
+  "dash_confirm":"ఈ దుకాణాన్ని తొలగించాలా? దీన్ని తిరిగి పొందలేరు.",
+  "dash_nprods":"{n} ఉత్పత్తులు"
 };
 STR.bn = {
   "meta_title":"TalkShop: আপনার দোকানের কথা বলুন। অনলাইনে আসুন।",
@@ -1709,7 +1767,18 @@ STR.bn = {
   "img_url":"লিংক",
   "img_url_ph":"https://... ছবির লিংক",
   "img_url_err":"https:// ছবির লিংক ব্যবহার করুন",
-  "img_banner":"ব্যানার ছবি"
+  "img_banner":"ব্যানার ছবি",
+  "btn_short":"ছোট লিংক নিন",
+  "short_loading":"আপনার ছোট লিংক তৈরি হচ্ছে...",
+  "short_err":"ছোট লিংক তৈরি করা যায়নি। বদলে পুরো লিংকটি রইল।",
+  "dash_title":"আমার দোকান",
+  "dash_empty":"এখনও কোনো দোকান সংরক্ষণ করা হয়নি। একটি দোকান প্রকাশ করুন, সেটি এখানে দেখা যাবে।",
+  "dash_edit":"সম্পাদনা",
+  "dash_view":"দেখুন",
+  "dash_copy":"লিংক কপি করুন",
+  "dash_del":"মুছুন",
+  "dash_confirm":"এই দোকানটি মুছবেন? এটি ফেরানো যাবে না।",
+  "dash_nprods":"{n}টি পণ্য"
 };
 STR.kn = {
   "meta_title":"TalkShop: ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ವಿವರಿಸಿ. ಅದನ್ನು ಆನ್‌ಲೈನ್‌ಗೆ ತನ್ನಿ.",
@@ -2074,7 +2143,18 @@ STR.kn = {
   "img_url":"ಲಿಂಕ್",
   "img_url_ph":"https://... ಚಿತ್ರ ಲಿಂಕ್",
   "img_url_err":"https:// ಚಿತ್ರ ಲಿಂಕ್ ಬಳಸಿ",
-  "img_banner":"ಬ್ಯಾನರ್ ಚಿತ್ರ"
+  "img_banner":"ಬ್ಯಾನರ್ ಚಿತ್ರ",
+  "btn_short":"ಚಿಕ್ಕ ಲಿಂಕ್ ಪಡೆಯಿರಿ",
+  "short_loading":"ನಿಮ್ಮ ಚಿಕ್ಕ ಲಿಂಕ್ ತಯಾರಾಗುತ್ತಿದೆ...",
+  "short_err":"ಚಿಕ್ಕ ಲಿಂಕ್ ಮಾಡಲಾಗಲಿಲ್ಲ. ಬದಲಾಗಿ ಪೂರ್ಣ ಲಿಂಕ್ ಇಲ್ಲಿದೆ.",
+  "dash_title":"ನನ್ನ ಅಂಗಡಿಗಳು",
+  "dash_empty":"ಇನ್ನೂ ಯಾವುದೇ ಅಂಗಡಿ ಉಳಿಸಿಲ್ಲ. ಒಂದು ಅಂಗಡಿಯನ್ನು ಪ್ರಕಟಿಸಿ, ಅದು ಇಲ್ಲಿ ಕಾಣುತ್ತದೆ.",
+  "dash_edit":"ಸಂಪಾದಿಸಿ",
+  "dash_view":"ನೋಡಿ",
+  "dash_copy":"ಲಿಂಕ್ ನಕಲಿಸಿ",
+  "dash_del":"ಅಳಿಸಿ",
+  "dash_confirm":"ಈ ಅಂಗಡಿಯನ್ನು ಅಳಿಸಬೇಕೇ? ಇದನ್ನು ಹಿಂಪಡೆಯಲಾಗುವುದಿಲ್ಲ.",
+  "dash_nprods":"{n} ಉತ್ಪನ್ನಗಳು"
 };
 STR.mr = {
   "meta_title":"TalkShop: तुमच्या दुकानाबद्दल सांगा. ते ऑनलाइन न्या.",
@@ -2439,7 +2519,18 @@ STR.mr = {
   "img_url":"लिंक",
   "img_url_ph":"https://... प्रतिमा लिंक",
   "img_url_err":"https:// प्रतिमा लिंक वापरा",
-  "img_banner":"बॅनर प्रतिमा"
+  "img_banner":"बॅनर प्रतिमा",
+  "btn_short":"लहान लिंक मिळवा",
+  "short_loading":"तुमची लहान लिंक तयार होत आहे...",
+  "short_err":"लहान लिंक तयार करता आली नाही. त्याऐवजी पूर्ण लिंक येथे आहे.",
+  "dash_title":"माझी दुकाने",
+  "dash_empty":"अजून कोणतीही दुकाने जतन केलेली नाहीत. दुकान प्रकाशित करा, ती येथे दिसेल.",
+  "dash_edit":"संपादित करा",
+  "dash_view":"पहा",
+  "dash_copy":"लिंक कॉपी करा",
+  "dash_del":"हटवा",
+  "dash_confirm":"हे दुकान हटवायचे? हे परत मिळवता येणार नाही.",
+  "dash_nprods":"{n} उत्पादने"
 };
 STR.zh = {
   "meta_title":"TalkShop：描述您的小店，轻松上线。",
@@ -2804,7 +2895,18 @@ STR.zh = {
   "img_url":"链接",
   "img_url_ph":"https://... 图片链接",
   "img_url_err":"请使用 https:// 图片链接",
-  "img_banner":"横幅图片"
+  "img_banner":"横幅图片",
+  "btn_short":"获取短链接",
+  "short_loading":"正在生成短链接...",
+  "short_err":"无法生成短链接，这是完整链接。",
+  "dash_title":"我的店铺",
+  "dash_empty":"还没有保存的店铺。发布一家店铺，它就会显示在这里。",
+  "dash_edit":"编辑",
+  "dash_view":"查看",
+  "dash_copy":"复制链接",
+  "dash_del":"删除",
+  "dash_confirm":"删除这家店铺吗？此操作无法撤销。",
+  "dash_nprods":"{n} 件商品"
 };
 STR.ja = {
   "meta_title":"TalkShop：お店を紹介して、オンラインに。",
@@ -3169,7 +3271,18 @@ STR.ja = {
   "img_url":"リンク",
   "img_url_ph":"https://... 画像リンク",
   "img_url_err":"https:// の画像リンクを使用",
-  "img_banner":"バナー画像"
+  "img_banner":"バナー画像",
+  "btn_short":"短縮リンクを取得",
+  "short_loading":"短縮リンクを作成しています...",
+  "short_err":"短縮リンクを作成できませんでした。代わりにフルリンクを表示します。",
+  "dash_title":"マイショップ",
+  "dash_empty":"保存されたショップはまだありません。ショップを公開するとここに表示されます。",
+  "dash_edit":"編集",
+  "dash_view":"見る",
+  "dash_copy":"リンクをコピー",
+  "dash_del":"削除",
+  "dash_confirm":"このショップを削除しますか？元に戻せません。",
+  "dash_nprods":"商品{n}点"
 };
 STR.fr = {
   "meta_title":"TalkShop : Décrivez votre boutique. Mettez-la en ligne.",
@@ -3534,7 +3647,18 @@ STR.fr = {
   "img_url":"Lien",
   "img_url_ph":"Lien image https://...",
   "img_url_err":"Utilisez un lien image https://",
-  "img_banner":"Image de bannière"
+  "img_banner":"Image de bannière",
+  "btn_short":"Obtenir un lien court",
+  "short_loading":"Création de votre lien court...",
+  "short_err":"Impossible de créer un lien court. Voici le lien complet.",
+  "dash_title":"Mes boutiques",
+  "dash_empty":"Aucune boutique enregistrée pour le moment. Publiez une boutique et elle apparaîtra ici.",
+  "dash_edit":"Modifier",
+  "dash_view":"Voir",
+  "dash_copy":"Copier le lien",
+  "dash_del":"Supprimer",
+  "dash_confirm":"Supprimer cette boutique ? Cette action est irréversible.",
+  "dash_nprods":"{n} produits"
 };
 STR.de = {
   "meta_title":"TalkShop: Beschreiben Sie Ihr Geschäft. Bringen Sie es online.",
@@ -3899,7 +4023,18 @@ STR.de = {
   "img_url":"Link",
   "img_url_ph":"https://... Bildlink",
   "img_url_err":"Bitte https://-Bildlink verwenden",
-  "img_banner":"Bannerbild"
+  "img_banner":"Bannerbild",
+  "btn_short":"Kurzen Link holen",
+  "short_loading":"Kurzer Link wird erstellt...",
+  "short_err":"Kurzer Link konnte nicht erstellt werden. Hier ist stattdessen der volle Link.",
+  "dash_title":"Meine Shops",
+  "dash_empty":"Noch keine Shops gespeichert. Veröffentliche einen Shop und er erscheint hier.",
+  "dash_edit":"Bearbeiten",
+  "dash_view":"Ansehen",
+  "dash_copy":"Link kopieren",
+  "dash_del":"Löschen",
+  "dash_confirm":"Diesen Shop löschen? Das kann nicht rückgängig gemacht werden.",
+  "dash_nprods":"{n} Produkte"
 };
 STR.pt = {
   "meta_title":"TalkShop: Descreva sua loja. Coloque-a online.",
@@ -4264,7 +4399,18 @@ STR.pt = {
   "img_url":"Link",
   "img_url_ph":"Link de imagem https://...",
   "img_url_err":"Use um link de imagem https://",
-  "img_banner":"Imagem do banner"
+  "img_banner":"Imagem do banner",
+  "btn_short":"Obter link curto",
+  "short_loading":"Criando seu link curto...",
+  "short_err":"Não foi possível criar um link curto. Aqui está o link completo.",
+  "dash_title":"Minhas lojas",
+  "dash_empty":"Nenhuma loja salva ainda. Publique uma loja e ela aparecerá aqui.",
+  "dash_edit":"Editar",
+  "dash_view":"Ver",
+  "dash_copy":"Copiar link",
+  "dash_del":"Excluir",
+  "dash_confirm":"Excluir esta loja? Isso não pode ser desfeito.",
+  "dash_nprods":"{n} produtos"
 };
 STR.ar = {
   "meta_title":"TalkShop: صف متجرك. وانشره على الإنترنت.",
@@ -4629,7 +4775,18 @@ STR.ar = {
   "img_url":"رابط",
   "img_url_ph":"رابط صورة https://...",
   "img_url_err":"استخدم رابط صورة https://",
-  "img_banner":"صورة الغلاف"
+  "img_banner":"صورة الغلاف",
+  "btn_short":"الحصول على رابط مختصر",
+  "short_loading":"جارٍ إنشاء رابطك المختصر...",
+  "short_err":"تعذّر إنشاء رابط مختصر. هذا هو الرابط الكامل.",
+  "dash_title":"متاجري",
+  "dash_empty":"لا توجد متاجر محفوظة بعد. انشر متجراً وسيظهر هنا.",
+  "dash_edit":"تعديل",
+  "dash_view":"عرض",
+  "dash_copy":"نسخ الرابط",
+  "dash_del":"حذف",
+  "dash_confirm":"حذف هذا المتجر؟ لا يمكن التراجع عن ذلك.",
+  "dash_nprods":"{n} منتجات"
 };
 let uiLang = "en";
 try{ uiLang = localStorage.getItem("ts_ui") || "en"; }catch(e){}
@@ -5003,7 +5160,18 @@ STR.ml = {
   "img_url":"ലിങ്ക്",
   "img_url_ph":"https://... ചിത്ര ലിങ്ക്",
   "img_url_err":"https:// ചിത്ര ലിങ്ക് ഉപയോഗിക്കുക",
-  "img_banner":"ബാനർ ചിത്രം"
+  "img_banner":"ബാനർ ചിത്രം",
+  "btn_short":"ചെറിയ ലിങ്ക് നേടുക",
+  "short_loading":"നിങ്ങളുടെ ചെറിയ ലിങ്ക് ഉണ്ടാക്കുന്നു...",
+  "short_err":"ചെറിയ ലിങ്ക് ഉണ്ടാക്കാനായില്ല. പൂർണ്ണ ലിങ്ക് ഇതാ.",
+  "dash_title":"എന്റെ കടകൾ",
+  "dash_empty":"ഇതുവരെ കടകളൊന്നും സേവ് ചെയ്തിട്ടില്ല. ഒരു കട പ്രസിദ്ധീകരിക്കൂ, അത് ഇവിടെ കാണും.",
+  "dash_edit":"തിരുത്തുക",
+  "dash_view":"കാണുക",
+  "dash_copy":"ലിങ്ക് പകർത്തുക",
+  "dash_del":"മായ്ക്കുക",
+  "dash_confirm":"ഈ കട മായ്ക്കണോ? ഇത് തിരിച്ചെടുക്കാനാവില്ല.",
+  "dash_nprods":"{n} ഉൽപ്പന്നങ്ങൾ"
 };
 STR.hi = {
   "meta_title":"TalkShop: अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।",
@@ -5368,7 +5536,18 @@ STR.hi = {
   "img_url":"लिंक",
   "img_url_ph":"https://... तस्वीर लिंक",
   "img_url_err":"https:// तस्वीर लिंक इस्तेमाल करें",
-  "img_banner":"बैनर तस्वीर"
+  "img_banner":"बैनर तस्वीर",
+  "btn_short":"छोटा लिंक पाएं",
+  "short_loading":"आपका छोटा लिंक बनाया जा रहा है...",
+  "short_err":"छोटा लिंक नहीं बन सका। यहाँ पूरा लिंक है।",
+  "dash_title":"मेरी दुकानें",
+  "dash_empty":"अभी कोई दुकान सहेजी नहीं गई है। कोई दुकान प्रकाशित करें और वह यहाँ दिखेगी।",
+  "dash_edit":"संपादित करें",
+  "dash_view":"देखें",
+  "dash_copy":"लिंक कॉपी करें",
+  "dash_del":"हटाएं",
+  "dash_confirm":"क्या यह दुकान हटाएं? यह वापस नहीं होगा।",
+  "dash_nprods":"{n} उत्पाद"
 };
 STR.ta = {
   "meta_title":"TalkShop: உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.",
@@ -5733,7 +5912,18 @@ STR.ta = {
   "img_url":"இணைப்பு",
   "img_url_ph":"https://... பட இணைப்பு",
   "img_url_err":"https:// பட இணைப்பைப் பயன்படுத்தவும்",
-  "img_banner":"பேனர் படம்"
+  "img_banner":"பேனர் படம்",
+  "btn_short":"குறுகிய இணைப்பைப் பெறுக",
+  "short_loading":"உங்கள் குறுகிய இணைப்பு உருவாக்கப்படுகிறது...",
+  "short_err":"குறுகிய இணைப்பை உருவாக்க முடியவில்லை. முழு இணைப்பு இதோ.",
+  "dash_title":"என் கடைகள்",
+  "dash_empty":"இன்னும் கடைகள் சேமிக்கப்படவில்லை. ஒரு கடையை வெளியிடுங்கள், அது இங்கே தோன்றும்.",
+  "dash_edit":"திருத்து",
+  "dash_view":"பார்",
+  "dash_copy":"இணைப்பை நகலெடு",
+  "dash_del":"நீக்கு",
+  "dash_confirm":"இந்தக் கடையை நீக்கவா? இதை மீட்க முடியாது.",
+  "dash_nprods":"{n} பொருட்கள்"
 };
 STR.es = {
   "meta_title":"TalkShop: Describe tu tienda. Ponla en línea.",
@@ -6099,7 +6289,18 @@ STR.es = {
   "img_url":"Enlace",
   "img_url_ph":"Enlace de imagen https://...",
   "img_url_err":"Usa un enlace de imagen https://",
-  "img_banner":"Imagen de portada"
+  "img_banner":"Imagen de portada",
+  "btn_short":"Obtener enlace corto",
+  "short_loading":"Creando tu enlace corto...",
+  "short_err":"No se pudo crear un enlace corto. Aquí tienes el enlace completo.",
+  "dash_title":"Mis tiendas",
+  "dash_empty":"Aún no hay tiendas guardadas. Publica una tienda y aparecerá aquí.",
+  "dash_edit":"Editar",
+  "dash_view":"Ver",
+  "dash_copy":"Copiar enlace",
+  "dash_del":"Eliminar",
+  "dash_confirm":"¿Eliminar esta tienda? No se puede deshacer.",
+  "dash_nprods":"{n} productos"
 };
 
 
@@ -6678,6 +6879,7 @@ function stepSpeakHtml(){
   + '<div class="lang-row"><label for="langSel">'+t("lang_label")+'</label><select id="langSel">'+opts+'</select></div>'
   + '<div id="errBox"></div>'
   + '<div class="center" style="margin-top:24px;"><button class="btn btn-accent" id="toReview">'+t("btn_review")+'</button></div>'
+  + (readShops().length ? '<div class="center" style="margin-top:10px;"><a class="link-btn" href="#/shops">'+t("dash_title")+'</a></div>' : '')
   + '</div>';
 }
 function prodCatsOf(ps){ const s=[]; (ps||[]).forEach(p=>{ if(p.cat && s.indexOf(p.cat)<0) s.push(p.cat); }); return s; }
@@ -6847,6 +7049,8 @@ function stepShareHtml(){
   + '<p class="note">'+t("sh_note")+'</p>'
   + '<div class="share-link"><input type="text" id="shareUrl" readonly value="'+esc(state.link)+'">'
   + '<button class="btn btn-solid btn-sm" id="copyBtn" style="padding:12px 22px;">'+t("btn_copy")+'</button></div>'
+  + '<div class="short-row"><button class="btn btn-sm" id="shortBtn">'+t("btn_short")+'</button></div>'
+  + '<div id="shortBox"></div>'
   + '<div id="qrBox" style="margin-top:18px;"><p class="note" style="margin-bottom:12px;">'+t("qr_note")+'</p><div id="qrCanvas" class="center"></div>'
   + '<div style="margin-top:12px;"><button class="btn btn-sm" id="printQr">'+t("btn_printqr")+'</button></div></div>'
   + '<div class="center" style="margin-top:18px;"><button class="link-btn" id="editBtn">'+t("btn_edit")+'</button></div>'
@@ -6966,7 +7170,7 @@ function collectForm(){
   // theme: keep any saved custom theme; new shops default to forest
   if(!d.theme || !THEMES[d.theme]) d.theme = "forest";
 }
-function freshBuild(){ if(state.step===3){ state.step=1; state.transcript=""; state.data=null; state.link=""; const h=location.hash.replace(/^#\/?/,""); if(h.indexOf("build")===0){ render(buildView()); wireBuild(); window.scrollTo(0,0); } } }
+function freshBuild(){ if(state.step===3){ state.step=1; state.transcript=""; state.data=null; state.link=""; state.editShopId=null; const h=location.hash.replace(/^#\/?/,""); if(h.indexOf("build")===0){ render(buildView()); wireBuild(); window.scrollTo(0,0); } } }
 function goStep(n){ state.step = n; const c = $("#buildCard"); if(c){ c.innerHTML = buildStepHtml(); wireBuild(); } const st = $(".bdots"); if(st) st.outerHTML = stageBar(); window.scrollTo(0,0); }
 function wireBuild(){
   const lang = $("#langSel"); if(lang) lang.onchange = e => { state.lang = e.target.value; };
@@ -7004,6 +7208,7 @@ function wireBuild(){
     state.data.loc = { cc: scc, lang: uiLang };
     const payload = encodeSite(state.data);
     state.link = location.origin + location.pathname + "#/s/" + payload;
+    saveShopToRegistry(payload);
     goStep(3);
   };
   const copy = $("#copyBtn");
@@ -7014,6 +7219,25 @@ function wireBuild(){
     else { document.execCommand("copy"); done(); }
   };
   const edit = $("#editBtn"); if(edit) edit.onclick = () => goStep(2);
+  const shb = $("#shortBtn");
+  if(shb) shb.onclick = () => {
+    const box = $("#shortBox");
+    shb.disabled = true; shb.textContent = t("short_loading");
+    shortenUrl(state.link).then(short=>{
+      shb.style.display = "none";
+      box.innerHTML = '<div class="short-out"><input type="text" id="shortUrl" readonly value="'+esc(short)+'">'
+        + '<button class="btn btn-solid btn-sm" id="shortCopy" style="padding:12px 22px;">'+t("btn_copy")+'</button></div>';
+      const sc = $("#shortCopy");
+      const cp = ()=>{ const inp=$("#shortUrl"); inp.select();
+        const done=()=>{ sc.textContent=t("copied"); setTimeout(()=>sc.textContent=t("btn_copy"),1800); };
+        if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(short).then(done).catch(()=>{ document.execCommand("copy"); done(); });
+        else { document.execCommand("copy"); done(); } };
+      if(sc) sc.onclick = cp;
+    }).catch(()=>{
+      shb.disabled = false; shb.textContent = t("btn_short");
+      box.innerHTML = '<p class="note" style="margin-top:10px;">'+esc(t("short_err"))+'</p>';
+    });
+  };
   const qrc = $("#qrCanvas");
   if(qrc && state.link){
     try{ new QRCode(qrc, { text: state.link, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M }); }
@@ -8441,6 +8665,56 @@ async function applyShopLocale(d, payload){
     }catch(e){}
   }
 }
+function dashView(){
+  const shops = readShops();
+  let body;
+  if(!shops.length){
+    body = '<p class="note">'+t("dash_empty")+'</p>'
+      + '<div class="center" style="margin-top:16px;"><a class="btn btn-accent" href="#/build">'+t("nav_start")+'</a></div>';
+  } else {
+    body = '<div class="dash-list">' + shops.map(s=>{
+      const d = decodeSite(s.payload);
+      const n = d && d.products ? d.products.length : 0;
+      const dt = new Date(s.savedAt||Date.now()).toLocaleDateString();
+      return '<div class="dash-row" data-shop="'+esc(s.id)+'">'
+        + '<div class="dash-meta"><div class="dash-name">'+esc(s.name||t("dash_title"))+'</div>'
+        + '<div class="dash-sub">'+esc(t("dash_nprods").replace("{n}",n))+' \u00b7 '+esc(dt)+'</div></div>'
+        + '<div class="dash-actions">'
+        + '<button class="btn btn-sm" data-dact="edit">'+t("dash_edit")+'</button>'
+        + '<button class="btn btn-sm" data-dact="view">'+t("dash_view")+'</button>'
+        + '<button class="btn btn-sm" data-dact="copy">'+t("dash_copy")+'</button>'
+        + '<button class="btn btn-sm" data-dact="del">'+t("dash_del")+'</button>'
+        + '</div></div>';
+    }).join("") + '</div>';
+  }
+  return header()
+    + '<div class="wrap"><div class="builder-head"><h1>'+t("dash_title")+'</h1></div>'
+    + '<div class="card">'+body+'</div></div>'
+    + footer();
+}
+function wireDash(){
+  const list = document.querySelector(".dash-list");
+  if(!list) return;
+  list.addEventListener("click", e=>{
+    const b = e.target.closest("[data-dact]"); if(!b) return;
+    const row = b.closest("[data-shop]"); if(!row) return;
+    const id = row.getAttribute("data-shop");
+    const shops = readShops();
+    const s = shops.find(x=>x.id===id); if(!s) return;
+    const act = b.getAttribute("data-dact");
+    if(act==="edit"){ location.hash = "#/edit/"+s.payload; }
+    else if(act==="view"){ window.open(shopLinkOf(s.payload), "_blank"); }
+    else if(act==="copy"){
+      const link = shopLinkOf(s.payload);
+      const done = ()=>{ const o=b.textContent; b.textContent=t("copied"); setTimeout(()=>{ b.textContent=o; },1500); };
+      if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done).catch(done);
+      else done();
+    }
+    else if(act==="del"){
+      if(confirm(t("dash_confirm"))){ writeShops(shops.filter(x=>x.id!==id)); render(dashView()); wireDash(); window.scrollTo(0,0); }
+    }
+  });
+}
 function router(){
   const h = location.hash.replace(/^#\/?/, "");
   const wasShop = !!state.isShop;
@@ -8465,8 +8739,11 @@ function router(){
     if(d){ applyShopLocale(d, payload); return; }
     render(notFoundView());
   } else if(h.indexOf("edit/")===0){
-    const d = decodeSite(h.slice(5));
-    if(d){ state.data = d; state.step = 2; state.transcript = ""; render(buildView()); wireBuild(); }
+    const pl = h.slice(5);
+    const d = decodeSite(pl);
+    if(d){ state.data = d; state.step = 2; state.transcript = ""; state.editShopId = null;
+      const hit = readShops().find(s=>s.payload===pl); if(hit) state.editShopId = hit.id;
+      render(buildView()); wireBuild(); }
     else render(notFoundView());
   } else if(h==="privacy"){
     render(privacyView());
@@ -8474,6 +8751,8 @@ function router(){
     render(termsView());
   } else if(h==="locale"){
     render(localeView()); wireLocale();
+  } else if(h==="shops"){
+    render(dashView()); wireDash();
   } else if(h==="build" || h.indexOf("build")===0){
     render(buildView()); wireBuild();
   } else {
