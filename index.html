@@ -468,6 +468,7 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .stk{font-size:11px;font-weight:700;border-radius:999px;padding:3px 10px;margin-left:8px;white-space:nowrap;}
 .stk-low{background:#FCF3DC;color:#8a5a00;}
 .stk-out{background:#F1EFE7;color:#8a8577;}
+.stk-best{background:var(--s-accent,var(--accent));color:#fff;margin-left:0;margin-inline-start:8px;}
 .vpills{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
 .vpill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font-size:13.5px;cursor:pointer;color:var(--ink);min-height:44px;line-height:1.35;max-width:100%;}
 .vpill.on{background:var(--s-accent);border-color:var(--s-accent);color:#fff;font-weight:700;}
@@ -1023,6 +1024,7 @@ const STR = { en: {
   "ask":"Ask",
   "stock_low":"Low stock",
   "stock_out":"Out of stock",
+  "best":"Bestseller",
   "open_now":"Open now",
   "closed_now":"Closed",
   "opens_at":"Opens {t}",
@@ -1199,7 +1201,46 @@ const STR = { en: {
   "id_fail":"Could not save online, so here is the full link. It works the same.",
   "sh_id_label":"Short link",
   "sh_full_label":"Full link (backup)",
-  "s_loading":"Loading shop..."
+  "s_loading":"Loading shop...",
+  "gys_eyebrow":"DONE-FOR-YOU SERVICE",
+  "gys_h1":"We build your online store in 24 hours.",
+  "gys_sub":"Message us on Telegram with your shop details. We build your mobile storefront, add your products and photos, and set up WhatsApp ordering. You pay only when your store is live.",
+  "gys_cta":"Message us on Telegram",
+  "gys_cta_note":"Free to start. Pay only when your store is live.",
+  "gys_inc_title":"What's included",
+  "gys_inc1t":"Mobile storefront",
+  "gys_inc1b":"A fast, clean store that looks great on every phone.",
+  "gys_inc2t":"Your products and photos",
+  "gys_inc2b":"We add your products, prices, and photos for you.",
+  "gys_inc3t":"WhatsApp ordering",
+  "gys_inc3b":"Customers browse your store and order through WhatsApp.",
+  "gys_inc4t":"Your own share link",
+  "gys_inc4b":"A short link and QR code you can share anywhere.",
+  "gys_inc5t":"Works in 15 languages",
+  "gys_inc5b":"Your store automatically speaks your customers' language.",
+  "gys_steps_title":"How it works",
+  "gys_s1t":"Message us",
+  "gys_s1b":"Tap the button and say hello on Telegram.",
+  "gys_s2t":"Send your details",
+  "gys_s2b":"Share your shop name, products, prices, and a few photos.",
+  "gys_s3t":"Go live, then pay",
+  "gys_s3b":"Your store goes live within 24 hours. You pay only after that.",
+  "gys_price_title":"One simple price",
+  "gys_price_note":"one-time payment, yours forever",
+  "gys_launch_badge":"LAUNCH OFFER",
+  "gys_launch_text":"The first 5 shops pay only ₹2,999. Pay by UPI after your store is live.",
+  "gys_faq_title":"Common questions",
+  "gys_f1q":"Do I need any technical skills?",
+  "gys_f1a":"None at all. You just chat with us on Telegram. We handle everything technical.",
+  "gys_f2q":"How do customers place orders?",
+  "gys_f2a":"They browse your store on their phone and order through WhatsApp, like texting a friend.",
+  "gys_f3q":"Can I change my products later?",
+  "gys_f3a":"Yes. Message us anytime and we will update your store for free.",
+  "gys_f4q":"What if I don't like the store?",
+  "gys_f4a":"Then you pay nothing. You only pay after your store is live and you are happy.",
+  "gys_cta2_title":"Ready for your own online store?",
+  "gys_meta":"Get Your Store: we build your online shop in 24 hours | TalkShop",
+  "foot_service":"Get your store built",
 } };
 STR.te = {
   "meta_title":"TalkShop: మీ దుకాణం గురించి చెప్పండి. ఆన్‌లైన్‌లోకి తీసుకురండి.",
@@ -1435,6 +1476,7 @@ STR.te = {
   "ask":"అడగండి",
   "stock_low":"స్టాక్ తక్కువగా ఉంది",
   "stock_out":"స్టాక్ అయిపోయింది",
+  "best":"బెస్ట్‌సెల్లర్",
   "open_now":"ఇప్పుడు తెరిచి ఉంది",
   "closed_now":"మూసివేసింది",
   "opens_at":"{t}కు తెరుస్తుంది",
@@ -1611,7 +1653,46 @@ STR.te = {
   "id_fail":"ఆన్‌లైన్‌లో సేవ్ చేయలేకపోయాం, కాబట్టి పూర్తి లింక్ ఇదిగో. ఇది అలాగే పనిచేస్తుంది.",
   "sh_id_label":"చిన్న లింక్",
   "sh_full_label":"పూర్తి లింక్ (బ్యాకప్)",
-  "s_loading":"షాప్ లోడ్ అవుతోంది..."
+  "s_loading":"షాప్ లోడ్ అవుతోంది...",
+  "gys_eyebrow":"మీ కోసం చేసే సేవ",
+  "gys_h1":"24 గంటల్లో మీ ఆన్‌లైన్ స్టోర్‌ను మేము నిర్మిస్తాము.",
+  "gys_sub":"మీ షాపు వివరాలను Telegramలో పంపండి. మీ మొబైల్ స్టోర్‌ను మేము నిర్మించి, మీ ఉత్పత్తులు, ఫోటోలు జోడించి, WhatsApp ఆర్డర్ ఏర్పాటు చేస్తాము. మీ స్టోర్ లైవ్ అయిన తర్వాత మాత్రమే చెల్లించండి.",
+  "gys_cta":"Telegramలో సందేశం పంపండి",
+  "gys_cta_note":"ప్రారంభించడం ఉచితం. స్టోర్ లైవ్ అయిన తర్వాత మాత్రమే చెల్లించండి.",
+  "gys_inc_title":"ఇందులో ఉన్నవి",
+  "gys_inc1t":"మొబైల్ స్టోర్",
+  "gys_inc1b":"ప్రతి ఫోన్‌లో అందంగా కనిపించే వేగవంతమైన, శుభ్రమైన స్టోర్.",
+  "gys_inc2t":"మీ ఉత్పత్తులు, ఫోటోలు",
+  "gys_inc2b":"మీ ఉత్పత్తులు, ధరలు, ఫోటోలను మేము జోడిస్తాము.",
+  "gys_inc3t":"WhatsApp ఆర్డర్",
+  "gys_inc3b":"కస్టమర్లు మీ స్టోర్ చూసి WhatsApp ద్వారా ఆర్డర్ చేస్తారు.",
+  "gys_inc4t":"మీ సొంత షేర్ లింక్",
+  "gys_inc4b":"ఎక్కడైనా షేర్ చేయగల చిన్న లింక్ మరియు QR కోడ్.",
+  "gys_inc5t":"15 భాషల్లో పనిచేస్తుంది",
+  "gys_inc5b":"మీ స్టోర్ మీ కస్టమర్ల భాషలోనే మాట్లాడుతుంది.",
+  "gys_steps_title":"ఇది ఎలా పనిచేస్తుంది",
+  "gys_s1t":"సందేశం పంపండి",
+  "gys_s1b":"బటన్ నొక్కి Telegramలో హలో చెప్పండి.",
+  "gys_s2t":"వివరాలు పంపండి",
+  "gys_s2b":"షాపు పేరు, ఉత్పత్తులు, ధరలు, కొన్ని ఫోటోలు షేర్ చేయండి.",
+  "gys_s3t":"లైవ్ చేయండి, తర్వాత చెల్లించండి",
+  "gys_s3b":"24 గంటల్లో మీ స్టోర్ లైవ్ అవుతుంది. ఆ తర్వాత మాత్రమే చెల్లించండి.",
+  "gys_price_title":"ఒక సులభమైన ధర",
+  "gys_price_note":"ఒకేసారి చెల్లింపు, శాశ్వతంగా మీదే",
+  "gys_launch_badge":"లాంచ్ ఆఫర్",
+  "gys_launch_text":"మొదటి 5 షాపులు ₹2,999 మాత్రమే. స్టోర్ లైవ్ అయిన తర్వాత UPI ద్వారా చెల్లించండి.",
+  "gys_faq_title":"సాధారణ ప్రశ్నలు",
+  "gys_f1q":"నాకు సాంకేతిక పరిజ్ఞానం అవసరమా?",
+  "gys_f1a":"అస్సలు అవసరం లేదు. Telegramలో మాతో చాట్ చేయండి. సాంకేతిక విషయాలన్నీ మేము చూసుకుంటాము.",
+  "gys_f2q":"కస్టమర్లు ఎలా ఆర్డర్ చేస్తారు?",
+  "gys_f2a":"వారు ఫోన్‌లో మీ స్టోర్ చూసి, స్నేహితుడికి సందేశం పంపినట్లు WhatsApp ద్వారా ఆర్డర్ చేస్తారు.",
+  "gys_f3q":"తర్వాత ఉత్పత్తులను మార్చవచ్చా?",
+  "gys_f3a":"అవును. ఎప్పుడైనా సందేశం పంపండి, మీ స్టోర్‌ను ఉచితంగా అప్‌డేట్ చేస్తాము.",
+  "gys_f4q":"స్టోర్ నచ్చకపోతే?",
+  "gys_f4a":"అయితే ఏమీ చెల్లించకండి. స్టోర్ లైవ్ అయి మీకు సంతోషంగా ఉన్న తర్వాత మాత్రమే చెల్లించండి.",
+  "gys_cta2_title":"మీ సొంత ఆన్‌లైన్ స్టోర్‌కు సిద్ధమా?",
+  "gys_meta":"మీ స్టోర్ సిద్ధం: 24 గంటల్లో ఆన్‌లైన్ షాపు | TalkShop",
+  "foot_service":"మీ స్టోర్‌ను నిర్మించండి",
 };
 STR.bn = {
   "meta_title":"TalkShop: আপনার দোকানের কথা বলুন। অনলাইনে আসুন।",
@@ -1847,6 +1928,7 @@ STR.bn = {
   "ask":"জিজ্ঞেস করুন",
   "stock_low":"স্টক কম",
   "stock_out":"স্টক শেষ",
+  "best":"বেস্টসেলার",
   "open_now":"এখন খোলা",
   "closed_now":"বন্ধ",
   "opens_at":"{t}-এ খুলবে",
@@ -2023,7 +2105,46 @@ STR.bn = {
   "id_fail":"অনলাইনে সংরক্ষণ করা যায়নি, তাই পুরো লিংকটি রইল। এটি একইভাবে কাজ করবে।",
   "sh_id_label":"ছোট লিংক",
   "sh_full_label":"পুরো লিংক (ব্যাকআপ)",
-  "s_loading":"দোকান লোড হচ্ছে..."
+  "s_loading":"দোকান লোড হচ্ছে...",
+  "gys_eyebrow":"আপনার জন্য করা পরিষেবা",
+  "gys_h1":"আমরা ২৪ ঘণ্টায় আপনার অনলাইন দোকান বানিয়ে দেব।",
+  "gys_sub":"Telegram-এ আপনার দোকানের বিবরণ পাঠান। আমরা আপনার মোবাইল দোকান বানাব, আপনার পণ্য ও ছবি যোগ করব, আর WhatsApp অর্ডার সেট করে দেব। দোকান লাইভ হওয়ার পরেই পেমেন্ট করবেন।",
+  "gys_cta":"Telegram-এ মেসেজ করুন",
+  "gys_cta_note":"শুরু করা ফ্রি। দোকান লাইভ হলেই পেমেন্ট।",
+  "gys_inc_title":"যা যা থাকছে",
+  "gys_inc1t":"মোবাইল দোকান",
+  "gys_inc1b":"দ্রুত, পরিষ্কার দোকান যা প্রতিটি ফোনে সুন্দর দেখায়।",
+  "gys_inc2t":"আপনার পণ্য ও ছবি",
+  "gys_inc2b":"আপনার পণ্য, দাম ও ছবি আমরা যোগ করে দেব।",
+  "gys_inc3t":"WhatsApp অর্ডার",
+  "gys_inc3b":"গ্রাহকরা আপনার দোকান দেখে WhatsApp-এ অর্ডার করবেন।",
+  "gys_inc4t":"আপনার নিজের শেয়ার লিংক",
+  "gys_inc4b":"ছোট লিংক ও QR কোড, যেখানে খুশি শেয়ার করুন।",
+  "gys_inc5t":"১৫টি ভাষায় কাজ করে",
+  "gys_inc5b":"আপনার দোকান নিজে থেকেই গ্রাহকদের ভাষায় কথা বলবে।",
+  "gys_steps_title":"এটা কীভাবে কাজ করে",
+  "gys_s1t":"মেসেজ করুন",
+  "gys_s1b":"বোতাম টিপে Telegram-এ হ্যালো বলুন।",
+  "gys_s2t":"বিবরণ পাঠান",
+  "gys_s2b":"দোকানের নাম, পণ্য, দাম ও কয়েকটি ছবি শেয়ার করুন।",
+  "gys_s3t":"লাইভ করুন, তারপর পেমেন্ট",
+  "gys_s3b":"২৪ ঘণ্টার মধ্যে দোকান লাইভ হবে। তারপরেই পেমেন্ট করবেন।",
+  "gys_price_title":"একটাই সহজ দাম",
+  "gys_price_note":"একবার পেমেন্ট, চিরকাল আপনার",
+  "gys_launch_badge":"লঞ্চ অফার",
+  "gys_launch_text":"প্রথম ৫টি দোকান মাত্র ₹২,৯৯৯ দেবে। দোকান লাইভ হওয়ার পর UPI-তে পেমেন্ট করুন।",
+  "gys_faq_title":"সাধারণ প্রশ্ন",
+  "gys_f1q":"আমার কি টেকনিক্যাল জ্ঞান দরকার?",
+  "gys_f1a":"একদম না। শুধু Telegram-এ আমাদের সাথে চ্যাট করুন। টেকনিক্যাল সবকিছু আমরা সামলে নেব।",
+  "gys_f2q":"গ্রাহকরা কীভাবে অর্ডার করবেন?",
+  "gys_f2a":"তারা ফোনে আপনার দোকান দেখে বন্ধুকে মেসেজ পাঠানোর মতো WhatsApp-এ অর্ডার করবেন।",
+  "gys_f3q":"পরে কি পণ্য বদলাতে পারব?",
+  "gys_f3a":"হ্যাঁ। যেকোনো সময় মেসেজ করুন, আমরা আপনার দোকান ফ্রিতে আপডেট করে দেব।",
+  "gys_f4q":"দোকান পছন্দ না হলে?",
+  "gys_f4a":"তাহলে কিছু দেবেন না। দোকান লাইভ হয়ে আপনি খুশি হলেই পেমেন্ট করবেন।",
+  "gys_cta2_title":"নিজের অনলাইন দোকানের জন্য তৈরি?",
+  "gys_meta":"আপনার দোকান তৈরি: ২৪ ঘণ্টায় অনলাইন দোকান | TalkShop",
+  "foot_service":"আপনার দোকান বানান",
 };
 STR.kn = {
   "meta_title":"TalkShop: ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ವಿವರಿಸಿ. ಅದನ್ನು ಆನ್‌ಲೈನ್‌ಗೆ ತನ್ನಿ.",
@@ -2259,6 +2380,7 @@ STR.kn = {
   "ask":"ಕೇಳಿ",
   "stock_low":"ಸ್ಟಾಕ್ ಕಡಿಮೆ ಇದೆ",
   "stock_out":"ಸ್ಟಾಕ್ ಖಾಲಿಯಾಗಿದೆ",
+  "best":"ಬೆಸ್ಟ್‌ಸೆಲ್ಲರ್",
   "open_now":"ಈಗ ತೆರೆದಿದೆ",
   "closed_now":"ಮುಚ್ಚಿದೆ",
   "opens_at":"{t} ಗೆ ತೆರೆಯುತ್ತದೆ",
@@ -2435,7 +2557,46 @@ STR.kn = {
   "id_fail":"ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ, ಆದ್ದರಿಂದ ಪೂರ್ಣ ಲಿಂಕ್ ಇಲ್ಲಿದೆ. ಅದು ಅದೇ ರೀತಿ ಕೆಲಸ ಮಾಡುತ್ತದೆ.",
   "sh_id_label":"ಚಿಕ್ಕ ಲಿಂಕ್",
   "sh_full_label":"ಪೂರ್ಣ ಲಿಂಕ್ (ಬ್ಯಾಕಪ್)",
-  "s_loading":"ಅಂಗಡಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ..."
+  "s_loading":"ಅಂಗಡಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
+  "gys_eyebrow":"ನಿಮಗಾಗಿ ಮಾಡುವ ಸೇವೆ",
+  "gys_h1":"ನಾವು 24 ಗಂಟೆಗಳಲ್ಲಿ ನಿಮ್ಮ ಆನ್‌ಲೈನ್ ಅಂಗಡಿಯನ್ನು ನಿರ್ಮಿಸುತ್ತೇವೆ.",
+  "gys_sub":"Telegram ನಲ್ಲಿ ನಿಮ್ಮ ಅಂಗಡಿ ವಿವರಗಳನ್ನು ಕಳುಹಿಸಿ. ನಾವು ನಿಮ್ಮ ಮೊಬೈಲ್ ಅಂಗಡಿಯನ್ನು ನಿರ್ಮಿಸಿ, ನಿಮ್ಮ ಉತ್ಪನ್ನಗಳು ಮತ್ತು ಫೋಟೋಗಳನ್ನು ಸೇರಿಸಿ, WhatsApp ಆರ್ಡರ್ ಹೊಂದಿಸುತ್ತೇವೆ. ನಿಮ್ಮ ಅಂಗಡಿ ಲೈವ್ ಆದ ನಂತರ ಮಾತ್ರ ಪಾವತಿಸಿ.",
+  "gys_cta":"Telegram ನಲ್ಲಿ ಸಂದೇಶ ಕಳುಹಿಸಿ",
+  "gys_cta_note":"ಪ್ರಾರಂಭ ಉಚಿತ. ಅಂಗಡಿ ಲೈವ್ ಆದ ನಂತರ ಮಾತ್ರ ಪಾವತಿ.",
+  "gys_inc_title":"ಏನೇನು ಸೇರಿದೆ",
+  "gys_inc1t":"ಮೊಬೈಲ್ ಅಂಗಡಿ",
+  "gys_inc1b":"ಪ್ರತಿ ಫೋನ್‌ನಲ್ಲೂ ಚೆನ್ನಾಗಿ ಕಾಣುವ ವೇಗವಾದ, ಸ್ವಚ್ಛವಾದ ಅಂಗಡಿ.",
+  "gys_inc2t":"ನಿಮ್ಮ ಉತ್ಪನ್ನಗಳು, ಫೋಟೋಗಳು",
+  "gys_inc2b":"ನಿಮ್ಮ ಉತ್ಪನ್ನಗಳು, ಬೆಲೆಗಳು ಮತ್ತು ಫೋಟೋಗಳನ್ನು ನಾವು ಸೇರಿಸುತ್ತೇವೆ.",
+  "gys_inc3t":"WhatsApp ಆರ್ಡರ್",
+  "gys_inc3b":"ಗ್ರಾಹಕರು ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ನೋಡಿ WhatsApp ಮೂಲಕ ಆರ್ಡರ್ ಮಾಡುತ್ತಾರೆ.",
+  "gys_inc4t":"ನಿಮ್ಮ ಸ್ವಂತ ಶೇರ್ ಲಿಂಕ್",
+  "gys_inc4b":"ಎಲ್ಲಿಯಾದರೂ ಹಂಚಿಕೊಳ್ಳಬಹುದಾದ ಚಿಕ್ಕ ಲಿಂಕ್ ಮತ್ತು QR ಕೋಡ್.",
+  "gys_inc5t":"15 ಭಾಷೆಗಳಲ್ಲಿ ಕೆಲಸ ಮಾಡುತ್ತದೆ",
+  "gys_inc5b":"ನಿಮ್ಮ ಅಂಗಡಿ ನಿಮ್ಮ ಗ್ರಾಹಕರ ಭಾಷೆಯಲ್ಲೇ ಮಾತನಾಡುತ್ತದೆ.",
+  "gys_steps_title":"ಇದು ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ",
+  "gys_s1t":"ಸಂದೇಶ ಕಳುಹಿಸಿ",
+  "gys_s1b":"ಬಟನ್ ಒತ್ತಿ Telegram ನಲ್ಲಿ ಹಲೋ ಹೇಳಿ.",
+  "gys_s2t":"ವಿವರಗಳನ್ನು ಕಳುಹಿಸಿ",
+  "gys_s2b":"ಅಂಗಡಿ ಹೆಸರು, ಉತ್ಪನ್ನಗಳು, ಬೆಲೆಗಳು ಮತ್ತು ಕೆಲವು ಫೋಟೋಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಿ.",
+  "gys_s3t":"ಲೈವ್ ಮಾಡಿ, ನಂತರ ಪಾವತಿಸಿ",
+  "gys_s3b":"24 ಗಂಟೆಗಳಲ್ಲಿ ನಿಮ್ಮ ಅಂಗಡಿ ಲೈವ್ ಆಗುತ್ತದೆ. ಅದರ ನಂತರ ಮಾತ್ರ ಪಾವತಿಸಿ.",
+  "gys_price_title":"ಒಂದು ಸರಳ ಬೆಲೆ",
+  "gys_price_note":"ಒಂದೇ ಬಾರಿ ಪಾವತಿ, ಶಾಶ್ವತವಾಗಿ ನಿಮ್ಮದು",
+  "gys_launch_badge":"ಲಾಂಚ್ ಆಫರ್",
+  "gys_launch_text":"ಮೊದಲ 5 ಅಂಗಡಿಗಳು ಕೇವಲ ₹2,999. ಅಂಗಡಿ ಲೈವ್ ಆದ ನಂತರ UPI ಮೂಲಕ ಪಾವತಿಸಿ.",
+  "gys_faq_title":"ಸಾಮಾನ್ಯ ಪ್ರಶ್ನೆಗಳು",
+  "gys_f1q":"ನನಗೆ ತಾಂತ್ರಿಕ ಜ್ಞಾನ ಬೇಕೇ?",
+  "gys_f1a":"ಬೇಕಿಲ್ಲ. Telegram ನಲ್ಲಿ ನಮ್ಮೊಂದಿಗೆ ಚಾಟ್ ಮಾಡಿ. ತಾಂತ್ರಿಕ ಎಲ್ಲವನ್ನೂ ನಾವು ನೋಡಿಕೊಳ್ಳುತ್ತೇವೆ.",
+  "gys_f2q":"ಗ್ರಾಹಕರು ಹೇಗೆ ಆರ್ಡರ್ ಮಾಡುತ್ತಾರೆ?",
+  "gys_f2a":"ಅವರು ಫೋನ್‌ನಲ್ಲಿ ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ನೋಡಿ, ಸ್ನೇಹಿತರಿಗೆ ಸಂದೇಶ ಕಳುಹಿಸುವಂತೆ WhatsApp ಮೂಲಕ ಆರ್ಡರ್ ಮಾಡುತ್ತಾರೆ.",
+  "gys_f3q":"ನಂತರ ಉತ್ಪನ್ನಗಳನ್ನು ಬದಲಾಯಿಸಬಹುದೇ?",
+  "gys_f3a":"ಹೌದು. ಯಾವಾಗ ಬೇಕಾದರೂ ಸಂದೇಶ ಕಳುಹಿಸಿ, ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ಉಚಿತವಾಗಿ ಅಪ್‌ಡೇಟ್ ಮಾಡುತ್ತೇವೆ.",
+  "gys_f4q":"ಅಂಗಡಿ ಇಷ್ಟವಾಗದಿದ್ದರೆ?",
+  "gys_f4a":"ಏನೂ ಪಾವತಿಸಬೇಡಿ. ಅಂಗಡಿ ಲೈವ್ ಆಗಿ ನಿಮಗೆ ಸಂತೋಷವಾದ ನಂತರ ಮಾತ್ರ ಪಾವತಿಸಿ.",
+  "gys_cta2_title":"ನಿಮ್ಮ ಸ್ವಂತ ಆನ್‌ಲೈನ್ ಅಂಗಡಿಗೆ ಸಿದ್ಧರೇ?",
+  "gys_meta":"ನಿಮ್ಮ ಅಂಗಡಿ ಸಿದ್ಧ: 24 ಗಂಟೆಗಳಲ್ಲಿ ಆನ್‌ಲೈನ್ ಅಂಗಡಿ | TalkShop",
+  "foot_service":"ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ನಿರ್ಮಿಸಿ",
 };
 STR.mr = {
   "meta_title":"TalkShop: तुमच्या दुकानाबद्दल सांगा. ते ऑनलाइन न्या.",
@@ -2671,6 +2832,7 @@ STR.mr = {
   "ask":"विचारा",
   "stock_low":"कमी साठा",
   "stock_out":"साठा संपला",
+  "best":"बेस्टसेलर",
   "open_now":"आता उघडे",
   "closed_now":"बंद",
   "opens_at":"{t} वाजता उघडते",
@@ -2847,7 +3009,46 @@ STR.mr = {
   "id_fail":"ऑनलाइन जतन करता आले नाही, म्हणून हा पूर्ण लिंक. तो तसाच काम करेल.",
   "sh_id_label":"लहान लिंक",
   "sh_full_label":"पूर्ण लिंक (बॅकअप)",
-  "s_loading":"दुकान लोड होत आहे..."
+  "s_loading":"दुकान लोड होत आहे...",
+  "gys_eyebrow":"तुमच्यासाठी करून देणारी सेवा",
+  "gys_h1":"आम्ही २४ तासांत तुमचे ऑनलाइन दुकान बनवून देऊ.",
+  "gys_sub":"Telegram वर तुमच्या दुकानाची माहिती पाठवा. आम्ही तुमचे मोबाइल दुकान बनवू, तुमची उत्पादने आणि फोटो जोडू, आणि WhatsApp ऑर्डर सेट करू. दुकान लाइव्ह झाल्यावरच पैसे द्या.",
+  "gys_cta":"Telegram वर संदेश पाठवा",
+  "gys_cta_note":"सुरुवात मोफत. दुकान लाइव्ह झाल्यावरच पैसे.",
+  "gys_inc_title":"यात काय समाविष्ट आहे",
+  "gys_inc1t":"मोबाइल दुकान",
+  "gys_inc1b":"प्रत्येक फोनवर छान दिसणारे जलद, स्वच्छ दुकान.",
+  "gys_inc2t":"तुमची उत्पादने, फोटो",
+  "gys_inc2b":"तुमची उत्पादने, किमती आणि फोटो आम्ही जोडून देऊ.",
+  "gys_inc3t":"WhatsApp ऑर्डर",
+  "gys_inc3b":"ग्राहक तुमचे दुकान पाहून WhatsApp वर ऑर्डर करतील.",
+  "gys_inc4t":"तुमची स्वतःची शेअर लिंक",
+  "gys_inc4b":"कुठेही शेअर करता येणारी छोटी लिंक आणि QR कोड.",
+  "gys_inc5t":"१५ भाषांमध्ये काम करते",
+  "gys_inc5b":"तुमचे दुकान आपोआप तुमच्या ग्राहकांच्या भाषेत बोलेल.",
+  "gys_steps_title":"हे कसे काम करते",
+  "gys_s1t":"संदेश पाठवा",
+  "gys_s1b":"बटण दाबा आणि Telegram वर नमस्कार करा.",
+  "gys_s2t":"माहिती पाठवा",
+  "gys_s2b":"दुकानाचे नाव, उत्पादने, किमती आणि काही फोटो शेअर करा.",
+  "gys_s3t":"लाइव्ह करा, मग पैसे द्या",
+  "gys_s3b":"२४ तासांत तुमचे दुकान लाइव्ह होईल. त्यानंतरच पैसे द्या.",
+  "gys_price_title":"एकच सोपी किंमत",
+  "gys_price_note":"एकदाच पैसे, कायमचे तुमचे",
+  "gys_launch_badge":"लॉन्च ऑफर",
+  "gys_launch_text":"पहिली ५ दुकाने फक्त ₹२,९९९. दुकान लाइव्ह झाल्यावर UPI ने पैसे द्या.",
+  "gys_faq_title":"सामान्य प्रश्न",
+  "gys_f1q":"मला तांत्रिक ज्ञान हवे का?",
+  "gys_f1a":"अजिबात नाही. फक्त Telegram वर आमच्याशी चॅट करा. तांत्रिक सगळे आम्ही पाहून घेऊ.",
+  "gys_f2q":"ग्राहक ऑर्डर कसे करतील?",
+  "gys_f2a":"ते फोनवर तुमचे दुकान पाहून, मित्राला संदेश पाठवावा तसे WhatsApp वर ऑर्डर करतील.",
+  "gys_f3q":"नंतर उत्पादने बदलता येतील का?",
+  "gys_f3a":"हो. कधीही संदेश पाठवा, आम्ही तुमचे दुकान मोफत अपडेट करू.",
+  "gys_f4q":"दुकान आवडले नाही तर?",
+  "gys_f4a":"मग काही देऊ नका. दुकान लाइव्ह होऊन तुम्ही खुश झाल्यावरच पैसे द्या.",
+  "gys_cta2_title":"तुमच्या स्वतःच्या ऑनलाइन दुकानासाठी तयार?",
+  "gys_meta":"तुमचे दुकान तयार: २४ तासांत ऑनलाइन दुकान | TalkShop",
+  "foot_service":"तुमचे दुकान बनवा",
 };
 STR.zh = {
   "meta_title":"TalkShop：描述您的小店，轻松上线。",
@@ -3083,6 +3284,7 @@ STR.zh = {
   "ask":"咨询",
   "stock_low":"库存不多",
   "stock_out":"已售罄",
+  "best":"畅销",
   "open_now":"营业中",
   "closed_now":"休息中",
   "opens_at":"{t} 开始营业",
@@ -3259,7 +3461,46 @@ STR.zh = {
   "id_fail":"无法在线保存，这是完整链接，效果一样。",
   "sh_id_label":"短链接",
   "sh_full_label":"完整链接（备用）",
-  "s_loading":"正在加载店铺..."
+  "s_loading":"正在加载店铺...",
+  "gys_eyebrow":"全包代建服务",
+  "gys_h1":"我们在24小时内为你建好网店。",
+  "gys_sub":"在Telegram上把你的店铺信息发给我们。我们为你搭建手机店铺,添加产品和照片,并设置WhatsApp下单。店铺上线后你再付款。",
+  "gys_cta":"在Telegram上联系我们",
+  "gys_cta_note":"免费开始。店铺上线后才付款。",
+  "gys_inc_title":"包含内容",
+  "gys_inc1t":"手机店铺",
+  "gys_inc1b":"快速、简洁的店铺,在每部手机上都好看。",
+  "gys_inc2t":"产品和照片",
+  "gys_inc2b":"我们帮你添加产品、价格和照片。",
+  "gys_inc3t":"WhatsApp下单",
+  "gys_inc3b":"顾客浏览你的店铺,通过WhatsApp下单。",
+  "gys_inc4t":"专属分享链接",
+  "gys_inc4b":"短链接和二维码,随处分享。",
+  "gys_inc5t":"支持15种语言",
+  "gys_inc5b":"你的店铺会自动说顾客的语言。",
+  "gys_steps_title":"流程",
+  "gys_s1t":"发消息",
+  "gys_s1b":"点击按钮,在Telegram上和我们打招呼。",
+  "gys_s2t":"发送资料",
+  "gys_s2b":"分享店名、产品、价格和几张照片。",
+  "gys_s3t":"上线后再付款",
+  "gys_s3b":"24小时内店铺上线。之后你再付款。",
+  "gys_price_title":"一个简单的价格",
+  "gys_price_note":"一次付费,永久拥有",
+  "gys_launch_badge":"首发优惠",
+  "gys_launch_text":"前5家店铺只需₹2,999。店铺上线后通过UPI付款。",
+  "gys_faq_title":"常见问题",
+  "gys_f1q":"我需要懂技术吗?",
+  "gys_f1a":"完全不需要。你只需要在Telegram上和我们聊天,技术上的事都交给我们。",
+  "gys_f2q":"顾客怎么下单?",
+  "gys_f2a":"他们在手机上浏览你的店铺,像给朋友发消息一样通过WhatsApp下单。",
+  "gys_f3q":"以后能改产品吗?",
+  "gys_f3a":"可以。随时发消息给我们,我们免费帮你更新店铺。",
+  "gys_f4q":"要是不喜欢店铺呢?",
+  "gys_f4a":"那就不用付钱。店铺上线、你满意之后才付款。",
+  "gys_cta2_title":"准备好拥有自己的网店了吗?",
+  "gys_meta":"店铺代建:24小时上线你的网店 | TalkShop",
+  "foot_service":"代建你的店铺",
 };
 STR.ja = {
   "meta_title":"TalkShop：お店を紹介して、オンラインに。",
@@ -3495,6 +3736,7 @@ STR.ja = {
   "ask":"質問する",
   "stock_low":"残りわずか",
   "stock_out":"在庫切れ",
+  "best":"ベストセラー",
   "open_now":"営業中",
   "closed_now":"閉店中",
   "opens_at":"{t} 開店",
@@ -3671,7 +3913,46 @@ STR.ja = {
   "id_fail":"オンライン保存できませんでした。こちらがフルリンクです。同じように使えます。",
   "sh_id_label":"短縮リンク",
   "sh_full_label":"フルリンク（バックアップ）",
-  "s_loading":"ショップを読み込み中..."
+  "s_loading":"ショップを読み込み中...",
+  "gys_eyebrow":"おまかせ代行サービス",
+  "gys_h1":"24時間であなたのネットショップを作ります。",
+  "gys_sub":"Telegramでお店の情報を送ってください。スマホ向け店舗を作り、商品と写真を登録し、WhatsApp注文を設定します。お支払いは店舗が公開されてからでOKです。",
+  "gys_cta":"Telegramでメッセージを送る",
+  "gys_cta_note":"開始は無料。店舗公開後にお支払い。",
+  "gys_inc_title":"含まれるもの",
+  "gys_inc1t":"スマホ向け店舗",
+  "gys_inc1b":"速くて見やすい店舗。どのスマホでもきれいに表示されます。",
+  "gys_inc2t":"商品と写真の登録",
+  "gys_inc2b":"商品、価格、写真はこちらで登録します。",
+  "gys_inc3t":"WhatsApp注文",
+  "gys_inc3b":"お客様は店舗を見てWhatsAppで注文します。",
+  "gys_inc4t":"専用の共有リンク",
+  "gys_inc4b":"どこでも共有できる短いリンクとQRコード。",
+  "gys_inc5t":"15言語に対応",
+  "gys_inc5b":"あなたの店舗はお客様の言語で自動表示されます。",
+  "gys_steps_title":"流れ",
+  "gys_s1t":"メッセージを送る",
+  "gys_s1b":"ボタンをタップしてTelegramでご挨拶ください。",
+  "gys_s2t":"情報を送る",
+  "gys_s2b":"店名、商品、価格、写真を数枚お送りください。",
+  "gys_s3t":"公開してから支払う",
+  "gys_s3b":"24時間以内に店舗が公開されます。その後でお支払いください。",
+  "gys_price_title":"シンプルな料金",
+  "gys_price_note":"買い切り、ずっとあなたのもの",
+  "gys_launch_badge":"ローンチ特価",
+  "gys_launch_text":"最初の5店舗は₹2,999のみ。店舗公開後にUPIでお支払いください。",
+  "gys_faq_title":"よくある質問",
+  "gys_f1q":"技術的な知識は必要ですか?",
+  "gys_f1a":"不要です。Telegramでチャットするだけ。技術的なことはすべてお任せください。",
+  "gys_f2q":"お客様はどう注文しますか?",
+  "gys_f2a":"スマホで店舗を見て、友達にメッセージを送るようにWhatsAppで注文します。",
+  "gys_f3q":"後から商品を変更できますか?",
+  "gys_f3a":"はい。いつでもメッセージを送ってください。無料で更新します。",
+  "gys_f4q":"店舗が気に入らなかったら?",
+  "gys_f4a":"その場合はお支払い不要です。店舗が公開され、ご満足いただいてからのお支払いです。",
+  "gys_cta2_title":"自分のネットショップを持つ準備はできましたか?",
+  "gys_meta":"店舗代行:24時間でネットショップ開設 | TalkShop",
+  "foot_service":"店舗を作ってもらう",
 };
 STR.fr = {
   "meta_title":"TalkShop : Décrivez votre boutique. Mettez-la en ligne.",
@@ -3907,6 +4188,7 @@ STR.fr = {
   "ask":"Question",
   "stock_low":"Stock faible",
   "stock_out":"Épuisé",
+  "best":"Meilleure vente",
   "open_now":"Ouvert",
   "closed_now":"Fermé",
   "opens_at":"Ouvre {t}",
@@ -4083,7 +4365,46 @@ STR.fr = {
   "id_fail":"Enregistrement en ligne impossible, voici le lien complet. Il fonctionne de la même façon.",
   "sh_id_label":"Lien court",
   "sh_full_label":"Lien complet (secours)",
-  "s_loading":"Chargement de la boutique..."
+  "s_loading":"Chargement de la boutique...",
+  "gys_eyebrow":"SERVICE CLÉ EN MAIN",
+  "gys_h1":"Nous créons votre boutique en ligne en 24 heures.",
+  "gys_sub":"Envoyez-nous les infos de votre boutique sur Telegram. Nous créons votre boutique mobile, ajoutons vos produits et photos, et configurons les commandes WhatsApp. Vous ne payez que lorsque votre boutique est en ligne.",
+  "gys_cta":"Écrivez-nous sur Telegram",
+  "gys_cta_note":"Gratuit pour commencer. Payez seulement quand la boutique est en ligne.",
+  "gys_inc_title":"Ce qui est inclus",
+  "gys_inc1t":"Boutique mobile",
+  "gys_inc1b":"Une boutique rapide et claire, parfaite sur tous les téléphones.",
+  "gys_inc2t":"Vos produits et photos",
+  "gys_inc2b":"Nous ajoutons vos produits, prix et photos pour vous.",
+  "gys_inc3t":"Commandes WhatsApp",
+  "gys_inc3b":"Les clients parcourent votre boutique et commandent via WhatsApp.",
+  "gys_inc4t":"Votre propre lien",
+  "gys_inc4b":"Un lien court et un QR code à partager partout.",
+  "gys_inc5t":"Disponible en 15 langues",
+  "gys_inc5b":"Votre boutique parle automatiquement la langue de vos clients.",
+  "gys_steps_title":"Comment ça marche",
+  "gys_s1t":"Écrivez-nous",
+  "gys_s1b":"Touchez le bouton et dites-nous bonjour sur Telegram.",
+  "gys_s2t":"Envoyez vos infos",
+  "gys_s2b":"Partagez le nom de la boutique, produits, prix et quelques photos.",
+  "gys_s3t":"En ligne, puis payez",
+  "gys_s3b":"Votre boutique est en ligne sous 24 heures. Vous payez seulement après.",
+  "gys_price_title":"Un prix simple",
+  "gys_price_note":"paiement unique, à vous pour toujours",
+  "gys_launch_badge":"OFFRE DE LANCEMENT",
+  "gys_launch_text":"Les 5 premières boutiques ne paient que ₹2,999. Payez par UPI une fois la boutique en ligne.",
+  "gys_faq_title":"Questions fréquentes",
+  "gys_f1q":"Ai-je besoin de compétences techniques ?",
+  "gys_f1a":"Aucune. Discutez simplement avec nous sur Telegram. Nous gérons toute la technique.",
+  "gys_f2q":"Comment les clients commandent-ils ?",
+  "gys_f2a":"Ils parcourent votre boutique sur leur téléphone et commandent via WhatsApp, comme un message à un ami.",
+  "gys_f3q":"Puis-je changer mes produits plus tard ?",
+  "gys_f3a":"Oui. Écrivez-nous à tout moment et nous mettrons votre boutique à jour gratuitement.",
+  "gys_f4q":"Et si la boutique ne me plaît pas ?",
+  "gys_f4a":"Alors vous ne payez rien. Vous ne payez que lorsque la boutique est en ligne et vous satisfait.",
+  "gys_cta2_title":"Prêt pour votre propre boutique en ligne ?",
+  "gys_meta":"Votre boutique clé en main : en ligne en 24 heures | TalkShop",
+  "foot_service":"Faites créer votre boutique",
 };
 STR.de = {
   "meta_title":"TalkShop: Beschreiben Sie Ihr Geschäft. Bringen Sie es online.",
@@ -4319,6 +4640,7 @@ STR.de = {
   "ask":"Fragen",
   "stock_low":"Wenig Bestand",
   "stock_out":"Ausverkauft",
+  "best":"Bestseller",
   "open_now":"Jetzt geöffnet",
   "closed_now":"Geschlossen",
   "opens_at":"Öffnet {t}",
@@ -4495,7 +4817,46 @@ STR.de = {
   "id_fail":"Online-Speichern fehlgeschlagen, hier ist der volle Link. Er funktioniert genauso.",
   "sh_id_label":"Kurzer Link",
   "sh_full_label":"Voller Link (Backup)",
-  "s_loading":"Shop wird geladen..."
+  "s_loading":"Shop wird geladen...",
+  "gys_eyebrow":"RUNDUM-SERVICE",
+  "gys_h1":"Wir bauen Ihren Online-Shop in 24 Stunden.",
+  "gys_sub":"Schicken Sie uns Ihre Shop-Infos per Telegram. Wir bauen Ihren mobilen Shop, fügen Ihre Produkte und Fotos hinzu und richten WhatsApp-Bestellungen ein. Sie zahlen erst, wenn Ihr Shop live ist.",
+  "gys_cta":"Schreiben Sie uns auf Telegram",
+  "gys_cta_note":"Kostenlos starten. Erst zahlen, wenn der Shop live ist.",
+  "gys_inc_title":"Das ist dabei",
+  "gys_inc1t":"Mobiler Shop",
+  "gys_inc1b":"Ein schneller, übersichtlicher Shop, der auf jedem Handy gut aussieht.",
+  "gys_inc2t":"Ihre Produkte und Fotos",
+  "gys_inc2b":"Wir fügen Ihre Produkte, Preise und Fotos für Sie hinzu.",
+  "gys_inc3t":"WhatsApp-Bestellung",
+  "gys_inc3b":"Kunden stöbern in Ihrem Shop und bestellen per WhatsApp.",
+  "gys_inc4t":"Ihr eigener Link",
+  "gys_inc4b":"Ein kurzer Link und QR-Code zum Teilen, überall.",
+  "gys_inc5t":"In 15 Sprachen",
+  "gys_inc5b":"Ihr Shop spricht automatisch die Sprache Ihrer Kunden.",
+  "gys_steps_title":"So funktioniert es",
+  "gys_s1t":"Schreiben Sie uns",
+  "gys_s1b":"Tippen Sie auf den Button und sagen Sie auf Telegram Hallo.",
+  "gys_s2t":"Infos schicken",
+  "gys_s2b":"Teilen Sie Shop-Name, Produkte, Preise und ein paar Fotos.",
+  "gys_s3t":"Live gehen, dann zahlen",
+  "gys_s3b":"Ihr Shop geht innerhalb von 24 Stunden live. Erst danach zahlen Sie.",
+  "gys_price_title":"Ein einfacher Preis",
+  "gys_price_note":"einmalig zahlen, für immer Ihrer",
+  "gys_launch_badge":"START-ANGEBOT",
+  "gys_launch_text":"Die ersten 5 Shops zahlen nur ₹2,999. Per UPI zahlen, nachdem der Shop live ist.",
+  "gys_faq_title":"Häufige Fragen",
+  "gys_f1q":"Brauche ich technisches Wissen?",
+  "gys_f1a":"Gar keins. Chatten Sie einfach mit uns auf Telegram. Den Rest übernehmen wir.",
+  "gys_f2q":"Wie bestellen Kunden?",
+  "gys_f2a":"Sie stöbern auf dem Handy in Ihrem Shop und bestellen per WhatsApp, wie eine Nachricht an einen Freund.",
+  "gys_f3q":"Kann ich Produkte später ändern?",
+  "gys_f3a":"Ja. Schreiben Sie uns einfach, wir aktualisieren Ihren Shop kostenlos.",
+  "gys_f4q":"Was, wenn mir der Shop nicht gefällt?",
+  "gys_f4a":"Dann zahlen Sie nichts. Sie zahlen erst, wenn der Shop live ist und Sie zufrieden sind.",
+  "gys_cta2_title":"Bereit für Ihren eigenen Online-Shop?",
+  "gys_meta":"Ihr Shop, fertig gebaut: in 24 Stunden online | TalkShop",
+  "foot_service":"Shop bauen lassen",
 };
 STR.pt = {
   "meta_title":"TalkShop: Descreva sua loja. Coloque-a online.",
@@ -4731,6 +5092,7 @@ STR.pt = {
   "ask":"Perguntar",
   "stock_low":"Poucas unidades",
   "stock_out":"Esgotado",
+  "best":"Mais vendido",
   "open_now":"Aberto agora",
   "closed_now":"Fechado",
   "opens_at":"Abre {t}",
@@ -4907,7 +5269,46 @@ STR.pt = {
   "id_fail":"Não foi possível salvar online, então aqui está o link completo. Funciona do mesmo jeito.",
   "sh_id_label":"Link curto",
   "sh_full_label":"Link completo (reserva)",
-  "s_loading":"Carregando loja..."
+  "s_loading":"Carregando loja...",
+  "gys_eyebrow":"SERVIÇO COMPLETO",
+  "gys_h1":"Criamos sua loja online em 24 horas.",
+  "gys_sub":"Mande os dados da sua loja pelo Telegram. Criamos sua loja para celular, adicionamos seus produtos e fotos e configuramos pedidos pelo WhatsApp. Você só paga quando sua loja estiver no ar.",
+  "gys_cta":"Fale conosco no Telegram",
+  "gys_cta_note":"Grátis para começar. Pague só quando a loja estiver no ar.",
+  "gys_inc_title":"O que está incluído",
+  "gys_inc1t":"Loja para celular",
+  "gys_inc1b":"Uma loja rápida e limpa, linda em qualquer telefone.",
+  "gys_inc2t":"Seus produtos e fotos",
+  "gys_inc2b":"Adicionamos seus produtos, preços e fotos por você.",
+  "gys_inc3t":"Pedidos pelo WhatsApp",
+  "gys_inc3b":"Os clientes veem sua loja e pedem pelo WhatsApp.",
+  "gys_inc4t":"Seu próprio link",
+  "gys_inc4b":"Um link curto e um QR code para compartilhar onde quiser.",
+  "gys_inc5t":"Funciona em 15 idiomas",
+  "gys_inc5b":"Sua loja fala automaticamente o idioma dos seus clientes.",
+  "gys_steps_title":"Como funciona",
+  "gys_s1t":"Mande mensagem",
+  "gys_s1b":"Toque no botão e diga olá no Telegram.",
+  "gys_s2t":"Envie seus dados",
+  "gys_s2b":"Compartilhe o nome da loja, produtos, preços e algumas fotos.",
+  "gys_s3t":"No ar, depois pague",
+  "gys_s3b":"Sua loja entra no ar em 24 horas. Você só paga depois disso.",
+  "gys_price_title":"Um preço simples",
+  "gys_price_note":"pagamento único, sua para sempre",
+  "gys_launch_badge":"OFERTA DE LANÇAMENTO",
+  "gys_launch_text":"As 5 primeiras lojas pagam só ₹2,999. Pague por UPI depois que a loja estiver no ar.",
+  "gys_faq_title":"Perguntas frequentes",
+  "gys_f1q":"Preciso de conhecimento técnico?",
+  "gys_f1a":"Nenhum. É só conversar com a gente no Telegram. Cuidamos de toda a parte técnica.",
+  "gys_f2q":"Como os clientes fazem pedidos?",
+  "gys_f2a":"Eles veem sua loja no celular e pedem pelo WhatsApp, como mandar mensagem para um amigo.",
+  "gys_f3q":"Posso mudar os produtos depois?",
+  "gys_f3a":"Sim. Mande mensagem quando quiser e atualizamos sua loja de graça.",
+  "gys_f4q":"E se eu não gostar da loja?",
+  "gys_f4a":"Então você não paga nada. Você só paga quando a loja estiver no ar e você estiver feliz.",
+  "gys_cta2_title":"Pronto para ter sua própria loja online?",
+  "gys_meta":"Sua loja pronta: online em 24 horas | TalkShop",
+  "foot_service":"Monte minha loja",
 };
 STR.ar = {
   "meta_title":"TalkShop: صف متجرك. وانشره على الإنترنت.",
@@ -5143,6 +5544,7 @@ STR.ar = {
   "ask":"اسأل",
   "stock_low":"مخزون منخفض",
   "stock_out":"نفد المخزون",
+  "best":"الأكثر مبيعًا",
   "open_now":"مفتوح الآن",
   "closed_now":"مغلق الآن",
   "opens_at":"يفتح {t}",
@@ -5319,7 +5721,46 @@ STR.ar = {
   "id_fail":"تعذّر الحفظ على الإنترنت، لذا هذا هو الرابط الكامل. يعمل بالطريقة نفسها.",
   "sh_id_label":"رابط مختصر",
   "sh_full_label":"الرابط الكامل (احتياطي)",
-  "s_loading":"جارٍ تحميل المتجر..."
+  "s_loading":"جارٍ تحميل المتجر...",
+  "gys_eyebrow":"خدمة متكاملة",
+  "gys_h1":"نبني متجرك الإلكتروني خلال ٢٤ ساعة.",
+  "gys_sub":"أرسل لنا تفاصيل متجرك على تيليغرام. سنبني واجهة متجرك للجوال، ونضيف منتجاتك وصورك، ونجهز الطلب عبر واتساب. لا تدفع إلا بعد أن يصبح متجرك مباشرًا.",
+  "gys_cta":"راسلنا على تيليغرام",
+  "gys_cta_note":"البدء مجاني. ادفع فقط عندما يصبح متجرك مباشرًا.",
+  "gys_inc_title":"ما المشمول",
+  "gys_inc1t":"متجر للجوال",
+  "gys_inc1b":"متجر سريع وأنيق يبدو رائعًا على كل هاتف.",
+  "gys_inc2t":"منتجاتك وصورك",
+  "gys_inc2b":"نضيف منتجاتك وأسعارك وصورك نيابة عنك.",
+  "gys_inc3t":"الطلب عبر واتساب",
+  "gys_inc3b":"يتصفح العملاء متجرك ويطلبون عبر واتساب.",
+  "gys_inc4t":"رابط المشاركة الخاص بك",
+  "gys_inc4b":"رابط قصير ورمز QR يمكنك مشاركتهما في أي مكان.",
+  "gys_inc5t":"يعمل بـ ١٥ لغة",
+  "gys_inc5b":"يتحدث متجرك تلقائيًا لغة عملائك.",
+  "gys_steps_title":"كيف يعمل",
+  "gys_s1t":"راسلنا",
+  "gys_s1b":"اضغط الزر وقل مرحبًا على تيليغرام.",
+  "gys_s2t":"أرسل التفاصيل",
+  "gys_s2b":"شارك اسم المتجر والمنتجات والأسعار وبعض الصور.",
+  "gys_s3t":"انطلق ثم ادفع",
+  "gys_s3b":"يصبح متجرك مباشرًا خلال ٢٤ ساعة. ادفع فقط بعد ذلك.",
+  "gys_price_title":"سعر واحد بسيط",
+  "gys_price_note":"دفعة واحدة، ولك للأبد",
+  "gys_launch_badge":"عرض الإطلاق",
+  "gys_launch_text":"أول ٥ متاجر تدفع فقط ₹2,999. ادفع عبر UPI بعد أن يصبح متجرك مباشرًا.",
+  "gys_faq_title":"أسئلة شائعة",
+  "gys_f1q":"هل أحتاج إلى مهارات تقنية؟",
+  "gys_f1a":"لا على الإطلاق. فقط تحدث معنا على تيليغرام. نحن نتولى كل الأمور التقنية.",
+  "gys_f2q":"كيف يطلب العملاء؟",
+  "gys_f2a":"يتصفحون متجرك على هواتفهم ويطلبون عبر واتساب، مثل مراسلة صديق.",
+  "gys_f3q":"هل يمكنني تغيير المنتجات لاحقًا؟",
+  "gys_f3a":"نعم. راسلنا في أي وقت وسنحدث متجرك مجانًا.",
+  "gys_f4q":"ماذا لو لم يعجبني المتجر؟",
+  "gys_f4a":"فلن تدفع شيئًا. تدفع فقط بعد أن يصبح متجرك مباشرًا وتكون راضيًا.",
+  "gys_cta2_title":"جاهز لمتجرك الإلكتروني الخاص؟",
+  "gys_meta":"متجرك جاهز: متجر إلكتروني خلال ٢٤ ساعة | TalkShop",
+  "foot_service":"ابنِ متجرك",
 };
 let uiLang = "en";
 try{ uiLang = localStorage.getItem("ts_ui") || "en"; }catch(e){}
@@ -5564,6 +6005,7 @@ STR.ml = {
   "ask":"ചോദിക്കൂ",
   "stock_low":"സ്റ്റോക്ക് കുറവാണ്",
   "stock_out":"സ്റ്റോക്ക് തീർന്നു",
+  "best":"ബെസ്റ്റ്‌സെല്ലർ",
   "open_now":"ഇപ്പോൾ തുറന്നിരിക്കുന്നു",
   "closed_now":"അടച്ചിരിക്കുന്നു",
   "opens_at":"{t} തുറക്കും",
@@ -5740,7 +6182,46 @@ STR.ml = {
   "id_fail":"ഓൺലൈനിൽ സേവ് ചെയ്യാനായില്ല, അതിനാൽ പൂർണ്ണ ലിങ്ക് ഇതാ. അത് അതുപോലെ പ്രവർത്തിക്കും.",
   "sh_id_label":"ചെറിയ ലിങ്ക്",
   "sh_full_label":"പൂർണ്ണ ലിങ്ക് (ബാക്കപ്പ്)",
-  "s_loading":"കട ലോഡ് ചെയ്യുന്നു..."
+  "s_loading":"കട ലോഡ് ചെയ്യുന്നു...",
+  "gys_eyebrow":"നിങ്ങൾക്കായി ചെയ്യുന്ന സേവനം",
+  "gys_h1":"24 മണിക്കൂറിനുള്ളിൽ നിങ്ങളുടെ ഓൺലൈൻ കട ഞങ്ങൾ നിർമ്മിക്കും.",
+  "gys_sub":"നിങ്ങളുടെ കടയുടെ വിവരങ്ങൾ Telegram-ൽ അയക്കൂ. നിങ്ങളുടെ മൊബൈൽ കട ഞങ്ങൾ നിർമ്മിക്കും, ഉൽപ്പന്നങ്ങളും ഫോട്ടോകളും ചേർക്കും, WhatsApp ഓർഡർ സജ്ജമാക്കും. കട ലൈവായ ശേഷം മാത്രം പണം നൽകൂ.",
+  "gys_cta":"Telegram-ൽ സന്ദേശം അയക്കൂ",
+  "gys_cta_note":"തുടങ്ങാൻ സൗജന്യം. കട ലൈവായ ശേഷം മാത്രം പണം.",
+  "gys_inc_title":"ഉൾപ്പെടുന്നത്",
+  "gys_inc1t":"മൊബൈൽ കട",
+  "gys_inc1b":"എല്ലാ ഫോണിലും മനോഹരമായി കാണുന്ന വേഗമേറിയ, വൃത്തിയുള്ള കട.",
+  "gys_inc2t":"നിങ്ങളുടെ ഉൽപ്പന്നങ്ങളും ഫോട്ടോകളും",
+  "gys_inc2b":"നിങ്ങളുടെ ഉൽപ്പന്നങ്ങളും വിലകളും ഫോട്ടോകളും ഞങ്ങൾ ചേർക്കും.",
+  "gys_inc3t":"WhatsApp ഓർഡർ",
+  "gys_inc3b":"ഉപഭോക്താക്കൾ നിങ്ങളുടെ കട കണ്ട് WhatsApp വഴി ഓർഡർ ചെയ്യും.",
+  "gys_inc4t":"നിങ്ങളുടെ സ്വന്തം ഷെയർ ലിങ്ക്",
+  "gys_inc4b":"എവിടെയും പങ്കിടാവുന്ന ചെറിയ ലിങ്കും QR കോഡും.",
+  "gys_inc5t":"15 ഭാഷകളിൽ പ്രവർത്തിക്കുന്നു",
+  "gys_inc5b":"നിങ്ങളുടെ കട ഉപഭോക്താക്കളുടെ ഭാഷയിൽ തനിയെ സംസാരിക്കും.",
+  "gys_steps_title":"ഇത് എങ്ങനെ പ്രവർത്തിക്കുന്നു",
+  "gys_s1t":"സന്ദേശം അയക്കൂ",
+  "gys_s1b":"ബട്ടൺ അമർത്തി Telegram-ൽ ഹലോ പറയൂ.",
+  "gys_s2t":"വിവരങ്ങൾ അയക്കൂ",
+  "gys_s2b":"കടയുടെ പേര്, ഉൽപ്പന്നങ്ങൾ, വിലകൾ, കുറച്ച് ഫോട്ടോകൾ പങ്കിടൂ.",
+  "gys_s3t":"ലൈവാക്കൂ, പിന്നെ പണം നൽകൂ",
+  "gys_s3b":"24 മണിക്കൂറിനുള്ളിൽ കട ലൈവാകും. അതിന് ശേഷം മാത്രം പണം നൽകൂ.",
+  "gys_price_title":"ഒരു ലളിതമായ വില",
+  "gys_price_note":"ഒറ്റത്തവണ പേയ്മെന്റ്, എന്നെന്നും നിങ്ങളുടേത്",
+  "gys_launch_badge":"ലോഞ്ച് ഓഫർ",
+  "gys_launch_text":"ആദ്യ 5 കടകൾക്ക് ₹2,999 മാത്രം. കട ലൈവായ ശേഷം UPI വഴി നൽകൂ.",
+  "gys_faq_title":"സാധാരണ ചോദ്യങ്ങൾ",
+  "gys_f1q":"സാങ്കേതിക പരിജ്ഞാനം വേണോ?",
+  "gys_f1a":"ഒട്ടും വേണ്ട. Telegram-ൽ ഞങ്ങളോട് സംസാരിച്ചാൽ മതി. സാങ്കേതികമായതെല്ലാം ഞങ്ങൾ നോക്കിക്കോളാം.",
+  "gys_f2q":"ഉപഭോക്താക്കൾ എങ്ങനെ ഓർഡർ ചെയ്യും?",
+  "gys_f2a":"അവർ ഫോണിൽ കട കണ്ട്, സുഹൃത്തിന് സന്ദേശമയക്കുന്നത് പോലെ WhatsApp വഴി ഓർഡർ ചെയ്യും.",
+  "gys_f3q":"പിന്നീട് ഉൽപ്പന്നങ്ങൾ മാറ്റാമോ?",
+  "gys_f3a":"തീർച്ചയായും. എപ്പോൾ വേണമെങ്കിലും സന്ദേശമയക്കൂ, നിങ്ങളുടെ കട സൗജന്യമായി അപ്ഡേറ്റ് ചെയ്യും.",
+  "gys_f4q":"കട ഇഷ്ടപ്പെട്ടില്ലെങ്കിൽ?",
+  "gys_f4a":"പണം നൽകേണ്ട. കട ലൈവായി നിങ്ങൾക്ക് സന്തോഷമായ ശേഷം മാത്രം നൽകൂ.",
+  "gys_cta2_title":"നിങ്ങളുടെ സ്വന്തം ഓൺലൈൻ കട തയ്യാറാണോ?",
+  "gys_meta":"നിങ്ങളുടെ കട തയ്യാർ: 24 മണിക്കൂറിൽ ഓൺലൈൻ കട | TalkShop",
+  "foot_service":"നിങ്ങളുടെ കട നിർമ്മിക്കൂ",
 };
 STR.hi = {
   "meta_title":"TalkShop: अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।",
@@ -5976,6 +6457,7 @@ STR.hi = {
   "ask":"पूछें",
   "stock_low":"कम स्टॉक",
   "stock_out":"स्टॉक खत्म",
+  "best":"बेस्टसेलर",
   "open_now":"अभी खुला है",
   "closed_now":"बंद है",
   "opens_at":"{t} को खुलेगा",
@@ -6152,7 +6634,46 @@ STR.hi = {
   "id_fail":"ऑनलाइन सहेजा नहीं जा सका, इसलिए यह रहा पूरा लिंक। यह वैसे ही काम करता है।",
   "sh_id_label":"छोटा लिंक",
   "sh_full_label":"पूरा लिंक (बैकअप)",
-  "s_loading":"दुकान लोड हो रही है..."
+  "s_loading":"दुकान लोड हो रही है...",
+  "gys_eyebrow":"पूरी सेवा, हम सब करेंगे",
+  "gys_h1":"हम 24 घंटों में आपका ऑनलाइन स्टोर बना देंगे।",
+  "gys_sub":"Telegram पर अपनी दुकान की जानकारी भेजें। हम आपका मोबाइल स्टोर बनाएंगे, आपके उत्पाद और फोटो जोड़ेंगे, और WhatsApp ऑर्डर सेट करेंगे। आप तभी भुगतान करें जब आपका स्टोर लाइव हो।",
+  "gys_cta":"Telegram पर संदेश भेजें",
+  "gys_cta_note":"शुरुआत मुफ़्त। स्टोर लाइव होने पर ही भुगतान करें।",
+  "gys_inc_title":"इसमें क्या शामिल है",
+  "gys_inc1t":"मोबाइल स्टोर",
+  "gys_inc1b":"एक तेज़, साफ़ स्टोर जो हर फोन पर शानदार दिखता है।",
+  "gys_inc2t":"आपके उत्पाद और फोटो",
+  "gys_inc2b":"हम आपके उत्पाद, कीमतें और फोटो जोड़ देंगे।",
+  "gys_inc3t":"WhatsApp ऑर्डर",
+  "gys_inc3b":"ग्राहक आपका स्टोर देखकर WhatsApp पर ऑर्डर करते हैं।",
+  "gys_inc4t":"आपका अपना शेयर लिंक",
+  "gys_inc4b":"एक छोटा लिंक और QR कोड जिसे कहीं भी शेयर करें।",
+  "gys_inc5t":"15 भाषाओं में काम करता है",
+  "gys_inc5b":"आपका स्टोर अपने आप आपके ग्राहकों की भाषा बोलता है।",
+  "gys_steps_title":"यह कैसे काम करता है",
+  "gys_s1t":"हमें संदेश भेजें",
+  "gys_s1b":"बटन दबाएं और Telegram पर नमस्ते कहें।",
+  "gys_s2t":"अपनी जानकारी भेजें",
+  "gys_s2b":"अपनी दुकान का नाम, उत्पाद, कीमतें और कुछ फोटो भेजें।",
+  "gys_s3t":"लाइव करें, फिर भुगतान करें",
+  "gys_s3b":"आपका स्टोर 24 घंटों में लाइव होगा। उसके बाद ही भुगतान करें।",
+  "gys_price_title":"एक सरल कीमत",
+  "gys_price_note":"एक बार भुगतान, हमेशा आपका",
+  "gys_launch_badge":"लॉन्च ऑफ़र",
+  "gys_launch_text":"पहली 5 दुकानें सिर्फ़ ₹2,999 दें। स्टोर लाइव होने के बाद UPI से भुगतान करें।",
+  "gys_faq_title":"आम सवाल",
+  "gys_f1q":"क्या मुझे तकनीकी ज्ञान चाहिए?",
+  "gys_f1a":"बिल्कुल नहीं। बस Telegram पर हमसे बात करें। तकनीकी सब कुछ हम संभालेंगे।",
+  "gys_f2q":"ग्राहक ऑर्डर कैसे करेंगे?",
+  "gys_f2a":"वे फोन पर आपका स्टोर देखेंगे और WhatsApp पर ऑर्डर करेंगे, जैसे दोस्त को संदेश भेजना।",
+  "gys_f3q":"क्या बाद में उत्पाद बदल सकता हूँ?",
+  "gys_f3a":"हाँ। कभी भी संदेश भेजें, हम आपका स्टोर मुफ़्त में अपडेट करेंगे।",
+  "gys_f4q":"अगर स्टोर पसंद न आए तो?",
+  "gys_f4a":"तो कुछ न दें। भुगतान तभी करें जब स्टोर लाइव हो और आप खुश हों।",
+  "gys_cta2_title":"अपना ऑनलाइन स्टोर तैयार है?",
+  "gys_meta":"आपका स्टोर तैयार: 24 घंटों में ऑनलाइन दुकान | TalkShop",
+  "foot_service":"अपना स्टोर बनवाएं",
 };
 STR.ta = {
   "meta_title":"TalkShop: உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.",
@@ -6388,6 +6909,7 @@ STR.ta = {
   "ask":"கேள்",
   "stock_low":"குறைந்த இருப்பு",
   "stock_out":"இருப்பு இல்லை",
+  "best":"பெஸ்ட்செல்லர்",
   "open_now":"இப்போது திறந்துள்ளது",
   "closed_now":"மூடப்பட்டுள்ளது",
   "opens_at":"{t} திறக்கும்",
@@ -6564,7 +7086,46 @@ STR.ta = {
   "id_fail":"ஆன்லைனில் சேமிக்க முடியவில்லை, எனவே இதோ முழு இணைப்பு. அது அதேபோல் செயல்படும்.",
   "sh_id_label":"குறுகிய இணைப்பு",
   "sh_full_label":"முழு இணைப்பு (காப்பு)",
-  "s_loading":"கடை ஏற்றப்படுகிறது..."
+  "s_loading":"கடை ஏற்றப்படுகிறது...",
+  "gys_eyebrow":"உங்களுக்காகச் செய்யும் சேவை",
+  "gys_h1":"உங்கள் ஆன்லைன் கடையை 24 மணி நேரத்தில் உருவாக்குகிறோம்.",
+  "gys_sub":"உங்கள் கடை விவரங்களை Telegram-ல் அனுப்புங்கள். உங்கள் மொபைல் கடையை நாங்கள் உருவாக்கி, தயாரிப்புகள், புகைப்படங்களைச் சேர்த்து, WhatsApp ஆர்டரை அமைக்கிறோம். உங்கள் கடை நேரலையான பிறகு மட்டுமே பணம் செலுத்துங்கள்.",
+  "gys_cta":"Telegram-ல் செய்தி அனுப்புங்கள்",
+  "gys_cta_note":"தொடங்க இலவசம். கடை நேரலையான பிறகு மட்டுமே பணம்.",
+  "gys_inc_title":"இதில் அடங்குவன",
+  "gys_inc1t":"மொபைல் கடை",
+  "gys_inc1b":"ஒவ்வொரு போனிலும் அழகாகத் தெரியும் வேகமான, சுத்தமான கடை.",
+  "gys_inc2t":"உங்கள் தயாரிப்புகள், புகைப்படங்கள்",
+  "gys_inc2b":"உங்கள் தயாரிப்புகள், விலைகள், புகைப்படங்களை நாங்கள் சேர்க்கிறோம்.",
+  "gys_inc3t":"WhatsApp ஆர்டர்",
+  "gys_inc3b":"வாடிக்கையாளர்கள் உங்கள் கடையைப் பார்த்து WhatsApp மூலம் ஆர்டர் செய்கிறார்கள்.",
+  "gys_inc4t":"உங்கள் சொந்தப் பகிர் இணைப்பு",
+  "gys_inc4b":"எங்கும் பகிரக்கூடிய குறுகிய இணைப்பு மற்றும் QR குறியீடு.",
+  "gys_inc5t":"15 மொழிகளில் வேலை செய்கிறது",
+  "gys_inc5b":"உங்கள் கடை உங்கள் வாடிக்கையாளர்களின் மொழியில் தானாகப் பேசுகிறது.",
+  "gys_steps_title":"இது எப்படி வேலை செய்கிறது",
+  "gys_s1t":"செய்தி அனுப்புங்கள்",
+  "gys_s1b":"பொத்தானைத் தட்டி Telegram-ல் வணக்கம் சொல்லுங்கள்.",
+  "gys_s2t":"விவரங்களை அனுப்புங்கள்",
+  "gys_s2b":"கடை பெயர், தயாரிப்புகள், விலைகள், சில புகைப்படங்களைப் பகிருங்கள்.",
+  "gys_s3t":"நேரலை, பிறகு பணம்",
+  "gys_s3b":"24 மணி நேரத்தில் உங்கள் கடை நேரலையாகும். அதன் பிறகு மட்டுமே பணம் செலுத்துங்கள்.",
+  "gys_price_title":"ஒரு எளிய விலை",
+  "gys_price_note":"ஒருமுறை கட்டணம், என்றும் உங்களுடையது",
+  "gys_launch_badge":"தொடக்கச் சலுகை",
+  "gys_launch_text":"முதல் 5 கடைகள் ₹2,999 மட்டுமே. கடை நேரலையான பிறகு UPI மூலம் செலுத்துங்கள்.",
+  "gys_faq_title":"பொதுவான கேள்விகள்",
+  "gys_f1q":"எனக்குத் தொழில்நுட்ப அறிவு தேவையா?",
+  "gys_f1a":"தேவையில்லை. Telegram-ல் எங்களுடன் பேசுங்கள். தொழில்நுட்ப அனைத்தையும் நாங்கள் பார்த்துக்கொள்கிறோம்.",
+  "gys_f2q":"வாடிக்கையாளர்கள் எப்படி ஆர்டர் செய்வார்கள்?",
+  "gys_f2a":"அவர்கள் போனில் உங்கள் கடையைப் பார்த்து, நண்பருக்குச் செய்தி அனுப்புவது போல WhatsApp மூலம் ஆர்டர் செய்வார்கள்.",
+  "gys_f3q":"பின்னர் தயாரிப்புகளை மாற்றலாமா?",
+  "gys_f3a":"ஆம். எப்போது வேண்டுமானாலும் செய்தி அனுப்புங்கள், உங்கள் கடையை இலவசமாகப் புதுப்பிப்போம்.",
+  "gys_f4q":"கடை பிடிக்கவில்லை என்றால்?",
+  "gys_f4a":"பணம் செலுத்த வேண்டாம். கடை நேரலையாகி நீங்கள் மகிழ்ந்த பிறகு மட்டுமே பணம்.",
+  "gys_cta2_title":"உங்கள் சொந்த ஆன்லைன் கடை தயாரா?",
+  "gys_meta":"உங்கள் கடை தயார்: 24 மணி நேரத்தில் ஆன்லைன் கடை | TalkShop",
+  "foot_service":"உங்கள் கடையை உருவாக்குங்கள்",
 };
 STR.es = {
   "meta_title":"TalkShop: Describe tu tienda. Ponla en línea.",
@@ -6801,6 +7362,7 @@ STR.es = {
   "ask":"Preguntar",
   "stock_low":"Poco stock",
   "stock_out":"Agotado",
+  "best":"Más vendido",
   "open_now":"Abierto ahora",
   "closed_now":"Cerrado",
   "opens_at":"Abre {t}",
@@ -6977,7 +7539,46 @@ STR.es = {
   "id_fail":"No se pudo guardar en línea, así que aquí está el enlace completo. Funciona igual.",
   "sh_id_label":"Enlace corto",
   "sh_full_label":"Enlace completo (respaldo)",
-  "s_loading":"Cargando tienda..."
+  "s_loading":"Cargando tienda...",
+  "gys_eyebrow":"SERVICIO LLAVE EN MANO",
+  "gys_h1":"Creamos tu tienda en línea en 24 horas.",
+  "gys_sub":"Escríbenos por Telegram con los datos de tu tienda. Creamos tu tienda móvil, añadimos tus productos y fotos, y configuramos los pedidos por WhatsApp. Pagas solo cuando tu tienda esté en línea.",
+  "gys_cta":"Escríbenos por Telegram",
+  "gys_cta_note":"Empezar es gratis. Pagas solo cuando tu tienda esté en línea.",
+  "gys_inc_title":"Qué incluye",
+  "gys_inc1t":"Tienda móvil",
+  "gys_inc1b":"Una tienda rápida y limpia que se ve genial en cualquier teléfono.",
+  "gys_inc2t":"Tus productos y fotos",
+  "gys_inc2b":"Añadimos tus productos, precios y fotos por ti.",
+  "gys_inc3t":"Pedidos por WhatsApp",
+  "gys_inc3b":"Los clientes ven tu tienda y piden por WhatsApp.",
+  "gys_inc4t":"Tu propio enlace",
+  "gys_inc4b":"Un enlace corto y un código QR para compartir donde quieras.",
+  "gys_inc5t":"Funciona en 15 idiomas",
+  "gys_inc5b":"Tu tienda habla automáticamente el idioma de tus clientes.",
+  "gys_steps_title":"Cómo funciona",
+  "gys_s1t":"Escríbenos",
+  "gys_s1b":"Toca el botón y salúdanos por Telegram.",
+  "gys_s2t":"Envía tus datos",
+  "gys_s2b":"Comparte el nombre de tu tienda, productos, precios y algunas fotos.",
+  "gys_s3t":"Publica y luego paga",
+  "gys_s3b":"Tu tienda estará en línea en 24 horas. Pagas solo después.",
+  "gys_price_title":"Un precio simple",
+  "gys_price_note":"pago único, tuya para siempre",
+  "gys_launch_badge":"OFERTA DE LANZAMIENTO",
+  "gys_launch_text":"Las primeras 5 tiendas pagan solo ₹2,999. Paga por UPI después de que tu tienda esté en línea.",
+  "gys_faq_title":"Preguntas frecuentes",
+  "gys_f1q":"¿Necesito conocimientos técnicos?",
+  "gys_f1a":"Ninguno. Solo chatea con nosotros por Telegram. Nosotros nos encargamos de todo lo técnico.",
+  "gys_f2q":"¿Cómo hacen pedidos los clientes?",
+  "gys_f2a":"Ven tu tienda en su teléfono y piden por WhatsApp, como enviar un mensaje a un amigo.",
+  "gys_f3q":"¿Puedo cambiar mis productos después?",
+  "gys_f3a":"Sí. Escríbenos cuando quieras y actualizaremos tu tienda gratis.",
+  "gys_f4q":"¿Y si no me gusta la tienda?",
+  "gys_f4a":"Entonces no pagas nada. Solo pagas cuando tu tienda esté en línea y estés contento.",
+  "gys_cta2_title":"¿Listo para tener tu propia tienda en línea?",
+  "gys_meta":"Tu tienda lista: creamos tu tienda en línea en 24 horas | TalkShop",
+  "foot_service":"Creamos tu tienda",
 };
 
 
@@ -7269,7 +7870,7 @@ function footer(){
   return '<footer><div class="wrap"><div class="foot">'
     + '<div><span class="brand">Talk<span>Shop</span></span>'
     + '<div>'+t("foot_tag")+'</div></div>'
-    + '<div><h5>'+t("foot_product")+'</h5><a href="#/build" onclick="freshBuild()">'+t("foot_build")+'</a><a class="sample-link" href="#/">'+t("foot_sample")+'</a><a href="#features">'+t("foot_features")+'</a><a href="#how">'+t("foot_how")+'</a></div>'
+    + '<div><h5>'+t("foot_product")+'</h5><a href="#/build" onclick="freshBuild()">'+t("foot_build")+'</a><a href="#/get-your-store">'+t("foot_service")+'</a><a class="sample-link" href="#/">'+t("foot_sample")+'</a><a href="#features">'+t("foot_features")+'</a><a href="#how">'+t("foot_how")+'</a></div>'
     + '<div><h5>'+t("foot_help")+'</h5><a href="#faq">'+t("foot_faq")+'</a><a href="#/build" onclick="freshBuild()">'+t("foot_update")+'</a></div>'
     + '<div><h5>'+t("foot_legal")+'</h5><a href="#/privacy">'+t("foot_privacy")+'</a><a href="#/terms">'+t("foot_terms")+'</a></div>'
     + '</div><div class="foot-bottom"><div>'+t("foot_rights")+'</div><div>'+t("foot_note")+'</div></div>'
@@ -7307,6 +7908,7 @@ function homeView(){
   + '<p class="sub">'+t("hero_sub")+'</p>'
   + '<div class="cta-row"><a class="btn btn-accent btn-lg" href="#/build" onclick="freshBuild()">'+t("hero_cta1")+'</a>'
   + '<a class="btn btn-lg sample-link" href="#/">'+t("hero_cta2")+'</a></div>'
+  + '<div class="meta-row"><a href="#/get-your-store">'+t("foot_service")+'</a></div>'
   + '<div class="meta-row"><b>'+t("meta_free")+'</b>  ·  <b>'+t("meta_noaccount")+'</b>  ·  <b>'+t("meta_noapp")+'</b>  ·  '+t("meta_browser")+'</div>'
   + '</div>'
   + '<div class="hero-visual">'
@@ -7615,6 +8217,7 @@ function prodFieldRow(p, i){
     + '<span class="pf-pricewrap"><span class="pf-cur" aria-hidden="true">'+esc(curSymbol(builderCur()))+'</span><input class="pf-price" data-pf="price" data-i="'+i+'" placeholder="'+t("bp_price")+'" inputmode="decimal" value="'+esc(p.price||"")+'"></span></div>'
     + '<div class="pf-vars" data-pf-vars="'+i+'">'+vars+'<button type="button" class="pf-addvar" data-pfaddvar="'+i+'">+ '+t("bp_addvar")+'</button></div>'
     + '<label class="pf-oos"><input type="checkbox" data-pf="oos" data-i="'+i+'"'+(p.stock==="out"?" checked":"")+'> '+t("bp_oos")+'</label>'
+    + '<label class="pf-oos"><input type="checkbox" data-pf="best" data-i="'+i+'"'+(p.best?" checked":"")+'> '+t("best")+'</label>'
     + '<div class="pf-img" data-imgctl="p'+i+'">'+imgCtlInner("p"+i, p.image, false)+'</div>'
     + '<div class="pf-err hidden" data-pf-err></div>' 
     + '</div>';
@@ -7632,7 +8235,7 @@ function previewHtml(d){
     const price = p.price || ((p.variants && p.variants[0] && p.variants[0].p) || "");
     const pim = imgSrc(p.image);
     return '<div class="pv-card"><div class="pv-img">'+(pim?'<img src="'+esc(pim)+'" alt="" onerror="imgFail(this)">':"")+'</div><div>' 
-      + '<div class="pv-nm">'+esc(p.name)+(out?' <span class="stk stk-out">'+t("stock_out")+'</span>':"")+'</div>'
+      + '<div class="pv-nm">'+esc(p.name)+(p.best?' <span class="stk stk-best">'+t("best")+'</span>':"")+(out?' <span class="stk stk-out">'+t("stock_out")+'</span>':"")+'</div>'
       + '<div class="pv-pr">'+esc(price)+'</div></div></div>';
   }).join("");
   return '<div class="shoptheme theme-'+theme+'">'
@@ -7991,6 +8594,11 @@ function wireBuild(){
       if(oos){
         const p=state.data.products[+oos.getAttribute("data-i")]; if(!p) return;
         p.stock=oos.checked?"out":null; renderPreview(); return;
+      }
+      const bst=e.target.closest('[data-pf="best"]');
+      if(bst){
+        const p=state.data.products[+bst.getAttribute("data-i")]; if(!p) return;
+        p.best=bst.checked?true:null; renderPreview(); return;
       }
       const iu=e.target.closest("[data-imgurl]");
       if(iu){
@@ -8487,8 +9095,9 @@ function prodRow(p, i, hlName){
   const name=p.k?t(p.k):(p.name||"");
   const out=p.stock==="out";
   let badge="";
-  if(p.stock==="low") badge='<span class="stk stk-low">'+t("stock_low")+'</span>';
-  else if(out) badge='<span class="stk stk-out">'+t("stock_out")+'</span>';
+  if(p.best) badge='<span class="stk stk-best">'+t("best")+'</span>';
+  if(p.stock==="low") badge+='<span class="stk stk-low">'+t("stock_low")+'</span>';
+  else if(out) badge+='<span class="stk stk-out">'+t("stock_out")+'</span>';
   const vi=selViOf(p, i);
   let varPills="";
   if(p.variants && p.variants.length){
@@ -9469,6 +10078,58 @@ function termsView(){
     [t("tos_c3t"), t("tos_c3b")], [t("tos_c4t"), t("tos_c4b")]
   ]);
 }
+/* ============================== get your store (done-for-you) ============================== */
+const GYS_TG = "https://t.me/TalkShopBot?start=setup";
+function gysView(){
+  const tgBtn = '<a class="btn btn-accent btn-lg" href="'+GYS_TG+'" target="_blank" rel="noopener">'+t("gys_cta")+'</a>';
+  const inc = [
+    [t("gys_inc1t"), t("gys_inc1b")], [t("gys_inc2t"), t("gys_inc2b")],
+    [t("gys_inc3t"), t("gys_inc3b")], [t("gys_inc4t"), t("gys_inc4b")],
+    [t("gys_inc5t"), t("gys_inc5b")]
+  ].map((c,i)=>'<div class="b-card"><div class="k">0'+(i+1)+'</div><h3>'+c[0]+'</h3><p>'+c[1]+'</p></div>').join("");
+  const steps = [
+    [t("gys_s1t"), t("gys_s1b")], [t("gys_s2t"), t("gys_s2b")], [t("gys_s3t"), t("gys_s3b")]
+  ].map((s,i)=>'<div class="b-card"><div class="k">'+(i+1)+'</div><h3>'+s[0]+'</h3><p>'+s[1]+'</p></div>').join("");
+  const faq = [
+    [t("gys_f1q"), t("gys_f1a")], [t("gys_f2q"), t("gys_f2a")],
+    [t("gys_f3q"), t("gys_f3a")], [t("gys_f4q"), t("gys_f4a")]
+  ].map(f=>'<details><summary>'+f[0]+'</summary><div class="a">'+f[1]+'</div></details>').join("");
+  return header()
+  + '<div class="sec"><div class="wrap" style="max-width:780px;text-align:center;">'
+  + '<div class="eyebrow">'+t("gys_eyebrow")+'</div>'
+  + '<h1 class="serif" style="font-size:clamp(34px,6vw,58px);letter-spacing:-1px;line-height:1.08;margin:0 0 16px;">'+t("gys_h1")+'</h1>'
+  + '<p class="lead" style="margin-left:auto;margin-right:auto;">'+t("gys_sub")+'</p>'
+  + '<div class="cta-row" style="justify-content:center;">'+tgBtn+'</div>'
+  + '<div class="meta-row" style="margin-bottom:0;">'+t("gys_cta_note")+'</div>'
+  + '</div></div>'
+  + '<div class="sec"><div class="wrap">'
+  + '<div class="sec-head"><h2>'+t("gys_inc_title")+'</h2></div>'
+  + '<div class="bento">'+inc+'</div>'
+  + '</div></div>'
+  + '<div class="sec"><div class="wrap">'
+  + '<div class="sec-head"><h2>'+t("gys_steps_title")+'</h2></div>'
+  + '<div class="bento">'+steps+'</div>'
+  + '</div></div>'
+  + '<div class="sec"><div class="wrap" style="max-width:660px;">'
+  + '<div class="sec-head" style="text-align:center;"><h2>'+t("gys_price_title")+'</h2></div>'
+  + '<div class="b-card dark" style="align-items:center;text-align:center;padding:44px 32px;">'
+  + '<div class="k" style="color:var(--amber);">'+t("gys_launch_badge")+'</div>'
+  + '<div style="font-size:16px;opacity:.85;"><s>\u20b96,999</s> '+t("gys_price_note")+'</div>'
+  + '<div class="serif" style="font-size:clamp(52px,9vw,80px);letter-spacing:-2px;line-height:1;margin:10px 0 14px;">\u20b92,999</div>'
+  + '<p style="max-width:24em;margin:0 auto 28px;">'+t("gys_launch_text")+'</p>'
+  + tgBtn
+  + '</div></div></div>'
+  + '<div class="sec"><div class="wrap" style="max-width:760px;">'
+  + '<div class="sec-head"><h2>'+t("gys_faq_title")+'</h2></div>'
+  + '<div class="faq">'+faq+'</div>'
+  + '</div></div>'
+  + '<div class="sec"><div class="wrap"><div class="cta-panel">'
+  + '<h2>'+t("gys_cta2_title")+'</h2>'
+  + '<p>'+t("gys_cta_note")+'</p>'
+  + tgBtn
+  + '</div></div></div>'
+  + footer();
+}
 /* ============================== locale chooser ============================== */
 function goLocale(){ try{ sessionStorage.setItem("ts_loc_back", location.hash); }catch(e){} }
 function footLocLabel(){
@@ -9921,6 +10582,9 @@ function router(){
     render(privacyView());
   } else if(h==="terms"){
     render(termsView());
+  } else if(h==="get-your-store"){
+    render(gysView());
+    document.title = t("gys_meta");
   } else if(h==="locale"){
     render(localeView()); wireLocale();
   } else if(h==="shops"){
