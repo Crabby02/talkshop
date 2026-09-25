@@ -33,6 +33,18 @@ function pathname(id) {
   return "shops/" + id + ".json";
 }
 
+// Generic path access for other record types (orders, indexes). Callers must
+// validate every path segment themselves; the fixed "shops/"/"orders/"
+// prefixes are lowercase, IDs are unambiguous alphanumerics. Directory
+// traversal is rejected explicitly.
+const PATH_RE = /^[A-Za-z0-9][A-Za-z0-9\-\/]*\.json$/;
+function checkPath(p) {
+  if (typeof p !== "string" || !PATH_RE.test(p) || p.indexOf("..") >= 0) {
+    throw new Error("bad_path");
+  }
+  return p;
+}
+
 async function apiFetch(url, opts, token) {
   return fetch(url, {
     ...opts,
@@ -45,20 +57,23 @@ async function apiFetch(url, opts, token) {
 }
 
 // HEAD the file URL: 200 = exists, 404 = missing.
-async function exists(id) {
+async function existsPath(path) {
   const { token, base } = cfg();
-  const r = await apiFetch(base + "/" + pathname(id), { method: "HEAD" }, token);
+  const r = await apiFetch(base + "/" + checkPath(path), { method: "HEAD" }, token);
   return r.status === 200;
 }
 
-async function save(id, jsonString) {
+async function savePath(path, jsonString) {
   const { token } = cfg();
-  const url = API + "/?pathname=" + encodeURIComponent(pathname(id));
+  const url = API + "/?pathname=" + encodeURIComponent(checkPath(path));
   const r = await apiFetch(url, {
     method: "PUT",
     headers: {
       "x-vercel-blob-access": "private",
       "x-add-random-suffix": "0",
+      // Updates rewrite the same pathname (order status, shop republish),
+      // so overwrites must be allowed.
+      "x-allow-overwrite": "1",
       "x-content-type": "application/json",
       "content-type": "application/json"
     },
@@ -70,12 +85,24 @@ async function save(id, jsonString) {
   }
 }
 
-async function load(id) {
+async function loadPath(path) {
   const { token, base } = cfg();
-  const r = await apiFetch(base + "/" + pathname(id), { method: "GET" }, token);
+  const r = await apiFetch(base + "/" + checkPath(path), { method: "GET" }, token);
   if (r.status === 404) return null;
   if (!r.ok) throw new Error("blob_load_failed:" + r.status);
   return await r.text();
+}
+
+async function exists(id) {
+  return existsPath(pathname(id));
+}
+
+async function save(id, jsonString) {
+  return savePath(pathname(id), jsonString);
+}
+
+async function load(id) {
+  return loadPath(pathname(id));
 }
 
 async function remove(id) {
@@ -88,4 +115,4 @@ async function remove(id) {
   if (!r.ok) throw new Error("blob_delete_failed:" + r.status);
 }
 
-module.exports = { exists, save, load, remove };
+module.exports = { exists, save, load, remove, existsPath, savePath, loadPath };

@@ -259,6 +259,36 @@ textarea.typebox{width:100%; border:1px solid var(--line); border-radius:12px; p
 .dash-sub{font-size:13px; color:var(--ink2);}
 .dash-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
 .dash-actions .btn{width:100%;justify-content:center;}
+.btn-orders{grid-column:1/-1;}
+.ord-badge{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:#c0392b;color:#fff;font-size:12px;font-weight:700;margin-inline-start:6px;}
+.ord-top{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap;}
+.ord-h{font-size:24px;margin:0;flex:1 1 auto;}
+.ord-shop{margin:0 0 16px;}
+.ord-list{display:flex;flex-direction:column;gap:12px;}
+.ord-card{border:1px solid var(--line);border-radius:14px;background:var(--paper);padding:12px 14px;}
+.ord-head{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;padding:0;cursor:pointer;text-align:start;font:inherit;color:inherit;min-height:44px;}
+.ord-code{font-weight:800;font-size:16px;letter-spacing:.5px;}
+.ord-pill{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;}
+.ord-pill-new{background:#e8f0fe;color:#1a56db;}
+.ord-pill-prep{background:#fff4d6;color:#8a5a00;}
+.ord-pill-ready{background:#e6f7ec;color:#1e7e34;}
+.ord-pill-done{background:#e9ecef;color:#495057;}
+.ord-pill-cancel{background:#fde8e8;color:#a01f1f;}
+.ord-time{margin-inline-start:auto;font-size:12px;color:var(--ink2);white-space:nowrap;}
+.ord-caret{color:var(--ink2);font-size:14px;}
+.ord-sum{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;color:var(--ink2);margin-top:6px;}
+.ord-sep{opacity:.5;}
+.ord-total{font-weight:700;color:var(--ink);}
+.ord-detail{margin-top:10px;border-top:1px solid var(--line);padding-top:10px;}
+.ord-items{list-style:none;margin:0 0 8px;padding:0;}
+.ord-items li{padding:6px 0;border-bottom:1px dashed var(--line);font-size:14px;display:flex;justify-content:space-between;gap:10px;}
+.ord-li-price{font-weight:600;white-space:nowrap;}
+.ord-kv{display:flex;justify-content:space-between;gap:12px;font-size:14px;padding:4px 0;}
+.ord-kv span:first-child{color:var(--ink2);}
+.ord-contact{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap;}
+.ord-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.ord-empty{text-align:center;padding:32px 16px;color:var(--ink2);}
+.ord-empty p{margin:6px 0;}
 .share-btns{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:26px;}
 .note{font-size:14px; color:var(--ink2); max-width:34em; margin:0 auto;}
 /* ---------- published shop ---------- */
@@ -762,9 +792,20 @@ function setRegistryServerId(regId, serverId){
   const ix = shops.findIndex(s=>s.id===regId);
   if(ix>=0){ shops[ix].serverId = serverId; writeShops(shops); }
 }
+// Merchant key for the orders inbox, issued by POST /api/shops. Kept silent
+// in the on-device registry; the merchant never needs to see or type it.
+function setRegistryKey(regId, key){
+  const shops = readShops();
+  const ix = shops.findIndex(s=>s.id===regId);
+  if(ix>=0){ shops[ix].merchantKey = key; writeShops(shops); }
+}
 // POST the shop to /api/shops for a short server-side ID. On success the
 // share screen's primary link becomes #/s/<id>; on any failure the full
 // payload link stays as the share link (it always works).
+// Republish sends the existing serverId (and merchantKey when we have one)
+// so the record updates in place and the shared link stays stable. A 403/404
+// (key lost, e.g. another device claimed it) falls back to minting a brand
+// new shop, which is the pre-key behavior.
 function issueShopId(payload, regId){
   let done = false;
   const finish = (ok, id)=>{
@@ -781,11 +822,32 @@ function issueShopId(payload, regId){
     const box = $("#idLinkBox");
     if(box){ box.innerHTML = idLinkRowsHtml(); wireIdRows(); }
   };
+  const postShop = (withId)=>{
+    const entry = readShops().find(s=>s.id===regId);
+    const body = { payload: decodeSite(payload) };
+    if(withId && entry && entry.serverId){
+      body.shopId = entry.serverId;
+      if(entry.merchantKey) body.key = entry.merchantKey;
+    }
+    return fetch("/api/shops", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(body) })
+      .then(async r=>{
+        const j = await r.json().catch(()=>null);
+        if(r.status===403 || r.status===404){ const e=new Error("republish_denied"); e.denied=true; throw e; }
+        if(!r.ok || !j) throw new Error("api");
+        return j;
+      });
+  };
+  const handle = (j)=>{
+    const id = j && j.id;
+    if(typeof id !== "string" || !SHOP_ID_RE.test(id)) throw new Error("bad id");
+    if(j.merchantKey) setRegistryKey(regId, j.merchantKey);
+    finish(true, id);
+  };
   try{
-    fetch("/api/shops", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ payload: decodeSite(payload) }) })
-      .then(r=>{ if(!r.ok) throw new Error("api"); return r.json(); })
-      .then(j=>{ const id = j && j.id; if(typeof id !== "string" || !SHOP_ID_RE.test(id)) throw new Error("bad id"); finish(true, id); })
-      .catch(()=>finish(false));
+    postShop(true).then(handle).catch(e=>{
+      if(e && e.denied) postShop(false).then(handle).catch(()=>finish(false));
+      else finish(false);
+    });
   }catch(e){ finish(false); }
   setTimeout(()=>finish(false), 15000);
 }
@@ -1101,6 +1163,33 @@ const STR = { en: {
   "dash_title":"My shops",
   "dash_empty":"No shops saved here yet. Publish a shop and it will show up here.",
   "dash_edit":"Edit",
+  "ord_view":"Orders",
+  "ord_back":"Back",
+  "ord_title":"Orders",
+  "ord_refresh":"Refresh",
+  "ord_loading":"Loading orders...",
+  "ord_empty":"No orders yet",
+  "ord_empty_sub":"New orders from your storefront will appear here.",
+  "ord_err":"Could not load orders.",
+  "ord_denied":"Access denied",
+  "ord_denied_sub":"Republish this shop to enable the orders inbox.",
+  "ord_items_n":"{n} items",
+  "ord_sub":"Subtotal",
+  "ord_disc":"Discount",
+  "ord_fee":"Delivery fee",
+  "ord_addr":"Address",
+  "ord_slot":"Time slot",
+  "ord_pay":"Payment",
+  "ord_note":"Note",
+  "ord_call":"Call",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"New",
+  "ord_st_preparing":"Preparing",
+  "ord_st_ready":"Ready",
+  "ord_st_completed":"Completed",
+  "ord_st_cancelled":"Cancelled",
+  "ord_cancel":"Cancel",
+  "ord_customer":"Customer",
   "dash_view":"View",
   "dash_copy":"Copy link",
   "dash_del":"Delete",
@@ -1486,6 +1575,33 @@ STR.te = {
   "dash_title":"నా దుకాణాలు",
   "dash_empty":"ఇంకా దుకాణాలేవీ సేవ్ చేయలేదు. ఒక దుకాణాన్ని ప్రచురించండి, అది ఇక్కడ కనిపిస్తుంది.",
   "dash_edit":"సవరించు",
+  "ord_view":"ఆర్డర్లు",
+  "ord_back":"వెనుకకు",
+  "ord_title":"ఆర్డర్లు",
+  "ord_refresh":"రిఫ్రెష్",
+  "ord_loading":"ఆర్డర్లు లోడ్ అవుతున్నాయి...",
+  "ord_empty":"ఇంకా ఆర్డర్లు లేవు",
+  "ord_empty_sub":"మీ స్టోర్ నుండి కొత్త ఆర్డర్లు ఇక్కడ కనిపిస్తాయి.",
+  "ord_err":"ఆర్డర్లు లోడ్ కాలేదు.",
+  "ord_denied":"యాక్సెస్ నిరాకరించబడింది",
+  "ord_denied_sub":"ఆర్డర్ల ఇన్‌బాక్స్‌ను ప్రారంభించడానికి ఈ దుకాణాన్ని మళ్లీ ప్రచురించండి.",
+  "ord_items_n":"{n} వస్తువులు",
+  "ord_sub":"మొత్తం",
+  "ord_disc":"తగ్గింపు",
+  "ord_fee":"డెలివరీ ఫీజు",
+  "ord_addr":"చిరునామా",
+  "ord_slot":"సమయం",
+  "ord_pay":"చెల్లింపు",
+  "ord_note":"గమనిక",
+  "ord_call":"కాల్ చేయండి",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"కొత్తది",
+  "ord_st_preparing":"తయారవుతోంది",
+  "ord_st_ready":"సిద్ధం",
+  "ord_st_completed":"పూర్తయింది",
+  "ord_st_cancelled":"రద్దు చేయబడింది",
+  "ord_cancel":"రద్దు చేయండి",
+  "ord_customer":"కస్టమర్",
   "dash_view":"చూడు",
   "dash_copy":"లింక్ కాపీ చేయి",
   "dash_del":"తొలగించు",
@@ -1871,6 +1987,33 @@ STR.bn = {
   "dash_title":"আমার দোকান",
   "dash_empty":"এখনও কোনো দোকান সংরক্ষণ করা হয়নি। একটি দোকান প্রকাশ করুন, সেটি এখানে দেখা যাবে।",
   "dash_edit":"সম্পাদনা",
+  "ord_view":"অর্ডার",
+  "ord_back":"পেছনে",
+  "ord_title":"অর্ডার",
+  "ord_refresh":"রিফ্রেশ",
+  "ord_loading":"অর্ডার লোড হচ্ছে...",
+  "ord_empty":"এখনও কোনো অর্ডার নেই",
+  "ord_empty_sub":"আপনার দোকান থেকে নতুন অর্ডার এখানে দেখা যাবে।",
+  "ord_err":"অর্ডার লোড করা যায়নি।",
+  "ord_denied":"অ্যাক্সেস প্রত্যাখ্যান",
+  "ord_denied_sub":"অর্ডার ইনবক্স চালু করতে এই দোকানটি আবার প্রকাশ করুন।",
+  "ord_items_n":"{n}টি পণ্য",
+  "ord_sub":"সাবটোটাল",
+  "ord_disc":"ছাড়",
+  "ord_fee":"ডেলিভারি ফি",
+  "ord_addr":"ঠিকানা",
+  "ord_slot":"সময়",
+  "ord_pay":"পেমেন্ট",
+  "ord_note":"নোট",
+  "ord_call":"কল করুন",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"নতুন",
+  "ord_st_preparing":"প্রস্তুত হচ্ছে",
+  "ord_st_ready":"প্রস্তুত",
+  "ord_st_completed":"সম্পন্ন",
+  "ord_st_cancelled":"বাতিল",
+  "ord_cancel":"বাতিল করুন",
+  "ord_customer":"গ্রাহক",
   "dash_view":"দেখুন",
   "dash_copy":"লিংক কপি করুন",
   "dash_del":"মুছুন",
@@ -2256,6 +2399,33 @@ STR.kn = {
   "dash_title":"ನನ್ನ ಅಂಗಡಿಗಳು",
   "dash_empty":"ಇನ್ನೂ ಯಾವುದೇ ಅಂಗಡಿ ಉಳಿಸಿಲ್ಲ. ಒಂದು ಅಂಗಡಿಯನ್ನು ಪ್ರಕಟಿಸಿ, ಅದು ಇಲ್ಲಿ ಕಾಣುತ್ತದೆ.",
   "dash_edit":"ಸಂಪಾದಿಸಿ",
+  "ord_view":"ಆರ್ಡರ್‌ಗಳು",
+  "ord_back":"ಹಿಂದೆ",
+  "ord_title":"ಆರ್ಡರ್‌ಗಳು",
+  "ord_refresh":"ರಿಫ್ರೆಶ್",
+  "ord_loading":"ಆರ್ಡರ್‌ಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ...",
+  "ord_empty":"ಇನ್ನೂ ಯಾವುದೇ ಆರ್ಡರ್ ಇಲ್ಲ",
+  "ord_empty_sub":"ನಿಮ್ಮ ಅಂಗಡಿಯ ಹೊಸ ಆರ್ಡರ್‌ಗಳು ಇಲ್ಲಿ ಕಾಣುತ್ತವೆ.",
+  "ord_err":"ಆರ್ಡರ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ.",
+  "ord_denied":"ಪ್ರವೇಶ ನಿರಾಕರಿಸಲಾಗಿದೆ",
+  "ord_denied_sub":"ಆರ್ಡರ್ ಇನ್‌ಬಾಕ್ಸ್ ಸಕ್ರಿಯಗೊಳಿಸಲು ಈ ಅಂಗಡಿಯನ್ನು ಮರು ಪ್ರಕಟಿಸಿ.",
+  "ord_items_n":"{n} ವಸ್ತುಗಳು",
+  "ord_sub":"ಉಪಮೊತ್ತ",
+  "ord_disc":"ರಿಯಾಯಿತಿ",
+  "ord_fee":"ಡೆಲಿವರಿ ಶುಲ್ಕ",
+  "ord_addr":"ವಿಳಾಸ",
+  "ord_slot":"ಸಮಯ",
+  "ord_pay":"ಪಾವತಿ",
+  "ord_note":"ಟಿಪ್ಪಣಿ",
+  "ord_call":"ಕರೆ ಮಾಡಿ",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"ಹೊಸದು",
+  "ord_st_preparing":"ತಯಾರಾಗುತ್ತಿದೆ",
+  "ord_st_ready":"ಸಿದ್ಧ",
+  "ord_st_completed":"ಪೂರ್ಣಗೊಂಡಿದೆ",
+  "ord_st_cancelled":"ರದ್ದಾಗಿದೆ",
+  "ord_cancel":"ರದ್ದುಮಾಡಿ",
+  "ord_customer":"ಗ್ರಾಹಕ",
   "dash_view":"ನೋಡಿ",
   "dash_copy":"ಲಿಂಕ್ ನಕಲಿಸಿ",
   "dash_del":"ಅಳಿಸಿ",
@@ -2641,6 +2811,33 @@ STR.mr = {
   "dash_title":"माझी दुकाने",
   "dash_empty":"अजून कोणतीही दुकाने जतन केलेली नाहीत. दुकान प्रकाशित करा, ती येथे दिसेल.",
   "dash_edit":"संपादित करा",
+  "ord_view":"ऑर्डर",
+  "ord_back":"मागे",
+  "ord_title":"ऑर्डर",
+  "ord_refresh":"रिफ्रेश",
+  "ord_loading":"ऑर्डर लोड होत आहेत...",
+  "ord_empty":"अजून ऑर्डर नाहीत",
+  "ord_empty_sub":"तुमच्या दुकानातील नवीन ऑर्डर येथे दिसतील.",
+  "ord_err":"ऑर्डर लोड करता आल्या नाहीत.",
+  "ord_denied":"प्रवेश नाकारला",
+  "ord_denied_sub":"ऑर्डर इनबॉक्स सुरू करण्यासाठी हे दुकान पुन्हा प्रकाशित करा.",
+  "ord_items_n":"{n} वस्तू",
+  "ord_sub":"उपबेरीज",
+  "ord_disc":"सूट",
+  "ord_fee":"डिलिव्हरी शुल्क",
+  "ord_addr":"पत्ता",
+  "ord_slot":"वेळ",
+  "ord_pay":"पेमेंट",
+  "ord_note":"टीप",
+  "ord_call":"कॉल करा",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"नवीन",
+  "ord_st_preparing":"तयार होत आहे",
+  "ord_st_ready":"तयार",
+  "ord_st_completed":"पूर्ण",
+  "ord_st_cancelled":"रद्द",
+  "ord_cancel":"रद्द करा",
+  "ord_customer":"ग्राहक",
   "dash_view":"पहा",
   "dash_copy":"लिंक कॉपी करा",
   "dash_del":"हटवा",
@@ -3026,6 +3223,33 @@ STR.zh = {
   "dash_title":"我的店铺",
   "dash_empty":"还没有保存的店铺。发布一家店铺，它就会显示在这里。",
   "dash_edit":"编辑",
+  "ord_view":"订单",
+  "ord_back":"返回",
+  "ord_title":"订单",
+  "ord_refresh":"刷新",
+  "ord_loading":"正在加载订单...",
+  "ord_empty":"暂无订单",
+  "ord_empty_sub":"您店铺的新订单将显示在这里。",
+  "ord_err":"无法加载订单。",
+  "ord_denied":"访问被拒绝",
+  "ord_denied_sub":"重新发布此店铺以启用订单收件箱。",
+  "ord_items_n":"{n} 件商品",
+  "ord_sub":"小计",
+  "ord_disc":"折扣",
+  "ord_fee":"配送费",
+  "ord_addr":"地址",
+  "ord_slot":"时间段",
+  "ord_pay":"付款",
+  "ord_note":"备注",
+  "ord_call":"拨打电话",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"新订单",
+  "ord_st_preparing":"准备中",
+  "ord_st_ready":"已就绪",
+  "ord_st_completed":"已完成",
+  "ord_st_cancelled":"已取消",
+  "ord_cancel":"取消",
+  "ord_customer":"客户",
   "dash_view":"查看",
   "dash_copy":"复制链接",
   "dash_del":"删除",
@@ -3411,6 +3635,33 @@ STR.ja = {
   "dash_title":"マイショップ",
   "dash_empty":"保存されたショップはまだありません。ショップを公開するとここに表示されます。",
   "dash_edit":"編集",
+  "ord_view":"注文",
+  "ord_back":"戻る",
+  "ord_title":"注文",
+  "ord_refresh":"更新",
+  "ord_loading":"注文を読み込み中...",
+  "ord_empty":"まだ注文がありません",
+  "ord_empty_sub":"ショップの新しい注文はここに表示されます。",
+  "ord_err":"注文を読み込めませんでした。",
+  "ord_denied":"アクセスが拒否されました",
+  "ord_denied_sub":"注文受信箱を有効にするには、このショップを再公開してください。",
+  "ord_items_n":"{n} 点",
+  "ord_sub":"小計",
+  "ord_disc":"割引",
+  "ord_fee":"配送料",
+  "ord_addr":"住所",
+  "ord_slot":"時間帯",
+  "ord_pay":"支払い",
+  "ord_note":"メモ",
+  "ord_call":"電話する",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"新規",
+  "ord_st_preparing":"準備中",
+  "ord_st_ready":"準備完了",
+  "ord_st_completed":"完了",
+  "ord_st_cancelled":"キャンセル済み",
+  "ord_cancel":"キャンセル",
+  "ord_customer":"お客様",
   "dash_view":"見る",
   "dash_copy":"リンクをコピー",
   "dash_del":"削除",
@@ -3796,6 +4047,33 @@ STR.fr = {
   "dash_title":"Mes boutiques",
   "dash_empty":"Aucune boutique enregistrée pour le moment. Publiez une boutique et elle apparaîtra ici.",
   "dash_edit":"Modifier",
+  "ord_view":"Commandes",
+  "ord_back":"Retour",
+  "ord_title":"Commandes",
+  "ord_refresh":"Actualiser",
+  "ord_loading":"Chargement des commandes...",
+  "ord_empty":"Aucune commande pour le moment",
+  "ord_empty_sub":"Les nouvelles commandes de votre boutique apparaîtront ici.",
+  "ord_err":"Impossible de charger les commandes.",
+  "ord_denied":"Accès refusé",
+  "ord_denied_sub":"Republiez cette boutique pour activer la boîte de réception des commandes.",
+  "ord_items_n":"{n} articles",
+  "ord_sub":"Sous-total",
+  "ord_disc":"Remise",
+  "ord_fee":"Frais de livraison",
+  "ord_addr":"Adresse",
+  "ord_slot":"Créneau",
+  "ord_pay":"Paiement",
+  "ord_note":"Note",
+  "ord_call":"Appeler",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"Nouvelle",
+  "ord_st_preparing":"En préparation",
+  "ord_st_ready":"Prête",
+  "ord_st_completed":"Terminée",
+  "ord_st_cancelled":"Annulée",
+  "ord_cancel":"Annuler",
+  "ord_customer":"Client",
   "dash_view":"Voir",
   "dash_copy":"Copier le lien",
   "dash_del":"Supprimer",
@@ -4181,6 +4459,33 @@ STR.de = {
   "dash_title":"Meine Shops",
   "dash_empty":"Noch keine Shops gespeichert. Veröffentliche einen Shop und er erscheint hier.",
   "dash_edit":"Bearbeiten",
+  "ord_view":"Bestellungen",
+  "ord_back":"Zurück",
+  "ord_title":"Bestellungen",
+  "ord_refresh":"Aktualisieren",
+  "ord_loading":"Bestellungen werden geladen...",
+  "ord_empty":"Noch keine Bestellungen",
+  "ord_empty_sub":"Neue Bestellungen aus Ihrem Shop erscheinen hier.",
+  "ord_err":"Bestellungen konnten nicht geladen werden.",
+  "ord_denied":"Zugriff verweigert",
+  "ord_denied_sub":"Veröffentlichen Sie diesen Shop erneut, um das Bestellpostfach zu aktivieren.",
+  "ord_items_n":"{n} Artikel",
+  "ord_sub":"Zwischensumme",
+  "ord_disc":"Rabatt",
+  "ord_fee":"Liefergebühr",
+  "ord_addr":"Adresse",
+  "ord_slot":"Zeitfenster",
+  "ord_pay":"Zahlung",
+  "ord_note":"Notiz",
+  "ord_call":"Anrufen",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"Neu",
+  "ord_st_preparing":"In Vorbereitung",
+  "ord_st_ready":"Bereit",
+  "ord_st_completed":"Abgeschlossen",
+  "ord_st_cancelled":"Storniert",
+  "ord_cancel":"Stornieren",
+  "ord_customer":"Kunde",
   "dash_view":"Ansehen",
   "dash_copy":"Link kopieren",
   "dash_del":"Löschen",
@@ -4566,6 +4871,33 @@ STR.pt = {
   "dash_title":"Minhas lojas",
   "dash_empty":"Nenhuma loja salva ainda. Publique uma loja e ela aparecerá aqui.",
   "dash_edit":"Editar",
+  "ord_view":"Pedidos",
+  "ord_back":"Voltar",
+  "ord_title":"Pedidos",
+  "ord_refresh":"Atualizar",
+  "ord_loading":"Carregando pedidos...",
+  "ord_empty":"Nenhum pedido ainda",
+  "ord_empty_sub":"Novos pedidos da sua loja aparecerão aqui.",
+  "ord_err":"Não foi possível carregar os pedidos.",
+  "ord_denied":"Acesso negado",
+  "ord_denied_sub":"Republique esta loja para ativar a caixa de pedidos.",
+  "ord_items_n":"{n} itens",
+  "ord_sub":"Subtotal",
+  "ord_disc":"Desconto",
+  "ord_fee":"Taxa de entrega",
+  "ord_addr":"Endereço",
+  "ord_slot":"Horário",
+  "ord_pay":"Pagamento",
+  "ord_note":"Observação",
+  "ord_call":"Ligar",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"Novo",
+  "ord_st_preparing":"Em preparo",
+  "ord_st_ready":"Pronto",
+  "ord_st_completed":"Concluído",
+  "ord_st_cancelled":"Cancelado",
+  "ord_cancel":"Cancelar",
+  "ord_customer":"Cliente",
   "dash_view":"Ver",
   "dash_copy":"Copiar link",
   "dash_del":"Excluir",
@@ -4951,6 +5283,33 @@ STR.ar = {
   "dash_title":"متاجري",
   "dash_empty":"لا توجد متاجر محفوظة بعد. انشر متجراً وسيظهر هنا.",
   "dash_edit":"تعديل",
+  "ord_view":"الطلبات",
+  "ord_back":"رجوع",
+  "ord_title":"الطلبات",
+  "ord_refresh":"تحديث",
+  "ord_loading":"جارٍ تحميل الطلبات...",
+  "ord_empty":"لا توجد طلبات بعد",
+  "ord_empty_sub":"ستظهر الطلبات الجديدة من متجرك هنا.",
+  "ord_err":"تعذّر تحميل الطلبات.",
+  "ord_denied":"تم رفض الوصول",
+  "ord_denied_sub":"أعد نشر هذا المتجر لتفعيل صندوق الطلبات.",
+  "ord_items_n":"{n} منتجات",
+  "ord_sub":"المجموع الفرعي",
+  "ord_disc":"الخصم",
+  "ord_fee":"رسوم التوصيل",
+  "ord_addr":"العنوان",
+  "ord_slot":"الموعد",
+  "ord_pay":"الدفع",
+  "ord_note":"ملاحظة",
+  "ord_call":"اتصال",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"جديد",
+  "ord_st_preparing":"قيد التحضير",
+  "ord_st_ready":"جاهز",
+  "ord_st_completed":"مكتمل",
+  "ord_st_cancelled":"ملغي",
+  "ord_cancel":"إلغاء",
+  "ord_customer":"العميل",
   "dash_view":"عرض",
   "dash_copy":"نسخ الرابط",
   "dash_del":"حذف",
@@ -5345,6 +5704,33 @@ STR.ml = {
   "dash_title":"എന്റെ കടകൾ",
   "dash_empty":"ഇതുവരെ കടകളൊന്നും സേവ് ചെയ്തിട്ടില്ല. ഒരു കട പ്രസിദ്ധീകരിക്കൂ, അത് ഇവിടെ കാണും.",
   "dash_edit":"തിരുത്തുക",
+  "ord_view":"ഓർഡറുകൾ",
+  "ord_back":"തിരികെ",
+  "ord_title":"ഓർഡറുകൾ",
+  "ord_refresh":"പുതുക്കുക",
+  "ord_loading":"ഓർഡറുകൾ ലോഡ് ചെയ്യുന്നു...",
+  "ord_empty":"ഇതുവരെ ഓർഡറുകളില്ല",
+  "ord_empty_sub":"നിങ്ങളുടെ കടയിലെ പുതിയ ഓർഡറുകൾ ഇവിടെ കാണും.",
+  "ord_err":"ഓർഡറുകൾ ലോഡ് ചെയ്യാനായില്ല.",
+  "ord_denied":"ആക്സസ് നിഷേധിച്ചു",
+  "ord_denied_sub":"ഓർഡർ ഇൻബോക്സ് പ്രവർത്തിപ്പിക്കാൻ ഈ കട വീണ്ടും പ്രസിദ്ധീകരിക്കൂ.",
+  "ord_items_n":"{n} ഇനങ്ങൾ",
+  "ord_sub":"ഉപആകെ",
+  "ord_disc":"കിഴിവ്",
+  "ord_fee":"ഡെലിവറി ഫീസ്",
+  "ord_addr":"വിലാസം",
+  "ord_slot":"സമയം",
+  "ord_pay":"പേയ്മെന്റ്",
+  "ord_note":"കുറിപ്പ്",
+  "ord_call":"വിളിക്കുക",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"പുതിയത്",
+  "ord_st_preparing":"തയ്യാറാക്കുന്നു",
+  "ord_st_ready":"തയ്യാർ",
+  "ord_st_completed":"പൂർത്തിയായി",
+  "ord_st_cancelled":"റദ്ദാക്കി",
+  "ord_cancel":"റദ്ദാക്കുക",
+  "ord_customer":"കസ്റ്റമർ",
   "dash_view":"കാണുക",
   "dash_copy":"ലിങ്ക് പകർത്തുക",
   "dash_del":"മായ്ക്കുക",
@@ -5730,6 +6116,33 @@ STR.hi = {
   "dash_title":"मेरी दुकानें",
   "dash_empty":"अभी कोई दुकान सहेजी नहीं गई है। कोई दुकान प्रकाशित करें और वह यहाँ दिखेगी।",
   "dash_edit":"संपादित करें",
+  "ord_view":"ऑर्डर",
+  "ord_back":"वापस",
+  "ord_title":"ऑर्डर",
+  "ord_refresh":"रिफ्रेश",
+  "ord_loading":"ऑर्डर लोड हो रहे हैं...",
+  "ord_empty":"अभी कोई ऑर्डर नहीं",
+  "ord_empty_sub":"आपकी दुकान के नए ऑर्डर यहाँ दिखेंगे।",
+  "ord_err":"ऑर्डर लोड नहीं हो सके।",
+  "ord_denied":"पहुँच अस्वीकृत",
+  "ord_denied_sub":"ऑर्डर इनबॉक्स चालू करने के लिए इस दुकान को फिर से प्रकाशित करें।",
+  "ord_items_n":"{n} आइटम",
+  "ord_sub":"उप-कुल",
+  "ord_disc":"छूट",
+  "ord_fee":"डिलिव्हरी शुल्क",
+  "ord_addr":"पता",
+  "ord_slot":"समय",
+  "ord_pay":"भुगतान",
+  "ord_note":"नोट",
+  "ord_call":"कॉल करें",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"नया",
+  "ord_st_preparing":"तैयार हो रहा है",
+  "ord_st_ready":"तैयार",
+  "ord_st_completed":"पूर्ण",
+  "ord_st_cancelled":"रद्द",
+  "ord_cancel":"रद्द करें",
+  "ord_customer":"ग्राहक",
   "dash_view":"देखें",
   "dash_copy":"लिंक कॉपी करें",
   "dash_del":"हटाएं",
@@ -6115,6 +6528,33 @@ STR.ta = {
   "dash_title":"என் கடைகள்",
   "dash_empty":"இன்னும் கடைகள் சேமிக்கப்படவில்லை. ஒரு கடையை வெளியிடுங்கள், அது இங்கே தோன்றும்.",
   "dash_edit":"திருத்து",
+  "ord_view":"ஆர்டர்கள்",
+  "ord_back":"பின்செல்",
+  "ord_title":"ஆர்டர்கள்",
+  "ord_refresh":"புதுப்பி",
+  "ord_loading":"ஆர்டர்கள் ஏற்றப்படுகின்றன...",
+  "ord_empty":"இன்னும் ஆர்டர்கள் இல்லை",
+  "ord_empty_sub":"உங்கள் கடையின் புதிய ஆர்டர்கள் இங்கே தோன்றும்.",
+  "ord_err":"ஆர்டர்களை ஏற்ற முடியவில்லை.",
+  "ord_denied":"அணுகல் மறுக்கப்பட்டது",
+  "ord_denied_sub":"ஆர்டர் இன்பாக்ஸை இயக்க இந்தக் கடையை மீண்டும் வெளியிடுங்கள்.",
+  "ord_items_n":"{n} பொருட்கள்",
+  "ord_sub":"துணை மொத்தம்",
+  "ord_disc":"தள்ளுபடி",
+  "ord_fee":"டெலிவரி கட்டணம்",
+  "ord_addr":"முகவரி",
+  "ord_slot":"நேரம்",
+  "ord_pay":"கட்டணம்",
+  "ord_note":"குறிப்பு",
+  "ord_call":"அழை",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"புதியது",
+  "ord_st_preparing":"தயாராகிறது",
+  "ord_st_ready":"தயார்",
+  "ord_st_completed":"முடிந்தது",
+  "ord_st_cancelled":"ரத்து செய்யப்பட்டது",
+  "ord_cancel":"ரத்து செய்",
+  "ord_customer":"வாடிக்கையாளர்",
   "dash_view":"பார்",
   "dash_copy":"இணைப்பை நகலெடு",
   "dash_del":"நீக்கு",
@@ -6501,6 +6941,33 @@ STR.es = {
   "dash_title":"Mis tiendas",
   "dash_empty":"Aún no hay tiendas guardadas. Publica una tienda y aparecerá aquí.",
   "dash_edit":"Editar",
+  "ord_view":"Pedidos",
+  "ord_back":"Atrás",
+  "ord_title":"Pedidos",
+  "ord_refresh":"Actualizar",
+  "ord_loading":"Cargando pedidos...",
+  "ord_empty":"Aún no hay pedidos",
+  "ord_empty_sub":"Los nuevos pedidos de tu tienda aparecerán aquí.",
+  "ord_err":"No se pudieron cargar los pedidos.",
+  "ord_denied":"Acceso denegado",
+  "ord_denied_sub":"Vuelve a publicar esta tienda para activar la bandeja de pedidos.",
+  "ord_items_n":"{n} artículos",
+  "ord_sub":"Subtotal",
+  "ord_disc":"Descuento",
+  "ord_fee":"Costo de envío",
+  "ord_addr":"Dirección",
+  "ord_slot":"Horario",
+  "ord_pay":"Pago",
+  "ord_note":"Nota",
+  "ord_call":"Llamar",
+  "ord_whatsapp":"WhatsApp",
+  "ord_st_new":"Nuevo",
+  "ord_st_preparing":"En preparación",
+  "ord_st_ready":"Listo",
+  "ord_st_completed":"Completado",
+  "ord_st_cancelled":"Cancelado",
+  "ord_cancel":"Cancelar",
+  "ord_customer":"Cliente",
   "dash_view":"Ver",
   "dash_copy":"Copiar enlace",
   "dash_del":"Eliminar",
@@ -8209,6 +8676,24 @@ function buildOrderMsg(tt, orderId){
   const RT=shopRT, d=RT.d;
   const L=[t("wa_order").replace("{shop}",d.name)];
   if(orderId) L.push(t("ck_order_x").replace("{x}",orderId));
+  const snap=ck.lastOrder; // after ckDone: immutable snapshot; before: live cart
+  if(snap){
+    snap.items.forEach(it=>{ L.push(it.qty+" x "+it.name+" - "+shopMoney(it.unitPrice*it.qty)); });
+    L.push("----------------");
+    L.push(t("subtotal")+": "+shopMoney(snap.totals.sub));
+    if(snap.totals.disc>0&&snap.coupon) L.push(t("coupon_disc")+" ("+snap.coupon.code+"): -"+shopMoney(snap.totals.disc));
+    if(snap.fulfillment==="delivery"&&d.dlv) L.push(t("dlv_fee")+": "+(snap.totals.fee>0?shopMoney(snap.totals.fee):t("free")));
+    L.push(t("total")+": "+shopMoney(snap.totals.total));
+    L.push("----------------");
+    L.push(t("wa_name")+": "+snap.customer.name);
+    L.push(t("wa_phone")+": "+snap.customer.phone);
+    L.push(t("wa_type")+": "+(snap.fulfillment==="delivery"?t("co_delivery"):t("co_pickup")));
+    if(snap.fulfillment==="delivery") L.push(t("wa_addr")+": "+snap.customer.address);
+    if(d.slots&&d.slots.length) L.push(t("wa_time")+": "+(snap.slot==="asap"?t("slot_asap"):snap.slot));
+    if(snap.paymentMethod) L.push(t("wa_pay")+": "+snap.paymentMethod);
+    if(snap.note) L.push(t("wa_notes")+": "+snap.note);
+    return L.join("\n");
+  }
   RT.cart.forEach(l=>{
     const p=d.products[l.pi];
     if(!p) return;
@@ -8249,7 +8734,9 @@ function wireDrawer(){
     }
     if(e.target.closest("#couponGo")){ applyCoupon(); return; }
     if(e.target.closest("#couponRm")){ RT.coupon=null; saveShop(); renderDrawer(); return; }
-    if(e.target.closest("#checkoutBtn")){ saveShop(); closeDrawer(); location.hash="#/checkout/"+shopRT.payload; return; }
+    if(e.target.closest("#checkoutBtn")){ saveShop(); closeDrawer();
+      try{ sessionStorage.setItem("ts_ck_sid", JSON.stringify({p:shopRT.payload, sid:shopRT.serverId||null})); }catch(e){}
+      location.hash="#/checkout/"+shopRT.payload; return; }
   });
   dr.addEventListener("keydown", e=>{
     if(e.target.id==="couponInp" && e.key==="Enter"){ e.preventDefault(); applyCoupon(); }
@@ -8302,7 +8789,11 @@ async function startCheckout(d,payload){
   const shopCC=(loc.cc&&COUNTRY[loc.cc])?loc.cc:null;
   state.cc=shopCC;
   if(shopCC){ const cur=COUNTRY[shopCC].cur; if(cur!==fxCur){ fxCur=cur; fxRate=FX_FALLBACK[cur]||1; } }
-  initShop(d,payload);
+  // The checkout route carries only the payload; recover the server shop ID
+  // stashed by the storefront so the order can be recorded in the inbox.
+  let ckSid=null;
+  try{ const o=JSON.parse(sessionStorage.getItem("ts_ck_sid")||"null"); if(o&&o.p===payload) ckSid=o.sid||null; }catch(e){}
+  initShop(d,payload,ckSid);
   if(!shopRT.cart.length){ location.hash="#/s/"+payload; return; }
   ckNew(d,payload);
   render(checkoutHtml()); wireCheckout();
@@ -8627,10 +9118,57 @@ function ckPlaceManual(){
   ckDone();
 }
 function ckDone(){
-  ck.proc=false; ck.done=true; ckOrderId();
-  saveCustomer(shopRT.form||{});
-  shopRT.cart=[]; shopRT.coupon=null; saveShop(); renderCartBar();
-  rerenderCk(); window.scrollTo(0,0);
+  ck.proc=false;
+  // Snapshot the order BEFORE the cart is cleared, then record it in the
+  // merchant's orders inbox. The server code becomes the order number shown
+  // on the confirmation screen and in the WhatsApp handoff. Any failure
+  // falls back to a local code and the WhatsApp flow continues untouched.
+  const snap = snapshotOrder();
+  const apply = (code)=>{
+    ck.orderId = code || ckOrderId();
+    ck.lastOrder = snap;
+    saveCustomer(shopRT.form||{});
+    shopRT.cart=[]; shopRT.coupon=null; saveShop(); renderCartBar();
+    ck.done=true; rerenderCk(); window.scrollTo(0,0);
+  };
+  if(snap && snap.shopId){
+    let settled=false;
+    const to=setTimeout(()=>{ if(!settled){ settled=true; apply(null); } },10000);
+    postOrderToInbox(snap).then(code=>{ if(!settled){ settled=true; clearTimeout(to); apply(code); } })
+      .catch(()=>{ if(!settled){ settled=true; clearTimeout(to); apply(null); } });
+  } else apply(null);
+}
+// Everything the server needs to record the order, captured from the live
+// cart before ckDone clears it. name/variant are display strings; pi/vi let
+// the server re-derive prices from the stored payload.
+function snapshotOrder(){
+  const RT=shopRT;
+  if(!RT || !RT.cart || !RT.cart.length) return null;
+  const d=RT.d, tt=cartTotals();
+  const items=[];
+  for(let i=0;i<RT.cart.length;i++){
+    const l=RT.cart[i], p=d.products[l.pi];
+    if(!p) continue;
+    const v=(p.variants&&l.vi!=null)?p.variants[l.vi]:null;
+    const nm=(p.k?t(p.k):(p.name||""))+(v?" ("+v.n+")":"");
+    items.push({pi:l.pi, vi:(l.vi==null?null:l.vi), name:nm, variant:(v?v.n:null), qty:l.qty, unitPrice:priceNum(p,l.vi)});
+  }
+  if(!items.length) return null;
+  return {
+    shopId: RT.serverId||null,
+    items: items,
+    customer:{ name:String(RT.form.name||"").trim(), phone:String(RT.form.phone||"").trim(), address:String(RT.form.addr||"").trim() },
+    fulfillment: RT.fulfillment, slot: RT.slot||"asap",
+    paymentMethod: (ck&&ck.payTab)||"", coupon: RT.coupon?{code:RT.coupon.code}:null,
+    note: String(RT.form.notes||"").trim(), currency: (typeof fxCur!=="undefined"?fxCur:"USD"),
+    fxRate: (typeof fxRate!=="undefined"?fxRate:1),
+    totals:{ sub:tt.sub, disc:tt.disc, fee:tt.fee, total:tt.total }
+  };
+}
+function postOrderToInbox(snap){
+  return fetch("/api/orders",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(snap)})
+    .then(r=>{ if(!r.ok) throw new Error("api "+r.status); return r.json(); })
+    .then(j=>{ if(!j||!j.code) throw new Error("bad response"); return j.code; });
 }
 function ckWaSend(){
   if(!shopRT.waNum) return;
@@ -9125,6 +9663,155 @@ async function applyShopLocale(d, payload, serverId){
     }catch(e){}
   }
 }
+// ---- Merchant Orders inbox --------------------------------------------
+// Per-shop order list for the dashboard merchant. Reads are keyed with the
+// merchant key issued at publish time; nothing here ever shows the key.
+let ordTimer = null;
+let ordState = null;
+
+function ordStatusClass(s){
+  return s==="new" ? "ord-pill-new" : s==="preparing" ? "ord-pill-prep" : s==="ready" ? "ord-pill-ready" : s==="completed" ? "ord-pill-done" : "ord-pill-cancel";
+}
+function ordTime(ts){
+  try{ return new Date(ts).toLocaleString(); }catch(e){ return ""; }
+}
+function ordCount(o){
+  let n=0; (o.items||[]).forEach(it=>{ n+=it.qty||0; }); return n;
+}
+function ordMoney(o){
+  try{ return shopMoney(o.total) + (o.currency && o.currency!=="USD" ? " ("+esc(o.currency)+")" : ""); }
+  catch(e){ return esc(String(o.total)); }
+}
+function ordDetailRow(label, value){
+  if(!value) return "";
+  return '<div class="ord-kv"><span>'+label+'</span><span>'+value+'</span></div>';
+}
+function ordCardHtml(o){
+  const st = o.status || "new";
+  const open = ordState.expanded[o.orderId];
+  let detail = "";
+  if(open){
+    const items = (o.items||[]).map(it=>'<li>'+esc(String(it.qty))+'× '+esc(it.name||"")+' <span class="ord-li-price">'+esc(ordMoney({total:it.unitPrice*(it.qty||0)}))+'</span></li>').join("");
+    const cust = o.customer || {};
+    const phoneRaw = String(cust.phone||"");
+    const telHref = "tel:" + phoneRaw.replace(/[^\d+]/g,"");
+    const waHref = "https://wa.me/" + phoneRaw.replace(/\D/g,"");
+    detail = '<div class="ord-detail">'
+      + '<ul class="ord-items">'+items+'</ul>'
+      + ordDetailRow(t("ord_customer"), esc(cust.name||"")+(cust.phone?" · "+esc(cust.phone):""))
+      + ordDetailRow(t("ord_sub"), esc(ordMoney({total:o.subtotal})))
+      + (o.discount>0 ? ordDetailRow(t("ord_disc"), "−"+esc(ordMoney({total:o.discount}))) : "")
+      + (o.fee>0 ? ordDetailRow(t("ord_fee"), esc(ordMoney({total:o.fee}))) : "")
+      + ordDetailRow(t("ord_addr"), esc(cust.address||""))
+      + ordDetailRow(t("ord_slot"), esc(o.slot==="asap" ? t("slot_asap") : (o.slot||"")))
+      + ordDetailRow(t("ord_pay"), esc((function(){ try{ return payLabel(o.paymentMethod, null); }catch(e){ return o.paymentMethod||""; } })()))
+      + ordDetailRow(t("ord_note"), esc(o.note||""))
+      + '<div class="ord-contact">'
+      + (telHref !== "tel:" ? '<a class="btn btn-sm" href="'+esc(telHref)+'">'+t("ord_call")+'</a>' : "")
+      + (waHref !== "https://wa.me/" ? '<a class="btn btn-sm" href="'+esc(waHref)+'" target="_blank" rel="noopener">'+t("ord_whatsapp")+'</a>' : "")
+      + '</div>'
+      + ordActionHtml(o)
+      + '</div>';
+  }
+  return '<div class="ord-card" data-ord="'+esc(o.orderId)+'">'
+    + '<button class="ord-head" data-ordtoggle="'+esc(o.orderId)+'" aria-expanded="'+(open?"true":"false")+'">'
+    + '<span class="ord-code">'+esc(o.code||"")+'</span>'
+    + '<span class="ord-pill '+ordStatusClass(st)+'">'+esc(t("ord_st_"+st))+'</span>'
+    + '<span class="ord-time">'+esc(ordTime(o.createdAt))+'</span>'
+    + '<span class="ord-caret" aria-hidden="true">'+(open?"▾":"▸")+'</span></button>'
+    + '<div class="ord-sum"><span>'+esc((o.customer||{}).name||"")+'</span>'
+    + '<span class="ord-sep">·</span><span>'+esc(t("ord_items_n").replace("{n}",ordCount(o)))+'</span>'
+    + '<span class="ord-sep">·</span><span class="ord-total">'+esc(ordMoney(o))+'</span>'
+    + '<span class="ord-sep">·</span><span>'+esc(o.fulfillment==="delivery"?t("co_delivery"):t("co_pickup"))+'</span></div>'
+    + detail + '</div>';
+}
+// Status actions for the current state: New → Preparing → Ready → Completed,
+// plus Cancel from any open state. Cancelled/completed orders are terminal.
+function ordActionHtml(o){
+  const st = o.status || "new";
+  const adv = (to)=>'<button class="btn btn-sm" data-ordstatus="'+to+'">'+t("ord_st_"+to)+'</button>';
+  const cancel = '<button class="btn btn-sm" data-ordstatus="cancelled">'+t("ord_cancel")+'</button>';
+  let h = '<div class="ord-actions">';
+  if(st==="new") h += adv("preparing") + cancel;
+  else if(st==="preparing") h += adv("ready") + cancel;
+  else if(st==="ready") h += adv("completed") + cancel;
+  else h += '<span class="note">'+esc(t("ord_st_"+st))+'</span>';
+  return h + '</div>';
+}
+function ordersView(regId){
+  ordState = { regId:regId, serverId:null, key:null, orders:[], err:null, expanded:{}, loading:true };
+  const entry = readShops().find(x=>x.id===regId);
+  if(entry){ ordState.serverId = entry.serverId||null; ordState.key = entry.merchantKey||null; }
+  const name = entry ? (entry.name || t("dash_title")) : "";
+  return header()
+    + '<div class="wrap"><div class="ord-top"><a class="btn btn-sm" href="#/shops">'+t("ord_back")+'</a>'
+    + '<h1 class="ord-h">'+t("ord_title")+'</h1>'
+    + '<button class="btn btn-sm" id="ordRefresh">'+t("ord_refresh")+'</button></div>'
+    + '<p class="note ord-shop">'+esc(name)+'</p>'
+    + '<div id="ordList" class="ord-list" aria-live="polite"></div></div>'
+    + footer();
+}
+function ordListHtml(){
+  const st = ordState;
+  if(st.loading) return '<p class="note">'+t("ord_loading")+'</p>';
+  if(st.err==="forbidden") return '<div class="ord-empty"><p>'+t("ord_denied")+'</p><p class="note">'+t("ord_denied_sub")+'</p></div>';
+  if(st.err) return '<div class="ord-empty"><p>'+t("ord_err")+'</p><p class="note">'+esc(st.err)+'</p><button class="btn btn-sm" id="ordRetry">'+t("ord_refresh")+'</button></div>';
+  if(!st.orders.length) return '<div class="ord-empty"><p>'+t("ord_empty")+'</p><p class="note">'+t("ord_empty_sub")+'</p></div>';
+  return st.orders.map(ordCardHtml).join("");
+}
+function ordRender(){
+  const box = document.getElementById("ordList");
+  if(box && ordState){ box.innerHTML = ordListHtml(); const r=document.getElementById("ordRetry"); if(r) r.onclick=()=>ordFetch(); }
+}
+function ordFetch(){
+  const st = ordState;
+  if(!st) return;
+  if(!st.serverId || !st.key){ st.loading=false; st.err="forbidden"; ordRender(); return; }
+  const url = "/api/orders?shopId="+encodeURIComponent(st.serverId)+"&key="+encodeURIComponent(st.key);
+  fetch(url).then(r=>{
+    if(r.status===403) throw new Error("forbidden");
+    if(!r.ok) throw new Error("http "+r.status);
+    return r.json();
+  }).then(j=>{
+    st.orders = (j && j.orders) || [];
+    st.err = null; st.loading = false; ordRender();
+  }).catch(e=>{
+    st.loading=false; st.err = (e && e.message)||"error"; ordRender();
+  });
+}
+function ordPatch(orderId, status){
+  const st = ordState;
+  if(!st || !st.serverId || !st.key) return;
+  const url = "/api/orders";
+  fetch(url, { method:"PATCH", headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ shopId:st.serverId, orderId:orderId, key:st.key, status:status }) })
+    .then(r=>{ if(!r.ok) throw new Error("http "+r.status); return r.json(); })
+    .then(()=>{ ordFetch(); })
+    .catch(()=>{ ordFetch(); });
+}
+function wireOrders(){
+  if(ordTimer){ clearInterval(ordTimer); ordTimer=null; }
+  const refreshBtn = document.getElementById("ordRefresh");
+  if(refreshBtn) refreshBtn.onclick = ()=>{ ordState.loading=true; ordRender(); ordFetch(); };
+  document.getElementById("ordList").addEventListener("click", e=>{
+    const tg = e.target.closest("[data-ordtoggle]");
+    if(tg){
+      const id = tg.getAttribute("data-ordtoggle");
+      ordState.expanded[id] = !ordState.expanded[id];
+      ordRender(); return;
+    }
+    const sb = e.target.closest("[data-ordstatus]");
+    if(sb){
+      const card = sb.closest("[data-ord]");
+      if(card) ordPatch(card.getAttribute("data-ord"), sb.getAttribute("data-ordstatus"));
+      return;
+    }
+  });
+  ordFetch();
+  // Auto-refresh every 60s while the inbox is visible; the router clears the
+  // timer whenever the merchant navigates away.
+  ordTimer = setInterval(()=>{ if(document.visibilityState==="visible") ordFetch(); }, 60000);
+}
 function dashView(){
   const shops = readShops();
   let body;
@@ -9144,6 +9831,7 @@ function dashView(){
         + '<button class="btn btn-sm" data-dact="view">'+t("dash_view")+'</button>'
         + '<button class="btn btn-sm" data-dact="copy">'+t("dash_copy")+'</button>'
         + '<button class="btn btn-sm" data-dact="del">'+t("dash_del")+'</button>'
+        + ((s.serverId && s.merchantKey) ? '<button class="btn btn-sm btn-orders" data-dact="orders">'+t("ord_view")+' <span class="ord-badge" data-ordbadge="'+esc(s.id)+'" hidden></span></button>' : '')
         + '</div></div>';
     }).join("") + '</div>';
   }
@@ -9170,13 +9858,33 @@ function wireDash(){
       if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done).catch(done);
       else done();
     }
+    else if(act==="orders"){ location.hash = "#/orders/"+id; }
     else if(act==="del"){
       if(confirm(t("dash_confirm"))){ writeShops(shops.filter(x=>x.id!==id)); render(dashView()); wireDash(); window.scrollTo(0,0); }
     }
   });
+  updateOrderBadges();
+}
+// On the dashboard, fetch each published shop's order count and show a
+// "new orders" badge on its Orders button. Quiet on failure (badges just
+// stay hidden); dashboard data never leaves the device for this.
+function updateOrderBadges(){
+  const badges = document.querySelectorAll("[data-ordbadge]");
+  badges.forEach(badge=>{
+    const entry = readShops().find(x=>x.id===badge.getAttribute("data-ordbadge"));
+    if(!entry || !entry.serverId || !entry.merchantKey) return;
+    const url = "/api/orders?shopId="+encodeURIComponent(entry.serverId)+"&key="+encodeURIComponent(entry.merchantKey);
+    fetch(url).then(r=>r.ok?r.json():null).then(j=>{
+      const n = (j && j.orders) ? j.orders.filter(o=>o.status==="new").length : 0;
+      if(n>0){ badge.hidden=false; badge.textContent = n; }
+      else badge.hidden=true;
+    }).catch(()=>{});
+  });
 }
 function router(){
   const h = location.hash.replace(/^#\/?/, "");
+  // Leaving the orders inbox: stop its auto-refresh timer.
+  if(h.indexOf("orders/")!==0 && typeof ordTimer!=="undefined" && ordTimer){ clearInterval(ordTimer); ordTimer=null; }
   const wasShop = !!state.isShop;
   state.isShop = (h.indexOf("s/")===0||h.indexOf("checkout/")===0);
   if(wasShop && !state.isShop){
@@ -9200,6 +9908,8 @@ function router(){
     const d = decodeSite(payload);
     if(d){ applyShopLocale(d, payload); return; }
     render(notFoundView());
+  } else if(h.indexOf("orders/")===0){
+    render(ordersView(h.slice(7))); wireOrders();
   } else if(h.indexOf("edit/")===0){
     const pl = h.slice(5);
     const d = decodeSite(pl);

@@ -1,84 +1,53 @@
-// TalkShop shop storage API (phase 1).
+// TalkShop shop storage API (phase 2).
 //
-//   POST /api/shops        {payload: {...}} -> {id}              (8-char shop ID)
-//   GET  /api/shops?id=<id>                -> {id, payload} or 404
+//   POST /api/shops  {payload}                 -> {id, merchantKey}  (new shop)
+//   POST /api/shops  {payload, shopId}         -> {id, merchantKey?} (republish in place)
+//   GET  /api/shops?id=<id>                   -> {id, payload} or 404
 //
-// The payload is the existing client-side shop object; it is stored as-is
-// inside a small server envelope {v, savedAt, payload}. Nothing sensitive
-// should be stored in phase 1: there is no auth yet, IDs are unguessable
-// (8 chars x 5 bits = 40 bits) and are the only capability needed to read.
+// Every shop record carries a merchantKey (32 unambiguous chars) stored in
+// the server envelope {v, savedAt, updatedAt, merchantKey, payload}. The key
+// is returned to the publishing merchant only: on creation, and on republish
+// of a legacy record that has no key yet (one-time migration). It is never
+// returned by GET, and never logged.
 //
-// Follow-ups (noted, not done here): merchant auth + shop ownership, an
-// update endpoint for re-publishing, a delete endpoint, and abuse controls
-// beyond the per-instance rate limiter below.
+// Republish semantics: POST with a valid shopId updates that record's payload
+// in place, so the merchant's shared link stays stable across edits.
+//   - record has a key: the request must present it as {key}; 403 otherwise.
+//   - record has no key (pre-key shops): allowed without a key, a key is
+//     generated, stored, and returned.
+//   - unknown shopId: 404. Malformed shopId: 400.
 //
-// Storage lives in api/_lib/blob-store.js (Vercel Blob). Swap that module to
-// change backends without touching this file.
+// Storage lives in api/_lib/blob-store.js (Vercel Blob).
 "use strict";
 
-const crypto = require("crypto");
 const store = require("./_lib/blob-store");
+const util = require("./_lib/api-util");
 
 const MAX_BODY = 256 * 1024; // hard cap on stored payloads
-const ID_LEN = 8;
-// Unambiguous alphabet: no 0/O, 1/I/L. 32 symbols, 256 % 32 == 0, so no
-// modulo bias when mapping random bytes.
-const ID_ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 const ID_RE = /^[2-9A-HJ-NP-Z]{8}$/;
 
-// --- tiny per-instance rate limiter (best-effort friction, not a boundary) ---
-const buckets = new Map();
-function rateOk(ip, limit, windowMs) {
-  const now = Date.now();
-  let b = buckets.get(ip);
-  if (!b || now - b.start > windowMs) { b = { start: now, n: 0 }; buckets.set(ip, b); }
-  b.n += 1;
-  if (buckets.size > 5000) buckets.clear();
-  return b.n <= limit;
-}
-function clientIp(req) {
-  const f = req.headers["x-forwarded-for"];
-  const first = typeof f === "string" ? f.split(",")[0].trim() : "";
-  return first || "unknown";
-}
-
-function readBody(req, cap) {
-  return new Promise((resolve) => {
-    if (req.body && typeof req.body === "object") { resolve({ ok: true, body: req.body }); return; }
-    let raw = "";
-    let tooBig = false;
-    req.on("data", (c) => {
-      raw += c;
-      if (raw.length > cap + 1024) { tooBig = true; if (typeof req.destroy === "function") req.destroy(); }
-    });
-    req.on("end", () => {
-      if (tooBig) { resolve({ ok: false, reason: "too_large" }); return; }
-      try { resolve({ ok: true, body: JSON.parse(raw || "null") }); }
-      catch (e) { resolve({ ok: false, reason: "bad_json" }); }
-    });
-    req.on("error", () => resolve({ ok: false, reason: "read_error" }));
-  });
-}
-
-function newId() {
-  const bytes = crypto.randomBytes(ID_LEN);
-  let id = "";
-  for (let i = 0; i < ID_LEN; i++) id += ID_ALPHABET[bytes[i] % 32];
-  return id;
+function readEnvelope(raw) {
+  if (!raw) return null;
+  try {
+    const env = JSON.parse(raw);
+    if (!env || typeof env !== "object" || !env.payload || typeof env.payload !== "object") return null;
+    return env;
+  } catch (e) { return null; }
 }
 
 async function handlePost(req, res) {
-  if (!rateOk(clientIp(req), 30, 60 * 1000)) {
+  if (!util.rateOk(util.clientIp(req), 30, 60 * 1000)) {
     res.status(429).json({ error: "rate_limited" });
     return;
   }
 
-  const read = await readBody(req, MAX_BODY);
+  const read = await util.readBody(req, MAX_BODY);
   if (!read.ok) {
     res.status(read.reason === "too_large" ? 413 : 400).json({ error: read.reason });
     return;
   }
-  const payload = read.body && read.body.payload;
+  const body = read.body || {};
+  const payload = body.payload;
   if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
     res.status(400).json({ error: "bad_payload" });
     return;
@@ -88,10 +57,50 @@ async function handlePost(req, res) {
     return;
   }
 
-  // Fresh unguessable ID; retry on the near-impossible collision.
+  const shopId = body.shopId != null ? String(body.shopId) : "";
+
+  // --- republish an existing shop in place ---
+  if (shopId) {
+    if (!ID_RE.test(shopId)) { res.status(400).json({ error: "bad_shop_id" }); return; }
+    let raw = null;
+    try { raw = await store.load(shopId); }
+    catch (e) { res.status(502).json({ error: "store_unreachable" }); return; }
+    const env = readEnvelope(raw);
+    if (!env) { res.status(404).json({ error: "not_found" }); return; }
+
+    let merchantKey = env.merchantKey || null;
+    let returnKey = false;
+    if (merchantKey) {
+      // Keyed record: the merchant must prove ownership to overwrite.
+      if (!util.secretsEqual(body.key, merchantKey)) {
+        res.status(403).json({ error: "forbidden" });
+        return;
+      }
+    } else {
+      // Legacy record without a key: one-time migration, issue and return it.
+      merchantKey = util.newMerchantKey();
+      returnKey = true;
+    }
+
+    const next = {
+      v: 1,
+      savedAt: env.savedAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      merchantKey: merchantKey,
+      payload: payload
+    };
+    try { await store.save(shopId, JSON.stringify(next)); }
+    catch (e) { res.status(502).json({ error: "store_unreachable" }); return; }
+    const out = { id: shopId };
+    if (returnKey) out.merchantKey = merchantKey;
+    res.status(200).json(out);
+    return;
+  }
+
+  // --- brand-new shop ---
   let id = null;
   for (let i = 0; i < 5; i++) {
-    const cand = newId();
+    const cand = util.newShopId();
     let taken = false;
     try { taken = await store.exists(cand); }
     catch (e) { res.status(502).json({ error: "store_unreachable" }); return; }
@@ -99,18 +108,19 @@ async function handlePost(req, res) {
   }
   if (!id) { res.status(503).json({ error: "id_collision" }); return; }
 
-  const envelope = JSON.stringify({ v: 1, savedAt: new Date().toISOString(), payload });
+  const merchantKey = util.newMerchantKey();
+  const envelope = JSON.stringify({ v: 1, savedAt: new Date().toISOString(), merchantKey: merchantKey, payload });
   try {
     await store.save(id, envelope);
   } catch (e) {
     res.status(502).json({ error: "store_unreachable" });
     return;
   }
-  res.status(200).json({ id });
+  res.status(200).json({ id, merchantKey });
 }
 
 async function handleGet(req, res) {
-  if (!rateOk(clientIp(req), 120, 60 * 1000)) {
+  if (!util.rateOk(util.clientIp(req), 120, 60 * 1000)) {
     res.status(429).json({ error: "rate_limited" });
     return;
   }
@@ -125,11 +135,9 @@ async function handleGet(req, res) {
   let raw = null;
   try { raw = await store.load(id); }
   catch (e) { res.status(502).json({ error: "store_unreachable" }); return; }
-  if (!raw) { res.status(404).json({ error: "not_found" }); return; }
-
-  let env = null;
-  try { env = JSON.parse(raw); }
-  catch (e) { res.status(502).json({ error: "store_corrupt" }); return; }
+  const env = readEnvelope(raw);
+  if (!env) { res.status(404).json({ error: "not_found" }); return; }
+  // Note: the merchantKey is deliberately never returned here.
   res.status(200).json({ id, payload: env.payload });
 }
 
