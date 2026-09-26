@@ -456,6 +456,11 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .sr-clear{background:none;border:0;color:var(--ink2);font-size:13px;text-transform:none;letter-spacing:0;cursor:pointer;padding:4px 0;}
 .sr-item{display:block;width:100%;text-align:start;background:none;border:0;border-top:1px solid var(--line);padding:12px 14px;font-size:15px;color:var(--ink);cursor:pointer;}
 .sr-item:hover{background:#f6f6f6;}
+.sr-sug{display:flex;align-items:center;gap:10px;min-height:48px;}
+.sr-sug-main{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sr-sug-sub{flex:none;font-size:13px;color:var(--ink2);}
+.sr-thumb{width:36px;height:36px;object-fit:cover;border-radius:8px;flex:none;background:#f1f1f1;}
+.sr-cat .sr-sug-sub{font-size:12px;background:#f1f1f1;border-radius:10px;padding:2px 9px;}
 .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:8px;-webkit-overflow-scrolling:touch;}
 .chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 18px;font-size:14px;cursor:pointer;color:var(--ink);}
 .chip.on{background:var(--s-accent);border-color:var(--s-accent);color:#fff;font-weight:700;}
@@ -1033,6 +1038,7 @@ const STR = { en: {
   "search_ph":"Search items...",
   "search_recent":"Recent searches",
   "search_clear":"Clear",
+  "search_suggest":"Suggestions",
   "search_one":"{n} result",
   "search_other":"{n} results",
   "search_none":"No items match your search.",
@@ -1490,6 +1496,7 @@ STR.te = {
   "search_ph":"వస్తువులను వెతకండి...",
   "search_recent":"ఇటీవలి శోధనలు",
   "search_clear":"తొలగించు",
+  "search_suggest":"సూచనలు",
   "search_one":"{n} ఫలితం",
   "search_other":"{n} ఫలితాలు",
   "search_none":"మీ శోధనకు ఏ వస్తువూ సరిపోలలేదు.",
@@ -1947,6 +1954,7 @@ STR.bn = {
   "search_ph":"জিনিস খুঁজুন...",
   "search_recent":"সাম্প্রতিক অনুসন্ধান",
   "search_clear":"মুছুন",
+  "search_suggest":"পরামর্শ",
   "search_one":"{n}টি ফলাফল",
   "search_other":"{n}টি ফলাফল",
   "search_none":"আপনার অনুসন্ধানের সাথে কোনো পণ্য মেলেনি।",
@@ -2404,6 +2412,7 @@ STR.kn = {
   "search_ph":"ವಸ್ತುಗಳನ್ನು ಹುಡುಕಿ...",
   "search_recent":"ಇತ್ತೀಚಿನ ಹುಡುಕಾಟಗಳು",
   "search_clear":"ತೆರವುಗೊಳಿಸಿ",
+  "search_suggest":"ಸಲಹೆಗಳು",
   "search_one":"{n} ಫಲಿತಾಂಶ",
   "search_other":"{n} ಫಲಿತಾಂಶಗಳು",
   "search_none":"ನಿಮ್ಮ ಹುಡುಕಾಟಕ್ಕೆ ಯಾವುದೇ ವಸ್ತು ಹೊಂದಿಕೆಯಾಗಲಿಲ್ಲ.",
@@ -2861,6 +2870,7 @@ STR.mr = {
   "search_ph":"वस्तू शोधा...",
   "search_recent":"अलीकडील शोध",
   "search_clear":"साफ करा",
+  "search_suggest":"सूचना",
   "search_one":"{n} निकाल",
   "search_other":"{n} निकाल",
   "search_none":"तुमच्या शोधाशी कोणताही पदार्थ जुळला नाही.",
@@ -3318,6 +3328,7 @@ STR.zh = {
   "search_ph":"搜索商品…",
   "search_recent":"最近搜索",
   "search_clear":"清除",
+  "search_suggest":"建议",
   "search_one":"{n} 个结果",
   "search_other":"{n} 个结果",
   "search_none":"没有与您的搜索匹配的商品。",
@@ -3775,6 +3786,7 @@ STR.ja = {
   "search_ph":"商品を検索…",
   "search_recent":"最近の検索",
   "search_clear":"クリア",
+  "search_suggest":"候補",
   "search_one":"{n} 件の結果",
   "search_other":"{n} 件の結果",
   "search_none":"検索に一致する商品がありません。",
@@ -4232,6 +4244,7 @@ STR.fr = {
   "search_ph":"Rechercher des articles…",
   "search_recent":"Recherches récentes",
   "search_clear":"Effacer",
+  "search_suggest":"Suggestions",
   "search_one":"{n} résultat",
   "search_other":"{n} résultats",
   "search_none":"Aucun article ne correspond à votre recherche.",
@@ -4689,6 +4702,7 @@ STR.de = {
   "search_ph":"Artikel suchen...",
   "search_recent":"Letzte Suchanfragen",
   "search_clear":"Löschen",
+  "search_suggest":"Vorschläge",
   "search_one":"{n} Ergebnis",
   "search_other":"{n} Ergebnisse",
   "search_none":"Keine Artikel für Ihre Suche gefunden.",
@@ -5146,6 +5160,7 @@ STR.pt = {
   "search_ph":"Buscar itens...",
   "search_recent":"Pesquisas recentes",
   "search_clear":"Limpar",
+  "search_suggest":"Sugestões",
   "search_one":"{n} resultado",
   "search_other":"{n} resultados",
   "search_none":"Nenhum item corresponde à sua pesquisa.",
@@ -5603,6 +5618,7 @@ STR.ar = {
   "search_ph":"ابحث في الأصناف...",
   "search_recent":"عمليات بحث سابقة",
   "search_clear":"مسح",
+  "search_suggest":"اقتراحات",
   "search_one":"نتيجة واحدة",
   "search_other":"{n} نتائج",
   "search_none":"لا توجد أصناف مطابقة لبحثك.",
@@ -6069,6 +6085,7 @@ STR.ml = {
   "search_ph":"സാധനങ്ങൾ തിരയൂ...",
   "search_recent":"സമീപകാല തിരച്ചിലുകൾ",
   "search_clear":"മായ്ക്കുക",
+  "search_suggest":"നിർദ്ദേശങ്ങൾ",
   "search_one":"{n} ഫലം",
   "search_other":"{n} ഫലങ്ങൾ",
   "search_none":"നിങ്ങളുടെ തിരച്ചിലിന് അനുയോജ്യമായ സാധനങ്ങളൊന്നുമില്ല.",
@@ -6526,6 +6543,7 @@ STR.hi = {
   "search_ph":"आइटम खोजें...",
   "search_recent":"हाल की खोजें",
   "search_clear":"साफ़ करें",
+  "search_suggest":"सुझाव",
   "search_one":"{n} परिणाम",
   "search_other":"{n} परिणाम",
   "search_none":"आपकी खोज से कोई आइटम मेल नहीं खाता।",
@@ -6983,6 +7001,7 @@ STR.ta = {
   "search_ph":"பொருட்களைத் தேடுக...",
   "search_recent":"சமீபத்திய தேடல்கள்",
   "search_clear":"அழி",
+  "search_suggest":"பரிந்துரைகள்",
   "search_one":"{n} முடிவு",
   "search_other":"{n} முடிவுகள்",
   "search_none":"உங்கள் தேடலுடன் பொருந்தும் பொருட்கள் எதுவும் இல்லை.",
@@ -7441,6 +7460,7 @@ STR.es = {
   "search_ph":"Buscar productos...",
   "search_recent":"Búsquedas recientes",
   "search_clear":"Borrar",
+  "search_suggest":"Sugerencias",
   "search_one":"{n} resultado",
   "search_other":"{n} resultados",
   "search_none":"Ningún producto coincide con tu búsqueda.",
@@ -9243,6 +9263,79 @@ function srShowPanel(){
   });
 }
 function srHidePanel(){ const p=$("#srPanel"); if(p) p.hidden=true; }
+/* Search autocomplete suggestions (familiar Amazon/Flipkart/Zomato pattern):
+   as the shopper types, the panel shows tappable matching categories and
+   products. Product tap sets the query to the product name; category tap
+   switches the category filter. 0 new strings beyond "search_suggest". */
+function srSuggest(q){
+  const RT=shopRT, d=RT?RT.d:null;
+  const nq=sNorm(String(q==null?"":q).trim());
+  if(!RT||!d||nq.length<2) return null;
+  const cats=prodCats(d).filter(c=>sNorm(c).indexOf(nq)>=0).slice(0,3);
+  const prods=(d.products||[]).map((p,i)=>({p:p,i:i,s:prodSearchScore(nq,p)}))
+    .filter(o=>o.s>=0.75).sort((a,b)=>b.s-a.s).slice(0,5);
+  if(!cats.length&&!prods.length) return null;
+  return {cats:cats,prods:prods};
+}
+function srSuggestHtml(q){
+  const sg=srSuggest(q);
+  if(!sg) return "";
+  let h='<div class="sr-head"><span>'+esc(t("search_suggest"))+'</span></div>';
+  h+=sg.cats.map(function(c){
+    const n=shopRT.d.products.filter(function(p){ return p.cat===c; }).length;
+    return '<button class="sr-item sr-sug sr-cat" type="button" data-scat="'+esc(c)+'">'
+      +'<span class="sr-sug-main">'+esc(c)+'</span>'
+      +'<span class="sr-sug-sub">'+n+'</span></button>';
+  }).join("");
+  h+=sg.prods.map(function(o){
+    const p=o.p, nm=prodName(p), vi=selViOf(p,o.i), pim=imgSrc(p.image);
+    return '<button class="sr-item sr-sug" type="button" data-spi="'+o.i+'">'
+      +(pim?'<img class="sr-thumb" src="'+esc(pim)+'" alt="" loading="lazy" onerror="imgFail(this)">':"")
+      +'<span class="sr-sug-main">'+sHiName(nm,q)+'</span>'
+      +'<span class="sr-sug-sub">'+esc(priceLabel(p,vi))+'</span></button>';
+  }).join("");
+  return h;
+}
+function srBindSug(p){
+  p.querySelectorAll("[data-spi]").forEach(function(b){
+    b.onmousedown=function(e){ e.preventDefault(); };
+    b.onclick=function(){
+      const i=+b.getAttribute("data-spi");
+      const nm=prodName(shopRT.d.products[i]);
+      const si=$("#shopSearch");
+      if(si) si.value=nm;
+      shopRT.q=nm;
+      shopRT.cat="all"; // suggestion is a global search: drop any stale category filter
+      srAdd(nm);
+      renderProds();
+      p.hidden=true;
+      const pl=$("#prodList");
+      if(pl&&pl.scrollIntoView) pl.scrollIntoView({block:"start"});
+    };
+  });
+  p.querySelectorAll("[data-scat]").forEach(function(b){
+    b.onmousedown=function(e){ e.preventDefault(); };
+    b.onclick=function(){
+      const c=b.getAttribute("data-scat")||"";
+      const si=$("#shopSearch");
+      if(si) si.value="";
+      shopRT.q=""; shopRT.cat=c;
+      renderProds();
+      p.hidden=true;
+      const pl=$("#prodList");
+      if(pl&&pl.scrollIntoView) pl.scrollIntoView({block:"start"});
+    };
+  });
+}
+function srShowSuggest(v){
+  const p=$("#srPanel");
+  if(!p) return;
+  const html=srSuggestHtml(v);
+  if(!html){ p.hidden=true; return; }
+  p.innerHTML=html;
+  p.hidden=false;
+  srBindSug(p);
+}
 if(!window._srDoc){
   window._srDoc=true;
   document.addEventListener("click",function(e){
@@ -10115,7 +10208,7 @@ function wireShop(){
       srHidePanel();
       clearTimeout(dt);
       const v=e.target.value;
-      dt=setTimeout(function(){ shopRT.q=v; renderProds(); },150);
+      dt=setTimeout(function(){ shopRT.q=v; renderProds(); srShowSuggest(v); },150);
     };
     si.onfocus=function(){ if(!si.value.trim()) srShowPanel(); };
     si.onblur=function(){ if(si.value.trim().length>=2) srAdd(si.value); };
@@ -10125,6 +10218,10 @@ function wireShop(){
         shopRT.q=si.value;
         srAdd(si.value);
         renderProds();
+        srHidePanel();
+        si.blur();
+      }else if(e.key==="Escape"){
+        clearTimeout(dt);
         srHidePanel();
         si.blur();
       }
