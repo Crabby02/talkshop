@@ -682,6 +682,15 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .cline .cn b{display:block;font-size:15px;}
 .cline .cn small{color:var(--ink2);font-size:13px;}
 .cline .lt{font-family:ui-monospace,Menlo,monospace;font-size:14px;white-space:nowrap;}
+/* ---- cart drawer: suggested add-ons ("you might also like") ---- */
+.sug{margin-top:16px;border-top:1px solid var(--line);padding-top:10px;}
+.sug h4{margin:0 0 4px;font-size:14px;font-weight:800;color:var(--ink2);}
+.sug-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dotted var(--line);}
+.sug-img{width:46px;height:46px;border-radius:10px;object-fit:cover;flex:none;background:#E7E4DA;}
+.sug-nm{flex:1;min-width:0;font-size:14px;font-weight:600;}
+.sug-nm small{display:block;color:var(--ink2);font-size:12.5px;font-weight:400;}
+.sug-add{flex:none;min-width:44px;min-height:44px;border:0;border-radius:10px;background:var(--s-accent,var(--accent));color:#fff;font-weight:800;font-size:14px;padding:10px 18px;cursor:pointer;}
+.sug-add:active{background:var(--s-accent-deep);}
 .stepper{display:flex;align-items:center;gap:10px;flex:none;}
 .stepper button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:18px;cursor:pointer;line-height:1;color:var(--ink);}
 .stepper b{min-width:20px;text-align:center;}
@@ -1029,6 +1038,7 @@ const STR = { en: {
   "closed_now":"Closed",
   "opens_at":"Opens {t}",
   "cart_title":"Your order",
+  "cart_suggested":"You might also like",
   "cart_empty":"Your cart is empty.",
   "view_cart":"View cart",
   "co_name":"Your name",
@@ -1481,6 +1491,7 @@ STR.te = {
   "closed_now":"మూసివేసింది",
   "opens_at":"{t}కు తెరుస్తుంది",
   "cart_title":"మీ ఆర్డర్",
+  "cart_suggested":"మీకు ఇవి కూడా నచ్చవచ్చు",
   "cart_empty":"మీ కార్ట్ ఖాళీగా ఉంది.",
   "view_cart":"కార్ట్ చూడండి",
   "co_name":"మీ పేరు",
@@ -1933,6 +1944,7 @@ STR.bn = {
   "closed_now":"বন্ধ",
   "opens_at":"{t}-এ খুলবে",
   "cart_title":"আপনার অর্ডার",
+  "cart_suggested":"আপনার এগুলোও ভালো লাগতে পারে",
   "cart_empty":"আপনার কার্ট খালি।",
   "view_cart":"কার্ট দেখুন",
   "co_name":"আপনার নাম",
@@ -2385,6 +2397,7 @@ STR.kn = {
   "closed_now":"ಮುಚ್ಚಿದೆ",
   "opens_at":"{t} ಗೆ ತೆರೆಯುತ್ತದೆ",
   "cart_title":"ನಿಮ್ಮ ಆರ್ಡರ್",
+  "cart_suggested":"ಇವುಗಳೂ ನಿಮಗೆ ಇಷ್ಟವಾಗಬಹುದು",
   "cart_empty":"ನಿಮ್ಮ ಕಾರ್ಟ್ ಖಾಲಿ ಇದೆ.",
   "view_cart":"ಕಾರ್ಟ್ ನೋಡಿ",
   "co_name":"ನಿಮ್ಮ ಹೆಸರು",
@@ -2837,6 +2850,7 @@ STR.mr = {
   "closed_now":"बंद",
   "opens_at":"{t} वाजता उघडते",
   "cart_title":"तुमची ऑर्डर",
+  "cart_suggested":"तुम्हालाही हे आवडू शकतील",
   "cart_empty":"तुमची कार्ट रिकामी आहे.",
   "view_cart":"कार्ट पहा",
   "co_name":"तुमचे नाव",
@@ -3289,6 +3303,7 @@ STR.zh = {
   "closed_now":"休息中",
   "opens_at":"{t} 开始营业",
   "cart_title":"您的订单",
+  "cart_suggested":"您可能还喜欢",
   "cart_empty":"购物车是空的。",
   "view_cart":"查看购物车",
   "co_name":"您的姓名",
@@ -3741,6 +3756,7 @@ STR.ja = {
   "closed_now":"閉店中",
   "opens_at":"{t} 開店",
   "cart_title":"ご注文内容",
+  "cart_suggested":"こちらもおすすめ",
   "cart_empty":"カートは空です。",
   "view_cart":"カートを見る",
   "co_name":"お名前",
@@ -4193,6 +4209,7 @@ STR.fr = {
   "closed_now":"Fermé",
   "opens_at":"Ouvre {t}",
   "cart_title":"Votre commande",
+  "cart_suggested":"Vous aimerez aussi",
   "cart_empty":"Votre panier est vide.",
   "view_cart":"Voir le panier",
   "co_name":"Votre nom",
@@ -4645,6 +4662,7 @@ STR.de = {
   "closed_now":"Geschlossen",
   "opens_at":"Öffnet {t}",
   "cart_title":"Ihre Bestellung",
+  "cart_suggested":"Das könnte Ihnen auch gefallen",
   "cart_empty":"Ihr Warenkorb ist leer.",
   "view_cart":"Warenkorb ansehen",
   "co_name":"Ihr Name",
@@ -5097,6 +5115,7 @@ STR.pt = {
   "closed_now":"Fechado",
   "opens_at":"Abre {t}",
   "cart_title":"Seu pedido",
+  "cart_suggested":"Você também pode gostar",
   "cart_empty":"Seu carrinho está vazio.",
   "view_cart":"Ver carrinho",
   "co_name":"Seu nome",
@@ -5549,6 +5568,7 @@ STR.ar = {
   "closed_now":"مغلق الآن",
   "opens_at":"يفتح {t}",
   "cart_title":"طلبك",
+  "cart_suggested":"قد يعجبك أيضًا",
   "cart_empty":"سلة طلبك فارغة.",
   "view_cart":"عرض السلة",
   "co_name":"اسمك",
@@ -6010,6 +6030,7 @@ STR.ml = {
   "closed_now":"അടച്ചിരിക്കുന്നു",
   "opens_at":"{t} തുറക്കും",
   "cart_title":"നിങ്ങളുടെ ഓർഡർ",
+  "cart_suggested":"നിങ്ങൾക്ക് ഇവയും ഇഷ്ടപ്പെട്ടേക്കാം",
   "cart_empty":"നിങ്ങളുടെ കൊട്ട കാലിയാണ്.",
   "view_cart":"കൊട്ട കാണൂ",
   "co_name":"നിങ്ങളുടെ പേര്",
@@ -6462,6 +6483,7 @@ STR.hi = {
   "closed_now":"बंद है",
   "opens_at":"{t} को खुलेगा",
   "cart_title":"आपका ऑर्डर",
+  "cart_suggested":"आपको ये भी पसंद आ सकते हैं",
   "cart_empty":"आपकी टोकरी खाली है।",
   "view_cart":"टोकरी देखें",
   "co_name":"आपका नाम",
@@ -6914,6 +6936,7 @@ STR.ta = {
   "closed_now":"மூடப்பட்டுள்ளது",
   "opens_at":"{t} திறக்கும்",
   "cart_title":"உங்கள் ஆர்டர்",
+  "cart_suggested":"இவையும் உங்களுக்குப் பிடிக்கலாம்",
   "cart_empty":"உங்கள் கூடை காலியாக உள்ளது.",
   "view_cart":"கூடையைப் பார்",
   "co_name":"உங்கள் பெயர்",
@@ -7367,6 +7390,7 @@ STR.es = {
   "closed_now":"Cerrado",
   "opens_at":"Abre {t}",
   "cart_title":"Tu pedido",
+  "cart_suggested":"También te puede gustar",
   "cart_empty":"Tu carrito está vacío.",
   "view_cart":"Ver carrito",
   "co_name":"Tu nombre",
@@ -9257,6 +9281,36 @@ function totalsHtml(tt){
   if(!tt.okMin) h+='<div class="d-warn">'+esc(t("min_order").replace("{x}",shopMoney(tt.min)))+'</div>';
   return h;
 }
+/* ---- cart drawer: suggested add-ons (familiar Amazon/Zomato pattern; lifts average order value) ---- */
+function cartSuggest(){
+  const RT=shopRT, d=RT.d;
+  if(!d||!d.products) return [];
+  const inCart=new Set(RT.cart.map(l=>l.pi));
+  const pool=(d.products||[]).map((p,i)=>({p:p,i:i}))
+    .filter(o=>o.p&&!inCart.has(o.i)&&o.p.stock!=="out");
+  if(!pool.length) return [];
+  const cats=new Set();
+  RT.cart.forEach(l=>{ const p=d.products[l.pi]; if(p&&p.cat) cats.add(p.cat); });
+  pool.sort((a,b)=>{
+    const sa=(a.p.best?2:0)+((a.p.cat&&cats.has(a.p.cat))?1:0);
+    const sb=(b.p.best?2:0)+((b.p.cat&&cats.has(b.p.cat))?1:0);
+    return sb-sa;
+  });
+  return pool.slice(0,3);
+}
+function suggHtml(){
+  const s=cartSuggest();
+  if(!s.length) return "";
+  return '<div class="sug"><h4>'+t("cart_suggested")+'</h4>'+s.map(o=>{
+    const p=o.p, nm=p.k?t(p.k):(p.name||"");
+    const vi=selViOf(p,o.i);
+    const pim=imgSrc(p.image);
+    return '<div class="sug-row">'
+      +(pim?'<img class="sug-img" src="'+esc(pim)+'" loading="lazy" alt="" onerror="imgFail(this)">':"")
+      +'<div class="sug-nm">'+esc(nm)+'<small>'+esc(priceLabel(p,vi))+'</small></div>'
+      +'<button class="sug-add" data-sugadd="'+o.i+'">'+t("add")+'</button></div>';
+  }).join("")+'</div>';
+}
 function renderDrawer(){
   const RT=shopRT, d=RT.d, w=$("#drawerWrap");
   if(!w) return;
@@ -9264,7 +9318,7 @@ function renderDrawer(){
   let body="";
   if(!RT.cart.length){ body='<p style="color:var(--ink2);padding:8px 0 20px;">'+t("cart_empty")+'</p>'; }
   else{
-    body=drawerItemsHtml()+couponHtml(tt)+totalsHtml(tt)
+    body=drawerItemsHtml()+suggHtml()+couponHtml(tt)+totalsHtml(tt)
       +'<button class="ck-go" id="checkoutBtn">'+t("ck_title")+'</button>';
   }
   w.innerHTML='<div class="drawer"><div class="drawer-head"><h3 class="serif" style="font-size:22px;">'+t("cart_title")+'</h3>'
@@ -9343,6 +9397,9 @@ function wireDrawer(){
     }
     if(e.target.closest("#couponGo")){ applyCoupon(); return; }
     if(e.target.closest("#couponRm")){ RT.coupon=null; saveShop(); renderDrawer(); return; }
+    const sa=e.target.closest("[data-sugadd]");
+    if(sa){ const pi=+sa.getAttribute("data-sugadd"); const p=RT.d.products[pi];
+      if(p&&p.stock!=="out"){ addToCart(pi,selViOf(p,pi)); renderDrawer(); } return; }
     if(e.target.closest("#checkoutBtn")){ saveShop(); closeDrawer();
       try{ sessionStorage.setItem("ts_ck_sid", JSON.stringify({p:shopRT.payload, sid:shopRT.serverId||null})); }catch(e){}
       location.hash="#/checkout/"+shopRT.payload; return; }
