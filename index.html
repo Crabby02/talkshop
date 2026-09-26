@@ -713,6 +713,14 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .pay-opt small{display:block;color:var(--ink2);font-weight:400;font-size:13px;}
 .d-err{background:#FDF0EF;border:1px solid #E5B8B3;color:#8C2F28;border-radius:10px;padding:12px 14px;margin:12px 0;font-size:14px;}
 .d-warn{background:var(--amber-soft);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:12px 0;font-size:14px;}
+/* ---- cart drawer: empty state (order again + browse) ---- */
+.cart-browse{width:100%;background:none;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:16px;font-weight:700;cursor:pointer;margin-top:14px;color:var(--ink);min-height:52px;}
+.cart-browse:active{background:var(--line);}
+.ro-box{margin:14px 0 2px;}
+.ro-go{display:block;width:100%;border:0;border-radius:14px;background:var(--s-accent,var(--accent));color:#fff;cursor:pointer;padding:14px 16px;min-height:52px;text-align:start;}
+.ro-go b{display:block;font-size:16px;font-weight:800;}
+.ro-go span{display:block;font-size:13px;opacity:.88;margin-top:2px;font-weight:400;}
+.ro-go:active{background:var(--s-accent-deep);}
 .pay-instr{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin:6px 0;font-size:15px;}
 .pay-instr pre{white-space:pre-wrap;font-family:inherit;background:var(--paper);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:14px;}
 @media(max-width:360px){
@@ -1040,6 +1048,10 @@ const STR = { en: {
   "cart_title":"Your order",
   "cart_suggested":"You might also like",
   "cart_empty":"Your cart is empty.",
+  "cart_browse":"Browse products",
+  "order_again":"Order again",
+  "order_again_sub":"Same items as your last order",
+  "order_again_skip":"{n} items unavailable",
   "view_cart":"View cart",
   "co_name":"Your name",
   "co_phone":"Phone number",
@@ -1493,6 +1505,10 @@ STR.te = {
   "cart_title":"మీ ఆర్డర్",
   "cart_suggested":"మీకు ఇవి కూడా నచ్చవచ్చు",
   "cart_empty":"మీ కార్ట్ ఖాళీగా ఉంది.",
+  "cart_browse":"ఉత్పత్తులు చూడండి",
+  "order_again":"మళ్లీ ఆర్డర్ చేయండి",
+  "order_again_sub":"మీ చివరి ఆర్డర్‌లోని అదే వస్తువులు",
+  "order_again_skip":"{n} వస్తువులు అందుబాటులో లేవు",
   "view_cart":"కార్ట్ చూడండి",
   "co_name":"మీ పేరు",
   "co_phone":"ఫోన్ నంబర్",
@@ -1946,6 +1962,10 @@ STR.bn = {
   "cart_title":"আপনার অর্ডার",
   "cart_suggested":"আপনার এগুলোও ভালো লাগতে পারে",
   "cart_empty":"আপনার কার্ট খালি।",
+  "cart_browse":"পণ্য দেখুন",
+  "order_again":"আবার অর্ডার করুন",
+  "order_again_sub":"আপনার শেষ অর্ডারের একই পণ্য",
+  "order_again_skip":"{n}টি পণ্য পাওয়া যাচ্ছে না",
   "view_cart":"কার্ট দেখুন",
   "co_name":"আপনার নাম",
   "co_phone":"ফোন নম্বর",
@@ -2399,6 +2419,10 @@ STR.kn = {
   "cart_title":"ನಿಮ್ಮ ಆರ್ಡರ್",
   "cart_suggested":"ಇವುಗಳೂ ನಿಮಗೆ ಇಷ್ಟವಾಗಬಹುದು",
   "cart_empty":"ನಿಮ್ಮ ಕಾರ್ಟ್ ಖಾಲಿ ಇದೆ.",
+  "cart_browse":"ಉತ್ಪನ್ನಗಳನ್ನು ನೋಡಿ",
+  "order_again":"ಮತ್ತೆ ಆರ್ಡರ್ ಮಾಡಿ",
+  "order_again_sub":"ನಿಮ್ಮ ಕೊನೆಯ ಆರ್ಡರ್‌ನ ಅದೇ ವಸ್ತುಗಳು",
+  "order_again_skip":"{n} ವಸ್ತುಗಳು ಲಭ್ಯವಿಲ್ಲ",
   "view_cart":"ಕಾರ್ಟ್ ನೋಡಿ",
   "co_name":"ನಿಮ್ಮ ಹೆಸರು",
   "co_phone":"ಫೋನ್ ಸಂಖ್ಯೆ",
@@ -2852,6 +2876,10 @@ STR.mr = {
   "cart_title":"तुमची ऑर्डर",
   "cart_suggested":"तुम्हालाही हे आवडू शकतील",
   "cart_empty":"तुमची कार्ट रिकामी आहे.",
+  "cart_browse":"उत्पादने पहा",
+  "order_again":"पुन्हा ऑर्डर करा",
+  "order_again_sub":"तुमच्या शेवटच्या ऑर्डरमधीलच वस्तू",
+  "order_again_skip":"{n} वस्तू उपलब्ध नाहीत",
   "view_cart":"कार्ट पहा",
   "co_name":"तुमचे नाव",
   "co_phone":"फोन नंबर",
@@ -3305,6 +3333,10 @@ STR.zh = {
   "cart_title":"您的订单",
   "cart_suggested":"您可能还喜欢",
   "cart_empty":"购物车是空的。",
+  "cart_browse":"浏览商品",
+  "order_again":"再次下单",
+  "order_again_sub":"与您上次订单相同的商品",
+  "order_again_skip":"{n} 件商品暂时缺货",
   "view_cart":"查看购物车",
   "co_name":"您的姓名",
   "co_phone":"电话号码",
@@ -3758,6 +3790,10 @@ STR.ja = {
   "cart_title":"ご注文内容",
   "cart_suggested":"こちらもおすすめ",
   "cart_empty":"カートは空です。",
+  "cart_browse":"商品を見る",
+  "order_again":"もう一度注文する",
+  "order_again_sub":"前回と同じ商品",
+  "order_again_skip":"{n} 点の商品は在庫切れです",
   "view_cart":"カートを見る",
   "co_name":"お名前",
   "co_phone":"電話番号",
@@ -4211,6 +4247,10 @@ STR.fr = {
   "cart_title":"Votre commande",
   "cart_suggested":"Vous aimerez aussi",
   "cart_empty":"Votre panier est vide.",
+  "cart_browse":"Voir les produits",
+  "order_again":"Commander à nouveau",
+  "order_again_sub":"Les mêmes articles que votre dernière commande",
+  "order_again_skip":"{n} articles indisponibles",
   "view_cart":"Voir le panier",
   "co_name":"Votre nom",
   "co_phone":"Numéro de téléphone",
@@ -4664,6 +4704,10 @@ STR.de = {
   "cart_title":"Ihre Bestellung",
   "cart_suggested":"Das könnte Ihnen auch gefallen",
   "cart_empty":"Ihr Warenkorb ist leer.",
+  "cart_browse":"Produkte ansehen",
+  "order_again":"Erneut bestellen",
+  "order_again_sub":"Dieselben Artikel wie bei Ihrer letzten Bestellung",
+  "order_again_skip":"{n} Artikel nicht verfügbar",
   "view_cart":"Warenkorb ansehen",
   "co_name":"Ihr Name",
   "co_phone":"Telefonnummer",
@@ -5117,6 +5161,10 @@ STR.pt = {
   "cart_title":"Seu pedido",
   "cart_suggested":"Você também pode gostar",
   "cart_empty":"Seu carrinho está vazio.",
+  "cart_browse":"Ver produtos",
+  "order_again":"Pedir novamente",
+  "order_again_sub":"Os mesmos itens do seu último pedido",
+  "order_again_skip":"{n} itens indisponíveis",
   "view_cart":"Ver carrinho",
   "co_name":"Seu nome",
   "co_phone":"Telefone",
@@ -5570,6 +5618,10 @@ STR.ar = {
   "cart_title":"طلبك",
   "cart_suggested":"قد يعجبك أيضًا",
   "cart_empty":"سلة طلبك فارغة.",
+  "cart_browse":"تصفح المنتجات",
+  "order_again":"اطلب مرة أخرى",
+  "order_again_sub":"نفس منتجات طلبك الأخير",
+  "order_again_skip":"{n} من المنتجات غير متوفرة",
   "view_cart":"عرض السلة",
   "co_name":"اسمك",
   "co_phone":"رقم الهاتف",
@@ -6032,6 +6084,10 @@ STR.ml = {
   "cart_title":"നിങ്ങളുടെ ഓർഡർ",
   "cart_suggested":"നിങ്ങൾക്ക് ഇവയും ഇഷ്ടപ്പെട്ടേക്കാം",
   "cart_empty":"നിങ്ങളുടെ കൊട്ട കാലിയാണ്.",
+  "cart_browse":"ഉൽപ്പന്നങ്ങൾ കാണുക",
+  "order_again":"വീണ്ടും ഓർഡർ ചെയ്യൂ",
+  "order_again_sub":"നിങ്ങളുടെ അവസാന ഓർഡറിലെ അതേ സാധനങ്ങൾ",
+  "order_again_skip":"{n} സാധനങ്ങൾ ലഭ്യമല്ല",
   "view_cart":"കൊട്ട കാണൂ",
   "co_name":"നിങ്ങളുടെ പേര്",
   "co_phone":"ഫോൺ നമ്പർ",
@@ -6485,6 +6541,10 @@ STR.hi = {
   "cart_title":"आपका ऑर्डर",
   "cart_suggested":"आपको ये भी पसंद आ सकते हैं",
   "cart_empty":"आपकी टोकरी खाली है।",
+  "cart_browse":"उत्पाद देखें",
+  "order_again":"फिर से ऑर्डर करें",
+  "order_again_sub":"आपके पिछले ऑर्डर वाले आइटम",
+  "order_again_skip":"{n} आइटम उपलब्ध नहीं हैं",
   "view_cart":"टोकरी देखें",
   "co_name":"आपका नाम",
   "co_phone":"फ़ोन नंबर",
@@ -6938,6 +6998,10 @@ STR.ta = {
   "cart_title":"உங்கள் ஆர்டர்",
   "cart_suggested":"இவையும் உங்களுக்குப் பிடிக்கலாம்",
   "cart_empty":"உங்கள் கூடை காலியாக உள்ளது.",
+  "cart_browse":"தயாரிப்புகளைப் பார்க்கவும்",
+  "order_again":"மீண்டும் ஆர்டர் செய்க",
+  "order_again_sub":"உங்கள் கடைசி ஆர்டரில் இருந்த அதே பொருட்கள்",
+  "order_again_skip":"{n} பொருட்கள் கிடைக்கவில்லை",
   "view_cart":"கூடையைப் பார்",
   "co_name":"உங்கள் பெயர்",
   "co_phone":"தொலைபேசி எண்",
@@ -7392,6 +7456,10 @@ STR.es = {
   "cart_title":"Tu pedido",
   "cart_suggested":"También te puede gustar",
   "cart_empty":"Tu carrito está vacío.",
+  "cart_browse":"Ver productos",
+  "order_again":"Pedir de nuevo",
+  "order_again_sub":"Los mismos artículos de tu último pedido",
+  "order_again_skip":"{n} artículos no disponibles",
   "view_cart":"Ver carrito",
   "co_name":"Tu nombre",
   "co_phone":"Número de teléfono",
@@ -8796,6 +8864,87 @@ function writeCartLS(serverId, payload, data){
   const keys=shopCartKeys(serverId, payload);
   for(let i=0;i<keys.length;i++){ try{ localStorage.setItem(keys[i], s); }catch(e){} }
 }
+/* ---- order-again: last completed order, per shop, for one-tap reorder ---- */
+function reorderKeys(serverId, payload){
+  const keys=[];
+  if(serverId) keys.push("ts_reorder_"+serverId);
+  keys.push("ts_reorder_p"+hashStr(payload||""));
+  return keys;
+}
+function saveReorder(serverId, payload, items){
+  try{
+    const s=JSON.stringify({items:items,_ts:Date.now()});
+    const keys=reorderKeys(serverId, payload);
+    for(let i=0;i<keys.length;i++){ try{ localStorage.setItem(keys[i], s); }catch(e){} }
+  }catch(e){}
+}
+function readReorder(serverId, payload){
+  const keys=reorderKeys(serverId, payload);
+  let best=null, bestTs=-1;
+  for(let i=0;i<keys.length;i++){
+    try{
+      const o=JSON.parse(localStorage.getItem(keys[i]));
+      if(o&&typeof o==="object"&&Array.isArray(o.items)){
+        const ts=(typeof o._ts==="number")?o._ts:0;
+        if(ts>=bestTs){ best=o; bestTs=ts; }
+      }
+    }catch(e){}
+  }
+  return best;
+}
+/* Map a saved reorder snapshot back onto the current catalog. Matches by
+   product+variant name so a merchant republish that reorders products can
+   never remap to the wrong item; skips out-of-stock or vanished items. */
+function reorderLines(){
+  const RT=shopRT;
+  if(!RT||!RT.d) return null;
+  const saved=readReorder(RT.serverId, RT.payload);
+  if(!saved||!saved.items||!saved.items.length) return null;
+  const prods=RT.d.products||[];
+  const fullName=function(p,v){ return (p.k?t(p.k):(p.name||""))+(v?" ("+v.n+")":""); };
+  const lines=[]; let skipped=0;
+  for(let s=0;s<saved.items.length;s++){
+    const si=saved.items[s];
+    const qty=Math.min(99,Math.max(1,si.qty|0));
+    let pi=-1;
+    const atIdx=prods[si.pi|0];
+    if(atIdx){
+      const av=(atIdx.variants&&si.vi!=null)?atIdx.variants[si.vi]:null;
+      if(fullName(atIdx,av)===si.name) pi=si.pi|0;
+    }
+    if(pi<0){
+      for(let i=0;i<prods.length;i++){
+        const p=prods[i];
+        if(si.vi!=null&&!(p.variants&&p.variants[si.vi])) continue;
+        const v=(p.variants&&si.vi!=null)?p.variants[si.vi]:null;
+        if(fullName(p,v)===si.name){ pi=i; break; }
+      }
+    }
+    if(pi<0){ skipped++; continue; }
+    const p=prods[pi];
+    if(!p||p.stock==="out"){ skipped++; continue; }
+    if(si.vi!=null&&(!p.variants||!p.variants[si.vi])){ skipped++; continue; }
+    lines.push({pi:pi,vi:(si.vi==null?null:si.vi),qty:qty});
+  }
+  return lines.length?{lines:lines,skipped:skipped}:null;
+}
+function doReorder(){
+  const RT=shopRT;
+  if(!RT) return;
+  const ro=reorderLines();
+  if(!ro) return;
+  for(let i=0;i<ro.lines.length;i++){
+    const l=ro.lines[i];
+    const ex=RT.cart.find(function(x){ return x.pi===l.pi&&x.vi===l.vi; });
+    if(ex) ex.qty=Math.min(99,ex.qty+l.qty);
+    else RT.cart.push({pi:l.pi,vi:l.vi,qty:l.qty});
+  }
+  saveShop(); renderCartBar(true); renderDrawer();
+  if(ro.skipped>0){
+    const err=$("#dErr");
+    if(err) err.innerHTML='<div class="d-err">'+esc(t("order_again_skip").replace("{n}",ro.skipped))+'</div>';
+  }
+}
 /* ---- returning-customer profile (name/phone/address, per device) ---- */
 function readCustomer(){
   try{
@@ -9316,7 +9465,12 @@ function renderDrawer(){
   if(!w) return;
   const tt=cartTotals();
   let body="";
-  if(!RT.cart.length){ body='<p style="color:var(--ink2);padding:8px 0 20px;">'+t("cart_empty")+'</p>'; }
+  if(!RT.cart.length){
+    const ro=reorderLines();
+    body='<p style="color:var(--ink2);padding:8px 0 4px;">'+t("cart_empty")+'</p>'
+      +(ro?'<div class="ro-box"><button class="ro-go" id="reorderBtn"><b>'+t("order_again")+'</b><span>'+t("order_again_sub")+'</span></button></div>':"")
+      +'<button class="cart-browse" id="browseBtn">'+t("cart_browse")+'</button>';
+  }
   else{
     body=drawerItemsHtml()+suggHtml()+couponHtml(tt)+totalsHtml(tt)
       +'<button class="ck-go" id="checkoutBtn">'+t("ck_title")+'</button>';
@@ -9397,6 +9551,8 @@ function wireDrawer(){
     }
     if(e.target.closest("#couponGo")){ applyCoupon(); return; }
     if(e.target.closest("#couponRm")){ RT.coupon=null; saveShop(); renderDrawer(); return; }
+    if(e.target.closest("#browseBtn")){ closeDrawer(); return; }
+    if(e.target.closest("#reorderBtn")){ doReorder(); return; }
     const sa=e.target.closest("[data-sugadd]");
     if(sa){ const pi=+sa.getAttribute("data-sugadd"); const p=RT.d.products[pi];
       if(p&&p.stock!=="out"){ addToCart(pi,selViOf(p,pi)); renderDrawer(); } return; }
@@ -9793,6 +9949,7 @@ function ckDone(){
   const apply = (code)=>{
     ck.orderId = code || ckOrderId();
     ck.lastOrder = snap;
+    if(snap&&snap.items&&snap.items.length&&shopRT) saveReorder(shopRT.serverId, shopRT.payload, snap.items);
     saveCustomer(shopRT.form||{});
     shopRT.cart=[]; shopRT.coupon=null; saveShop(); renderCartBar();
     ck.done=true; rerenderCk(); window.scrollTo(0,0);
