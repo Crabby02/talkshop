@@ -725,6 +725,16 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .trow .neg{color:#a33b2e;}
 .coupon-row{display:flex;gap:8px;margin:12px 0;}
 .coupon-row input{flex:1;border:1px solid var(--line);border-radius:10px;padding:11px 13px;min-width:0;}
+/* Available offers: tap-to-apply coupon cards (Zomato/Swiggy "view offers" pattern).
+   Coupons were invisible unless the customer already knew a code; this makes
+   them discoverable in one tap. Rows are <button>s: 44px targets, logical
+   properties so Arabic RTL mirrors. */
+.offers{margin:12px 0 4px;}
+.offers-t{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.offer{display:flex;align-items:center;gap:10px;width:100%;text-align:start;border:1px dashed var(--s-accent);border-radius:12px;background:#fff;padding:10px 12px;margin-bottom:8px;cursor:pointer;min-height:48px;font:inherit;color:var(--ink);}
+.offer-code{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;font-size:13px;background:var(--s-tint,#f5f3ff);border-radius:8px;padding:6px 10px;flex:none;}
+.offer-desc{flex:1;font-size:14px;min-width:0;}
+.offer-apply{font-size:13px;font-weight:800;color:var(--s-accent);flex:none;text-transform:uppercase;letter-spacing:.04em;}
 .fulfill{display:flex;gap:8px;margin:10px 0 4px;}
 .fulfill label{flex:1;text-align:center;border:1px solid var(--line);border-radius:12px;padding:11px;cursor:pointer;font-weight:600;font-size:15px;background:#fff;}
 .fulfill label.on{border-color:var(--s-accent);box-shadow:inset 0 0 0 1px var(--s-accent);}
@@ -1099,6 +1109,9 @@ const STR = { en: {
   "coupon_apply":"Apply",
   "coupon_disc":"Discount",
   "coupon_bad":"That code did not work.",
+  "coupon_offers":"Available offers",
+  "coupon_pct":"{v}% off",
+  "coupon_flat":"{amt} off",
   "subtotal":"Subtotal",
   "dlv_fee":"Delivery fee",
   "free":"FREE",
@@ -1566,6 +1579,9 @@ STR.te = {
   "coupon_apply":"వర్తింపజేయండి",
   "coupon_disc":"తగ్గింపు",
   "coupon_bad":"ఆ కోడ్ పనిచేయలేదు.",
+  "coupon_offers":"అందుబాటులో ఉన్న ఆఫర్లు",
+  "coupon_pct":"{v}% తగ్గింపు",
+  "coupon_flat":"{amt} తగ్గింపు",
   "subtotal":"ఉప మొత్తం",
   "dlv_fee":"డెలివరీ ఛార్జీ",
   "free":"ఉచితం",
@@ -2033,6 +2049,9 @@ STR.bn = {
   "coupon_apply":"প্রয়োগ করুন",
   "coupon_disc":"ছাড়",
   "coupon_bad":"কোডটা কাজ করেনি।",
+  "coupon_offers":"উপলব্ধ অফার",
+  "coupon_pct":"{v}% ছাড়",
+  "coupon_flat":"{amt} ছাড়",
   "subtotal":"সাবটোটাল",
   "dlv_fee":"ডেলিভারি ফি",
   "free":"ফ্রি",
@@ -2500,6 +2519,9 @@ STR.kn = {
   "coupon_apply":"ಅನ್ವಯಿಸಿ",
   "coupon_disc":"ರಿಯಾಯಿತಿ",
   "coupon_bad":"ಆ ಕೋಡ್ ಕೆಲಸ ಮಾಡಲಿಲ್ಲ.",
+  "coupon_offers":"ಲಭ್ಯವಿರುವ ಆಫರ್ಗಳು",
+  "coupon_pct":"{v}% ರಿಯಾಯಿತಿ",
+  "coupon_flat":"{amt} ರಿಯಾಯಿತಿ",
   "subtotal":"ಉಪಮೊತ್ತ",
   "dlv_fee":"ಡೆಲಿವರಿ ಶುಲ್ಕ",
   "free":"ಉಚಿತ",
@@ -2967,6 +2989,9 @@ STR.mr = {
   "coupon_apply":"लागू करा",
   "coupon_disc":"सूट",
   "coupon_bad":"तो कोड चालला नाही.",
+  "coupon_offers":"उपलब्ध ऑफर",
+  "coupon_pct":"{v}% सूट",
+  "coupon_flat":"{amt} सूट",
   "subtotal":"सबटोटल",
   "dlv_fee":"डिलिव्हरी शुल्क",
   "free":"मोफत",
@@ -3434,6 +3459,9 @@ STR.zh = {
   "coupon_apply":"使用",
   "coupon_disc":"优惠",
   "coupon_bad":"这个优惠码用不了。",
+  "coupon_offers":"可用优惠",
+  "coupon_pct":"{v}% 优惠",
+  "coupon_flat":"{amt} 优惠",
   "subtotal":"小计",
   "dlv_fee":"配送费",
   "free":"免费",
@@ -3901,6 +3929,9 @@ STR.ja = {
   "coupon_apply":"適用する",
   "coupon_disc":"割引",
   "coupon_bad":"そのコードは使えませんでした。",
+  "coupon_offers":"利用可能なオファー",
+  "coupon_pct":"{v}% オフ",
+  "coupon_flat":"{amt} オフ",
   "subtotal":"小計",
   "dlv_fee":"配達料",
   "free":"無料",
@@ -4368,6 +4399,9 @@ STR.fr = {
   "coupon_apply":"Appliquer",
   "coupon_disc":"Remise",
   "coupon_bad":"Ce code n'a pas fonctionné.",
+  "coupon_offers":"Offres disponibles",
+  "coupon_pct":"{v} % de réduction",
+  "coupon_flat":"{amt} de réduction",
   "subtotal":"Sous-total",
   "dlv_fee":"Frais de livraison",
   "free":"GRATUIT",
@@ -4835,6 +4869,9 @@ STR.de = {
   "coupon_apply":"Einlösen",
   "coupon_disc":"Rabatt",
   "coupon_bad":"Dieser Code hat nicht funktioniert.",
+  "coupon_offers":"Verfügbare Angebote",
+  "coupon_pct":"{v} % Rabatt",
+  "coupon_flat":"{amt} Rabatt",
   "subtotal":"Zwischensumme",
   "dlv_fee":"Liefergebühr",
   "free":"GRATIS",
@@ -5302,6 +5339,9 @@ STR.pt = {
   "coupon_apply":"Aplicar",
   "coupon_disc":"Desconto",
   "coupon_bad":"Esse código não funcionou.",
+  "coupon_offers":"Ofertas disponíveis",
+  "coupon_pct":"{v}% de desconto",
+  "coupon_flat":"{amt} de desconto",
   "subtotal":"Subtotal",
   "dlv_fee":"Taxa de entrega",
   "free":"GRÁTIS",
@@ -5769,6 +5809,9 @@ STR.ar = {
   "coupon_apply":"تطبيق",
   "coupon_disc":"الخصم",
   "coupon_bad":"هذا الرمز لا يعمل.",
+  "coupon_offers":"العروض المتاحة",
+  "coupon_pct":"خصم {v}%",
+  "coupon_flat":"خصم {amt}",
   "subtotal":"المجموع الفرعي",
   "dlv_fee":"رسوم التوصيل",
   "free":"مجاناً",
@@ -6245,6 +6288,9 @@ STR.ml = {
   "coupon_apply":"പ്രയോഗിക്കൂ",
   "coupon_disc":"കിഴിവ്",
   "coupon_bad":"ആ കോഡ് പ്രവർത്തിച്ചില്ല.",
+  "coupon_offers":"ലഭ്യമായ ഓഫറുകൾ",
+  "coupon_pct":"{v}% കിഴിവ്",
+  "coupon_flat":"{amt} കിഴിവ്",
   "subtotal":"ആകെത്തുക",
   "dlv_fee":"ഡെലിവറി ഫീസ്",
   "free":"സൗജന്യം",
@@ -6712,6 +6758,9 @@ STR.hi = {
   "coupon_apply":"लागू करें",
   "coupon_disc":"छूट",
   "coupon_bad":"यह कोड काम नहीं कर रहा।",
+  "coupon_offers":"उपलब्ध ऑफर",
+  "coupon_pct":"{v}% छूट",
+  "coupon_flat":"{amt} छूट",
   "subtotal":"उप-योग",
   "dlv_fee":"डिलीवरी शुल्क",
   "free":"मुफ़्त",
@@ -7179,6 +7228,9 @@ STR.ta = {
   "coupon_apply":"பயன்படுத்து",
   "coupon_disc":"தள்ளுபடி",
   "coupon_bad":"அந்தக் குறியீடு வேலை செய்யவில்லை.",
+  "coupon_offers":"கிடைக்கும் சலுகைகள்",
+  "coupon_pct":"{v}% தள்ளுபடி",
+  "coupon_flat":"{amt} தள்ளுபடி",
   "subtotal":"கூட்டுத்தொகை",
   "dlv_fee":"டெலிவரி கட்டணம்",
   "free":"இலவசம்",
@@ -7647,6 +7699,9 @@ STR.es = {
   "coupon_apply":"Aplicar",
   "coupon_disc":"Descuento",
   "coupon_bad":"Ese código no funcionó.",
+  "coupon_offers":"Ofertas disponibles",
+  "coupon_pct":"{v}% de descuento",
+  "coupon_flat":"{amt} de descuento",
   "subtotal":"Subtotal",
   "dlv_fee":"Costo de entrega",
   "free":"GRATIS",
@@ -9680,6 +9735,25 @@ function couponHtml(tt){
   if(RT.coupon) return '<div class="trow"><span>'+t("coupon_disc")+' ('+esc(RT.coupon.code)+') <button class="ask-btn" id="couponRm" style="padding:0 4px;" aria-label="remove">✕</button></span><span class="neg">−'+esc(shopMoney(tt.disc))+'</span></div>';
   return '<div class="coupon-row"><input id="couponInp" placeholder="'+esc(t("coupon_ph"))+'" autocapitalize="characters" autocomplete="off"><button class="btn btn-sm btn-solid" id="couponGo">'+t("coupon_apply")+'</button></div>';
 }
+/* Available offers: one-tap coupon cards above the manual code input
+   (familiar Zomato/Swiggy "view offers" pattern). Hidden once a coupon is
+   applied (couponHtml shows the applied row instead). */
+function couponOffersHtml(){
+  const RT=shopRT, d=RT.d;
+  if(!(d.coupons&&d.coupons.length)||RT.coupon) return "";
+  const rows=d.coupons.map((c,i)=>{
+    const desc=c.type==="pct"?t("coupon_pct").replace("{v}",String(c.val)):t("coupon_flat").replace("{amt}",shopMoney(c.val));
+    return '<button type="button" class="offer" data-offer="'+i+'"><span class="offer-code">'+esc(c.code)+'</span>'
+      +'<span class="offer-desc">'+esc(desc)+'</span><span class="offer-apply">'+t("coupon_apply")+'</span></button>';
+  }).join("");
+  return '<div class="offers" role="group" aria-label="'+esc(t("coupon_offers"))+'"><div class="offers-t" aria-hidden="true">'+esc(t("coupon_offers"))+'</div>'+rows+'</div>';
+}
+function applyOffer(i){
+  const RT=shopRT, d=RT.d;
+  const c=(d.coupons||[])[i];
+  if(!c) return;
+  RT.coupon=c; saveShop(); renderDrawer();
+}
 function fulfillHtml(){
   const RT=shopRT;
   return '<div class="d-sec">'+t("wa_type")+'</div><div class="fulfill">'
@@ -9745,7 +9819,7 @@ function renderDrawer(){
       +'<button class="cart-browse" id="browseBtn">'+t("cart_browse")+'</button>';
   }
   else{
-    body=drawerItemsHtml()+suggHtml()+couponHtml(tt)+totalsHtml(tt)
+    body=drawerItemsHtml()+suggHtml()+couponOffersHtml()+couponHtml(tt)+totalsHtml(tt)
       +'<button class="ck-go" id="checkoutBtn">'+t("ck_title")+'</button>';
   }
   w.innerHTML='<div class="drawer"><div class="drawer-head"><h3 class="serif" style="font-size:22px;">'+t("cart_title")+'</h3>'
@@ -9824,6 +9898,8 @@ function wireDrawer(){
     }
     if(e.target.closest("#couponGo")){ applyCoupon(); return; }
     if(e.target.closest("#couponRm")){ RT.coupon=null; saveShop(); renderDrawer(); return; }
+    const of=e.target.closest("[data-offer]");
+    if(of){ applyOffer(+of.getAttribute("data-offer")); return; }
     if(e.target.closest("#browseBtn")){ closeDrawer(); return; }
     if(e.target.closest("#reorderBtn")){ doReorder(); return; }
     const sa=e.target.closest("[data-sugadd]");
