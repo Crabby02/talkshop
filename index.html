@@ -470,6 +470,10 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .sr-cat .sr-sug-sub{font-size:12px;background:#f1f1f1;border-radius:10px;padding:2px 9px;}
 .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:8px;-webkit-overflow-scrolling:touch;}
 .chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 18px;font-size:14px;cursor:pointer;color:var(--ink);}
+.sortbar{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:0 0 10px;}
+.sortlab{font-size:13px;color:var(--muted);}
+.sortsel{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;font-size:14px;color:var(--ink);min-height:44px;max-width:70vw;cursor:pointer;}
+.msh-rail .sortbar{margin:6px 0 0;}
 .chip.on{background:var(--s-accent);border-color:var(--s-accent);color:#fff;font-weight:700;}
 .prod2{display:block;padding:16px 0;border-bottom:1px dotted var(--line);}
 .prod2:last-child{border-bottom:none;}
@@ -1046,6 +1050,11 @@ const STR = { en: {
   "search_recent":"Recent searches",
   "search_clear":"Clear",
   "search_suggest":"Suggestions",
+  "sort":"Sort",
+  "sort_rec":"Recommended",
+  "sort_plh":"Price: Low to High",
+  "sort_phl":"Price: High to Low",
+  "sort_az":"Name: A to Z",
   "search_one":"{n} result",
   "search_other":"{n} results",
   "search_none":"No items match your search.",
@@ -1506,6 +1515,11 @@ STR.te = {
   "search_recent":"ఇటీవలి శోధనలు",
   "search_clear":"తొలగించు",
   "search_suggest":"సూచనలు",
+  "sort":"క్రమీకరణ",
+  "sort_rec":"సిఫార్సు చేయబడినవి",
+  "sort_plh":"ధర: తక్కువ నుండి ఎక్కువ",
+  "sort_phl":"ధర: ఎక్కువ నుండి తక్కువ",
+  "sort_az":"పేరు: అ నుండి ఱ",
   "search_one":"{n} ఫలితం",
   "search_other":"{n} ఫలితాలు",
   "search_none":"మీ శోధనకు ఏ వస్తువూ సరిపోలలేదు.",
@@ -1966,6 +1980,11 @@ STR.bn = {
   "search_recent":"সাম্প্রতিক অনুসন্ধান",
   "search_clear":"মুছুন",
   "search_suggest":"পরামর্শ",
+  "sort":"সাজান",
+  "sort_rec":"প্রস্তাবিত",
+  "sort_plh":"দাম: কম থেকে বেশি",
+  "sort_phl":"দাম: বেশি থেকে কম",
+  "sort_az":"নাম: অ থেকে য়",
   "search_one":"{n}টি ফলাফল",
   "search_other":"{n}টি ফলাফল",
   "search_none":"আপনার অনুসন্ধানের সাথে কোনো পণ্য মেলেনি।",
@@ -2426,6 +2445,11 @@ STR.kn = {
   "search_recent":"ಇತ್ತೀಚಿನ ಹುಡುಕಾಟಗಳು",
   "search_clear":"ತೆರವುಗೊಳಿಸಿ",
   "search_suggest":"ಸಲಹೆಗಳು",
+  "sort":"ವಿಂಗಡಿಸು",
+  "sort_rec":"ಶಿಫಾರಸು ಮಾಡಿದ",
+  "sort_plh":"ಬೆಲೆ: ಕಡಿಮೆಯಿಂದ ಹೆಚ್ಚಿಗೆ",
+  "sort_phl":"ಬೆಲೆ: ಹೆಚ್ಚಿನಿಂದ ಕಡಿಮೆಗೆ",
+  "sort_az":"ಹೆಸರು: ಅ ನಿಂದ ಱ",
   "search_one":"{n} ಫಲಿತಾಂಶ",
   "search_other":"{n} ಫಲಿತಾಂಶಗಳು",
   "search_none":"ನಿಮ್ಮ ಹುಡುಕಾಟಕ್ಕೆ ಯಾವುದೇ ವಸ್ತು ಹೊಂದಿಕೆಯಾಗಲಿಲ್ಲ.",
@@ -2886,6 +2910,11 @@ STR.mr = {
   "search_recent":"अलीकडील शोध",
   "search_clear":"साफ करा",
   "search_suggest":"सूचना",
+  "sort":"क्रमवारी",
+  "sort_rec":"शिफारस केलेले",
+  "sort_plh":"किंमत: कमी ते जास्त",
+  "sort_phl":"किंमत: जास्त ते कमी",
+  "sort_az":"नाव: अ ते ज्ञ",
   "search_one":"{n} निकाल",
   "search_other":"{n} निकाल",
   "search_none":"तुमच्या शोधाशी कोणताही पदार्थ जुळला नाही.",
@@ -3346,6 +3375,11 @@ STR.zh = {
   "search_recent":"最近搜索",
   "search_clear":"清除",
   "search_suggest":"建议",
+  "sort":"排序",
+  "sort_rec":"推荐",
+  "sort_plh":"价格：从低到高",
+  "sort_phl":"价格：从高到低",
+  "sort_az":"名称：A 到 Z",
   "search_one":"{n} 个结果",
   "search_other":"{n} 个结果",
   "search_none":"没有与您的搜索匹配的商品。",
@@ -3806,6 +3840,11 @@ STR.ja = {
   "search_recent":"最近の検索",
   "search_clear":"クリア",
   "search_suggest":"候補",
+  "sort":"並び替え",
+  "sort_rec":"おすすめ",
+  "sort_plh":"価格の安い順",
+  "sort_phl":"価格の高い順",
+  "sort_az":"名前順",
   "search_one":"{n} 件の結果",
   "search_other":"{n} 件の結果",
   "search_none":"検索に一致する商品がありません。",
@@ -4266,6 +4305,11 @@ STR.fr = {
   "search_recent":"Recherches récentes",
   "search_clear":"Effacer",
   "search_suggest":"Suggestions",
+  "sort":"Trier",
+  "sort_rec":"Recommandés",
+  "sort_plh":"Prix : croissant",
+  "sort_phl":"Prix : décroissant",
+  "sort_az":"Nom : A à Z",
   "search_one":"{n} résultat",
   "search_other":"{n} résultats",
   "search_none":"Aucun article ne correspond à votre recherche.",
@@ -4726,6 +4770,11 @@ STR.de = {
   "search_recent":"Letzte Suchanfragen",
   "search_clear":"Löschen",
   "search_suggest":"Vorschläge",
+  "sort":"Sortieren",
+  "sort_rec":"Empfohlen",
+  "sort_plh":"Preis: aufsteigend",
+  "sort_phl":"Preis: absteigend",
+  "sort_az":"Name: A bis Z",
   "search_one":"{n} Ergebnis",
   "search_other":"{n} Ergebnisse",
   "search_none":"Keine Artikel für Ihre Suche gefunden.",
@@ -5186,6 +5235,11 @@ STR.pt = {
   "search_recent":"Pesquisas recentes",
   "search_clear":"Limpar",
   "search_suggest":"Sugestões",
+  "sort":"Ordenar",
+  "sort_rec":"Recomendados",
+  "sort_plh":"Preço: crescente",
+  "sort_phl":"Preço: decrescente",
+  "sort_az":"Nome: A a Z",
   "search_one":"{n} resultado",
   "search_other":"{n} resultados",
   "search_none":"Nenhum item corresponde à sua pesquisa.",
@@ -5646,6 +5700,11 @@ STR.ar = {
   "search_recent":"عمليات بحث سابقة",
   "search_clear":"مسح",
   "search_suggest":"اقتراحات",
+  "sort":"ترتيب",
+  "sort_rec":"موصى به",
+  "sort_plh":"السعر: من الأقل إلى الأعلى",
+  "sort_phl":"السعر: من الأعلى إلى الأقل",
+  "sort_az":"الاسم: أ إلى ي",
   "search_one":"نتيجة واحدة",
   "search_other":"{n} نتائج",
   "search_none":"لا توجد أصناف مطابقة لبحثك.",
@@ -6115,6 +6174,11 @@ STR.ml = {
   "search_recent":"സമീപകാല തിരച്ചിലുകൾ",
   "search_clear":"മായ്ക്കുക",
   "search_suggest":"നിർദ്ദേശങ്ങൾ",
+  "sort":"അടുക്കുക",
+  "sort_rec":"ശുപാർശ ചെയ്തവ",
+  "sort_plh":"വില: കുറഞ്ഞത് മുതൽ കൂടിയത് വരെ",
+  "sort_phl":"വില: കൂടിയത് മുതൽ കുറഞ്ഞത് വരെ",
+  "sort_az":"പേര്: അ മുതൽ ഔ വരെ",
   "search_one":"{n} ഫലം",
   "search_other":"{n} ഫലങ്ങൾ",
   "search_none":"നിങ്ങളുടെ തിരച്ചിലിന് അനുയോജ്യമായ സാധനങ്ങളൊന്നുമില്ല.",
@@ -6575,6 +6639,11 @@ STR.hi = {
   "search_recent":"हाल की खोजें",
   "search_clear":"साफ़ करें",
   "search_suggest":"सुझाव",
+  "sort":"छाँटें",
+  "sort_rec":"अनुशंसित",
+  "sort_plh":"कीमत: कम से ज़्यादा",
+  "sort_phl":"कीमत: ज़्यादा से कम",
+  "sort_az":"नाम: अ से ज्ञ",
   "search_one":"{n} परिणाम",
   "search_other":"{n} परिणाम",
   "search_none":"आपकी खोज से कोई आइटम मेल नहीं खाता।",
@@ -7035,6 +7104,11 @@ STR.ta = {
   "search_recent":"சமீபத்திய தேடல்கள்",
   "search_clear":"அழி",
   "search_suggest":"பரிந்துரைகள்",
+  "sort":"வரிசைப்படுத்து",
+  "sort_rec":"பரிந்துரைக்கப்பட்டவை",
+  "sort_plh":"விலை: குறைவு முதல் அதிகம்",
+  "sort_phl":"விலை: அதிகம் முதல் குறைவு",
+  "sort_az":"பெயர்: அ முதல் ஃ",
   "search_one":"{n} முடிவு",
   "search_other":"{n} முடிவுகள்",
   "search_none":"உங்கள் தேடலுடன் பொருந்தும் பொருட்கள் எதுவும் இல்லை.",
@@ -7496,6 +7570,11 @@ STR.es = {
   "search_recent":"Búsquedas recientes",
   "search_clear":"Borrar",
   "search_suggest":"Sugerencias",
+  "sort":"Ordenar",
+  "sort_rec":"Recomendados",
+  "sort_plh":"Precio: de menor a mayor",
+  "sort_phl":"Precio: de mayor a menor",
+  "sort_az":"Nombre: A a Z",
   "search_one":"{n} resultado",
   "search_other":"{n} resultados",
   "search_none":"Ningún producto coincide con tu búsqueda.",
@@ -9453,6 +9532,19 @@ function renderProds(){
       .sort((a,b)=>b.s-a.s);
   }
   items=items.filter(o=>RT.cat==="all"||o.p.cat===RT.cat);
+  /* Sort control (familiar Amazon/Flipkart/Zomato pattern): "Recommended" keeps
+     the default order (search relevance while searching, merchant order otherwise);
+     the other options reorder the visible items by price or name. */
+  const so=RT.sort||"rec";
+  if(so!=="rec"){
+    if(so==="plh") items.sort((a,b)=>priceNum(a.p,selViOf(a.p,a.i))-priceNum(b.p,selViOf(b.p,b.i)));
+    else if(so==="phl") items.sort((a,b)=>priceNum(b.p,selViOf(b.p,b.i))-priceNum(a.p,selViOf(a.p,a.i)));
+    else if(so==="az"){ const sl=LOCALE_TAG[uiLang]||"en"; items.sort((a,b)=>prodName(a.p).localeCompare(prodName(b.p),sl)); }
+  }
+  const sortOpts=[["rec","sort_rec"],["plh","sort_plh"],["phl","sort_phl"],["az","sort_az"]];
+  const sortHtml='<div class="sortbar"><span class="sortlab" aria-hidden="true">'+esc(t("sort"))+'</span>'
+    +'<select class="sortsel" id="sortSel" aria-label="'+esc(t("sort"))+'">'
+    +sortOpts.map(o=>'<option value="'+o[0]+'"'+(so===o[0]?" selected":"")+'>'+esc(t(o[1]))+'</option>').join("")+'</select></div>';
   let rows=items.map(o=>prodRow(o.p,o.i,nq?sHiName(prodName(o.p),q):null)).join("");
   if(nq){
     if(items.length===0){
@@ -9470,11 +9562,11 @@ function renderProds(){
     }
   }
   if(mob&&rail){
-    rail.innerHTML=html;
-    rail.style.display=cats.length?"":"none";
+    rail.innerHTML=html+sortHtml;
+    rail.style.display="";
     if(box) box.innerHTML=rows;
   }else if(box){
-    box.innerHTML=html+rows;
+    box.innerHTML=html+sortHtml+rows;
   }
 }
 function saveShop(){
@@ -10204,6 +10296,10 @@ if(!window._lbEsc){
     if(e.key==="Escape"&&$("#lb")) closeLightbox();
   });
 }
+function shopListChange(e){
+  const ss=e.target&&e.target.closest?e.target.closest("#sortSel"):null;
+  if(ss){ shopRT.sort=ss.value; renderProds(); }
+}
 function shopListClick(e){
   const zoom=e.target.closest("[data-zoom]");
   if(zoom){ openLightbox(+zoom.getAttribute("data-zoom")); return; }
@@ -10283,7 +10379,7 @@ function wireShop(){
   }
   ["#prodList","#mRail"].forEach(function(sel){
     const pl=$(sel);
-    if(pl){ pl.addEventListener("click",shopListClick); }
+    if(pl){ pl.addEventListener("click",shopListClick); pl.addEventListener("change",shopListChange); }
   });
   const sb=$("#mshSearchBtn");
   if(sb) sb.onclick=function(){
@@ -10297,7 +10393,7 @@ function initShop(d, payload, serverId){
   const saved=cartStore[payload]||readCartLS(serverId,payload)||{};
   shopRT={
     d:d, payload:payload, serverId:serverId||null, waNum:cleanPhone(d.whatsapp||"").replace(/^\+/,""),
-    cart:saved.cart||[], cat:"all", q:"", coupon:saved.coupon||null,
+    cart:saved.cart||[], cat:"all", q:"", sort:"rec", coupon:saved.coupon||null,
     fulfillment:saved.fulfillment||"pickup", slot:saved.slot||"asap",
     pay:(saved.pay!=null?saved.pay:defaultPay(d)),
     form:shopFormOf(saved),
