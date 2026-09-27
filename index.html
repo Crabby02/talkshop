@@ -615,6 +615,16 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .ck-sticky-tot b{font-size:19px;}
 .ck-sticky .ck-paybtn{flex:1;margin:0;}
 .ck-next{color:var(--ink2);font-size:15px;margin:12px 0 4px;}
+.ck-code-row{display:inline-flex;align-items:center;gap:10px;margin:12px 0 6px;flex-wrap:wrap;justify-content:center;}
+.ck-code-row .ck-orderno{margin:0;}
+.ck-copybtn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink);min-height:40px;}
+.ck-copybtn:hover{border-color:var(--s-accent,var(--accent));color:var(--s-accent,var(--accent));}
+.ck-receipt{margin:18px auto 6px;max-width:480px;text-align:start;border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:#fff;}
+.ck-receipt h2{font-size:15px;margin:0 0 4px;font-weight:800;}
+.ck-rmeta{color:var(--ink2);font-size:13px;margin:0 0 8px;}
+.ck-receipt .trow{font-size:14px;padding:5px 0;}
+.ck-receipt .trow.grand{font-size:16px;margin-top:6px;padding-top:10px;}
+.ck-receipt .qn{color:var(--ink2);font-size:12px;}
 .link-btn{background:none;border:0;color:var(--ink2);font-size:15px;font-weight:600;cursor:pointer;padding:12px 8px;text-decoration:underline;}
 
 /* ---- mobile storefront UI (isMobileUI) ---- */
@@ -1169,6 +1179,8 @@ const STR = { en: {
   "ck_order_x":"Order {x}",
   "ck_sent":"We've sent your order to {shop}.",
   "ck_back":"Back to shop",
+  "copy_code":"Copy code",
+  "ck_receipt":"Order receipt",
   "ck_upi_pay":"Pay {x} with any UPI app",
   "ck_place_order":"Place order",
   "ck_payout":"Payout details",
@@ -1634,6 +1646,8 @@ STR.te = {
   "ck_order_x":"ఆర్డర్ {x}",
   "ck_sent":"మీ ఆర్డర్ను {shop} కు పంపాము.",
   "ck_back":"షాప్కు తిరిగి వెళ్ళండి",
+  "copy_code":"కోడ్ కాపీ చేయండి",
+  "ck_receipt":"ఆర్డర్ రసీదు",
   "ck_upi_pay":"ఏదైనా UPI యాప్తో {x} చెల్లించండి",
   "ck_place_order":"ఆర్డర్ చేయండి",
   "ck_payout":"డబ్బు అందుకోవడానికి వివరాలు",
@@ -2099,6 +2113,8 @@ STR.bn = {
   "ck_order_x":"অর্ডার {x}",
   "ck_sent":"আপনার অর্ডার {shop}-এ পাঠিয়ে দিয়েছি।",
   "ck_back":"দোকানে ফিরে যান",
+  "copy_code":"কোড কপি করুন",
+  "ck_receipt":"অর্ডার রসিদ",
   "ck_upi_pay":"যেকোনো UPI অ্যাপ দিয়ে {x} পেমেন্ট করুন",
   "ck_place_order":"অর্ডার করুন",
   "ck_payout":"টাকা পাওয়ার তথ্য",
@@ -2564,6 +2580,8 @@ STR.kn = {
   "ck_order_x":"ಆರ್ಡರ್ {x}",
   "ck_sent":"ನಿಮ್ಮ ಆರ್ಡರ್ ಅನ್ನು {shop} ಗೆ ಕಳುಹಿಸಿದ್ದೇವೆ.",
   "ck_back":"ಅಂಗಡಿಗೆ ಹಿಂತಿರುಗಿ",
+  "copy_code":"ಕೋಡ್ ನಕಲಿಸಿ",
+  "ck_receipt":"ಆರ್ಡರ್ ರಸೀದಿ",
   "ck_upi_pay":"ಯಾವುದೇ UPI ಆ್ಯಪ್ ಮೂಲಕ {x} ಪಾವತಿಸಿ",
   "ck_place_order":"ಆರ್ಡರ್ ಮಾಡಿ",
   "ck_payout":"ಹಣ ಸ್ವೀಕರಿಸುವ ವಿವರಗಳು",
@@ -3029,6 +3047,8 @@ STR.mr = {
   "ck_order_x":"ऑर्डर {x}",
   "ck_sent":"तुमची ऑर्डर आम्ही {shop} ला पाठवली आहे.",
   "ck_back":"दुकानात परत जा",
+  "copy_code":"कोड कॉपी करा",
+  "ck_receipt":"ऑर्डर पावती",
   "ck_upi_pay":"कोणत्याही UPI अॅपने {x} भरा",
   "ck_place_order":"ऑर्डर करा",
   "ck_payout":"पैसे मिळवण्याची माहिती",
@@ -3494,6 +3514,8 @@ STR.zh = {
   "ck_order_x":"订单 {x}",
   "ck_sent":"我们已将您的订单发送给 {shop}。",
   "ck_back":"返回店铺",
+  "copy_code":"复制代码",
+  "ck_receipt":"订单收据",
   "ck_upi_pay":"用任意 UPI 应用支付 {x}",
   "ck_place_order":"下单",
   "ck_payout":"收款信息",
@@ -3959,6 +3981,8 @@ STR.ja = {
   "ck_order_x":"注文 {x}",
   "ck_sent":"ご注文を {shop} に送信しました。",
   "ck_back":"お店に戻る",
+  "copy_code":"コードをコピー",
+  "ck_receipt":"注文の領収書",
   "ck_upi_pay":"お好きなUPIアプリで {x} を支払う",
   "ck_place_order":"注文する",
   "ck_payout":"入金先情報",
@@ -4424,6 +4448,8 @@ STR.fr = {
   "ck_order_x":"Commande {x}",
   "ck_sent":"Nous avons envoyé votre commande à {shop}.",
   "ck_back":"Retour à la boutique",
+  "copy_code":"Copier le code",
+  "ck_receipt":"Reçu de commande",
   "ck_upi_pay":"Payez {x} avec n'importe quelle appli UPI",
   "ck_place_order":"Commander",
   "ck_payout":"Coordonnées de versement",
@@ -4889,6 +4915,8 @@ STR.de = {
   "ck_order_x":"Bestellung {x}",
   "ck_sent":"Wir haben Ihre Bestellung an {shop} gesendet.",
   "ck_back":"Zurück zum Shop",
+  "copy_code":"Code kopieren",
+  "ck_receipt":"Bestellbeleg",
   "ck_upi_pay":"{x} mit einer beliebigen UPI-App zahlen",
   "ck_place_order":"Bestellen",
   "ck_payout":"Auszahlungsdaten",
@@ -5354,6 +5382,8 @@ STR.pt = {
   "ck_order_x":"Pedido {x}",
   "ck_sent":"Enviamos seu pedido para {shop}.",
   "ck_back":"Voltar à loja",
+  "copy_code":"Copiar código",
+  "ck_receipt":"Recibo do pedido",
   "ck_upi_pay":"Pague {x} com qualquer app UPI",
   "ck_place_order":"Fazer pedido",
   "ck_payout":"Dados para recebimento",
@@ -5819,6 +5849,8 @@ STR.ar = {
   "ck_order_x":"الطلب {x}",
   "ck_sent":"أرسلنا طلبك إلى {shop}.",
   "ck_back":"عودة إلى المتجر",
+  "copy_code":"نسخ الرمز",
+  "ck_receipt":"إيصال الطلب",
   "ck_upi_pay":"ادفع {x} باستخدام أي تطبيق UPI",
   "ck_place_order":"تأكيد الطلب",
   "ck_payout":"بيانات استلام الأموال",
@@ -6293,6 +6325,8 @@ STR.ml = {
   "ck_order_x":"ഓർഡർ {x}",
   "ck_sent":"നിങ്ങളുടെ ഓർഡർ {shop} എന്ന കടയിലേക്ക് അയച്ചു.",
   "ck_back":"കടയിലേക്ക് മടങ്ങൂ",
+  "copy_code":"കോഡ് പകർത്തുക",
+  "ck_receipt":"ഓർഡർ രസീത്",
   "ck_upi_pay":"ഏതെങ്കിലും UPI ആപ്പ് വഴി {x} അടയ്ക്കൂ",
   "ck_place_order":"ഓർഡർ ചെയ്യൂ",
   "ck_payout":"പണം ലഭിക്കാനുള്ള വിവരങ്ങൾ",
@@ -6758,6 +6792,8 @@ STR.hi = {
   "ck_order_x":"ऑर्डर {x}",
   "ck_sent":"हमने आपका ऑर्डर {shop} को भेज दिया है।",
   "ck_back":"दुकान पर वापस जाएं",
+  "copy_code":"कोड कॉपी करें",
+  "ck_receipt":"ऑर्डर रसीद",
   "ck_upi_pay":"किसी भी UPI ऐप से {x} भुगतान करें",
   "ck_place_order":"ऑर्डर करें",
   "ck_payout":"पैसे पाने का विवरण",
@@ -7223,6 +7259,8 @@ STR.ta = {
   "ck_order_x":"ஆர்டர் {x}",
   "ck_sent":"உங்கள் ஆர்டரை {shop} க்கு அனுப்பிவிட்டோம்.",
   "ck_back":"கடைக்குத் திரும்பு",
+  "copy_code":"குறியீட்டை நகலெடு",
+  "ck_receipt":"ஆர்டர் ரசீது",
   "ck_upi_pay":"ஏதேனும் UPI செயலி மூலம் {x} செலுத்துக",
   "ck_place_order":"ஆர்டர் செய்க",
   "ck_payout":"பணம் பெறும் விவரங்கள்",
@@ -7689,6 +7727,8 @@ STR.es = {
   "ck_order_x":"Pedido {x}",
   "ck_sent":"Hemos enviado tu pedido a {shop}.",
   "ck_back":"Volver a la tienda",
+  "copy_code":"Copiar código",
+  "ck_receipt":"Recibo del pedido",
   "ck_upi_pay":"Paga {x} con cualquier app UPI",
   "ck_place_order":"Hacer pedido",
   "ck_payout":"Datos para recibir pagos",
@@ -10022,11 +10062,31 @@ function checkoutDoneHtml(d,tt,theme){
   return '<div class="shoptheme theme-'+theme+'"><div class="ck-wrap'+(isMobileUI()?' mob':'')+'" data-uimode="'+(isMobileUI()?'mobile':'desktop')+'"><div class="ck-panel ck-success">'
     +'<div class="ck-check">\u2713</div>'
     +'<h1 class="serif" style="font-size:clamp(28px,5vw,40px);margin:0 0 6px;">'+t("ck_confirmed")+'</h1>'
-    +'<div><span class="ck-orderno">'+esc(t("ck_order_x").replace("{x}",ck.orderId))+'</span></div>'
+    +'<div class="ck-code-row"><span class="ck-orderno">'+esc(t("ck_order_x").replace("{x}",ck.orderId))+'</span><button type="button" class="ck-copybtn" id="ckCopyBtn">'+t("copy_code")+'</button></div>'
     +'<p style="color:var(--ink2);margin:14px 0 4px;">'+esc(t("ck_sent").replace("{shop}",d.name))+'</p>'
+    +ckReceiptHtml(d)
     +'<p class="ck-next">'+t("ck_next")+'</p>'
     +'<div class="ck-btnrow">'+waBtn+'<a class="btn" href="#/s/'+ck.payload+'">'+t("ck_back")+'</a></div>'
     +'</div></div></div>';
+}
+/* Order confirmation receipt: itemized lines + totals + fulfillment meta from
+   the ck.lastOrder snapshot (familiar Amazon/Domino's pattern; the customer
+   keeps proof of what was ordered after the cart clears). Zero backend. */
+function ckReceiptHtml(d){
+  const s=ck.lastOrder;
+  if(!s||!s.items||!s.items.length) return "";
+  const rows=s.items.map(function(it){
+    return '<div class="trow"><span>'+esc(it.name)+' <span class="qn">x '+it.qty+'</span></span><span>'+esc(shopMoney(it.unitPrice*it.qty))+'</span></div>';
+  }).join("");
+  const tot=s.totals||{};
+  let foot='<div class="trow"><span>'+t("subtotal")+'</span><span>'+esc(shopMoney(tot.sub||0))+'</span></div>';
+  if(tot.disc>0) foot+='<div class="trow"><span>'+t("coupon_disc")+(s.coupon&&s.coupon.code?' ('+esc(s.coupon.code)+')':"")+'</span><span class="neg">-'+esc(shopMoney(tot.disc))+'</span></div>';
+  if(s.fulfillment==="delivery") foot+='<div class="trow"><span>'+t("dlv_fee")+'</span><span>'+(tot.fee>0?esc(shopMoney(tot.fee)):t("free"))+'</span></div>';
+  foot+='<div class="trow grand"><span>'+t("total")+'</span><span>'+esc(shopMoney(tot.total||0))+'</span></div>';
+  const ful=s.fulfillment==="delivery"?t("co_delivery"):t("co_pickup");
+  const slot=(s.slot&&s.slot!=="asap")?s.slot:t("slot_asap");
+  const meta='<p class="ck-rmeta">'+esc(ful)+' &middot; '+esc(slot)+(s.paymentMethod?' &middot; '+esc(payLabel(s.paymentMethod,d)):"")+'</p>';
+  return '<div class="ck-receipt"><h2>'+t("ck_receipt")+'</h2>'+meta+rows+foot+'</div>';
 }
 function checkoutHtml(){
   const d=ck.d, theme=(d.theme&&THEMES[d.theme])?d.theme:"forest";
@@ -10048,6 +10108,14 @@ function checkoutHtml(){
     +'</div></div>';
 }
 /* ---- checkout wiring ---- */
+function legacyCopy(txt){
+  try{
+    const ta=document.createElement("textarea"); ta.value=txt;
+    ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    document.execCommand("copy"); document.body.removeChild(ta);
+  }catch(e){}
+}
 function wireCheckout(){
   mountStripe();
   const wrap=document.querySelector(".ck-wrap"); if(!wrap||!ck) return;
@@ -10075,6 +10143,14 @@ function wireCheckout(){
     }
     if(e.target.closest("#ckGoBtn")){ ckGo(); return; }
     if(e.target.closest("#ckWaBtn")){ ckWaSend(); return; }
+    if(e.target.closest("#ckCopyBtn")){
+      const btn=e.target.closest("#ckCopyBtn");
+      const txt=ck.orderId||"";
+      const done=()=>{ const o=btn.textContent; btn.textContent=t("copied"); setTimeout(()=>{ btn.textContent=o; },1800); };
+      if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done).catch(function(){ legacyCopy(txt); done(); });
+      else { legacyCopy(txt); done(); }
+      return;
+    }
     if(e.target.closest("#ckClearSaved")){ clearCustomer(); return; }
   });
 }
