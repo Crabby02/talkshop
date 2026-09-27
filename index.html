@@ -450,6 +450,13 @@ html[dir="rtl"] body{direction:rtl}
 .shop-tools{margin-bottom:4px;position:relative;}
 .shop-search{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px;background:#fff;font-size:16px;}
 .sr-count{font-size:13px;color:var(--ink2);padding:2px 2px 10px;}
+.sr-none{text-align:center;padding:36px 20px 24px;max-width:420px;margin:0 auto;}
+.sr-none-ic{font-size:34px;line-height:1;color:var(--ink2);margin-bottom:12px;}
+.sr-none-t{font-size:16px;font-weight:700;margin:0 0 6px;}
+.sr-none-s{font-size:13px;color:var(--ink2);margin:0 0 16px;}
+.sr-none-clear{min-height:44px;padding:0 24px;}
+.sr-alt{margin-top:28px;text-align:start;}
+.sr-alt-h{font-size:13px;font-weight:700;color:var(--ink2);margin:0 0 10px;}
 mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .sr-panel{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--line);border-radius:12px;margin-top:2px;box-shadow:0 12px 32px rgba(0,0,0,.14);z-index:60;overflow:hidden;}
 .sr-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 2px;font-size:11px;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em;}
@@ -1042,6 +1049,8 @@ const STR = { en: {
   "search_one":"{n} result",
   "search_other":"{n} results",
   "search_none":"No items match your search.",
+  "search_none_sub":"Try a different search, or browse everything below.",
+  "search_none_clear":"Clear search",
   "cat_all":"All",
   "add":"Add",
   "ask":"Ask",
@@ -1500,6 +1509,8 @@ STR.te = {
   "search_one":"{n} ఫలితం",
   "search_other":"{n} ఫలితాలు",
   "search_none":"మీ శోధనకు ఏ వస్తువూ సరిపోలలేదు.",
+  "search_none_sub":"మరో శోధన ప్రయత్నించండి, లేదా కింద అన్నी చूడండి.",
+  "search_none_clear":"శోధన తుడిచివేయండి",
   "cat_all":"అన్నీ",
   "add":"జోడించండి",
   "ask":"అడగండి",
@@ -1958,6 +1969,8 @@ STR.bn = {
   "search_one":"{n}টি ফলাফল",
   "search_other":"{n}টি ফলাফল",
   "search_none":"আপনার অনুসন্ধানের সাথে কোনো পণ্য মেলেনি।",
+  "search_none_sub":"অন্য কিছু খুঁজে দেখুন, অথবা নিচে সব দেখুন।",
+  "search_none_clear":"খোঁজ মুছুন",
   "cat_all":"সব",
   "add":"যোগ করুন",
   "ask":"জিজ্ঞেস করুন",
@@ -2416,6 +2429,8 @@ STR.kn = {
   "search_one":"{n} ಫಲಿತಾಂಶ",
   "search_other":"{n} ಫಲಿತಾಂಶಗಳು",
   "search_none":"ನಿಮ್ಮ ಹುಡುಕಾಟಕ್ಕೆ ಯಾವುದೇ ವಸ್ತು ಹೊಂದಿಕೆಯಾಗಲಿಲ್ಲ.",
+  "search_none_sub":"ಬೇರೆ ಹುಡುಕಾಟ ಪ್ರಯತ್ನಿಸಿ, ಅಥವಾ ಕೆಳಗೆ ಎಲ್ಲವನ್ನೂ ನೋಡಿ.",
+  "search_none_clear":"ಹುಡುಕಾಟ ತೆರವುಗೊಳಿಸಿ",
   "cat_all":"ಎಲ್ಲಾ",
   "add":"ಸೇರಿಸಿ",
   "ask":"ಕೇಳಿ",
@@ -2874,6 +2889,8 @@ STR.mr = {
   "search_one":"{n} निकाल",
   "search_other":"{n} निकाल",
   "search_none":"तुमच्या शोधाशी कोणताही पदार्थ जुळला नाही.",
+  "search_none_sub":"वेगळा शोध वापरून पहा, किंवा खाली सर्वकाही पहा.",
+  "search_none_clear":"शोध साभ करा",
   "cat_all":"सर्व",
   "add":"जोडा",
   "ask":"विचारा",
@@ -3332,6 +3349,8 @@ STR.zh = {
   "search_one":"{n} 个结果",
   "search_other":"{n} 个结果",
   "search_none":"没有与您的搜索匹配的商品。",
+  "search_none_sub":"试试其他搜索，或浏览下方全部商品。",
+  "search_none_clear":"清除搜索",
   "cat_all":"全部",
   "add":"加入",
   "ask":"咨询",
@@ -3790,6 +3809,8 @@ STR.ja = {
   "search_one":"{n} 件の結果",
   "search_other":"{n} 件の結果",
   "search_none":"検索に一致する商品がありません。",
+  "search_none_sub":"別の検索を試すか、下ですべて見る。",
+  "search_none_clear":"検索をクリア",
   "cat_all":"すべて",
   "add":"追加",
   "ask":"質問する",
@@ -4248,6 +4269,8 @@ STR.fr = {
   "search_one":"{n} résultat",
   "search_other":"{n} résultats",
   "search_none":"Aucun article ne correspond à votre recherche.",
+  "search_none_sub":"Essayez une autre recherche ou parcourez tout ci-dessous.",
+  "search_none_clear":"Effacer la recherche",
   "cat_all":"Tout",
   "add":"Ajouter",
   "ask":"Question",
@@ -4706,6 +4729,8 @@ STR.de = {
   "search_one":"{n} Ergebnis",
   "search_other":"{n} Ergebnisse",
   "search_none":"Keine Artikel für Ihre Suche gefunden.",
+  "search_none_sub":"Versuche es mit einer anderen Suche oder stöbere unten in allem.",
+  "search_none_clear":"Suche zurücksetzen",
   "cat_all":"Alle",
   "add":"Dazu",
   "ask":"Fragen",
@@ -5164,6 +5189,8 @@ STR.pt = {
   "search_one":"{n} resultado",
   "search_other":"{n} resultados",
   "search_none":"Nenhum item corresponde à sua pesquisa.",
+  "search_none_sub":"Tente outra busca ou explore tudo abaixo.",
+  "search_none_clear":"Limpar busca",
   "cat_all":"Todos",
   "add":"Adicionar",
   "ask":"Perguntar",
@@ -5622,6 +5649,8 @@ STR.ar = {
   "search_one":"نتيجة واحدة",
   "search_other":"{n} نتائج",
   "search_none":"لا توجد أصناف مطابقة لبحثك.",
+  "search_none_sub":"جرّب بحثًا مختلفًا، أو تصفّح كل شيء أدناه.",
+  "search_none_clear":"مسح البحث",
   "cat_all":"الكل",
   "add":"أضف",
   "ask":"اسأل",
@@ -6089,6 +6118,8 @@ STR.ml = {
   "search_one":"{n} ഫലം",
   "search_other":"{n} ഫലങ്ങൾ",
   "search_none":"നിങ്ങളുടെ തിരച്ചിലിന് അനുയോജ്യമായ സാധനങ്ങളൊന്നുമില്ല.",
+  "search_none_sub":"മറ്റൊരു തിരയൽ പരീക്ഷിക്കുക, അല്ലെങ്കിൽ താഴെ എല്ലാം കാണുക.",
+  "search_none_clear":"തിരയൽ മായ്ക്കുക",
   "cat_all":"എല്ലാം",
   "add":"ചേർക്കൂ",
   "ask":"ചോദിക്കൂ",
@@ -6547,6 +6578,8 @@ STR.hi = {
   "search_one":"{n} परिणाम",
   "search_other":"{n} परिणाम",
   "search_none":"आपकी खोज से कोई आइटम मेल नहीं खाता।",
+  "search_none_sub":"कोई अन्य खोज आज़माएँ, या नीचे सब कुछ देखें।",
+  "search_none_clear":"खोज साफ़ करें",
   "cat_all":"सभी",
   "add":"जोड़ें",
   "ask":"पूछें",
@@ -7005,6 +7038,8 @@ STR.ta = {
   "search_one":"{n} முடிவு",
   "search_other":"{n} முடிவுகள்",
   "search_none":"உங்கள் தேடலுடன் பொருந்தும் பொருட்கள் எதுவும் இல்லை.",
+  "search_none_sub":"வேறு தேடலை முயற்சிக்கவும், அல்லது கீழே அனைத்தையும் பார்க்கவும்.",
+  "search_none_clear":"தேடலை நீக்கு",
   "cat_all":"அனைத்தும்",
   "add":"சேர்",
   "ask":"கேள்",
@@ -7464,6 +7499,8 @@ STR.es = {
   "search_one":"{n} resultado",
   "search_other":"{n} resultados",
   "search_none":"Ningún producto coincide con tu búsqueda.",
+  "search_none_sub":"Prueba con otra búsqueda o explora todo a continuación.",
+  "search_none_clear":"Borrar búsqueda",
   "cat_all":"Todo",
   "add":"Añadir",
   "ask":"Preguntar",
@@ -9418,8 +9455,19 @@ function renderProds(){
   items=items.filter(o=>RT.cat==="all"||o.p.cat===RT.cat);
   let rows=items.map(o=>prodRow(o.p,o.i,nq?sHiName(prodName(o.p),q):null)).join("");
   if(nq){
-    const lbl=items.length===0?t("search_none"):t(items.length===1?"search_one":"search_other").replace("{n}",items.length);
-    rows='<div class="sr-count" role="status">'+esc(lbl)+'</div>'+rows;
+    if(items.length===0){
+      /* Graceful zero-results: a clear recovery path (one-tap clear search)
+         instead of a dead empty grid. Familiar Amazon/Zomato pattern;
+         category chips above still offer one-tap browsing. */
+      rows='<div class="sr-none" role="status"><div class="sr-none-ic" aria-hidden="true">&#x2315;</div>'
+        +'<p class="sr-none-t">'+esc(t("search_none"))+'</p>'
+        +'<p class="sr-none-s">'+esc(t("search_none_sub"))+'</p>'
+        +'<button type="button" class="btn btn-solid sr-none-clear" data-clearq>'+esc(t("search_none_clear"))+'</button>'
+        +'</div>';
+    }else{
+      const lbl=t(items.length===1?"search_one":"search_other").replace("{n}",items.length);
+      rows='<div class="sr-count" role="status">'+esc(lbl)+'</div>'+rows;
+    }
   }
   if(mob&&rail){
     rail.innerHTML=html;
@@ -10167,6 +10215,12 @@ function shopListClick(e){
     shopRT.sel[i]=+pill.getAttribute("data-vj");
     renderProds();
     return;
+  }
+  const clearq=e.target.closest("[data-clearq]");
+  if(clearq){
+    shopRT.q=""; shopRT.cat="all";
+    const si=$("#shopSearch"); if(si){ si.value=""; si.focus(); }
+    renderProds(); return;
   }
   const askBtn=e.target.closest("[data-ask]");
   if(askBtn){
