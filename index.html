@@ -594,6 +594,12 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .pc-mid{flex:1;min-width:0;}
 .pc-name{font-weight:700;font-size:16px;line-height:1.35;}
 .pc-price{font-weight:800;font-size:17px;margin-top:4px;}
+/* Discount display (familiar Amazon/Flipkart/Zomato pattern): struck-through MRP
+   + green "% off" pill next to the selling price. Inline spans mirror
+   automatically in RTL; margins use logical properties. */
+.pc-mrp{color:var(--ink2);font-weight:400;font-size:14px;text-decoration:line-through;margin-inline-start:8px;white-space:nowrap;}
+.off-pill{font-size:11px;font-weight:800;border-radius:999px;padding:3px 10px;margin-inline-start:8px;white-space:nowrap;background:#DFF2E3;color:#0E7A34;}
+.pf-mrp{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;color:var(--ink2);}
 .pc-act{margin-top:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
 .pc-add{background:var(--s-accent,var(--accent));color:#fff;border:0;border-radius:10px;padding:11px 36px;font-weight:800;font-size:15px;cursor:pointer;min-height:44px;}
 .pc-add:disabled{opacity:.45;cursor:not-allowed;}
@@ -1113,6 +1119,7 @@ const STR = { en: {
   "coupon_bad":"That code did not work.",
   "coupon_offers":"Available offers",
   "coupon_pct":"{v}% off",
+  "off_pct":"{n}% off",
   "coupon_flat":"{amt} off",
   "subtotal":"Subtotal",
   "dlv_fee":"Delivery fee",
@@ -1212,6 +1219,7 @@ const STR = { en: {
   "bp_del":"Remove",
   "bp_name":"Name",
   "bp_price":"Price",
+  "bp_mrp":"MRP (optional)",
   "ck_more":"More options",
   "ck_next":"The shop will confirm your order on WhatsApp shortly.",
   "n_items":"{n} items",
@@ -1583,6 +1591,7 @@ STR.te = {
   "coupon_bad":"ఆ కోడ్ పనిచేయలేదు.",
   "coupon_offers":"అందుబాటులో ఉన్న ఆఫర్లు",
   "coupon_pct":"{v}% తగ్గింపు",
+  "off_pct":"{n}% తగ్గింపు",
   "coupon_flat":"{amt} తగ్గింపు",
   "subtotal":"ఉప మొత్తం",
   "dlv_fee":"డెలివరీ ఛార్జీ",
@@ -1682,6 +1691,7 @@ STR.te = {
   "bp_del":"తొలగించు",
   "bp_name":"పేరు",
   "bp_price":"ధర",
+  "bp_mrp":"MRP (ఐచ్ఛికం)",
   "ck_more":"మరిన్ని ఎంపికలు",
   "ck_next":"షాపు త్వరలో WhatsAppలో మీ ఆర్డర్‌ను నిర్ధారిస్తుంది.",
   "n_items":"{n} వస్తువులు",
@@ -2053,6 +2063,7 @@ STR.bn = {
   "coupon_bad":"কোডটা কাজ করেনি।",
   "coupon_offers":"উপলব্ধ অফার",
   "coupon_pct":"{v}% ছাড়",
+  "off_pct":"{n}% ছাড়",
   "coupon_flat":"{amt} ছাড়",
   "subtotal":"সাবটোটাল",
   "dlv_fee":"ডেলিভারি ফি",
@@ -2152,6 +2163,7 @@ STR.bn = {
   "bp_del":"সরান",
   "bp_name":"নাম",
   "bp_price":"দাম",
+  "bp_mrp":"MRP (ঐচ্ছিক)",
   "ck_more":"আরও অপশন",
   "ck_next":"দোকান শীঘ্রই WhatsApp-এ আপনার অর্ডার নিশ্চিত করবে।",
   "n_items":"{n}টি পণ্য",
@@ -2523,6 +2535,7 @@ STR.kn = {
   "coupon_bad":"ಆ ಕೋಡ್ ಕೆಲಸ ಮಾಡಲಿಲ್ಲ.",
   "coupon_offers":"ಲಭ್ಯವಿರುವ ಆಫರ್ಗಳು",
   "coupon_pct":"{v}% ರಿಯಾಯಿತಿ",
+  "off_pct":"{n}% ರಿಯಾಯಿತಿ",
   "coupon_flat":"{amt} ರಿಯಾಯಿತಿ",
   "subtotal":"ಉಪಮೊತ್ತ",
   "dlv_fee":"ಡೆಲಿವರಿ ಶುಲ್ಕ",
@@ -2622,6 +2635,7 @@ STR.kn = {
   "bp_del":"ತೆಗೆದುಹಾಕಿ",
   "bp_name":"ಹೆಸರು",
   "bp_price":"ಬೆಲೆ",
+  "bp_mrp":"MRP (ಐಚ್ಛಿಕ)",
   "ck_more":"ಇನ್ನಷ್ಟು ಆಯ್ಕೆಗಳು",
   "ck_next":"ಅಂಗಡಿ ಶೀಘ್ರದಲ್ಲೇ WhatsApp ನಲ್ಲಿ ನಿಮ್ಮ ಆರ್ಡರ್ ದೃಢೀಕರಿಸುತ್ತದೆ.",
   "n_items":"{n} ವಸ್ತುಗಳು",
@@ -2993,6 +3007,7 @@ STR.mr = {
   "coupon_bad":"तो कोड चालला नाही.",
   "coupon_offers":"उपलब्ध ऑफर",
   "coupon_pct":"{v}% सूट",
+  "off_pct":"{n}% सूट",
   "coupon_flat":"{amt} सूट",
   "subtotal":"सबटोटल",
   "dlv_fee":"डिलिव्हरी शुल्क",
@@ -3092,6 +3107,7 @@ STR.mr = {
   "bp_del":"काढा",
   "bp_name":"नाव",
   "bp_price":"किंमत",
+  "bp_mrp":"MRP (ऐच्छिक)",
   "ck_more":"अधिक पर्याय",
   "ck_next":"दुकान लवकरच WhatsApp वर तुमच्या ऑर्डरची पुष्टी करेल.",
   "n_items":"{n} उत्पादने",
@@ -3463,6 +3479,7 @@ STR.zh = {
   "coupon_bad":"这个优惠码用不了。",
   "coupon_offers":"可用优惠",
   "coupon_pct":"{v}% 优惠",
+  "off_pct":"{n}% 优惠",
   "coupon_flat":"{amt} 优惠",
   "subtotal":"小计",
   "dlv_fee":"配送费",
@@ -3562,6 +3579,7 @@ STR.zh = {
   "bp_del":"删除",
   "bp_name":"名称",
   "bp_price":"价格",
+  "bp_mrp":"原价 (可选)",
   "ck_more":"更多选项",
   "ck_next":"商家将很快在 WhatsApp 上确认您的订单。",
   "n_items":"{n} 件商品",
@@ -3933,6 +3951,7 @@ STR.ja = {
   "coupon_bad":"そのコードは使えませんでした。",
   "coupon_offers":"利用可能なオファー",
   "coupon_pct":"{v}% オフ",
+  "off_pct":"{n}% オフ",
   "coupon_flat":"{amt} オフ",
   "subtotal":"小計",
   "dlv_fee":"配達料",
@@ -4032,6 +4051,7 @@ STR.ja = {
   "bp_del":"削除",
   "bp_name":"名前",
   "bp_price":"価格",
+  "bp_mrp":"定価 (任意)",
   "ck_more":"その他のオプション",
   "ck_next":"店舗がまもなく WhatsApp でご注文を確認します。",
   "n_items":"{n} 点",
@@ -4403,6 +4423,7 @@ STR.fr = {
   "coupon_bad":"Ce code n'a pas fonctionné.",
   "coupon_offers":"Offres disponibles",
   "coupon_pct":"{v} % de réduction",
+  "off_pct":"{n} % de réduction",
   "coupon_flat":"{amt} de réduction",
   "subtotal":"Sous-total",
   "dlv_fee":"Frais de livraison",
@@ -4502,6 +4523,7 @@ STR.fr = {
   "bp_del":"Supprimer",
   "bp_name":"Nom",
   "bp_price":"Prix",
+  "bp_mrp":"Prix barré (facultatif)",
   "ck_more":"Plus d'options",
   "ck_next":"La boutique confirmera votre commande sur WhatsApp sous peu.",
   "n_items":"{n} articles",
@@ -4873,6 +4895,7 @@ STR.de = {
   "coupon_bad":"Dieser Code hat nicht funktioniert.",
   "coupon_offers":"Verfügbare Angebote",
   "coupon_pct":"{v} % Rabatt",
+  "off_pct":"{n} % Rabatt",
   "coupon_flat":"{amt} Rabatt",
   "subtotal":"Zwischensumme",
   "dlv_fee":"Liefergebühr",
@@ -4972,6 +4995,7 @@ STR.de = {
   "bp_del":"Entfernen",
   "bp_name":"Name",
   "bp_price":"Preis",
+  "bp_mrp":"Statt-Preis (optional)",
   "ck_more":"Weitere Optionen",
   "ck_next":"Der Shop wird Ihre Bestellung in Kürze per WhatsApp bestätigen.",
   "n_items":"{n} Artikel",
@@ -5343,6 +5367,7 @@ STR.pt = {
   "coupon_bad":"Esse código não funcionou.",
   "coupon_offers":"Ofertas disponíveis",
   "coupon_pct":"{v}% de desconto",
+  "off_pct":"{n}% de desconto",
   "coupon_flat":"{amt} de desconto",
   "subtotal":"Subtotal",
   "dlv_fee":"Taxa de entrega",
@@ -5442,6 +5467,7 @@ STR.pt = {
   "bp_del":"Remover",
   "bp_name":"Nome",
   "bp_price":"Preço",
+  "bp_mrp":"Preço antigo (opcional)",
   "ck_more":"Mais opções",
   "ck_next":"A loja confirmará seu pedido no WhatsApp em breve.",
   "n_items":"{n} itens",
@@ -5813,6 +5839,7 @@ STR.ar = {
   "coupon_bad":"هذا الرمز لا يعمل.",
   "coupon_offers":"العروض المتاحة",
   "coupon_pct":"خصم {v}%",
+  "off_pct":"خصم {n}%",
   "coupon_flat":"خصم {amt}",
   "subtotal":"المجموع الفرعي",
   "dlv_fee":"رسوم التوصيل",
@@ -5912,6 +5939,7 @@ STR.ar = {
   "bp_del":"إزالة",
   "bp_name":"الاسم",
   "bp_price":"السعر",
+  "bp_mrp":"السعر قبل الخصم (اختياري)",
   "ck_more":"خيارات أكثر",
   "ck_next":"سيؤكد المتجر طلبك على واتساب قريبًا.",
   "n_items":"{n} منتجات",
@@ -6292,6 +6320,7 @@ STR.ml = {
   "coupon_bad":"ആ കോഡ് പ്രവർത്തിച്ചില്ല.",
   "coupon_offers":"ലഭ്യമായ ഓഫറുകൾ",
   "coupon_pct":"{v}% കിഴിവ്",
+  "off_pct":"{n}% കിഴിവ്",
   "coupon_flat":"{amt} കിഴിവ്",
   "subtotal":"ആകെത്തുക",
   "dlv_fee":"ഡെലിവറി ഫീസ്",
@@ -6391,6 +6420,7 @@ STR.ml = {
   "bp_del":"നീക്കം ചെയ്യുക",
   "bp_name":"പേര്",
   "bp_price":"വില",
+  "bp_mrp":"MRP (ഓപ്ഷണൽ)",
   "ck_more":"കൂടുതൽ ഓപ്ഷനുകൾ",
   "ck_next":"കട ഉടൻ WhatsApp-ൽ നിങ്ങളുടെ ഓർഡർ സ്ഥിരീകരിക്കും.",
   "n_items":"{n} ഇനങ്ങൾ",
@@ -6762,6 +6792,7 @@ STR.hi = {
   "coupon_bad":"यह कोड काम नहीं कर रहा।",
   "coupon_offers":"उपलब्ध ऑफर",
   "coupon_pct":"{v}% छूट",
+  "off_pct":"{n}% छूट",
   "coupon_flat":"{amt} छूट",
   "subtotal":"उप-योग",
   "dlv_fee":"डिलीवरी शुल्क",
@@ -6861,6 +6892,7 @@ STR.hi = {
   "bp_del":"हटाएं",
   "bp_name":"नाम",
   "bp_price":"कीमत",
+  "bp_mrp":"MRP (वैकल्पिक)",
   "ck_more":"और विकल्प",
   "ck_next":"दुकान जल्द ही WhatsApp पर आपके ऑर्डर की पुष्टि करेगी।",
   "n_items":"{n} आइटम",
@@ -7232,6 +7264,7 @@ STR.ta = {
   "coupon_bad":"அந்தக் குறியீடு வேலை செய்யவில்லை.",
   "coupon_offers":"கிடைக்கும் சலுகைகள்",
   "coupon_pct":"{v}% தள்ளுபடி",
+  "off_pct":"{n}% தள்ளுபடி",
   "coupon_flat":"{amt} தள்ளுபடி",
   "subtotal":"கூட்டுத்தொகை",
   "dlv_fee":"டெலிவரி கட்டணம்",
@@ -7331,6 +7364,7 @@ STR.ta = {
   "bp_del":"நீக்கு",
   "bp_name":"பெயர்",
   "bp_price":"விலை",
+  "bp_mrp":"MRP (விருப்பம்)",
   "ck_more":"மேலும் விருப்பங்கள்",
   "ck_next":"கடை விரைவில் WhatsApp-இல் உங்கள் ஆர்டரை உறுதிப்படுத்தும்.",
   "n_items":"{n} பொருட்கள்",
@@ -7703,6 +7737,7 @@ STR.es = {
   "coupon_bad":"Ese código no funcionó.",
   "coupon_offers":"Ofertas disponibles",
   "coupon_pct":"{v}% de descuento",
+  "off_pct":"{n}% de descuento",
   "coupon_flat":"{amt} de descuento",
   "subtotal":"Subtotal",
   "dlv_fee":"Costo de entrega",
@@ -7802,6 +7837,7 @@ STR.es = {
   "bp_del":"Quitar",
   "bp_name":"Nombre",
   "bp_price":"Precio",
+  "bp_mrp":"Precio anterior (opcional)",
   "ck_more":"Más opciones",
   "ck_next":"La tienda confirmará tu pedido por WhatsApp en breve.",
   "n_items":"{n} artículos",
@@ -8540,6 +8576,7 @@ function prodFieldRow(p, i){
     + '<button type="button" class="pf-del" data-pfdel="'+i+'" aria-label="'+t("bp_del")+'">&times;</button></div>'
     + '<div class="pf-grid"><input data-pf="name" data-i="'+i+'" placeholder="'+t("bp_name")+'" value="'+esc(p.name||"")+'">'
     + '<span class="pf-pricewrap"><span class="pf-cur" aria-hidden="true">'+esc(curSymbol(builderCur()))+'</span><input class="pf-price" data-pf="price" data-i="'+i+'" placeholder="'+t("bp_price")+'" inputmode="decimal" value="'+esc(p.price||"")+'"></span></div>'
+    + '<label class="pf-mrp"><span>'+t("bp_mrp")+'</span><span class="pf-pricewrap"><span class="pf-cur" aria-hidden="true">'+esc(curSymbol(builderCur()))+'</span><input class="pf-price" data-pf="mrp" data-i="'+i+'" placeholder="'+t("bp_mrp")+'" inputmode="decimal" value="'+esc(p.mrp||"")+'"></span></label>'
     + '<div class="pf-vars" data-pf-vars="'+i+'">'+vars+'<button type="button" class="pf-addvar" data-pfaddvar="'+i+'">+ '+t("bp_addvar")+'</button></div>'
     + '<label class="pf-oos"><input type="checkbox" data-pf="oos" data-i="'+i+'"'+(p.stock==="out"?" checked":"")+'> '+t("bp_oos")+'</label>'
     + '<label class="pf-oos"><input type="checkbox" data-pf="best" data-i="'+i+'"'+(p.best?" checked":"")+'> '+t("best")+'</label>'
@@ -8559,9 +8596,14 @@ function previewHtml(d){
     const out = p.stock==="out";
     const price = p.price || ((p.variants && p.variants[0] && p.variants[0].p) || "");
     const pim = imgSrc(p.image);
+    /* Mirror the storefront discount badge in the live preview so the merchant
+       sees exactly what shoppers will see as they type the MRP. */
+    const prN=parseNum(p.price), mrN=parseNum(p.mrp);
+    const pdisc=(mrN!=null&&prN!=null&&mrN>prN&&prN>0)?Math.round((1-prN/mrN)*100):0;
+    const pdiscHtml=pdisc>0?' <s class="pc-mrp">'+esc(p.mrp)+'</s><span class="off-pill">'+esc(t("off_pct").replace("{n}",pdisc))+'</span>':"";
     return '<div class="pv-card"><div class="pv-img">'+(pim?'<img src="'+esc(pim)+'" alt="" onerror="imgFail(this)">':"")+'</div><div>' 
       + '<div class="pv-nm">'+esc(p.name)+(p.best?' <span class="stk stk-best">'+t("best")+'</span>':"")+(out?' <span class="stk stk-out">'+t("stock_out")+'</span>':"")+'</div>'
-      + '<div class="pv-pr">'+esc(price)+'</div></div></div>';
+      + '<div class="pv-pr">'+esc(price)+pdiscHtml+'</div></div></div>';
   }).join("");
   return '<div class="shoptheme theme-'+theme+'">'
     + (d.announce ? '<div class="banner">'+esc(d.announce)+'</div>' : "")
@@ -8954,6 +8996,7 @@ function wireBuild(){
       const k=el.getAttribute("data-pf"), vi=el.getAttribute("data-vi");
       if(k==="name") p.name=el.value;
       else if(k==="price") p.price=el.value;
+      else if(k==="mrp") p.mrp=el.value;
       else if(k==="newcat") p.cat=el.value;
       else if(k==="vname" && p.variants[+vi]) p.variants[+vi].n=el.value;
       else if(k==="vprice" && p.variants[+vi]) p.variants[+vi].p=el.value;
@@ -8962,7 +9005,7 @@ function wireBuild(){
     });
     card.addEventListener("focusout", e=>{
       if(!state.data) return;
-      const el=e.target.closest('[data-pf="price"],[data-pf="vprice"]'); if(!el) return;
+      const el=e.target.closest('[data-pf="price"],[data-pf="vprice"],[data-pf="mrp"]'); if(!el) return;
       const row=el.closest(".pf-row"), err=row?row.querySelector("[data-pf-err]"):null;
       const raw=el.value, nv=raw.trim()?normPrice(raw):"";
       const bad=!!(raw.trim()&&nv==null);
@@ -8973,6 +9016,7 @@ function wireBuild(){
         const i=+el.getAttribute("data-i"), p=state.data.products[i]; if(!p) return;
         const k=el.getAttribute("data-pf"), vi=el.getAttribute("data-vi");
         if(k==="price") p.price=nv;
+        else if(k==="mrp") p.mrp=nv;
         else if(k==="vprice"&&p.variants&&p.variants[+vi]) p.variants[+vi].p=nv;
         renderPreview();
       }
@@ -9025,7 +9069,7 @@ function wireBuild(){
       const dup=e.target.closest("[data-pfdup]");
       if(dup){
         const di=+dup.getAttribute("data-pfdup"), p=state.data.products[di];
-        if(p) state.data.products.splice(di+1,0,{cat:p.cat||"",name:p.name||"",price:p.price||"",
+        if(p) state.data.products.splice(di+1,0,{cat:p.cat||"",name:p.name||"",price:p.price||"",mrp:p.mrp||"",
           image:p.image||"",variants:(p.variants||[]).map(v=>({n:v.n||"",p:v.p||""})),stock:null});
         renderProdRows(); renderPreview(); return;
       }
@@ -9570,6 +9614,20 @@ function selViOf(p, i){
   const s=shopRT.sel[i];
   return (s!=null && s<p.variants.length) ? s : 0;
 }
+/* Discount display (familiar Amazon/Flipkart/Zomato/Dukaan pattern): when the
+   merchant sets an optional MRP above the selling price, show the
+   struck-through MRP and a green "% off" pill next to the price. Guarded so it
+   never renders when the MRP is missing, unparsable, or not above the current
+   (selected-variant) price. Zero backend; the MRP rides on the product object. */
+function discountHtml(p, vi){
+  const price=priceNum(p, vi);
+  const mrp=parseNum(p.mrp);
+  if(mrp==null||!(mrp>price)||!(price>0)) return "";
+  const pct=Math.round((1-price/mrp)*100);
+  if(!(pct>0)) return "";
+  return '<span class="pc-mrp">'+esc(shopMoney(mrp))+'</span>'
+    +'<span class="off-pill">'+esc(t("off_pct").replace("{n}",pct))+'</span>';
+}
 function prodRow(p, i, hlName){
   const name=p.k?t(p.k):(p.name||"");
   const out=p.stock==="out";
@@ -9596,14 +9654,14 @@ function prodRow(p, i, hlName){
   if(isMobileUI()){
     return '<div class="msh-card"><div class="msh-img"'+(pim?"":' aria-hidden="true"')+'>'+(pim?'<button type="button" class="pz" data-zoom="'+i+'" aria-label="'+esc(name)+'"><img src="'+esc(pim)+'" loading="lazy" alt="" onerror="imgFail(this)"></button>':"")+'</div><div class="msh-mid">'
     + '<div class="pc-name">'+(hlName||esc(name))+badge+'</div>'
-    + '<div class="pc-price">'+esc(priceLabel(p,vi))+'</div>'
+    + '<div class="pc-price">'+esc(priceLabel(p,vi))+discountHtml(p,vi)+'</div>'
     + varPills
     + '<div class="pc-act">'+act+askBtn+'</div>'
     + '</div></div>';
   }
   return '<div class="pc"><div class="pc-img"'+(pim?"":' aria-hidden="true"')+'>'+(pim?'<button type="button" class="pz" data-zoom="'+i+'" aria-label="'+esc(name)+'"><img src="'+esc(pim)+'" loading="lazy" alt="" onerror="imgFail(this)"></button>':"")+'</div><div class="pc-mid">' 
     + '<div class="pc-name">'+(hlName||esc(name))+badge+'</div>'
-    + '<div class="pc-price">'+esc(priceLabel(p,vi))+'</div>'
+    + '<div class="pc-price">'+esc(priceLabel(p,vi))+discountHtml(p,vi)+'</div>'
     + varPills
     + '<div class="pc-act">'+act+askBtn+'</div>'
     + '</div></div>';
