@@ -622,6 +622,8 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .ck-receipt{margin:18px auto 6px;max-width:480px;text-align:start;border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:#fff;}
 .ck-receipt h2{font-size:15px;margin:0 0 4px;font-weight:800;}
 .ck-rmeta{color:var(--ink2);font-size:13px;margin:0 0 8px;}
+.ck-rnote{font-size:13px;color:var(--ink2);margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line);line-height:1.45;overflow-wrap:anywhere;}
+.ck-rnote b{color:var(--ink);font-weight:700;}
 .ck-receipt .trow{font-size:14px;padding:5px 0;}
 .ck-receipt .trow.grand{font-size:16px;margin-top:6px;padding-top:10px;}
 .ck-receipt .qn{color:var(--ink2);font-size:12px;}
@@ -10162,7 +10164,8 @@ function ckReceiptHtml(d){
   const ful=s.fulfillment==="delivery"?t("co_delivery"):t("co_pickup");
   const slot=(s.slot&&s.slot!=="asap")?s.slot:t("slot_asap");
   const meta='<p class="ck-rmeta">'+esc(ful)+' &middot; '+esc(slot)+(s.paymentMethod?' &middot; '+esc(payLabel(s.paymentMethod,d)):"")+'</p>';
-  return '<div class="ck-receipt"><h2>'+t("ck_receipt")+'</h2>'+meta+rows+foot+'</div>';
+  const noteRow=s.note?'<p class="ck-rnote"><b>'+esc(t("wa_notes"))+':</b> <span dir="auto">'+esc(s.note)+'</span></p>':"";
+  return '<div class="ck-receipt"><h2>'+t("ck_receipt")+'</h2>'+meta+rows+noteRow+foot+'</div>';
 }
 function checkoutHtml(){
   const d=ck.d, theme=(d.theme&&THEMES[d.theme])?d.theme:"forest";
