@@ -490,6 +490,11 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .vpill.on{background:var(--s-accent);border-color:var(--s-accent);color:#fff;font-weight:700;}
 .vpill:focus-visible{outline:2px solid var(--s-accent);outline-offset:2px;}
 .ask-btn{font-size:13.5px;font-weight:600;color:var(--s-accent);text-decoration:underline;white-space:nowrap;background:none;border:0;cursor:pointer;padding:8px 6px;min-height:44px;display:inline-flex;align-items:center;}
+.pc-share{width:44px;height:44px;flex:none;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--ink2);cursor:pointer;}
+.pc-share:active{transform:scale(.93);}
+.pc-share.ok{border-color:var(--s-accent);color:var(--s-accent);}
+.hl-card{animation:hlpulse 1.1s ease-in-out 2;}
+@keyframes hlpulse{0%,100%{box-shadow:0 0 0 0 rgba(0,0,0,0);}50%{box-shadow:0 0 0 3px var(--s-accent);}}
 .add-btn:disabled{opacity:.35;cursor:not-allowed;}
 .openbadge{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-size:14px;font-weight:700;border-radius:999px;padding:8px 18px;}
 .ob-open{background:#E7F6EA;color:#14663a;}
@@ -1091,6 +1096,7 @@ const STR = { en: {
   "cat_all":"All",
   "add":"Add",
   "ask":"Ask",
+  "share":"Share",
   "stock_low":"Low stock",
   "stock_out":"Out of stock",
   "best":"Bestseller",
@@ -1563,6 +1569,7 @@ STR.te = {
   "cat_all":"అన్నీ",
   "add":"జోడించండి",
   "ask":"అడగండి",
+  "share":"షేర్ చేయి",
   "stock_low":"స్టాక్ తక్కువగా ఉంది",
   "stock_out":"స్టాక్ అయిపోయింది",
   "best":"బెస్ట్‌సెల్లర్",
@@ -2035,6 +2042,7 @@ STR.bn = {
   "cat_all":"সব",
   "add":"যোগ করুন",
   "ask":"জিজ্ঞেস করুন",
+  "share":"শেয়ার করুন",
   "stock_low":"স্টক কম",
   "stock_out":"স্টক শেষ",
   "best":"বেস্টসেলার",
@@ -2507,6 +2515,7 @@ STR.kn = {
   "cat_all":"ಎಲ್ಲಾ",
   "add":"ಸೇರಿಸಿ",
   "ask":"ಕೇಳಿ",
+  "share":"ಹಂಚಿಕೊಳ್ಳಿ",
   "stock_low":"ಸ್ಟಾಕ್ ಕಡಿಮೆ ಇದೆ",
   "stock_out":"ಸ್ಟಾಕ್ ಖಾಲಿಯಾಗಿದೆ",
   "best":"ಬೆಸ್ಟ್‌ಸೆಲ್ಲರ್",
@@ -2979,6 +2988,7 @@ STR.mr = {
   "cat_all":"सर्व",
   "add":"जोडा",
   "ask":"विचारा",
+  "share":"शेअर करा",
   "stock_low":"कमी साठा",
   "stock_out":"साठा संपला",
   "best":"बेस्टसेलर",
@@ -3451,6 +3461,7 @@ STR.zh = {
   "cat_all":"全部",
   "add":"加入",
   "ask":"咨询",
+  "share":"分享",
   "stock_low":"库存不多",
   "stock_out":"已售罄",
   "best":"畅销",
@@ -3923,6 +3934,7 @@ STR.ja = {
   "cat_all":"すべて",
   "add":"追加",
   "ask":"質問する",
+  "share":"シェア",
   "stock_low":"残りわずか",
   "stock_out":"在庫切れ",
   "best":"ベストセラー",
@@ -4395,6 +4407,7 @@ STR.fr = {
   "cat_all":"Tout",
   "add":"Ajouter",
   "ask":"Question",
+  "share":"Partager",
   "stock_low":"Stock faible",
   "stock_out":"Épuisé",
   "best":"Meilleure vente",
@@ -4867,6 +4880,7 @@ STR.de = {
   "cat_all":"Alle",
   "add":"Dazu",
   "ask":"Fragen",
+  "share":"Teilen",
   "stock_low":"Wenig Bestand",
   "stock_out":"Ausverkauft",
   "best":"Bestseller",
@@ -5339,6 +5353,7 @@ STR.pt = {
   "cat_all":"Todos",
   "add":"Adicionar",
   "ask":"Perguntar",
+  "share":"Compartilhar",
   "stock_low":"Poucas unidades",
   "stock_out":"Esgotado",
   "best":"Mais vendido",
@@ -5811,6 +5826,7 @@ STR.ar = {
   "cat_all":"الكل",
   "add":"أضف",
   "ask":"اسأل",
+  "share":"مشاركة",
   "stock_low":"مخزون منخفض",
   "stock_out":"نفد المخزون",
   "best":"الأكثر مبيعًا",
@@ -6292,6 +6308,7 @@ STR.ml = {
   "cat_all":"എല്ലാം",
   "add":"ചേർക്കൂ",
   "ask":"ചോദിക്കൂ",
+  "share":"പങ്കിടുക",
   "stock_low":"സ്റ്റോക്ക് കുറവാണ്",
   "stock_out":"സ്റ്റോക്ക് തീർന്നു",
   "best":"ബെസ്റ്റ്‌സെല്ലർ",
@@ -6764,6 +6781,7 @@ STR.hi = {
   "cat_all":"सभी",
   "add":"जोड़ें",
   "ask":"पूछें",
+  "share":"शेयर करें",
   "stock_low":"कम स्टॉक",
   "stock_out":"स्टॉक खत्म",
   "best":"बेस्टसेलर",
@@ -7236,6 +7254,7 @@ STR.ta = {
   "cat_all":"அனைத்தும்",
   "add":"சேர்",
   "ask":"கேள்",
+  "share":"பகிர்",
   "stock_low":"குறைந்த இருப்பு",
   "stock_out":"இருப்பு இல்லை",
   "best":"பெஸ்ட்செல்லர்",
@@ -7709,6 +7728,7 @@ STR.es = {
   "cat_all":"Todo",
   "add":"Añadir",
   "ask":"Preguntar",
+  "share":"Compartir",
   "stock_low":"Poco stock",
   "stock_out":"Agotado",
   "best":"Más vendido",
@@ -9374,6 +9394,9 @@ function freeDelChip(d){
   if(fa==null) return "";
   return '<div class="fd-chip">'+esc(t("fd_over").replace("{x}",shopMoney(fa)))+'</div>';
 }
+function shareGlyph(){
+  return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.7" x2="15.4" y2="6.3"/><line x1="8.6" y1="13.3" x2="15.4" y2="17.7"/></svg>';
+}
 function waGlyph(){
   return '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.1-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.2-.7.6-.2.4-.9 2.2-.9 4.3 0 2.1 1.6 4.2 1.8 4.5.2.3 3.1 4.8 7.6 6.5.6.2 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/></svg>';
 }
@@ -9647,23 +9670,24 @@ function prodRow(p, i, hlName){
   const qty=cartQty(i, vi);
   const pim=imgSrc(p.image);
   const askBtn=shopRT.waNum?'<button class="ask-btn" data-ask="'+i+'">'+t("ask")+'</button>':"";
+  const shareBtn='<button type="button" class="pc-share" data-share="'+i+'" aria-label="'+esc(t("share"))+'">'+shareGlyph()+'</button>';
   let act;
   if(out) act='<button class="pc-add" disabled>'+t("stock_out")+'</button>';
   else if(qty===0) act='<button class="pc-add" data-add="'+i+'">'+t("add")+'</button>';
   else act='<div class="pc-step"><button data-pdec="'+i+'" aria-label="&minus;">&minus;</button><b>'+qty+'</b><button data-pinc="'+i+'" aria-label="+">+</button></div>';
   if(isMobileUI()){
-    return '<div class="msh-card"><div class="msh-img"'+(pim?"":' aria-hidden="true"')+'>'+(pim?'<button type="button" class="pz" data-zoom="'+i+'" aria-label="'+esc(name)+'"><img src="'+esc(pim)+'" loading="lazy" alt="" onerror="imgFail(this)"></button>':"")+'</div><div class="msh-mid">'
+    return '<div class="msh-card" data-pi="'+i+'"><div class="msh-img"'+(pim?"":' aria-hidden="true"')+'>'+(pim?'<button type="button" class="pz" data-zoom="'+i+'" aria-label="'+esc(name)+'"><img src="'+esc(pim)+'" loading="lazy" alt="" onerror="imgFail(this)"></button>':"")+'</div><div class="msh-mid">'
     + '<div class="pc-name">'+(hlName||esc(name))+badge+'</div>'
     + '<div class="pc-price">'+esc(priceLabel(p,vi))+discountHtml(p,vi)+'</div>'
     + varPills
-    + '<div class="pc-act">'+act+askBtn+'</div>'
+    + '<div class="pc-act">'+act+askBtn+shareBtn+'</div>'
     + '</div></div>';
   }
-  return '<div class="pc"><div class="pc-img"'+(pim?"":' aria-hidden="true"')+'>'+(pim?'<button type="button" class="pz" data-zoom="'+i+'" aria-label="'+esc(name)+'"><img src="'+esc(pim)+'" loading="lazy" alt="" onerror="imgFail(this)"></button>':"")+'</div><div class="pc-mid">' 
+  return '<div class="pc" data-pi="'+i+'"><div class="pc-img"'+(pim?"":' aria-hidden="true"')+'>'+(pim?'<button type="button" class="pz" data-zoom="'+i+'" aria-label="'+esc(name)+'"><img src="'+esc(pim)+'" loading="lazy" alt="" onerror="imgFail(this)"></button>':"")+'</div><div class="pc-mid">' 
     + '<div class="pc-name">'+(hlName||esc(name))+badge+'</div>'
     + '<div class="pc-price">'+esc(priceLabel(p,vi))+discountHtml(p,vi)+'</div>'
     + varPills
-    + '<div class="pc-act">'+act+askBtn+'</div>'
+    + '<div class="pc-act">'+act+askBtn+shareBtn+'</div>'
     + '</div></div>';
 }
 function renderProds(){
@@ -10513,6 +10537,40 @@ function shopListChange(e){
   const ss=e.target&&e.target.closest?e.target.closest("#sortSel"):null;
   if(ss){ shopRT.sort=ss.value; renderProds(); }
 }
+/* Per-product share (familiar Flipkart/Amazon pattern): builds a deep link
+   #/s/<id>?p=<i> that scrolls to and highlights the product on arrival.
+   Native share sheet when available, clipboard copy with an accent flash
+   otherwise. Product index is stable across republishes (merchant order). */
+let pendingHl=-1; // product index to scroll to + highlight once after shop load
+function productLink(i){
+  const RT=shopRT;
+  let base=null, seg="";
+  const h=(location.hash||"").replace(/^#\/?/,"");
+  if(h.indexOf("s/")===0){ seg=h.slice(2); const qm=seg.indexOf("?"); if(qm>=0) seg=seg.slice(0,qm); }
+  if(seg && SHOP_ID_RE.test(seg)) base=shopIdLinkOf(seg);
+  if(!base){ try{ const hit=readShops().find(s=>s.payload===RT.payload); if(hit&&hit.serverId) base=shopIdLinkOf(hit.serverId); }catch(e){} }
+  if(!base) base=location.origin+location.pathname+"#/s/"+RT.payload;
+  return base+"?p="+i;
+}
+function shareProduct(i){
+  const RT=shopRT, p=RT.d.products[i]; if(!p) return;
+  const url=productLink(i);
+  const name=p.k?t(p.k):(p.name||"");
+  if(navigator.share){ navigator.share({title:RT.d.name+" - "+name, text:name+" at "+RT.d.name, url:url}).catch(function(){}); return; }
+  const done=function(){
+    const btn=document.querySelector('[data-share="'+i+'"]');
+    if(btn){ btn.classList.add("ok"); setTimeout(function(){ btn.classList.remove("ok"); },1600); }
+  };
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done).catch(function(){ legacyCopy(url); done(); });
+  else { legacyCopy(url); done(); }
+}
+function hlCard(i){
+  const card=document.querySelector('#prodList [data-pi="'+i+'"]');
+  if(!card) return; // filtered out or invalid index: land on the storefront silently
+  try{ card.scrollIntoView({block:"center"}); }catch(e){ card.scrollIntoView(); }
+  card.classList.add("hl-card");
+  setTimeout(function(){ card.classList.remove("hl-card"); },2600);
+}
 function shopListClick(e){
   const zoom=e.target.closest("[data-zoom]");
   if(zoom){ openLightbox(+zoom.getAttribute("data-zoom")); return; }
@@ -10537,6 +10595,8 @@ function shopListClick(e){
     askAbout(i, selViOf(shopRT.d.products[i], i));
     return;
   }
+  const shBtn=e.target.closest("[data-share]");
+  if(shBtn){ shareProduct(+shBtn.getAttribute("data-share")); return; }
   const addBtn=e.target.closest("[data-add]");
   if(addBtn && !addBtn.disabled){
     const i=+addBtn.getAttribute("data-add");
@@ -10718,13 +10778,14 @@ function shopLoadingView(){
 // Fetch a server-saved shop by its short ID, then render the normal storefront.
 // The fetched data is re-encoded to a canonical payload string so checkout
 // and back-links keep working exactly like payload links.
-function fetchShopById(id, h){
+function fetchShopById(id, h, hlP){
   fetch("/api/shops?id="+encodeURIComponent(id))
     .then(r=>{ if(!r.ok) throw new Error("nf"); return r.json(); })
     .then(j=>{
       if(location.hash.replace(/^#\/?/,"") !== h) return; // user moved on
       const d = j && j.payload;
       if(!d || typeof d !== "object" || Array.isArray(d)){ render(notFoundView()); return; }
+      pendingHl=(typeof hlP==="number"?hlP:-1);
       applyShopLocale(d, encodeSite(d), id);
     })
     .catch(()=>{ if(location.hash.replace(/^#\/?/,"") === h) render(notFoundView()); });
@@ -10987,6 +11048,7 @@ async function applyShopLocale(d, payload, serverId){
   render(siteView(d, payload));
   initShop(d, payload, serverId);
   window.scrollTo(0,0);
+  if(pendingHl>=0){ const t=pendingHl; pendingHl=-1; hlCard(t); } // per-product deep link
   maybeShopInfoBanner(d);
   if(shopCC){
     const cur = COUNTRY[shopCC].cur;
@@ -11237,11 +11299,13 @@ function router(){
     if(d){ startCheckout(d, payload); return; }
     render(notFoundView());
   } else if(h.indexOf("s/")===0){
-    const seg = h.slice(2);
-    if(SHOP_ID_RE.test(seg)){ render(shopLoadingView()); fetchShopById(seg, h); return; }
+    let seg = h.slice(2), hlP = -1;
+    const pm = seg.match(/[?&]p=(\d+)$/); // per-product deep link #/s/<id>?p=<i>
+    if(pm){ hlP = +pm[1]; seg = seg.slice(0, pm.index); }
+    if(SHOP_ID_RE.test(seg)){ render(shopLoadingView()); fetchShopById(seg, h, hlP); return; }
     const payload = seg;
     const d = decodeSite(payload);
-    if(d){ applyShopLocale(d, payload); return; }
+    if(d){ pendingHl = hlP; applyShopLocale(d, payload); return; }
     render(notFoundView());
   } else if(h.indexOf("orders/")===0){
     render(ordersView(h.slice(7))); wireOrders();
