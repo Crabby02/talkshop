@@ -647,6 +647,7 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .pc-act{margin-top:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
 .pc-add{background:var(--s-accent,var(--accent));color:#fff;border:0;border-radius:10px;padding:11px 36px;font-weight:800;font-size:15px;cursor:pointer;min-height:44px;}
 .pc-add:disabled{opacity:.45;cursor:not-allowed;}
+.pc-add.pc-notify{background:none;border:2px solid var(--s-accent,var(--accent));color:var(--s-accent,var(--accent));opacity:1;display:inline-flex;align-items:center;gap:8px;padding:11px 18px;}
 .pc-step{display:inline-flex;align-items:stretch;border:2px solid var(--s-accent,var(--accent));border-radius:10px;overflow:hidden;background:#fff;}
 .pc-step button{width:44px;min-height:44px;border:0;background:var(--s-accent,var(--accent));color:#fff;font-size:20px;font-weight:800;cursor:pointer;}
 .pc-step b{min-width:40px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;background:#fff;}
@@ -1199,6 +1200,8 @@ const STR = { en: {
   "err_need_addr":"Please enter your delivery address.",
   "wa_order":"New order for {shop}",
   "wa_ask":"Hi {name}! I have a question about {item}.",
+  "notify_me":"Notify me",
+  "wa_notify":"Hi {name}! Please tell me when {item} is back in stock.",
   "wa_name":"Name",
   "wa_phone":"Phone",
   "wa_type":"Order type",
@@ -1681,6 +1684,8 @@ STR.te = {
   "err_need_addr":"దయచేసి మీ డెలివరీ చిరునామా నమోదు చేయండి.",
   "wa_order":"{shop} కోసం కొత్త ఆర్డర్",
   "wa_ask":"హాయ్ {name}! {item} గురించి నాకు ఒక ప్రశ్న ఉంది.",
+  "notify_me":"నాకు తెలియజేయండి",
+  "wa_notify":"హాయ్ {name}! {item} మళ్లీ స్టాక్‌లోకి వచ్చినప్పుడు నాకు తెలియజేయండి.",
   "wa_name":"పేరు",
   "wa_phone":"ఫోన్",
   "wa_type":"ఆర్డర్ రకం",
@@ -2163,6 +2168,8 @@ STR.bn = {
   "err_need_addr":"আপনার ডেলিভারির ঠিকানা লিখুন।",
   "wa_order":"{shop}-এর জন্য নতুন অর্ডার",
   "wa_ask":"হাই {name}! {item} নিয়ে আমার একটা প্রশ্ন আছে।",
+  "notify_me":"আমাকে জানান",
+  "wa_notify":"হাই {name}! {item} আবার স্টকে এলে আমাকে জানান।",
   "wa_name":"নাম",
   "wa_phone":"ফোন",
   "wa_type":"অর্ডারের ধরন",
@@ -2645,6 +2652,8 @@ STR.kn = {
   "err_need_addr":"ದಯವಿಟ್ಟು ನಿಮ್ಮ ಡೆಲಿವರಿ ವಿಳಾಸವನ್ನು ನಮೂದಿಸಿ.",
   "wa_order":"{shop} ಗಾಗಿ ಹೊಸ ಆರ್ಡರ್",
   "wa_ask":"ಹಾಯ್ {name}! ನನಗೆ {item} ಬಗ್ಗೆ ಒಂದು ಪ್ರಶ್ನೆ ಇದೆ.",
+  "notify_me":"ನನಗೆ ತಿಳಿಸಿ",
+  "wa_notify":"ಹಾಯ್ {name}! {item} ಮತ್ತೆ ಸ್ಟಾಕ್‌ನಲ್ಲಿದ್ದಾಗ ದಯವಿಟ್ಟು ನನಗೆ ತಿಳಿಸಿ.",
   "wa_name":"ಹೆಸರು",
   "wa_phone":"ಫೋನ್",
   "wa_type":"ಆರ್ಡರ್ ಪ್ರಕಾರ",
@@ -3127,6 +3136,8 @@ STR.mr = {
   "err_need_addr":"कृपया तुमचा डिलिव्हरी पत्ता टाका.",
   "wa_order":"{shop} साठी नवीन ऑर्डर",
   "wa_ask":"नमस्कार {name}! मला {item} बद्दल प्रश्न आहे.",
+  "notify_me":"मला कळवा",
+  "wa_notify":"नमस्कार {name}! {item} पुन्हा स्टॉकमध्ये आल्यावर कृपया मला कळवा.",
   "wa_name":"नाव",
   "wa_phone":"फोन",
   "wa_type":"ऑर्डर प्रकार",
@@ -3609,6 +3620,8 @@ STR.zh = {
   "err_need_addr":"请填写您的配送地址。",
   "wa_order":"{shop} 的新订单",
   "wa_ask":"您好{name}！我想问一下{item}。",
+  "notify_me":"到货通知我",
+  "wa_notify":"您好{name}！{item}到货后请通知我。",
   "wa_name":"姓名",
   "wa_phone":"电话",
   "wa_type":"订单类型",
@@ -4091,6 +4104,8 @@ STR.ja = {
   "err_need_addr":"配達先住所を入力してください。",
   "wa_order":"{shop} への新しい注文",
   "wa_ask":"こんにちは{name}さん！{item}について質問があります。",
+  "notify_me":"入荷を通知",
+  "wa_notify":"こんにちは{name}さん！{item}が入荷したら教えてください。",
   "wa_name":"お名前",
   "wa_phone":"電話番号",
   "wa_type":"注文方法",
@@ -4573,6 +4588,8 @@ STR.fr = {
   "err_need_addr":"Veuillez entrer votre adresse de livraison.",
   "wa_order":"Nouvelle commande pour {shop}",
   "wa_ask":"Bonjour {name} ! J'ai une question sur {item}.",
+  "notify_me":"Me notifier",
+  "wa_notify":"Bonjour {name} ! Dites-moi quand {item} sera de nouveau disponible.",
   "wa_name":"Nom",
   "wa_phone":"Téléphone",
   "wa_type":"Type de commande",
@@ -5055,6 +5072,8 @@ STR.de = {
   "err_need_addr":"Bitte geben Sie Ihre Lieferadresse ein.",
   "wa_order":"Neue Bestellung für {shop}",
   "wa_ask":"Hallo {name}! Ich habe eine Frage zu {item}.",
+  "notify_me":"Benachrichtigen",
+  "wa_notify":"Hallo {name}! Bitte sag mir Bescheid, wenn {item} wieder verfügbar ist.",
   "wa_name":"Name",
   "wa_phone":"Telefon",
   "wa_type":"Bestellart",
@@ -5537,6 +5556,8 @@ STR.pt = {
   "err_need_addr":"Digite seu endereço de entrega, por favor.",
   "wa_order":"Novo pedido para {shop}",
   "wa_ask":"Oi {name}! Tenho uma dúvida sobre {item}.",
+  "notify_me":"Avise-me",
+  "wa_notify":"Oi {name}! Por favor, me avise quando {item} estiver disponível novamente.",
   "wa_name":"Nome",
   "wa_phone":"Telefone",
   "wa_type":"Tipo de pedido",
@@ -6019,6 +6040,8 @@ STR.ar = {
   "err_need_addr":"يُرجى إدخال عنوان التوصيل.",
   "wa_order":"طلب جديد لـ {shop}",
   "wa_ask":"مرحباً {name}! لدي سؤال عن {item}.",
+  "notify_me":"أعلمني",
+  "wa_notify":"مرحباً {name}! من فضلك أخبرني عندما يعود {item} إلى المخزون.",
   "wa_name":"الاسم",
   "wa_phone":"الهاتف",
   "wa_type":"نوع الطلب",
@@ -6510,6 +6533,8 @@ STR.ml = {
   "err_need_addr":"ദയവായി ഡെലിവറി വിലാസം എഴുതൂ.",
   "wa_order":"{shop}-ലേക്ക് പുതിയ ഓർഡർ",
   "wa_ask":"ഹായ് {name}! {item}-നെക്കുറിച്ച് ചോദിക്കാനുണ്ട്.",
+  "notify_me":"എന്നെ അറിയിക്കൂ",
+  "wa_notify":"ഹായ് {name}! {item} വീണ്ടും സ്റ്റോക്കിൽ വരുമ്പോൾ എന്നെ അറിയിക്കൂ.",
   "wa_name":"പേര്",
   "wa_phone":"ഫോൺ",
   "wa_type":"ഓർഡർ തരം",
@@ -6992,6 +7017,8 @@ STR.hi = {
   "err_need_addr":"कृपया अपना डिलीवरी पता लिखें।",
   "wa_order":"{shop} के लिए नया ऑर्डर",
   "wa_ask":"नमस्ते {name}! मुझे {item} के बारे में पूछना है।",
+  "notify_me":"मुझे बताएं",
+  "wa_notify":"नमस्ते {name}! {item} फिर से स्टॉक में आए तो कृपया मुझे बताएं।",
   "wa_name":"नाम",
   "wa_phone":"फ़ोन",
   "wa_type":"ऑर्डर का प्रकार",
@@ -7474,6 +7501,8 @@ STR.ta = {
   "err_need_addr":"டெலிவரி முகவரியை எழுதுங்கள்.",
   "wa_order":"{shop} க்கு புதிய ஆர்டர்",
   "wa_ask":"வணக்கம் {name}! {item} பற்றி கேட்க விரும்புகிறேன்.",
+  "notify_me":"எனக்கு தெரிவியுங்கள்",
+  "wa_notify":"வணக்கம் {name}! {item} மீண்டும் கிடைக்கும்போது எனக்கு தெரிவியுங்கள்.",
   "wa_name":"பெயர்",
   "wa_phone":"தொலைபேசி",
   "wa_type":"ஆர்டர் வகை",
@@ -7957,6 +7986,8 @@ STR.es = {
   "err_need_addr":"Por favor escribe tu dirección de entrega.",
   "wa_order":"Nuevo pedido para {shop}",
   "wa_ask":"¡Hola {name}! Tengo una pregunta sobre {item}.",
+  "notify_me":"Avísame",
+  "wa_notify":"¡Hola {name}! Por favor avísame cuando {item} vuelva a estar disponible.",
   "wa_name":"Nombre",
   "wa_phone":"Teléfono",
   "wa_type":"Tipo de pedido",
@@ -9574,6 +9605,9 @@ function shareGlyph(){
 function heartGlyph(){
   return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
 }
+function bellGlyph(){
+  return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>';
+}
 function waGlyph(){
   return '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.1-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.2-.7.6-.2.4-.9 2.2-.9 4.3 0 2.1 1.6 4.2 1.8 4.5.2.3 3.1 4.8 7.6 6.5.6.2 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/></svg>';
 }
@@ -9851,7 +9885,12 @@ function prodRow(p, i, hlName){
   const saveOn=isSaved(i);
   const saveBtn='<button type="button" class="pc-saveov'+(saveOn?" on":"")+'" data-wl="'+i+'" aria-pressed="'+saveOn+'" aria-label="'+esc(t("wl_save"))+'">'+heartGlyph()+'</button>';
   let act;
-  if(out) act='<button class="pc-add" disabled>'+t("stock_out")+'</button>';
+  /* Back-in-stock alert (familiar Amazon/Dukaan pattern): the dead disabled
+     button becomes a one-tap WhatsApp request so the merchant can message
+     the shopper back when the item returns. Only when the shop has a
+     WhatsApp number; otherwise the honest disabled label stays. */
+  if(out) act=shopRT.waNum?'<button class="pc-add pc-notify" data-notify="'+i+'">'+bellGlyph()+'<span>'+esc(t("notify_me"))+'</span></button>'
+    :'<button class="pc-add" disabled>'+t("stock_out")+'</button>';
   else if(qty===0) act='<button class="pc-add" data-add="'+i+'">'+t("add")+'</button>';
   else act='<div class="pc-step"><button data-pdec="'+i+'" aria-label="&minus;">&minus;</button><b>'+qty+'</b><button data-pinc="'+i+'" aria-label="+">+</button></div>';
   if(isMobileUI()){
@@ -9948,6 +9987,13 @@ function askAbout(i,vi){
   const v=(p.variants&&vi!=null)?p.variants[vi]:null;
   const nm=(p.k?t(p.k):(p.name||""))+(v?" ("+v.n+")":"");
   window.open("https://wa.me/"+RT.waNum+"?text="+encodeURIComponent(t("wa_ask").replace("{name}",RT.d.name).replace("{item}",nm)),"_blank");
+}
+function notifyBackInStock(i){
+  const RT=shopRT;
+  if(!RT.waNum) return;
+  const p=RT.d.products[i]; if(!p) return;
+  const nm=p.k?t(p.k):(p.name||"");
+  window.open("https://wa.me/"+RT.waNum+"?text="+encodeURIComponent(t("wa_notify").replace("{name}",RT.d.name).replace("{item}",nm)),"_blank");
 }
 function renderCartBar(pop){
   const w=$("#cartBarWrap");
@@ -10967,7 +11013,8 @@ function renderSaved(){
     const pim=imgSrc(p.image);
     const out=p.stock==="out";
     const qty=cartQty(i, selViOf(p, i));
-    const act=out?'<button class="pc-add" disabled>'+t("stock_out")+'</button>'
+    const act=out?(shopRT.waNum?'<button type="button" class="pc-add pc-notify" data-notify="'+i+'">'+bellGlyph()+'<span>'+esc(t("notify_me"))+'</span></button>'
+      :'<button class="pc-add" disabled>'+t("stock_out")+'</button>')
       :qty===0
       ?'<button type="button" class="rv-add" data-add="'+i+'">'+t("add")+'</button>'
       :'<div class="pc-step"><button type="button" data-pdec="'+i+'" aria-label="&minus;">&minus;</button><b>'+qty+'</b><button type="button" data-pinc="'+i+'" aria-label="+">+</button></div>';
@@ -11004,6 +11051,8 @@ function shopListClick(e){
     askAbout(i, selViOf(shopRT.d.products[i], i));
     return;
   }
+  const nbBtn=e.target.closest("[data-notify]");
+  if(nbBtn){ notifyBackInStock(+nbBtn.getAttribute("data-notify")); return; }
   const shBtn=e.target.closest("[data-share]");
   if(shBtn){ shareProduct(+shBtn.getAttribute("data-share")); return; }
   const wlBtn=e.target.closest("[data-wl]");
