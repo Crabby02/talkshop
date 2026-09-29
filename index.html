@@ -493,6 +493,15 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .pc-share{width:44px;height:44px;flex:none;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--ink2);cursor:pointer;}
 .pc-share:active{transform:scale(.93);}
 .pc-share.ok{border-color:var(--s-accent);color:var(--s-accent);}
+/* ---- save for later (familiar Amazon/Flipkart wishlist pattern): heart overlay
+   on the product image corner + in the lightbox; saved items collect in a rail ---- */
+.pc-saveov{position:absolute;top:6px;inset-inline-end:6px;width:40px;height:40px;border:0;border-radius:50%;background:rgba(255,255,255,.94);color:var(--ink2);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.18);z-index:2;}
+.pc-saveov:active{transform:scale(.93);}
+.pc-saveov.on{color:var(--s-accent);}
+.pc-saveov.on svg{fill:currentColor;}
+.wl-card{position:relative;}
+.wl-rm{position:absolute;top:4px;inset-inline-end:4px;width:32px;height:32px;border:0;border-radius:50%;background:rgba(255,255,255,.94);color:var(--ink2);font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.14);z-index:2;}
+.wl-rm:active{transform:scale(.93);}
 .hl-card{animation:hlpulse 1.1s ease-in-out 2;}
 @keyframes hlpulse{0%,100%{box-shadow:0 0 0 0 rgba(0,0,0,0);}50%{box-shadow:0 0 0 3px var(--s-accent);}}
 /* ---- recently viewed rail (familiar Amazon/Shopify pattern): a compact
@@ -589,7 +598,7 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .pv-add{display:inline-block;margin-top:9px;background:var(--s-accent,var(--accent));color:#fff;font-weight:800;font-size:13px;border-radius:8px;padding:8px 24px;}
 /* ---- storefront: product cards ---- */
 .pc{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);}
-.pc-img{width:88px;height:88px;border-radius:12px;background:#E7E4DA;flex:none;}
+.pc-img{width:88px;height:88px;border-radius:12px;background:#E7E4DA;flex:none;position:relative;}
 .pc-img{overflow:hidden;}
 .pc-img img{width:100%;height:100%;object-fit:cover;display:block;}
 /* tap-to-zoom product image: the thumbnail is a button that opens a full-screen lightbox */
@@ -600,6 +609,10 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .lb img{max-width:94vw;max-height:88vh;object-fit:contain;border-radius:10px;box-shadow:0 12px 48px rgba(0,0,0,.5);background:#E7E4DA;}
 .lb-cap{position:absolute;left:0;right:0;bottom:max(18px, env(safe-area-inset-bottom));text-align:center;color:#fff;font-size:15px;font-weight:600;padding:0 64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .lb-x{position:absolute;top:max(14px, env(safe-area-inset-top));inset-inline-end:14px;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:24px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.lb-wl{position:absolute;top:max(14px, env(safe-area-inset-top));inset-inline-start:14px;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.lb-wl:active{transform:scale(.93);}
+.lb-wl.on{color:#ff9a8f;}
+.lb-wl.on svg{fill:currentColor;}
 .lb-x:active{background:rgba(255,255,255,.3);}
 .pv-img{overflow:hidden;}
 .pv-img img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -690,7 +703,7 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .msh-sec .sub{color:var(--ink2);font-size:14px;margin-bottom:14px;}
 .msh-card{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);align-items:flex-start;}
 .msh-card:last-child{border-bottom:0;}
-.msh-img{width:84px;height:84px;flex:none;border-radius:14px;background:#E7E4DA;overflow:hidden;}
+.msh-img{width:84px;height:84px;flex:none;border-radius:14px;background:#E7E4DA;overflow:hidden;position:relative;}
 .msh-img img{width:100%;height:100%;object-fit:cover;display:block;}
 .msh-mid{flex:1;min-width:0;}
 .msh .pc-act{margin-top:8px;}
@@ -1129,6 +1142,9 @@ const STR = { en: {
   "ckc_ok":"Accept",
   "ckc_no":"Decline",
   "rec_foryou":"Recommended for you",
+  "wl_save":"Save",
+  "wl_saved":"Saved items",
+  "wl_remove":"Remove",
   "stock_low":"Low stock",
   "stock_out":"Out of stock",
   "best":"Bestseller",
@@ -1605,6 +1621,9 @@ STR.te = {
   "rv_recent":"ఇటీవల చూసినవి",
   "ckc_title":"మీ గోప్యత",
   "ckc_body":"మంచి సూచనలు చూపించడానికి ఈ పరికరంలో మీరు చూసినవి, ఆర్డర్ చేసినవి మేము గుర్తుంచుకుంటాము. తిరస్కరించినా షాప్ బాగానే పనిచేస్తుంది.",
+  "wl_save":"సేవ్",
+  "wl_saved":"సేవ్ చేసినవి",
+  "wl_remove":"తొలగించు",
   "ckc_ok":"అంగీకరించు",
   "ckc_no":"తిరస్కరించు",
   "rec_foryou":"మీ కోసం సూచనలు",
@@ -2081,6 +2100,9 @@ STR.bn = {
   "add":"যোগ করুন",
   "ask":"জিজ্ঞেস করুন",
   "share":"শেয়ার করুন",
+  "wl_save":"সংরক্ষণ",
+  "wl_saved":"সংরক্ষিত আইটেম",
+  "wl_remove":"সরান",
   "rv_recent":"সম্প্রতি দেখা",
   "ckc_title":"আপনার গোপনীয়তা",
   "ckc_body":"ভালো পরামর্শ দেখাতে আমরা এই ডিভাইসে আপনি কী দেখেছেন ও অর্ডার করেছেন তা মনে রাখি। প্রত্যাখ্যান করলেও দোকান ঠিকমতো চলবে।",
@@ -2557,6 +2579,9 @@ STR.kn = {
   "search_none_sub":"ಬೇರೆ ಹುಡುಕಾಟ ಪ್ರಯತ್ನಿಸಿ, ಅಥವಾ ಕೆಳಗೆ ಎಲ್ಲವನ್ನೂ ನೋಡಿ.",
   "search_none_clear":"ಹುಡುಕಾಟ ತೆರವುಗೊಳಿಸಿ",
   "cat_all":"ಎಲ್ಲಾ",
+  "wl_save":"ಉಳಿಸಿ",
+  "wl_saved":"ಉಳಿಸಿದ ಐಟಂಗಳು",
+  "wl_remove":"ತೆಗೆದುಹಾಕಿ",
   "add":"ಸೇರಿಸಿ",
   "ask":"ಕೇಳಿ",
   "share":"ಹಂಚಿಕೊಳ್ಳಿ",
@@ -3033,6 +3058,9 @@ STR.mr = {
   "search_one":"{n} निकाल",
   "search_other":"{n} निकाल",
   "search_none":"तुमच्या शोधाशी कोणताही पदार्थ जुळला नाही.",
+  "wl_save":"जतन करा",
+  "wl_saved":"जतन केलेले",
+  "wl_remove":"काढा",
   "search_none_sub":"वेगळा शोध वापरून पहा, किंवा खाली सर्वकाही पहा.",
   "search_none_clear":"शोध साभ करा",
   "cat_all":"सर्व",
@@ -3509,6 +3537,9 @@ STR.zh = {
   "sort_plh":"价格：从低到高",
   "sort_phl":"价格：从高到低",
   "sort_az":"名称：A 到 Z",
+  "wl_save":"保存",
+  "wl_saved":"已保存的商品",
+  "wl_remove":"移除",
   "search_one":"{n} 个结果",
   "search_other":"{n} 个结果",
   "search_none":"没有与您的搜索匹配的商品。",
@@ -3985,6 +4016,9 @@ STR.ja = {
   "search_suggest":"候補",
   "sort":"並び替え",
   "sort_rec":"おすすめ",
+  "wl_save":"保存",
+  "wl_saved":"保存した商品",
+  "wl_remove":"削除",
   "sort_plh":"価格の安い順",
   "sort_phl":"価格の高い順",
   "sort_az":"名前順",
@@ -4461,6 +4495,9 @@ STR.fr = {
   "search_ph":"Rechercher des articles…",
   "search_recent":"Recherches récentes",
   "search_clear":"Effacer",
+  "wl_save":"Enregistrer",
+  "wl_saved":"Articles enregistrés",
+  "wl_remove":"Retirer",
   "search_suggest":"Suggestions",
   "sort":"Trier",
   "sort_rec":"Recommandés",
@@ -4937,6 +4974,9 @@ STR.de = {
   "locale_country":"Land oder Region",
   "locale_back":"Zurück",
   "locale_shopnote":"Preise in diesem Shop werden in der Währung des Ladens ({cur}) angezeigt.",
+  "wl_save":"Speichern",
+  "wl_saved":"Gespeicherte Artikel",
+  "wl_remove":"Entfernen",
   "search_ph":"Artikel suchen...",
   "search_recent":"Letzte Suchanfragen",
   "search_clear":"Löschen",
@@ -5413,6 +5453,9 @@ STR.pt = {
   "locale_title":"Idioma &amp; Região",
   "locale_note":"Escolha o idioma e a região usados no TalkShop.",
   "locale_lang":"Idioma",
+  "wl_save":"Salvar",
+  "wl_saved":"Itens salvos",
+  "wl_remove":"Remover",
   "locale_country":"País ou Região",
   "locale_back":"Voltar",
   "locale_shopnote":"Os preços desta loja são mostrados na moeda da loja ({cur}).",
@@ -5889,6 +5932,9 @@ STR.ar = {
   "tos_c3b":"لا تسئ استخدام الخدمة: ممنوع محاولة تعطيل الموقع أو كشطه بمعدلات مسيئة أو تضليل الزبائن بشأن متجرك. قد نحظر إساءة الاستخدام لنبقي الخدمة تعمل للجميع.",
   "tos_c4t":"المسؤولية",
   "tos_c4b":"إلى أقصى حد يسمح به القانون، لا يتحمل TalkShop أي مسؤولية عن أي خسارة ناتجة عن استخدامك للخدمة، بما فيها الطلبات أو الأعمال الضائعة. استخدامك لخدمات الأطراف الخارجية (مثل واتساب) يخضع لشروطها الخاصة.",
+  "wl_save":"حفظ",
+  "wl_saved":"العناصر المحفوظة",
+  "wl_remove":"إزالة",
   "locale_title":"اللغة &amp; المنطقة",
   "locale_note":"اختر اللغة والمنطقة المستخدمة في TalkShop.",
   "locale_lang":"اللغة",
@@ -6374,6 +6420,9 @@ STR.ml = {
   "tos_c2t":"നിങ്ങളുടെ ഉള്ളടക്കം",
   "tos_c2b":"നിങ്ങൾ നൽകുന്ന കട ഉള്ളടക്കത്തിന്റെയും നിങ്ങൾ പങ്കിടുന്ന ലിങ്കുകളുടെയും ഉടമ നിങ്ങളാണ്. നിങ്ങളുടെ ഉള്ളടക്കം സത്യസന്ധവും നിയമപരവും മറ്റുള്ളവരുടെ അവകാശങ്ങൾ ലംഘിക്കാത്തതുമാണെന്ന് ഉറപ്പാക്കേണ്ടത് നിങ്ങളുടെ ഉത്തരവാദിത്തമാണ്. നിയമവിരുദ്ധമായ സാധനങ്ങൾക്കോ സേവനങ്ങൾക്കോ, തട്ടിപ്പിനോ, സ്പാമിനോ, ഉപദ്രവത്തിനോ TalkShop ഉപയോഗിക്കരുത്.",
   "tos_c3t":"സ്വീകാര്യമായ ഉപയോഗം",
+  "wl_save":"സംരക്ഷിക്കുക",
+  "wl_saved":"സംരക്ഷിച്ച ഇനങ്ങൾ",
+  "wl_remove":"നീക്കം ചെയ്യുക",
   "tos_c3b":"സേവനം ദുരുപയോഗം ചെയ്യരുത്: സൈറ്റ് തടസ്സപ്പെടുത്താനോ, അമിത നിരക്കിൽ സ്ക്രേപ്പ് ചെയ്യാനോ, ഉപഭോക്താക്കളെ തെറ്റിദ്ധരിപ്പിക്കാനോ ശ്രമിക്കരുത്. എല്ലാവർക്കും സേവനം പ്രവർത്തിക്കാൻ ദുരുപയോഗം തടയാൻ ഞങ്ങൾക്ക് കഴിയും.",
   "tos_c4t":"ബാധ്യത",
   "tos_c4b":"നിയമം അനുവദിക്കുന്ന പരമാവധി പരിധിവരെ, സേവനത്തിന്റെ ഉപയോഗത്തിൽ നിന്നുണ്ടാകുന്ന ഏതൊരു നഷ്ടത്തിനും (നഷ്ടപ്പെട്ട ഓർഡറുകളോ ബിസിനസോ ഉൾപ്പെടെ) TalkShop ബാധ്യസ്ഥമല്ല. മൂന്നാം കക്ഷി സേവനങ്ങളുടെ (WhatsApp പോലുള്ളവ) നിങ്ങളുടെ ഉപയോഗം അവരുടെ സ്വന്തം നിബന്ധനകൾക്ക് വിധേയമാണ്.",
@@ -6850,6 +6899,9 @@ STR.hi = {
   "tos_intro":"TalkShop का इस्तेमाल करके आप इन शर्तों से सहमत होते हैं। अगर आप सहमत नहीं हैं, तो कृपया साइट का इस्तेमाल न करें।",
   "tos_c1t":"सेवा",
   "tos_c1b":"TalkShop शेयर करने लायक स्टोर पेज बनाने का एक मुफ़्त, सेल्फ-सर्व टूल है। यह बिना किसी वारंटी के, जैसा है वैसा दिया जाता है। हम कभी भी सेवा के किसी हिस्से को बदल, सीमित या बंद कर सकते हैं।",
+  "wl_save":"सहेजें",
+  "wl_saved":"सहेजे गए आइटम",
+  "wl_remove":"हटाएं",
   "tos_c2t":"आपकी सामग्री",
   "tos_c2b":"आप जो दुकान की सामग्री डालते हैं और जो लिंक शेयर करते हैं, उसके मालिक आप हैं। यह आपकी ज़िम्मेदारी है कि आपकी सामग्री सच्ची, कानूनी हो और किसी और के अधिकारों का उल्लंघन न करे। अवैध सामान या सेवाओं, धोखाधड़ी, स्पैम या उत्पीड़न के लिए TalkShop का इस्तेमाल न करें।",
   "tos_c3t":"स्वीकार्य उपयोग",
@@ -7326,6 +7378,9 @@ STR.ta = {
   "pp_c5t":"உங்கள் கட்டுப்பாடு",
   "pp_c5b":"நாட்டுப் பரிந்துரை வெறும் பரிந்துரை மட்டுமே: அது உங்கள் அமைப்புகளை அமைதியாக மாற்றாது, அறிவிப்பில் மூடும் பொத்தான் உள்ளது. தலைப்புப் பட்டியிலிருந்து நாடு, நாணயம், மொழியை எப்போது வேண்டுமானாலும் நீங்களே மாற்றலாம்.",
   "tos_title":"சேவை விதிமுறைகள்",
+  "wl_save":"சேமி",
+  "wl_saved":"சேமித்த பொருட்கள்",
+  "wl_remove":"நீக்கு",
   "tos_intro":"TalkShop-ஐப் பயன்படுத்துவதன் மூலம் இந்த விதிமுறைகளை ஏற்கிறீர்கள். உடன்படவில்லை என்றால் தளத்தைப் பயன்படுத்த வேண்டாம்.",
   "tos_c1t":"சேவை",
   "tos_c1b":"TalkShop பகிரக்கூடிய கடைப் பக்கங்களை உருவாக்கும் இலவச, தன்சேவைக் கருவி. எந்த உத்தரவாதமும் இன்றி, உள்ளபடியே வழங்கப்படுகிறது. சேவையின் எந்தப் பகுதியையும் எப்போது வேண்டுமானாலும் மாற்ற, கட்டுப்படுத்த அல்லது நிறுத்த எங்களுக்கு உரிமை உண்டு.",
@@ -7803,6 +7858,9 @@ STR.es = {
   "pp_c3b":"El contenido de tu tienda se codifica directamente en tu enlace para compartir. No tenemos ningún servidor que lo reciba o lo almacene, así que nunca vemos los detalles de tu tienda, tus precios ni tus pedidos. Cuando un cliente toca un botón de pedido, tu navegador abre WhatsApp con un mensaje prellenado a tu número. Esa conversación ocurre entre tú y tu cliente; TalkShop no forma parte de ella.",
   "pp_c4t":"Terceros",
   "pp_c4b":"Intervienen tres servicios externos, cada uno con su propia política: ipapi.co (consulta de país por dirección IP), api.frankfurter.app (tipos de cambio de moneda) y WhatsApp (solo cuando tú o un cliente tocan un botón de pedido o de compartir). No les enviamos el contenido de tu tienda.",
+  "wl_save":"Guardar",
+  "wl_saved":"Artículos guardados",
+  "wl_remove":"Quitar",
   "pp_c5t":"Tu control",
   "pp_c5b":"La sugerencia de país es solo eso, una sugerencia: nunca cambia tus ajustes en silencio, y el aviso tiene un botón para cerrarlo. Puedes cambiar el país, la moneda y el idioma cuando quieras desde el encabezado.",
   "tos_title":"Términos del servicio",
@@ -9513,6 +9571,9 @@ function freeDelChip(d){
 function shareGlyph(){
   return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.7" x2="15.4" y2="6.3"/><line x1="8.6" y1="13.3" x2="15.4" y2="17.7"/></svg>';
 }
+function heartGlyph(){
+  return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
+}
 function waGlyph(){
   return '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.1-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.2-.7.6-.2.4-.9 2.2-.9 4.3 0 2.1 1.6 4.2 1.8 4.5.2.3 3.1 4.8 7.6 6.5.6.2 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/></svg>';
 }
@@ -9787,19 +9848,21 @@ function prodRow(p, i, hlName){
   const pim=imgSrc(p.image);
   const askBtn=shopRT.waNum?'<button class="ask-btn" data-ask="'+i+'">'+t("ask")+'</button>':"";
   const shareBtn='<button type="button" class="pc-share" data-share="'+i+'" aria-label="'+esc(t("share"))+'">'+shareGlyph()+'</button>';
+  const saveOn=isSaved(i);
+  const saveBtn='<button type="button" class="pc-saveov'+(saveOn?" on":"")+'" data-wl="'+i+'" aria-pressed="'+saveOn+'" aria-label="'+esc(t("wl_save"))+'">'+heartGlyph()+'</button>';
   let act;
   if(out) act='<button class="pc-add" disabled>'+t("stock_out")+'</button>';
   else if(qty===0) act='<button class="pc-add" data-add="'+i+'">'+t("add")+'</button>';
   else act='<div class="pc-step"><button data-pdec="'+i+'" aria-label="&minus;">&minus;</button><b>'+qty+'</b><button data-pinc="'+i+'" aria-label="+">+</button></div>';
   if(isMobileUI()){
-    return '<div class="msh-card" data-pi="'+i+'"><div class="msh-img"'+(pim?"":' aria-hidden="true"')+'>'+(pim?'<button type="button" class="pz" data-zoom="'+i+'" aria-label="'+esc(name)+'"><img src="'+esc(pim)+'" loading="lazy" alt="" onerror="imgFail(this)"></button>':"")+'</div><div class="msh-mid">'
+    return '<div class="msh-card" data-pi="'+i+'"><div class="msh-img">'+(pim?'<button type="button" class="pz" data-zoom="'+i+'" aria-label="'+esc(name)+'"><img src="'+esc(pim)+'" loading="lazy" alt="" onerror="imgFail(this)"></button>':"")+saveBtn+'</div><div class="msh-mid">'
     + '<div class="pc-name">'+(hlName||esc(name))+badge+'</div>'
     + '<div class="pc-price">'+esc(priceLabel(p,vi))+discountHtml(p,vi)+'</div>'
     + varPills
     + '<div class="pc-act">'+act+askBtn+shareBtn+'</div>'
     + '</div></div>';
   }
-  return '<div class="pc" data-pi="'+i+'"><div class="pc-img"'+(pim?"":' aria-hidden="true"')+'>'+(pim?'<button type="button" class="pz" data-zoom="'+i+'" aria-label="'+esc(name)+'"><img src="'+esc(pim)+'" loading="lazy" alt="" onerror="imgFail(this)"></button>':"")+'</div><div class="pc-mid">' 
+  return '<div class="pc" data-pi="'+i+'"><div class="pc-img">'+(pim?'<button type="button" class="pz" data-zoom="'+i+'" aria-label="'+esc(name)+'"><img src="'+esc(pim)+'" loading="lazy" alt="" onerror="imgFail(this)"></button>':"")+saveBtn+'</div><div class="pc-mid">' 
     + '<div class="pc-name">'+(hlName||esc(name))+badge+'</div>'
     + '<div class="pc-price">'+esc(priceLabel(p,vi))+discountHtml(p,vi)+'</div>'
     + varPills
@@ -10630,12 +10693,22 @@ function openLightbox(i){
   closeLightbox(true);
   lbLastFocus=document.activeElement;
   const name=p.k?t(p.k):(p.name||"");
+  const lbSaved=isSaved(i);
   const lb=document.createElement("div");
   lb.className="lb"; lb.id="lb";
   lb.innerHTML='<img src="'+esc(src)+'" alt="'+esc(name)+'" onerror="imgFail(this)">'
     +'<div class="lb-cap">'+esc(name)+'</div>'
+    +'<button type="button" class="lb-wl'+(lbSaved?" on":"")+'" id="lbWl" aria-label="'+esc(t("wl_save"))+'" aria-pressed="'+lbSaved+'">'+heartGlyph()+'</button>'
     +'<button type="button" class="lb-x" id="lbX" aria-label="'+t("close")+'">&times;</button>';
-  lb.addEventListener("click",function(e){ if(e.target===lb||e.target.id==="lbX") closeLightbox(); });
+  lb.addEventListener("click",function(e){
+    if(e.target.closest&&e.target.closest("#lbWl")){
+      toggleSaved(i);
+      const b=$("#lbWl");
+      if(b){ const on=isSaved(i); b.classList.toggle("on",on); b.setAttribute("aria-pressed",on); }
+      return;
+    }
+    if(e.target===lb||e.target.id==="lbX") closeLightbox();
+  });
   document.body.appendChild(lb);
   document.body.style.overflow="hidden";
   requestAnimationFrame(function(){ lb.classList.add("open"); });
@@ -10846,6 +10919,67 @@ function renderRec(){
   }).join("");
   wrap.innerHTML='<div class="rv-sec"><h2 class="rv-h">'+esc(t("rec_foryou"))+'</h2><div class="rv-rail">'+cards+'</div></div>';
 }
+/* ---- Save for later (familiar Amazon/Flipkart wishlist pattern): a heart
+   toggle on each product card and in the lightbox. It is an explicit action,
+   like adding to cart, so it works without tracking consent and needs no
+   account. Saved items collect in a "Saved items" rail under the product
+   grid with one-tap move to cart (default variant) and a remove button.
+   Per-shop localStorage, most-recent first, capped at 60.
+   3 new strings (wl_save, wl_saved, wl_remove) x 15 languages; flex rail
+   and corner remove button mirror automatically in RTL. */
+function savedKey(){
+  return "ts_saved_"+(shopRT.serverId||("p"+hashStr(shopRT.payload||"")));
+}
+function readSaved(){
+  try{
+    const a=JSON.parse(localStorage.getItem(savedKey())||"[]");
+    return Array.isArray(a)?a.filter(function(x){ return typeof x==="number"&&x>=0; }):[];
+  }catch(e){ return []; }
+}
+function isSaved(i){ return i!=null&&readSaved().indexOf(i)>=0; }
+function toggleSaved(i){
+  if(!shopRT||i==null||i<0) return;
+  try{
+    let a=readSaved();
+    const k=a.indexOf(i);
+    if(k>=0) a.splice(k,1);
+    else a=[i].concat(a).slice(0,60);
+    localStorage.setItem(savedKey(), JSON.stringify(a));
+  }catch(e){}
+  renderProds(); renderSaved();
+}
+function removeSaved(i){
+  if(!shopRT||i==null||i<0) return;
+  try{ localStorage.setItem(savedKey(), JSON.stringify(readSaved().filter(function(x){ return x!==i; }))); }catch(e){}
+  renderProds(); renderSaved();
+}
+function renderSaved(){
+  const wrap=$("#wlWrap");
+  if(!wrap||!shopRT||!shopRT.d) return;
+  const prods=shopRT.d.products||[];
+  const items=readSaved()
+    .map(function(i){ return {i:i, p:prods[i]}; })
+    .filter(function(o){ return o.p; });
+  if(!items.length){ wrap.innerHTML=""; return; }
+  const cards=items.map(function(o){
+    const p=o.p, i=o.i;
+    const name=p.k?t(p.k):(p.name||"");
+    const pim=imgSrc(p.image);
+    const out=p.stock==="out";
+    const qty=cartQty(i, selViOf(p, i));
+    const act=out?'<button class="pc-add" disabled>'+t("stock_out")+'</button>'
+      :qty===0
+      ?'<button type="button" class="rv-add" data-add="'+i+'">'+t("add")+'</button>'
+      :'<div class="pc-step"><button type="button" data-pdec="'+i+'" aria-label="&minus;">&minus;</button><b>'+qty+'</b><button type="button" data-pinc="'+i+'" aria-label="+">+</button></div>';
+    return '<div class="rv-card wl-card">'
+      +'<button type="button" class="wl-rm" data-wlrm="'+i+'" aria-label="'+esc(t("wl_remove"))+'">&times;</button>'
+      +(pim?'<button type="button" class="rv-img" data-zoom="'+i+'" aria-label="'+esc(name)+'"><img src="'+esc(pim)+'" loading="lazy" alt="" onerror="imgFail(this)"></button>':"")
+      +'<div class="rv-name">'+esc(name)+'</div>'
+      +'<div class="rv-price">'+esc(priceLabel(p, selViOf(p, i)))+'</div>'
+      +act+'</div>';
+  }).join("");
+  wrap.innerHTML='<div class="rv-sec"><h2 class="rv-h">'+esc(t("wl_saved"))+'</h2><div class="rv-rail">'+cards+'</div></div>';
+}
 function shopListClick(e){
   const zoom=e.target.closest("[data-zoom]");
   if(zoom){ openLightbox(+zoom.getAttribute("data-zoom")); return; }
@@ -10872,18 +11006,22 @@ function shopListClick(e){
   }
   const shBtn=e.target.closest("[data-share]");
   if(shBtn){ shareProduct(+shBtn.getAttribute("data-share")); return; }
+  const wlBtn=e.target.closest("[data-wl]");
+  if(wlBtn){ toggleSaved(+wlBtn.getAttribute("data-wl")); return; }
+  const wlRm=e.target.closest("[data-wlrm]");
+  if(wlRm){ removeSaved(+wlRm.getAttribute("data-wlrm")); return; }
   const addBtn=e.target.closest("[data-add]");
   if(addBtn && !addBtn.disabled){
     const i=+addBtn.getAttribute("data-add");
     addToCart(i, selViOf(shopRT.d.products[i], i));
-    renderProds(); renderRecent(); renderCartBar(true);
+    renderProds(); renderRecent(); renderSaved(); renderCartBar(true);
     return;
   }
   const inc=e.target.closest("[data-pinc]");
   if(inc){
     const i=+inc.getAttribute("data-pinc");
     addToCart(i, selViOf(shopRT.d.products[i], i));
-    renderProds(); renderRecent();
+    renderProds(); renderRecent(); renderSaved();
     return;
   }
   const dec=e.target.closest("[data-pdec]");
@@ -10892,12 +11030,12 @@ function shopListClick(e){
     const p=shopRT.d.products[i], vi=selViOf(p, i);
     const l=shopRT.cart.find(l=>l.pi===i&&((l.vi==null&&vi==null)||l.vi===vi));
     if(l){ l.qty--; if(l.qty<=0) shopRT.cart.splice(shopRT.cart.indexOf(l),1); saveShop(); }
-    renderProds(); renderRecent(); renderCartBar();
+    renderProds(); renderRecent(); renderSaved(); renderCartBar();
     return;
   }
 }
 function wireShop(){
-  renderProds(); renderRecent(); renderRec(); renderCartBar(); renderConsent();
+  renderProds(); renderRecent(); renderRec(); renderSaved(); renderCartBar(); renderConsent();
   const si=$("#shopSearch");
   if(si){
     si.value=shopRT.q||"";
@@ -10925,7 +11063,7 @@ function wireShop(){
       }
     };
   }
-  ["#prodList","#mRail","#rvWrap","#recWrap"].forEach(function(sel){
+  ["#prodList","#mRail","#rvWrap","#recWrap","#wlWrap"].forEach(function(sel){
     const pl=$(sel);
     if(pl){ pl.addEventListener("click",shopListClick); pl.addEventListener("change",shopListChange); }
   });
@@ -11012,7 +11150,7 @@ function siteView(d, payload){
   + '<div class="wrap shopview"><div class="shop-mast"><div class="kicker">'+t("mini_kicker")+'</div>'
   + '<h1>'+esc(d.name)+'</h1>' + ((d.tagline||d.taglineKey)?'<p>'+(d.taglineKey?t(d.taglineKey):esc(d.tagline))+'</p>':"") + shopOpenBadge(d) + freeDelChip(d)
   + '<div>'+shopShareWaHtml(d, payload)+'</div></div>'
-  + prodsSec + (prodsSec?'<div id="rvWrap"></div><div id="recWrap"></div><div id="ckWrap"></div>':"") + shopHoursSec(d)
+  + prodsSec + (prodsSec?'<div id="rvWrap"></div><div id="recWrap"></div><div id="wlWrap"></div><div id="ckWrap"></div>':"") + shopHoursSec(d)
   + shopContactSec(d, waNum)
   + shopFootSec(d, payload, shopFootCC)
   + '</div>'
@@ -11041,7 +11179,7 @@ function siteViewMobile(d, payload){
   + ((d.tagline||d.taglineKey)?'<p>'+(d.taglineKey?t(d.taglineKey):esc(d.tagline))+'</p>':"")
   + freeDelChip(d) + '<div>'+shopShareWaHtml(d, payload)+'</div>'
   + '</div>'
-  + prodsSec + (prodsSec?'<div id="rvWrap"></div><div id="recWrap"></div><div id="ckWrap"></div>':"") + shopHoursSec(d,"msh-sec")
+  + prodsSec + (prodsSec?'<div id="rvWrap"></div><div id="recWrap"></div><div id="wlWrap"></div><div id="ckWrap"></div>':"") + shopHoursSec(d,"msh-sec")
   + shopContactSec(d, waNum,"msh-sec")
   + shopFootSec(d, payload, shopFootCC)
   + '</div>'
