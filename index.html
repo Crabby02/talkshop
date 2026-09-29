@@ -510,6 +510,17 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .rv-add{min-height:40px;border:0;border-radius:9px;background:var(--s-accent,var(--accent));color:#fff;font-weight:700;font-size:13.5px;cursor:pointer;padding:0 12px;}
 .rv-card .pc-step{display:flex;align-items:center;justify-content:space-between;gap:4px;}
 .rv-card .pc-step button{min-width:40px;min-height:40px;}
+/* ---- privacy consent banner (familiar cookie-bar pattern): fixed bottom sheet,
+   sits above the cart bar, centered on desktop, mirrors automatically in RTL ---- */
+.ck-bar{position:fixed;left:12px;right:12px;bottom:84px;z-index:70;max-width:560px;margin:0 auto;
+  background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 34px rgba(0,0,0,.14);
+  padding:12px 14px;display:flex;gap:12px;align-items:center;}
+.ck-tx{flex:1;display:flex;flex-direction:column;gap:2px;font-size:13px;line-height:1.45;color:#333;}
+.ck-tx b{font-size:13.5px;color:#111;}
+.ck-btns{display:flex;gap:8px;flex:0 0 auto;}
+.ck-ok,.ck-no{min-height:44px;padding:0 16px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+.ck-ok{border:0;background:var(--s-accent,var(--accent));color:#fff;}
+.ck-no{border:1px solid var(--line);background:#fff;color:#333;}
 .add-btn:disabled{opacity:.35;cursor:not-allowed;}
 .openbadge{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-size:14px;font-weight:700;border-radius:999px;padding:8px 18px;}
 .ob-open{background:#E7F6EA;color:#14663a;}
@@ -1071,7 +1082,7 @@ const STR = { en: {
   "pp_c1t":"What we collect",
   "pp_c1b":"Almost nothing. To suggest your country and currency, we look up the country of your current IP address through ipapi.co. This is country-level only: we never ask for or receive your precise location. The result is used for the suggestion and is not stored anywhere.",
   "pp_c2t":"What stays on your device",
-  "pp_c2b":"Your language and country choices, and a cached currency exchange rate, are saved in your browser's local storage so the site remembers your preferences. Nothing else is stored locally. You can erase this at any time by clearing this site's data in your browser settings.",
+  "pp_c2b":"Your language and country choices, and a cached currency exchange rate, are saved in your browser's local storage so the site remembers your preferences. If you accept the privacy prompt on a shop page, the products you view and order are also remembered on that device, only to show you better suggestions, and this is never sent to any server. You can erase this at any time by clearing this site's data in your browser settings.",
   "pp_c3t":"Your shop data",
   "pp_c3b":"Your storefront content is encoded directly into your share link. We have no server that receives or stores it, so we never see your shop details, prices, or orders. When a customer taps an order button, your browser opens WhatsApp with a pre-filled message to your number. That conversation happens between you and your customer; TalkShop is not part of it.",
   "pp_c4t":"Third parties",
@@ -1113,6 +1124,11 @@ const STR = { en: {
   "ask":"Ask",
   "share":"Share",
   "rv_recent":"Recently viewed",
+  "ckc_title":"Your privacy",
+  "ckc_body":"We remember what you view and order on this device to show better suggestions. Decline and the shop still works fine.",
+  "ckc_ok":"Accept",
+  "ckc_no":"Decline",
+  "rec_foryou":"Recommended for you",
   "stock_low":"Low stock",
   "stock_out":"Out of stock",
   "best":"Bestseller",
@@ -1545,7 +1561,7 @@ STR.te = {
   "pp_c1t":"మేము ఏమి సేకరిస్తాము",
   "pp_c1b":"దాదాపు ఏమీ లేదు. మీ దేశం, కరెన్సీని సూచించడానికి, మీ ప్రస్తుత IP చిరునామా యొక్క దేశాన్ని ipapi.co ద్వారా తెలుసుకుంటాము. ఇది దేశ స్థాయిలో మాత్రమే: మీ ఖచ్చితమైన స్థానాన్ని మేము అడగము, పొందము. ఫలితం సూచన కోసం మాత్రమే ఉపయోగించబడుతుంది, ఎక్కడా నిల్వ చేయబడదు.",
   "pp_c2t":"మీ పరికరంలో ఏమి ఉంటుంది",
-  "pp_c2b":"మీ భాష, దేశ ఎంపికలు, నిల్వ చేసిన కరెన్సీ మార్పిడి రేటు మీ బ్రౌజర్ యొక్క లోకల్ స్టోరేజ్‌లో సేవ్ చేయబడతాయి, తద్వారా సైట్ మీ అభిరుచులను గుర్తుంచుకుంటుంది. మరేమీ స్థానికంగా నిల్వ చేయబడదు. మీ బ్రౌజర్ సెట్టింగులలో ఈ సైట్ డేటాను తొలగించడం ద్వారా మీరు దీన్ని ఎప్పుడైనా తుడిచివేయవచ్చు.",
+  "pp_c2b":"మీ భాష, దేశ ఎంపికలు, నిల్వ చేసిన కరెన్సీ మార్పిడి రేటు మీ బ్రౌజర్ యొక్క లోకల్ స్టోరేజ్‌లో సేవ్ చేయబడతాయి, తద్వారా సైట్ మీ అభిరుచులను గుర్తుంచుకుంటుంది. మీరు షాప్ పేజీలో గోప్యతా అనుమతిని అంగీకరిస్తే, మీరు చూసిన మరియు ఆర్డర్ చేసిన ఉత్పత్తులు కూడా ఆ పరికరంలోనే గుర్తుంచుకోబడతాయి, మీకు మెరుగైన సూచనలు చూపడానికి మాత్రమే, ఇది ఎప్పుడూ ఏ సర్వర్‌కు పంపబడదు. మీ బ్రౌజర్ సెట్టింగులలో ఈ సైట్ డేటాను తొలగించడం ద్వారా మీరు దీన్ని ఎప్పుడైనా తుడిచివేయవచ్చు.",
   "pp_c3t":"మీ దుకాణ డేటా",
   "pp_c3b":"మీ స్టోర్‌ఫ్రంట్ కంటెంట్ నేరుగా మీ షేర్ లింక్‌లోనే ఎన్‌కోడ్ చేయబడుతుంది. దాన్ని స్వీకరించే లేదా నిల్వ చేసే సర్వర్ మాకు లేదు, కాబట్టి మీ దుకాణ వివరాలు, ధరలు లేదా ఆర్డర్లను మేము ఎప్పుడూ చూడము. కస్టమర్ ఆర్డర్ బటన్ నొక్కినప్పుడు, మీ బ్రౌజర్ మీ నంబర్‌కు ముందే నింపిన సందేశంతో వాట్సాప్‌ను తెరుస్తుంది. ఆ సంభాషణ మీకు, మీ కస్టమర్‌కు మధ్య జరుగుతుంది; TalkShop దానిలో భాగం కాదు.",
   "pp_c4t":"మూడో పక్షాలు",
@@ -1587,6 +1603,11 @@ STR.te = {
   "ask":"అడగండి",
   "share":"షేర్ చేయి",
   "rv_recent":"ఇటీవల చూసినవి",
+  "ckc_title":"మీ గోప్యత",
+  "ckc_body":"మంచి సూచనలు చూపించడానికి ఈ పరికరంలో మీరు చూసినవి, ఆర్డర్ చేసినవి మేము గుర్తుంచుకుంటాము. తిరస్కరించినా షాప్ బాగానే పనిచేస్తుంది.",
+  "ckc_ok":"అంగీకరించు",
+  "ckc_no":"తిరస్కరించు",
+  "rec_foryou":"మీ కోసం సూచనలు",
   "stock_low":"స్టాక్ తక్కువగా ఉంది",
   "stock_out":"స్టాక్ అయిపోయింది",
   "best":"బెస్ట్‌సెల్లర్",
@@ -2019,7 +2040,7 @@ STR.bn = {
   "pp_c1t":"আমরা কী সংগ্রহ করি",
   "pp_c1b":"প্রায় কিছুই না। আপনার দেশ ও মুদ্রা সাজেস্ট করতে, আমরা ipapi.co-এর মাধ্যমে আপনার বর্তমান IP ঠিকানার দেশ দেখি। এটা শুধু দেশ-পর্যায়ের: আমরা কখনোই আপনার সঠিক অবস্থান চাই না বা পাই না। ফলাফলটা শুধু সাজেশনের জন্য ব্যবহার হয়, কোথাও সংরক্ষণ করা হয় না।",
   "pp_c2t":"আপনার ডিভাইসে যা থাকে",
-  "pp_c2b":"আপনার ভাষা ও দেশের পছন্দ, এবং ক্যাশ করা মুদ্রা বিনিময় হার, আপনার ব্রাউজারের লোকাল স্টোরেজে সংরক্ষিত থাকে, যাতে সাইট আপনার পছন্দ মনে রাখে। এর বাইরে স্থানীয়ভাবে আর কিছু সংরক্ষণ করা হয় না। ব্রাউজার সেটিংসে এই সাইটের ডেটা মুছে যেকোনো সময় মুছে ফেলতে পারেন।",
+  "pp_c2b":"আপনার ভাষা ও দেশের পছন্দ, এবং ক্যাশ করা মুদ্রা বিনিময় হার, আপনার ব্রাউজারের লোকাল স্টোরেজে সংরক্ষিত থাকে, যাতে সাইট আপনার পছন্দ মনে রাখে। আপনি কোনো দোকানের পেজে গোপনীয়তা বার্তায় সম্মতি দিলে, আপনি যে পণ্যগুলো দেখেন ও অর্ডার করেন সেগুলোও সেই ডিভাইসেই মনে রাখা হয়, শুধু আপনাকে ভালো পরামর্শ দেখানোর জন্য, এবং এটি কখনো কোনো সার্ভারে পাঠানো হয় না। ব্রাউজার সেটিংসে এই সাইটের ডেটা মুছে যেকোনো সময় মুছে ফেলতে পারেন।",
   "pp_c3t":"আপনার দোকানের ডেটা",
   "pp_c3b":"আপনার স্টোরফ্রন্টের কনটেন্ট সরাসরি আপনার শেয়ার লিংকেই এনকোড করা থাকে। আমাদের কোনো সার্ভার এটা গ্রহণ বা সংরক্ষণ করে না, তাই আমরা কখনোই আপনার দোকানের তথ্য, দাম বা অর্ডার দেখি না। গ্রাহক অর্ডার বোতাম চাপলে, আপনার ব্রাউজার আপনার নম্বরে আগে থেকে লেখা মেসেজসহ হোয়াটসঅ্যাপ খুলে দেয়। সেই কথোপকথন আপনার ও আপনার গ্রাহকের মধ্যে হয়; TalkShop এর অংশ নয়।",
   "pp_c4t":"তৃতীয় পক্ষ",
@@ -2061,6 +2082,11 @@ STR.bn = {
   "ask":"জিজ্ঞেস করুন",
   "share":"শেয়ার করুন",
   "rv_recent":"সম্প্রতি দেখা",
+  "ckc_title":"আপনার গোপনীয়তা",
+  "ckc_body":"ভালো পরামর্শ দেখাতে আমরা এই ডিভাইসে আপনি কী দেখেছেন ও অর্ডার করেছেন তা মনে রাখি। প্রত্যাখ্যান করলেও দোকান ঠিকমতো চলবে।",
+  "ckc_ok":"গ্রহণ করুন",
+  "ckc_no":"প্রত্যাখ্যান করুন",
+  "rec_foryou":"আপনার জন্য সুপারিশ",
   "stock_low":"স্টক কম",
   "stock_out":"স্টক শেষ",
   "best":"বেস্টসেলার",
@@ -2493,7 +2519,7 @@ STR.kn = {
   "pp_c1t":"ನಾವು ಸಂಗ್ರಹಿಸುವುದು",
   "pp_c1b":"ಬಹುತೇಕ ಏನೂ ಇಲ್ಲ. ನಿಮ್ಮ ದೇಶ ಮತ್ತು ಕರೆನ್ಸಿಯನ್ನು ಸೂಚಿಸಲು, ipapi.co ಮೂಲಕ ನಿಮ್ಮ ಪ್ರಸ್ತುತ IP ವಿಳಾಸದ ದೇಶವನ್ನು ನಾವು ನೋಡುತ್ತೇವೆ. ಇದು ದೇಶ ಮಟ್ಟಕ್ಕೆ ಮಾತ್ರ: ನಿಮ್ಮ ನಿಖರವಾದ ಸ್ಥಳವನ್ನು ನಾವು ಎಂದಿಗೂ ಕೇಳುವುದಿಲ್ಲ ಅಥವಾ ಪಡೆಯುವುದಿಲ್ಲ. ಸೂಚನೆಗಾಗಿ ಮಾತ್ರ ಫಲಿತಾಂಶವನ್ನು ಬಳಸಲಾಗುತ್ತದೆ ಮತ್ತು ಎಲ್ಲಿಯೂ ಸಂಗ್ರಹಿಸಲಾಗುವುದಿಲ್ಲ.",
   "pp_c2t":"ನಿಮ್ಮ ಸಾಧನದಲ್ಲೇ ಉಳಿಯುವುದು",
-  "pp_c2b":"ನಿಮ್ಮ ಭಾಷೆ ಮತ್ತು ದೇಶದ ಆಯ್ಕೆಗಳು, ಮತ್ತು ಕ್ಯಾಶ್ ಮಾಡಿದ ಕರೆನ್ಸಿ ವಿನಿಮಯ ದರ, ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನ ಲೋಕಲ್ ಸ್ಟೋರೇಜ್‌ನಲ್ಲಿ ಉಳಿಯುತ್ತವೆ, ಆದ್ದರಿಂದ ಸೈಟ್ ನಿಮ್ಮ ಆದ್ಯತೆಗಳನ್ನು ನೆನಪಿಟ್ಟುಕೊಳ್ಳುತ್ತದೆ. ಸ್ಥಳೀಯವಾಗಿ ಬೇರೇನೂ ಸಂಗ್ರಹಿಸಲಾಗುವುದಿಲ್ಲ. ನಿಮ್ಮ ಬ್ರೌಸರ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಈ ಸೈಟ್‌ನ ಡೇಟಾವನ್ನು ತೆರವುಗೊಳಿಸುವ ಮೂಲಕ ನೀವು ಇದನ್ನು ಯಾವಾಗ ಬೇಕಾದರೂ ಅಳಿಸಬಹುದು.",
+  "pp_c2b":"ನಿಮ್ಮ ಭಾಷೆ ಮತ್ತು ದೇಶದ ಆಯ್ಕೆಗಳು, ಮತ್ತು ಕ್ಯಾಶ್ ಮಾಡಿದ ಕರೆನ್ಸಿ ವಿನಿಮಯ ದರ, ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನ ಲೋಕಲ್ ಸ್ಟೋರೇಜ್‌ನಲ್ಲಿ ಉಳಿಯುತ್ತವೆ, ಆದ್ದರಿಂದ ಸೈಟ್ ನಿಮ್ಮ ಆದ್ಯತೆಗಳನ್ನು ನೆನಪಿಟ್ಟುಕೊಳ್ಳುತ್ತದೆ. ನೀವು ಅಂಗಡಿ ಪುಟದಲ್ಲಿ ಗೌಪ್ಯತೆ ಪ್ರಾಂಪ್ಟ್‌ಗೆ ಒಪ್ಪಿದರೆ, ನೀವು ವೀಕ್ಷಿಸುವ ಮತ್ತು ಆರ್ಡರ್ ಮಾಡುವ ಉತ್ಪನ್ನಗಳನ್ನು ಸಹ ಆ ಸಾಧನದಲ್ಲಿಯೇ ನೆನಪಿಟ್ಟುಕೊಳ್ಳಲಾಗುತ್ತದೆ, ನಿಮಗೆ ಉತ್ತಮ ಸಲಹೆಗಳನ್ನು ತೋರಿಸಲು ಮಾತ್ರ, ಮತ್ತು ಇದನ್ನು ಎಂದಿಗೂ ಯಾವುದೇ ಸರ್ವರ್‌ಗೆ ಕಳುಹಿಸಲಾಗುವುದಿಲ್ಲ. ನಿಮ್ಮ ಬ್ರೌಸರ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಈ ಸೈಟ್‌ನ ಡೇಟಾವನ್ನು ತೆರವುಗೊಳಿಸುವ ಮೂಲಕ ನೀವು ಇದನ್ನು ಯಾವಾಗ ಬೇಕಾದರೂ ಅಳಿಸಬಹುದು.",
   "pp_c3t":"ನಿಮ್ಮ ಅಂಗಡಿ ಡೇಟಾ",
   "pp_c3b":"ನಿಮ್ಮ ಅಂಗಡಿ ಪುಟದ ವಿಷಯವನ್ನು ನೇರವಾಗಿ ನಿಮ್ಮ ಹಂಚಿಕೆ ಲಿಂಕ್‌ನಲ್ಲೇ ಎನ್‌ಕೋಡ್ ಮಾಡಲಾಗುತ್ತದೆ. ಅದನ್ನು ಸ್ವೀಕರಿಸುವ ಅಥವಾ ಸಂಗ್ರಹಿಸುವ ಸರ್ವರ್ ನಮ್ಮ ಬಳಿ ಇಲ್ಲ, ಆದ್ದರಿಂದ ನಿಮ್ಮ ಅಂಗಡಿ ವಿವರಗಳು, ಬೆಲೆಗಳು ಅಥವಾ ಆರ್ಡರ್‌ಗಳನ್ನು ನಾವು ಎಂದಿಗೂ ನೋಡುವುದಿಲ್ಲ. ಗ್ರಾಹಕರು ಆರ್ಡರ್ ಬಟನ್ ಒತ್ತಿದಾಗ, ನಿಮ್ಮ ಬ್ರೌಸರ್ ನಿಮ್ಮ ಸಂಖ್ಯೆಗೆ ಮೊದಲೇ ಬರೆದ ಸಂದೇಶದೊಂದಿಗೆ ವಾಟ್ಸಾಪ್ ತೆರೆಯುತ್ತದೆ. ಆ ಸಂಭಾಷಣೆ ನಿಮ್ಮ ಮತ್ತು ನಿಮ್ಮ ಗ್ರಾಹಕರ ನಡುವೆ ನಡೆಯುತ್ತದೆ; TalkShop ಅದರ ಭಾಗವಲ್ಲ.",
   "pp_c4t":"ಮೂರನೇ ಪಕ್ಷಗಳು",
@@ -2535,6 +2561,11 @@ STR.kn = {
   "ask":"ಕೇಳಿ",
   "share":"ಹಂಚಿಕೊಳ್ಳಿ",
   "rv_recent":"ಇತ್ತೀಚೆಗೆ ವೀಕ್ಷಿಸಿದವು",
+  "ckc_title":"ನಿಮ್ಮ ಗೌಪ್ಯತೆ",
+  "ckc_body":"ಉತ್ತಮ ಸಲಹೆಗಳನ್ನು ತೋರಿಸಲು ಈ ಸಾಧನದಲ್ಲಿ ನೀವು ನೋಡಿದ್ದು ಮತ್ತು ಆರ್ಡರ್ ಮಾಡಿದ್ದನ್ನು ನಾವು ನೆನಪಿನಲ್ಲಿಟ್ಟುಕೊಳ್ಳುತ್ತೇವೆ. ನಿರಾಕರಿಸಿದರೂ ಅಂಗಡಿ ಚೆನ್ನಾಗಿ ಕೆಲಸ ಮಾಡುತ್ತದೆ.",
+  "ckc_ok":"ಒಪ್ಪಿಕೊಳ್ಳಿ",
+  "ckc_no":"ನಿರಾಕರಿಸಿ",
+  "rec_foryou":"ನಿಮಗಾಗಿ ಶಿಫಾರಸುಗಳು",
   "stock_low":"ಸ್ಟಾಕ್ ಕಡಿಮೆ ಇದೆ",
   "stock_out":"ಸ್ಟಾಕ್ ಖಾಲಿಯಾಗಿದೆ",
   "best":"ಬೆಸ್ಟ್‌ಸೆಲ್ಲರ್",
@@ -2967,7 +2998,7 @@ STR.mr = {
   "pp_c1t":"आम्ही काय गोळा करतो",
   "pp_c1b":"जवळजवळ काहीच नाही. तुमचा देश आणि चलन सुचवण्यासाठी, आम्ही ipapi.co द्वारे तुमच्या सध्याच्या IP पत्त्याचा देश पाहतो. हे फक्त देशाच्या पातळीवर आहे: आम्ही तुमचे नेमके स्थान कधीही मागत नाही किंवा मिळवत नाही. निकाल फक्त सूचनेसाठी वापरला जातो आणि कुठेही साठवला जात नाही.",
   "pp_c2t":"तुमच्या डिव्हाइसवर काय राहते",
-  "pp_c2b":"तुमची भाषा आणि देश निवड, आणि कॅश केलेला चलन विनिमय दर, तुमच्या ब्राउझरच्या लोकल स्टोरेजमध्ये जतन केले जातात, जेणेकरून साइटला तुमची पसंती आठवते. याशिवाय स्थानिक पातळीवर काहीही साठवले जात नाही. तुमच्या ब्राउझर सेटिंग्जमध्ये या साइटचा डेटा साफ करून तुम्ही हे कधीही पुसू शकता.",
+  "pp_c2b":"तुमची भाषा आणि देश निवड, आणि कॅश केलेला चलन विनिमय दर, तुमच्या ब्राउझरच्या लोकल स्टोरेजमध्ये जतन केले जातात, जेणेकरून साइटला तुमची पसंती आठवते. तुम्ही दुकानाच्या पानावर गोपनीयता सूचनेला संमती दिल्यास, तुम्ही पाहिलेली आणि ऑर्डर केलेली उत्पादने देखील त्याच डिव्हाइसवर लक्षात ठेवली जातात, फक्त तुम्हाला चांगल्या सूचना दाखवण्यासाठी, आणि हे कधीही कोणत्याही सर्व्हरला पाठवले जात नाही. तुमच्या ब्राउझर सेटिंग्जमध्ये या साइटचा डेटा साफ करून तुम्ही हे कधीही पुसू शकता.",
   "pp_c3t":"तुमच्या दुकानाचा डेटा",
   "pp_c3b":"तुमच्या दुकान-पेजची सामग्री थेट तुमच्या शेअर लिंकमध्ये एन्कोड केलेली असते. ती मिळवणारा किंवा साठवणारा आमचा कोणताही सर्व्हर नाही, त्यामुळे आम्ही तुमच्या दुकानाचे तपशील, किमती किंवा ऑर्डर कधीही पाहत नाही. ग्राहक ऑर्डर बटणावर टॅप करतो तेव्हा, तुमचा ब्राउझर तुमच्या नंबरवर आधीच लिहिलेल्या संदेशासह WhatsApp उघडतो. ती चर्चा तुमच्यात आणि तुमच्या ग्राहकात होते; TalkShop त्याचा भाग नाही.",
   "pp_c4t":"तृतीय पक्ष",
@@ -3009,6 +3040,11 @@ STR.mr = {
   "ask":"विचारा",
   "share":"शेअर करा",
   "rv_recent":"अलीकडे पाहिलेले",
+  "ckc_title":"तुमची गोपनीयता",
+  "ckc_body":"चांगल्या सूचना दाखवण्यासाठी आम्ही या डिव्हाइसवर तुम्ही काय पाहिले आणि ऑर्डर केले ते लक्षात ठेवतो. नकार दिलात तरी दुकान व्यवस्थित चालेल.",
+  "ckc_ok":"स्वीकारा",
+  "ckc_no":"नकार द्या",
+  "rec_foryou":"तुमच्यासाठी शिफारसी",
   "stock_low":"कमी साठा",
   "stock_out":"साठा संपला",
   "best":"बेस्टसेलर",
@@ -3441,7 +3477,7 @@ STR.zh = {
   "pp_c1t":"我们收集什么",
   "pp_c1b":"几乎什么都不收集。为了向您推荐国家和货币，我们会通过 ipapi.co 查询您当前 IP 地址所在的国家。这只是国家级别的：我们从不索取或获取您的精确位置。查询结果只用于推荐，不会存储在任何地方。",
   "pp_c2t":"留在您设备上的东西",
-  "pp_c2b":"您的语言和国家选择，以及缓存的货币汇率，会保存在浏览器的本地存储里，这样网站能记住您的偏好。除此之外本地不存任何东西。您可以随时在浏览器设置中清除本站数据来删除它们。",
+  "pp_c2b":"您的语言和国家选择，以及缓存的货币汇率，会保存在浏览器的本地存储里，这样网站能记住您的偏好。如果您在店铺页面接受隐私提示，您浏览和下单的商品也会仅保存在该设备上，只为向您展示更好的推荐，绝不会发送到任何服务器。您可以随时在浏览器设置中清除本站数据来删除它们。",
   "pp_c3t":"您的店铺数据",
   "pp_c3b":"您的店铺内容直接编码在您的分享链接里。我们没有接收或存储这些数据的服务器，所以我们看不到您的店铺信息、价格或订单。顾客点击下单按钮时，您的浏览器会打开 WhatsApp，并填好发给您号码的消息。这段对话发生在您和顾客之间，TalkShop 不参与。",
   "pp_c4t":"第三方",
@@ -3483,6 +3519,11 @@ STR.zh = {
   "ask":"咨询",
   "share":"分享",
   "rv_recent":"最近看过",
+  "ckc_title":"您的隐私",
+  "ckc_body":"我们会在此设备上记住您的浏览和下单记录，以展示更好的推荐。拒绝后商店仍可正常使用。",
+  "ckc_ok":"接受",
+  "ckc_no":"拒绝",
+  "rec_foryou":"为您推荐",
   "stock_low":"库存不多",
   "stock_out":"已售罄",
   "best":"畅销",
@@ -3915,7 +3956,7 @@ STR.ja = {
   "pp_c1t":"収集する情報",
   "pp_c1b":"ほとんど何も収集しません。国と通貨をおすすめするために、ipapi.co を使って現在の IP アドレスの国を調べます。国レベルのみで、正確な位置情報を求めたり受け取ったりすることはありません。結果はおすすめ表示にのみ使い、どこにも保存しません。",
   "pp_c2t":"お使いの端末に残るもの",
-  "pp_c2b":"言語と国の選択、キャッシュされた為替レートは、ブラウザのローカルストレージに保存され、設定を覚えておくために使われます。それ以外のものは端末に保存されません。ブラウザの設定からこのサイトのデータを消去すれば、いつでも削除できます。",
+  "pp_c2b":"言語と国の選択、キャッシュされた為替レートは、ブラウザのローカルストレージに保存され、設定を覚えておくために使われます。ショップページでプライバシー表示に同意すると、閲覧・注文した商品もその端末にのみ記憶され、より良いおすすめ表示のためだけに使われ、サーバーに送信されることはありません。ブラウザの設定からこのサイトのデータを消去すれば、いつでも削除できます。",
   "pp_c3t":"お店のデータ",
   "pp_c3b":"店舗ページの内容は、共有リンクの中に直接エンコードされています。受け取ったり保存したりするサーバーは存在しないため、お店の内容、価格、注文内容を私たちが見ることはありません。お客さまが注文ボタンをタップすると、ブラウザがあなたの番号宛てのメッセージを入力済みで WhatsApp を開きます。そのやり取りはあなたとお客さまの間で完結し、TalkShop は関与しません。",
   "pp_c4t":"第三者",
@@ -3957,6 +3998,11 @@ STR.ja = {
   "ask":"質問する",
   "share":"シェア",
   "rv_recent":"最近見た商品",
+  "ckc_title":"プライバシーについて",
+  "ckc_body":"おすすめを改善するため、このデバイスでの閲覧・注文履歴を記憶します。拒否してもショップは通常通り使えます。",
+  "ckc_ok":"同意する",
+  "ckc_no":"拒否する",
+  "rec_foryou":"あなたへのおすすめ",
   "stock_low":"残りわずか",
   "stock_out":"在庫切れ",
   "best":"ベストセラー",
@@ -4389,7 +4435,7 @@ STR.fr = {
   "pp_c1t":"Ce que nous collectons",
   "pp_c1b":"Presque rien. Pour suggérer votre pays et votre devise, nous cherchons le pays de votre adresse IP actuelle via ipapi.co. C'est au niveau du pays uniquement : nous ne demandons ni ne recevons jamais votre position précise. Le résultat sert uniquement à la suggestion et n'est stocké nulle part.",
   "pp_c2t":"Ce qui reste sur votre appareil",
-  "pp_c2b":"Vos choix de langue et de pays, ainsi qu'un taux de change en cache, sont enregistrés dans le stockage local de votre navigateur pour que le site se souvienne de vos préférences. Rien d'autre n'est stocké localement. Vous pouvez tout effacer à tout moment en effaçant les données de ce site dans les paramètres de votre navigateur.",
+  "pp_c2b":"Vos choix de langue et de pays, ainsi qu'un taux de change en cache, sont enregistrés dans le stockage local de votre navigateur pour que le site se souvienne de vos préférences. Si vous acceptez le message de confidentialité sur une page de boutique, les produits que vous consultez et commandez sont aussi mémorisés sur cet appareil, uniquement pour vous montrer de meilleures suggestions, et ne sont jamais envoyés à un serveur. Vous pouvez tout effacer à tout moment en effaçant les données de ce site dans les paramètres de votre navigateur.",
   "pp_c3t":"Vos données de boutique",
   "pp_c3b":"Le contenu de votre vitrine est encodé directement dans votre lien de partage. Nous n'avons aucun serveur qui le reçoit ou le stocke, nous ne voyons donc jamais vos infos de boutique, vos prix ni vos commandes. Quand un client touche un bouton de commande, votre navigateur ouvre WhatsApp avec un message pré-rempli vers votre numéro. Cette conversation se passe entre vous et votre client ; TalkShop n'en fait pas partie.",
   "pp_c4t":"Tiers",
@@ -4431,6 +4477,11 @@ STR.fr = {
   "ask":"Question",
   "share":"Partager",
   "rv_recent":"Récemment consultés",
+  "ckc_title":"Votre confidentialité",
+  "ckc_body":"Nous mémorisons ce que vous consultez et commandez sur cet appareil pour de meilleures suggestions. Vous pouvez refuser, la boutique fonctionnera normalement.",
+  "ckc_ok":"Accepter",
+  "ckc_no":"Refuser",
+  "rec_foryou":"Recommandé pour vous",
   "stock_low":"Stock faible",
   "stock_out":"Épuisé",
   "best":"Meilleure vente",
@@ -4863,7 +4914,7 @@ STR.de = {
   "pp_c1t":"Was wir erfassen",
   "pp_c1b":"So gut wie nichts. Um Ihnen Land und Währung vorzuschlagen, ermitteln wir über ipapi.co das Land Ihrer aktuellen IP-Adresse. Das ist nur ländergenau: Wir fragen Ihren genauen Standort weder ab noch erhalten wir ihn. Das Ergebnis dient nur dem Vorschlag und wird nirgends gespeichert.",
   "pp_c2t":"Was auf Ihrem Gerät bleibt",
-  "pp_c2b":"Ihre Sprach- und Länderauswahl sowie ein zwischengespeicherter Währungswechselkurs werden im lokalen Speicher Ihres Browsers gespeichert, damit die Seite Ihre Einstellungen behält. Sonst wird lokal nichts gespeichert. Sie können dies jederzeit löschen, indem Sie die Website-Daten in Ihren Browser-Einstellungen entfernen.",
+  "pp_c2b":"Ihre Sprach- und Länderauswahl sowie ein zwischengespeicherter Währungswechselkurs werden im lokalen Speicher Ihres Browsers gespeichert, damit die Seite Ihre Einstellungen behält. Wenn Sie der Datenschutzabfrage auf einer Shop-Seite zustimmen, werden die Produkte, die Sie ansehen und bestellen, ebenfalls nur auf diesem Gerät gespeichert, ausschließlich um Ihnen bessere Vorschläge zu zeigen, und niemals an einen Server gesendet. Sie können dies jederzeit löschen, indem Sie die Website-Daten in Ihren Browser-Einstellungen entfernen.",
   "pp_c3t":"Ihre Shop-Daten",
   "pp_c3b":"Ihre Shop-Inhalte sind direkt in Ihrem Teilen-Link codiert. Wir haben keinen Server, der sie empfängt oder speichert, daher sehen wir Ihre Shop-Details, Preise oder Bestellungen nie. Wenn ein Kunde auf einen Bestell-Knopf tippt, öffnet Ihr Browser WhatsApp mit einer vorausgefüllten Nachricht an Ihre Nummer. Dieses Gespräch findet zwischen Ihnen und Ihrem Kunden statt; TalkShop ist nicht daran beteiligt.",
   "pp_c4t":"Dritte",
@@ -4905,6 +4956,11 @@ STR.de = {
   "ask":"Fragen",
   "share":"Teilen",
   "rv_recent":"Zuletzt angesehen",
+  "ckc_title":"Ihre Privatsphäre",
+  "ckc_body":"Wir merken uns, was Sie auf diesem Gerät ansehen und bestellen, um bessere Empfehlungen zu zeigen. Bei Ablehnung funktioniert der Shop trotzdem einwandfrei.",
+  "ckc_ok":"Akzeptieren",
+  "ckc_no":"Ablehnen",
+  "rec_foryou":"Für Sie empfohlen",
   "stock_low":"Wenig Bestand",
   "stock_out":"Ausverkauft",
   "best":"Bestseller",
@@ -5337,7 +5393,7 @@ STR.pt = {
   "pp_c1t":"O que coletamos",
   "pp_c1b":"Quase nada. Para sugerir seu país e moeda, consultamos o país do seu endereço IP atual via ipapi.co. Isso é apenas em nível de país: nunca pedimos nem recebemos sua localização exata. O resultado é usado só para a sugestão e não é guardado em lugar nenhum.",
   "pp_c2t":"O que fica no seu aparelho",
-  "pp_c2b":"Suas escolhas de idioma e país, além de uma taxa de câmbio salva em cache, ficam no armazenamento local do seu navegador para o site lembrar suas preferências. Nada mais é guardado localmente. Você pode apagar isso a qualquer momento limpando os dados do site nas configurações do navegador.",
+  "pp_c2b":"Suas escolhas de idioma e país, além de uma taxa de câmbio salva em cache, ficam no armazenamento local do seu navegador para o site lembrar suas preferências. Se você aceitar o aviso de privacidade na página de uma loja, os produtos que você visualiza e pede também ficam guardados nesse dispositivo, só para mostrar sugestões melhores, e nunca são enviados a nenhum servidor. Você pode apagar isso a qualquer momento limpando os dados do site nas configurações do navegador.",
   "pp_c3t":"Os dados da sua loja",
   "pp_c3b":"O conteúdo da sua vitrine é codificado direto no seu link de compartilhamento. Não temos nenhum servidor que receba ou guarde esses dados, então nunca vemos os detalhes da sua loja, preços ou pedidos. Quando um cliente toca em um botão de pedido, o navegador abre o WhatsApp com uma mensagem pronta para o seu número. Essa conversa acontece entre você e seu cliente; o TalkShop não participa dela.",
   "pp_c4t":"Terceiros",
@@ -5379,6 +5435,11 @@ STR.pt = {
   "ask":"Perguntar",
   "share":"Compartilhar",
   "rv_recent":"Vistos recentemente",
+  "ckc_title":"Sua privacidade",
+  "ckc_body":"Lembramos o que você vê e pede neste dispositivo para mostrar melhores sugestões. Recusar não impede o funcionamento da loja.",
+  "ckc_ok":"Aceitar",
+  "ckc_no":"Recusar",
+  "rec_foryou":"Recomendado para você",
   "stock_low":"Poucas unidades",
   "stock_out":"Esgotado",
   "best":"Mais vendido",
@@ -5811,7 +5872,7 @@ STR.ar = {
   "pp_c1t":"ما الذي نجمعه",
   "pp_c1b":"لا شيء تقريباً. لاقتراح دولتك وعملتك، نبحث عن دولة عنوان IP الحالي عبر ipapi.co. هذا على مستوى الدولة فقط: لا نطلب موقعك الدقيق ولا نستلمه أبداً. تُستخدم النتيجة للاقتراح فقط ولا تُحفظ في أي مكان.",
   "pp_c2t":"ما الذي يبقى على جهازك",
-  "pp_c2b":"تُحفظ اختياراتك للغة والدولة، وسعر صرف عملة مخزن مؤقتاً، في التخزين المحلي لمتصفحك ليتذكر الموقع تفضيلاتك. لا شيء آخر يُخزن محلياً. يمكنك مسح هذا في أي وقت من إعدادات المتصفح بحذف بيانات هذا الموقع.",
+  "pp_c2b":"تُحفظ اختياراتك للغة والدولة، وسعر صرف عملة مخزن مؤقتاً، في التخزين المحلي لمتصفحك ليتذكر الموقع تفضيلاتك. إذا قبلت رسالة الخصوصية في صفحة متجر، فسيتم أيضاً تذكر المنتجات التي تشاهدها وتطلبها على ذلك الجهاز فقط، لعرض اقتراحات أفضل لك، ولا يتم إرسالها إلى أي خادم أبداً. يمكنك مسح هذا في أي وقت من إعدادات المتصفح بحذف بيانات هذا الموقع.",
   "pp_c3t":"بيانات متجرك",
   "pp_c3b":"محتوى واجهة متجرك مُضمَّن مباشرة داخل رابط المشاركة. ليس لدينا خادم يستلمها أو يخزنها، فلا نرى أبداً تفاصيل متجرك أو أسعارك أو طلباتك. عندما يضغط زبون زر طلب، يفتح متصفحك واتساب برسالة مكتوبة مسبقاً إلى رقمك. تلك المحادثة بينك وبين زبونك؛ TalkShop ليس طرفاً فيها.",
   "pp_c4t":"أطراف خارجية",
@@ -5853,6 +5914,11 @@ STR.ar = {
   "ask":"اسأل",
   "share":"مشاركة",
   "rv_recent":"شوهدت مؤخرًا",
+  "ckc_title":"خصوصيتك",
+  "ckc_body":"نتذكر ما تشاهده وتطلبه على هذا الجهاز لعرض اقتراحات أفضل. يمكنك الرفض وسيعمل المتجر بشكل طبيعي.",
+  "ckc_ok":"قبول",
+  "ckc_no":"رفض",
+  "rec_foryou":"مقترح لك",
   "stock_low":"مخزون منخفض",
   "stock_out":"نفد المخزون",
   "best":"الأكثر مبيعًا",
@@ -6294,7 +6360,7 @@ STR.ml = {
   "pp_c1t":"ഞങ്ങൾ ശേഖരിക്കുന്നത്",
   "pp_c1b":"ഏതാണ്ട് ഒന്നുമില്ല. നിങ്ങളുടെ രാജ്യവും കറൻസിയും നിർദ്ദേശിക്കാൻ, ipapi.co വഴി നിങ്ങളുടെ നിലവിലെ IP വിലാസത്തിന്റെ രാജ്യം ഞങ്ങൾ നോക്കുന്നു. ഇത് രാജ്യതല വിവരം മാത്രമാണ്: നിങ്ങളുടെ കൃത്യമായ സ്ഥാനം ഞങ്ങൾ ഒരിക്കലും ചോദിക്കുകയോ ലഭിക്കുകയോ ചെയ്യുന്നില്ല. ഫലം നിർദ്ദേശത്തിന് മാത്രം ഉപയോഗിക്കുന്നു, എവിടെയും സംഭരിക്കുന്നില്ല.",
   "pp_c2t":"നിങ്ങളുടെ ഉപകരണത്തിൽ തങ്ങുന്നത്",
-  "pp_c2b":"നിങ്ങളുടെ ഭാഷയും രാജ്യവും തിരഞ്ഞെടുക്കലുകൾ, കാഷ് ചെയ്ത കറൻസി വിനിമയ നിരക്ക് എന്നിവ സൈറ്റ് നിങ്ങളുടെ മുൻഗണനകൾ ഓർമ്മിക്കാൻ നിങ്ങളുടെ ബ്രൗസറിന്റെ ലോക്കൽ സ്റ്റോറേജിൽ സേവ് ചെയ്യുന്നു. ഇതല്ലാതെ മറ്റൊന്നും പ്രാദേശികമായി സംഭരിക്കുന്നില്ല. ബ്രൗസർ ക്രമീകരണങ്ങളിൽ ഈ സൈറ്റിന്റെ ഡാറ്റ മായ്ച്ച് എപ്പോൾ വേണമെങ്കിലും ഇത് ഇല്ലാതാക്കാം.",
+  "pp_c2b":"നിങ്ങളുടെ ഭാഷയും രാജ്യവും തിരഞ്ഞെടുക്കലുകൾ, കാഷ് ചെയ്ത കറൻസി വിനിമയ നിരക്ക് എന്നിവ സൈറ്റ് നിങ്ങളുടെ മുൻഗണനകൾ ഓർമ്മിക്കാൻ നിങ്ങളുടെ ബ്രൗസറിന്റെ ലോക്കൽ സ്റ്റോറേജിൽ സേവ് ചെയ്യുന്നു. ഒരു ഷോപ്പ് പേജിലെ സ്വകാര്യതാ അറിയിപ്പ് നിങ്ങൾ അംഗീകരിച്ചാൽ, നിങ്ങൾ കാണുകയും ഓർഡർ ചെയ്യുകയും ചെയ്യുന്ന ഉൽപ്പന്നങ്ങൾ ആ ഉപകരണത്തിൽ മാത്രം ഓർമ്മിക്കപ്പെടും, നിങ്ങൾക്ക് മികച്ച നിർദ്ദേശങ്ങൾ കാണിക്കാൻ മാത്രം, ഇത് ഒരിക്കലും ഒരു സെർവറിലേക്കും അയയ്ക്കില്ല. ബ്രൗസർ ക്രമീകരണങ്ങളിൽ ഈ സൈറ്റിന്റെ ഡാറ്റ മായ്ച്ച് എപ്പോൾ വേണമെങ്കിലും ഇത് ഇല്ലാതാക്കാം.",
   "pp_c3t":"നിങ്ങളുടെ കടയുടെ ഡാറ്റ",
   "pp_c3b":"നിങ്ങളുടെ കടയുടെ ഉള്ളടക്കം നേരിട്ട് നിങ്ങളുടെ ഷെയർ ലിങ്കിൽ തന്നെ എൻകോഡ് ചെയ്യപ്പെടുന്നു. അത് സ്വീകരിക്കുകയോ സംഭരിക്കുകയോ ചെയ്യുന്ന സെർവർ ഞങ്ങൾക്കില്ല, അതിനാൽ നിങ്ങളുടെ കട വിവരങ്ങൾ, വിലകൾ, ഓർഡറുകൾ എന്നിവ ഞങ്ങൾ ഒരിക്കലും കാണുന്നില്ല. ഒരു ഉപഭോക്താവ് ഓർഡർ ബട്ടൺ അമർത്തുമ്പോൾ, നിങ്ങളുടെ ബ്രൗസർ നിങ്ങളുടെ നമ്പറിലേക്ക് മുൻകൂട്ടി എഴുതിയ സന്ദേശവുമായി WhatsApp തുറക്കുന്നു. ആ സംഭാഷണം നിങ്ങൾക്കും നിങ്ങളുടെ ഉപഭോക്താവിനും ഇടയിലാണ്; TalkShop അതിന്റെ ഭാഗമല്ല.",
   "pp_c4t":"മൂന്നാം കക്ഷികൾ",
@@ -6336,6 +6402,11 @@ STR.ml = {
   "ask":"ചോദിക്കൂ",
   "share":"പങ്കിടുക",
   "rv_recent":"അടുത്തിടെ കണ്ടത്",
+  "ckc_title":"നിങ്ങളുടെ സ്വകാര്യത",
+  "ckc_body":"മികച്ച നിർദ്ദേശങ്ങൾ കാണിക്കാൻ ഈ ഉപകരണത്തിൽ നിങ്ങൾ കണ്ടതും ഓർഡർ ചെയ്തതും ഞങ്ങൾ ഓർമ്മിക്കുന്നു. നിരസിച്ചാലും കട സാധാരണ പ്രവർത്തിക്കും.",
+  "ckc_ok":"അംഗീകരിക്കുക",
+  "ckc_no":"നിരസിക്കുക",
+  "rec_foryou":"നിങ്ങൾക്കുള്ള നിർദ്ദേശങ്ങൾ",
   "stock_low":"സ്റ്റോക്ക് കുറവാണ്",
   "stock_out":"സ്റ്റോക്ക് തീർന്നു",
   "best":"ബെസ്റ്റ്‌സെല്ലർ",
@@ -6768,7 +6839,7 @@ STR.hi = {
   "pp_c1t":"हम क्या लेते हैं",
   "pp_c1b":"लगभग कुछ नहीं। आपका देश और मुद्रा सुझाने के लिए हम ipapi.co के ज़रिए आपके मौजूदा IP पते का देश देखते हैं। यह सिर्फ देश-स्तर की जानकारी है: हम आपकी सटीक लोकेशन कभी नहीं मांगते या पाते। नतीजा सिर्फ सुझाव के लिए इस्तेमाल होता है और कहीं स्टोर नहीं होता।",
   "pp_c2t":"आपके डिवाइस पर क्या रहता है",
-  "pp_c2b":"आपकी भाषा और देश की पसंद, और एक कैश्ड मुद्रा विनिमय दर, आपके ब्राउज़र के लोकल स्टोरेज में सेव होती है ताकि साइट आपकी पसंद याद रखे। इसके अलावा कुछ भी स्थानीय रूप से स्टोर नहीं होता। आप ब्राउज़र सेटिंग्स में साइट का डेटा साफ़ करके इसे कभी भी मिटा सकते हैं।",
+  "pp_c2b":"आपकी भाषा और देश की पसंद, और एक कैश्ड मुद्रा विनिमय दर, आपके ब्राउज़र के लोकल स्टोरेज में सेव होती है ताकि साइट आपकी पसंद याद रखे। अगर आप किसी दुकान के पेज पर गोपनीयता संदेश स्वीकार करते हैं, तो आपके देखे और ऑर्डर किए गए उत्पाद भी उसी डिवाइस पर याद रखे जाते हैं, सिर्फ आपको बेहतर सुझाव दिखाने के लिए, और इन्हें कभी किसी सर्वर पर नहीं भेजा जाता। आप ब्राउज़र सेटिंग्स में साइट का डेटा साफ़ करके इसे कभी भी मिटा सकते हैं।",
   "pp_c3t":"आपकी दुकान का डेटा",
   "pp_c3b":"आपकी दुकान की सामग्री सीधे आपके शेयर लिंक में कोड की जाती है। हमारे पास इसे पाने या स्टोर करने वाला कोई सर्वर नहीं है, इसलिए हम आपकी दुकान का विवरण, कीमतें या ऑर्डर कभी नहीं देखते। जब कोई ग्राहक ऑर्डर बटन दबाता है, तो आपका ब्राउज़र आपके नंबर पर पहले से लिखा संदेश लेकर WhatsApp खोलता है। वह बातचीत आपके और आपके ग्राहक के बीच होती है; TalkShop उसका हिस्सा नहीं है।",
   "pp_c4t":"तीसरे पक्ष",
@@ -6810,6 +6881,11 @@ STR.hi = {
   "ask":"पूछें",
   "share":"शेयर करें",
   "rv_recent":"हाल ही में देखे गए",
+  "ckc_title":"आपकी गोपनीयता",
+  "ckc_body":"बेहतर सुझाव दिखाने के लिए हम इस डिवाइस पर आपके देखे और ऑर्डर किए आइटम याद रखते हैं। मना करने पर भी दुकान ठीक चलेगी।",
+  "ckc_ok":"स्वीकार करें",
+  "ckc_no":"मना करें",
+  "rec_foryou":"आपके लिए सुझाव",
   "stock_low":"कम स्टॉक",
   "stock_out":"स्टॉक खत्म",
   "best":"बेस्टसेलर",
@@ -7242,7 +7318,7 @@ STR.ta = {
   "pp_c1t":"நாங்கள் சேகரிப்பது",
   "pp_c1b":"கிட்டத்தட்ட ஒன்றுமில்லை. உங்கள் நாடு மற்றும் நாணயத்தைப் பரிந்துரைக்க, ipapi.co மூலம் உங்கள் தற்போதைய IP முகவரியின் நாட்டைப் பார்க்கிறோம். இது நாடு அளவிலான தகவல் மட்டுமே: உங்கள் துல்லியமான இருப்பிடத்தை நாங்கள் ஒருபோதும் கேட்பதில்லை, பெறுவதில்லை. முடிவு பரிந்துரைக்கு மட்டும் பயன்படுத்தப்படுகிறது, எங்கும் சேமிக்கப்படுவதில்லை.",
   "pp_c2t":"உங்கள் சாதனத்தில் இருப்பது",
-  "pp_c2b":"உங்கள் மொழி மற்றும் நாட்டுத் தேர்வுகள், மற்றும் சேமிக்கப்பட்ட நாணய மாற்று விகிதம் உங்கள் உலாவியின் உள்ளூர் சேமிப்பில் வைக்கப்படுகின்றன, தளம் உங்கள் விருப்பங்களை நினைவில் வைக்க. வேறு எதுவும் உள்ளூரில் சேமிக்கப்படுவதில்லை. உலாவி அமைப்புகளில் இந்தத் தளத்தின் தரவை நீக்கி எப்போது வேண்டுமானாலும் அழிக்கலாம்.",
+  "pp_c2b":"உங்கள் மொழி மற்றும் நாட்டுத் தேர்வுகள், மற்றும் சேமிக்கப்பட்ட நாணய மாற்று விகிதம் உங்கள் உலாவியின் உள்ளூர் சேமிப்பில் வைக்கப்படுகின்றன, தளம் உங்கள் விருப்பங்களை நினைவில் வைக்க. ஒரு கடை பக்கத்தில் தனியுரிமை அறிவிப்பை நீங்கள் ஏற்றுக்கொண்டால், நீங்கள் பார்க்கும் மற்றும் ஆர்டர் செய்யும் பொருட்களும் அந்தச் சாதனத்தில் மட்டுமே நினைவில் வைக்கப்படும், உங்களுக்குச் சிறந்த பரிந்துரைகளைக் காட்ட மட்டுமே, இது ஒருபோதும் எந்தச் சேவையகத்திற்கும் அனுப்பப்படாது. உலாவி அமைப்புகளில் இந்தத் தளத்தின் தரவை நீக்கி எப்போது வேண்டுமானாலும் அழிக்கலாம்.",
   "pp_c3t":"உங்கள் கடைத் தரவு",
   "pp_c3b":"உங்கள் கடையின் உள்ளடக்கம் நேரடியாக உங்கள் பகிர் இணைப்பிலேயே குறியாக்கம் செய்யப்படுகிறது. அதைப் பெறும் அல்லது சேமிக்கும் சேவையகம் எங்களிடம் இல்லை, எனவே உங்கள் கடை விவரங்கள், விலைகள் அல்லது ஆர்டர்களை நாங்கள் ஒருபோதும் பார்ப்பதில்லை. வாடிக்கையாளர் ஆர்டர் பொத்தானை அழுத்தும்போது, உங்கள் உலாவி உங்கள் எண்ணுக்கு முன்பே எழுதிய செய்தியுடன் WhatsApp-ஐத் திறக்கிறது. அந்த உரையாடல் உங்களுக்கும் உங்கள் வாடிக்கையாளருக்கும் இடையே நடக்கிறது; TalkShop அதில் பங்கேற்காது.",
   "pp_c4t":"மூன்றாம் தரப்பினர்",
@@ -7284,6 +7360,11 @@ STR.ta = {
   "ask":"கேள்",
   "share":"பகிர்",
   "rv_recent":"அண்மையில் பார்த்தவை",
+  "ckc_title":"உங்கள் தனியுரிமை",
+  "ckc_body":"சிறந்த பரிந்துரைகளைக் காட்ட, இந்தச் சாதனத்தில் நீங்கள் பார்த்தவை, ஆர்டர் செய்தவற்றை நினைவில் வைத்திருக்கிறோம். மறுத்தாலும் கடை நன்றாகவே இயங்கும்.",
+  "ckc_ok":"ஏற்கவும்",
+  "ckc_no":"மறுக்கவும்",
+  "rec_foryou":"உங்களுக்கான பரிந்துரைகள்",
   "stock_low":"குறைந்த இருப்பு",
   "stock_out":"இருப்பு இல்லை",
   "best":"பெஸ்ட்செல்லர்",
@@ -7717,7 +7798,7 @@ STR.es = {
   "pp_c1t":"Lo que recopilamos",
   "pp_c1b":"Casi nada. Para sugerir tu país y tu moneda, consultamos el país de tu dirección IP actual a través de ipapi.co. Es solo a nivel de país: nunca pedimos ni recibimos tu ubicación exacta. El resultado se usa para la sugerencia y no se almacena en ningún lugar.",
   "pp_c2t":"Lo que queda en tu dispositivo",
-  "pp_c2b":"Tus elecciones de idioma y país, y un tipo de cambio en caché, se guardan en el almacenamiento local de tu navegador para que el sitio recuerde tus preferencias. No se almacena nada más localmente. Puedes borrarlo en cualquier momento desde los ajustes de tu navegador.",
+  "pp_c2b":"Tus elecciones de idioma y país, y un tipo de cambio en caché, se guardan en el almacenamiento local de tu navegador para que el sitio recuerde tus preferencias. Si aceptas el aviso de privacidad en la página de una tienda, los productos que ves y pides también se recuerdan en ese dispositivo, solo para mostrarte mejores sugerencias, y nunca se envían a ningún servidor. Puedes borrarlo en cualquier momento desde los ajustes de tu navegador.",
   "pp_c3t":"Los datos de tu tienda",
   "pp_c3b":"El contenido de tu tienda se codifica directamente en tu enlace para compartir. No tenemos ningún servidor que lo reciba o lo almacene, así que nunca vemos los detalles de tu tienda, tus precios ni tus pedidos. Cuando un cliente toca un botón de pedido, tu navegador abre WhatsApp con un mensaje prellenado a tu número. Esa conversación ocurre entre tú y tu cliente; TalkShop no forma parte de ella.",
   "pp_c4t":"Terceros",
@@ -7759,6 +7840,11 @@ STR.es = {
   "ask":"Preguntar",
   "share":"Compartir",
   "rv_recent":"Vistos recientemente",
+  "ckc_title":"Tu privacidad",
+  "ckc_body":"Recordamos lo que ves y pides en este dispositivo para mostrarte mejores sugerencias. Puedes rechazarlo y la tienda seguirá funcionando.",
+  "ckc_ok":"Aceptar",
+  "ckc_no":"Rechazar",
+  "rec_foryou":"Recomendado para ti",
   "stock_low":"Poco stock",
   "stock_out":"Agotado",
   "best":"Más vendido",
@@ -9790,6 +9876,7 @@ function addToCart(pi,vi){
   const line=RT.cart.find(l=>l.pi===pi&&l.vi===vi);
   if(line) line.qty++; else RT.cart.push({pi:pi,vi:vi,qty:1});
   saveShop(); renderCartBar(true);
+  logBehav("add", pi);
 }
 function askAbout(i,vi){
   const RT=shopRT;
@@ -10449,6 +10536,9 @@ function ckDone(){
   const apply = (code)=>{
     ck.orderId = code || ckOrderId();
     ck.lastOrder = snap;
+    if(trackOK()&&snap&&snap.items&&snap.items.length){
+      for(let oi=0;oi<snap.items.length;oi++){ const it=snap.items[oi]; logBehav("order", it.pi, it.qty); }
+    }
     if(snap&&snap.items&&snap.items.length&&shopRT) saveReorder(shopRT.serverId, shopRT.payload, snap.items);
     saveCustomer(shopRT.form||{});
     shopRT.cart=[]; shopRT.coupon=null; saveShop(); renderCartBar();
@@ -10535,8 +10625,8 @@ var lbLastFocus=null;
 function openLightbox(i){
   const p=(shopRT&&shopRT.d&&shopRT.d.products)?shopRT.d.products[i]:null;
   const src=imgSrc(p&&p.image);
-  if(!src) return;
   noteViewed(i);
+  if(!src) return;
   closeLightbox(true);
   lbLastFocus=document.activeElement;
   const name=p.k?t(p.k):(p.name||"");
@@ -10619,14 +10709,18 @@ function readRecent(){
 function noteViewed(i){
   try{
     if(!shopRT||i==null||i<0) return;
-    const arr=[i].concat(readRecent().filter(function(x){ return x!==i; })).slice(0,12);
-    localStorage.setItem(recentKey(), JSON.stringify(arr));
+    if(trackOK()){
+      const arr=[i].concat(readRecent().filter(function(x){ return x!==i; })).slice(0,12);
+      localStorage.setItem(recentKey(), JSON.stringify(arr));
+    }
   }catch(e){}
+  logBehav("view", i);
   renderRecent();
 }
 function renderRecent(){
   const wrap=$("#rvWrap");
   if(!wrap||!shopRT||!shopRT.d) return;
+  if(!trackOK()){ wrap.innerHTML=""; return; }
   const prods=shopRT.d.products||[];
   const items=readRecent()
     .map(function(i){ return {i:i, p:prods[i]}; })
@@ -10647,6 +10741,110 @@ function renderRecent(){
       +act+'</div>';
   }).join("");
   wrap.innerHTML='<div class="rv-sec"><h2 class="rv-h">'+esc(t("rv_recent"))+'</h2><div class="rv-rail">'+cards+'</div></div>';
+}
+/* ---- Privacy consent + on-device behavior log + "Recommended for you" ----
+   The shopper's views, cart adds and orders are recorded ONLY on this device
+   (localStorage, per shop, capped at 200 events) and ONLY after they accept
+   the consent banner. Nothing is sent anywhere: the merchant never sees it,
+   there is no account and no cross-device tracking. Declining wipes any
+   behavior data for the shop and the personalized rails stay hidden.
+   The recommender scores every in-stock, not-in-cart product from:
+     - category affinity (viewed/added/ordered items, weighted 1/3/5, recency-ramped)
+     - price-band affinity (closeness to the shopper's weighted average price)
+     - merchant bestseller flag as a popularity prior (this is also the cold-start fallback)
+   5 new strings (ck_title, ck_body, ck_ok, ck_no, rec_foryou) x 15 languages. */
+function trackOK(){ try{ return localStorage.getItem("ts_consent")==="1"; }catch(e){ return false; } }
+function consentGiven(){ try{ return localStorage.getItem("ts_consent"); }catch(e){ return null; } }
+function behavKey(){
+  if(!shopRT) return "ts_behav_none";
+  return "ts_behav_"+(shopRT.serverId||("p"+hashStr(shopRT.payload||"")));
+}
+function readBehav(){
+  try{ const a=JSON.parse(localStorage.getItem(behavKey())||"[]"); return Array.isArray(a)?a:[]; }catch(e){ return []; }
+}
+function logBehav(ev, i, q){
+  if(!trackOK()||!shopRT||i==null||i<0) return;
+  try{
+    let a=readBehav();
+    a.push({t:Date.now(), e:ev, i:i, q:q||0});
+    if(a.length>200) a=a.slice(a.length-200);
+    localStorage.setItem(behavKey(), JSON.stringify(a));
+  }catch(e){}
+  if(ev==="view"||ev==="add") renderRec();
+}
+function setConsent(v){
+  try{
+    localStorage.setItem("ts_consent", v?"1":"0");
+    if(!v && shopRT){
+      try{ localStorage.removeItem(recentKey()); }catch(e){}
+      try{ localStorage.removeItem(behavKey()); }catch(e){}
+    }
+  }catch(e){}
+  const b=$("#ckWrap"); if(b) b.innerHTML="";
+  renderRecent(); renderRec();
+}
+function renderConsent(){
+  const w=$("#ckWrap");
+  if(!w||!shopRT) return;
+  if(consentGiven()!=null){ w.innerHTML=""; return; }
+  w.innerHTML='<div class="ck-bar" role="dialog" aria-live="polite" aria-label="'+esc(t("ckc_title"))+'">'
+    +'<div class="ck-tx"><b>'+esc(t("ckc_title"))+'</b><span>'+esc(t("ckc_body"))+'</span></div>'
+    +'<div class="ck-btns"><button type="button" class="ck-no" data-ck="0">'+esc(t("ckc_no"))+'</button>'
+    +'<button type="button" class="ck-ok" data-ck="1">'+esc(t("ckc_ok"))+'</button></div></div>';
+}
+function renderRec(){
+  const wrap=$("#recWrap");
+  if(!wrap||!shopRT||!shopRT.d) return;
+  if(!trackOK()){ wrap.innerHTML=""; return; }
+  const prods=shopRT.d.products||[];
+  const evs=readBehav();
+  const inCart={};
+  (shopRT.cart||[]).forEach(function(l){ inCart[l.pi]=1; });
+  const W={view:1, add:3, order:5};
+  const catW={}, n=evs.length;
+  let pwSum=0, pwTot=0;
+  evs.forEach(function(ev, idx){
+    const p=prods[ev.i]; if(!p) return;
+    const w=(W[ev.e]||1)*(0.5+0.5*(n?(idx+1)/n:1));
+    const c=p.cat||"";
+    catW[c]=(catW[c]||0)+w;
+    const pr=priceNum(p, selViOf(p, ev.i));
+    if(pr>0){ pwSum+=pr*w; pwTot+=w; }
+  });
+  const avg=pwTot?pwSum/pwTot:0;
+  const scored=[];
+  for(let i=0;i<prods.length;i++){
+    const p=prods[i];
+    if(!p||p.stock==="out"||inCart[i]) continue;
+    let s=0;
+    const cw=catW[p.cat||""];
+    if(cw) s+=cw*2;
+    if(avg>0){
+      const pr=priceNum(p, selViOf(p, i));
+      if(pr>0){ const d=Math.abs(pr-avg)/avg; s+=Math.max(0, 3-d*6); }
+    }
+    if(p.best) s+=2;
+    s+=(prods.length-i)*0.001;
+    scored.push({i:i, s:s});
+  }
+  scored.sort(function(a,b){ return b.s-a.s; });
+  const top=scored.slice(0,8);
+  if(!top.length){ wrap.innerHTML=""; return; }
+  const cards=top.map(function(o){
+    const p=prods[o.i], i=o.i;
+    const name=p.k?t(p.k):(p.name||"");
+    const pim=imgSrc(p.image);
+    const qty=cartQty(i, selViOf(p, i));
+    const act=qty===0
+      ? '<button type="button" class="rv-add" data-add="'+i+'">'+t("add")+'</button>'
+      : '<div class="pc-step"><button type="button" data-pdec="'+i+'" aria-label="&minus;">&minus;</button><b>'+qty+'</b><button type="button" data-pinc="'+i+'" aria-label="+">+</button></div>';
+    return '<div class="rv-card">'
+      +(pim?'<button type="button" class="rv-img" data-zoom="'+i+'" aria-label="'+esc(name)+'"><img src="'+esc(pim)+'" loading="lazy" alt="" onerror="imgFail(this)"></button>':"")
+      +'<div class="rv-name">'+esc(name)+'</div>'
+      +'<div class="rv-price">'+esc(priceLabel(p, selViOf(p, i)))+'</div>'
+      +act+'</div>';
+  }).join("");
+  wrap.innerHTML='<div class="rv-sec"><h2 class="rv-h">'+esc(t("rec_foryou"))+'</h2><div class="rv-rail">'+cards+'</div></div>';
 }
 function shopListClick(e){
   const zoom=e.target.closest("[data-zoom]");
@@ -10699,7 +10897,7 @@ function shopListClick(e){
   }
 }
 function wireShop(){
-  renderProds(); renderRecent(); renderCartBar();
+  renderProds(); renderRecent(); renderRec(); renderCartBar(); renderConsent();
   const si=$("#shopSearch");
   if(si){
     si.value=shopRT.q||"";
@@ -10727,9 +10925,14 @@ function wireShop(){
       }
     };
   }
-  ["#prodList","#mRail","#rvWrap"].forEach(function(sel){
+  ["#prodList","#mRail","#rvWrap","#recWrap"].forEach(function(sel){
     const pl=$(sel);
     if(pl){ pl.addEventListener("click",shopListClick); pl.addEventListener("change",shopListChange); }
+  });
+  const ckw=$("#ckWrap");
+  if(ckw) ckw.addEventListener("click",function(e){
+    const b=e.target.closest("[data-ck]");
+    if(b) setConsent(b.getAttribute("data-ck")==="1");
   });
   const sb=$("#mshSearchBtn");
   if(sb) sb.onclick=function(){
@@ -10809,7 +11012,7 @@ function siteView(d, payload){
   + '<div class="wrap shopview"><div class="shop-mast"><div class="kicker">'+t("mini_kicker")+'</div>'
   + '<h1>'+esc(d.name)+'</h1>' + ((d.tagline||d.taglineKey)?'<p>'+(d.taglineKey?t(d.taglineKey):esc(d.tagline))+'</p>':"") + shopOpenBadge(d) + freeDelChip(d)
   + '<div>'+shopShareWaHtml(d, payload)+'</div></div>'
-  + prodsSec + (prodsSec?'<div id="rvWrap"></div>':"") + shopHoursSec(d)
+  + prodsSec + (prodsSec?'<div id="rvWrap"></div><div id="recWrap"></div><div id="ckWrap"></div>':"") + shopHoursSec(d)
   + shopContactSec(d, waNum)
   + shopFootSec(d, payload, shopFootCC)
   + '</div>'
@@ -10838,7 +11041,7 @@ function siteViewMobile(d, payload){
   + ((d.tagline||d.taglineKey)?'<p>'+(d.taglineKey?t(d.taglineKey):esc(d.tagline))+'</p>':"")
   + freeDelChip(d) + '<div>'+shopShareWaHtml(d, payload)+'</div>'
   + '</div>'
-  + prodsSec + (prodsSec?'<div id="rvWrap"></div>':"") + shopHoursSec(d,"msh-sec")
+  + prodsSec + (prodsSec?'<div id="rvWrap"></div><div id="recWrap"></div><div id="ckWrap"></div>':"") + shopHoursSec(d,"msh-sec")
   + shopContactSec(d, waNum,"msh-sec")
   + shopFootSec(d, payload, shopFootCC)
   + '</div>'
