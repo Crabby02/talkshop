@@ -52,6 +52,44 @@ h1,h2,h3{overflow-wrap:break-word;}
 .btn-line{background:transparent;}
 .price-card.launch .btn-line{color:var(--paper); border-color:rgba(250,246,239,.45);}
 .price-card.launch .btn-line:hover{background:rgba(250,246,239,.08); box-shadow:none;}
+/* ================= chat-first hero ================= */
+.chat-hero{padding:88px 0 76px; text-align:center;}
+.chat-hero .disp{font-size:clamp(46px,6.4vw,84px); margin:20px 0 0;}
+.chat-hero .disp .em{color:var(--accent);}
+.chat-hero .sub{max-width:660px; margin:22px auto 0; font-size:19px; color:var(--ink2); line-height:1.55;}
+.chatbox{max-width:780px; margin:40px auto 0; background:#fff; border:1px solid var(--line); border-radius:22px; box-shadow:var(--shadow); text-align:start; overflow:hidden;}
+.chatbox textarea{display:block; width:100%; border:0; background:transparent; resize:none; padding:24px 26px 6px; font:inherit; font-size:17px; line-height:1.55; min-height:104px; outline:none; color:var(--ink);}
+.chatbox textarea::placeholder{color:#A79C85;}
+.chatbar{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 14px 14px 26px;}
+.chat-hint{font-size:13.5px; color:var(--ink2);}
+.chat-submit{flex:0 0 auto; width:54px; height:54px; border-radius:50%; background:var(--accent); border:0; color:#fff; font-size:24px; line-height:1; cursor:pointer; transition:transform .12s ease, background .12s ease;}
+.chat-submit:hover{background:var(--accent-deep); transform:translateY(-1px);}
+.chips{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; max-width:820px; margin:22px auto 0;}
+.chip{border:1px solid var(--line); background:var(--paper2); border-radius:999px; padding:10px 20px; font-size:14.5px; font-weight:600; font-family:inherit; cursor:pointer; color:var(--ink2); transition:border-color .12s ease, color .12s ease;}
+.chip:hover{border-color:var(--accent); color:var(--accent-deep);}
+/* ================= gallery ================= */
+.gal-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:10px;}
+.gal-card{display:flex; flex-direction:column; align-items:flex-start; gap:10px; background:#fff; border:1px solid var(--line); border-radius:18px; padding:26px; cursor:pointer; text-align:start; font:inherit; color:var(--ink); transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease;}
+.gal-card:hover{transform:translateY(-3px); box-shadow:var(--shadow-sm); border-color:var(--accent);}
+.gal-ic{width:60px; height:60px; border-radius:15px; overflow:hidden; border:1px solid var(--line);}
+.gal-ic svg{width:100%; height:100%; display:block;}
+.gal-k{font-weight:800; font-size:19px; letter-spacing:-.01em;}
+.gal-p{font-size:14.5px; color:var(--ink2); line-height:1.5; margin:0;}
+.gal-use{font-size:14px; font-weight:700; color:var(--accent-deep); margin-top:6px;}
+/* ================= pipeline ================= */
+.pipe{max-width:880px; margin-top:8px;}
+.pipe-row{display:flex; gap:30px; align-items:flex-start; padding:30px 4px; border-top:1px solid var(--line);}
+.pipe-row:last-child{border-bottom:1px solid var(--line);}
+.pipe-n{flex:0 0 auto; font-family:var(--disp); font-weight:800; font-size:44px; letter-spacing:-.03em; line-height:1; color:transparent; -webkit-text-stroke:1.5px var(--accent);}
+.pipe-row h3{margin:0 0 8px; font-size:21px; letter-spacing:-.01em;}
+.pipe-row p{margin:0; color:var(--ink2); font-size:16px; line-height:1.6;}
+@media(max-width:860px){
+  .gal-grid{grid-template-columns:1fr;}
+  .chat-hero{padding:64px 0 56px;}
+  .chatbar{padding-left:20px;}
+  .pipe-row{gap:20px; padding:24px 2px;}
+  .pipe-n{font-size:34px;}
+}
 .btn-sm{padding:9px 20px; font-size:14px;}
 .btn-lg{padding:16px 36px; font-size:18px;}
 /* ================= masthead ================= */
@@ -1269,7 +1307,30 @@ const STR = { en: {
   pr_cta:"Get my store built",
   pr_pay:"Secure payment via PayPal. Pay by card or with your PayPal account, no subscription, just one payment.",
   pr_paynow:"Pay now",
-} };
+  "hero_chat_sub":"Describe your shop in plain words. We build your storefront, put it online within 24 hours, and you pay once.",
+  "hero_chat_ph":"Describe your shop: what you sell, your prices, your town…",
+  "hero_chat_btn":"Continue on Telegram",
+  "hero_trust":"Free to start · No account · Pay only after your store is live",
+  "chip1":"A bakery in Kochi",
+  "chip2":"A flower shop",
+  "chip3":"A tailor shop",
+  "chip4":"A barbershop",
+  "chip5":"A small cafe",
+  "chip6":"A corner grocery store",
+  "gal_use":"Use this idea",
+  "pipe_h2":"From words to orders",
+  "pipe1t":"Describe your shop",
+  "pipe1b":"Type a few lines in the box above, or just message us on Telegram. Plain words are enough.",
+  "pipe2t":"We build your storefront",
+  "pipe2b":"We turn your words into a clean mobile storefront with your products, prices, and photos.",
+  "pipe3t":"It goes live",
+  "pipe3b":"Your store is online within 24 hours, at its own link.",
+  "pipe4t":"You pay once",
+  "pipe4b":"Only after your store is live and you love it. One payment through our secure PayPal link.",
+  "pipe5t":"Share it and take orders",
+  "pipe5b":"Print the QR code, share the link anywhere. Customers order straight from the page on WhatsApp."
+}
+};
 STR.te = {
   "meta_title":"TalkShop: మీ దుకాణం గురించి చెప్పండి. ఆన్‌లైన్‌లోకి తీసుకురండి.",
   "nav_how":"ఎలా పనిచేస్తుంది",
@@ -1780,6 +1841,28 @@ STR.te = {
   "pr_cta":"నా స్టోర్ తయారు చేయండి",
   "pr_pay":"PayPal ద్వారా సురక్షిత చెల్లింపు. కార్డ్ లేదా మీ PayPal ఖాతాతో చెల్లించండి, సబ్స్క్రిప్షన్ లేదు, ఒక్కసారి చెల్లింపు మాత్రమే.",
   "pr_paynow":"ఇప్పుడే చెల్లించండి",
+  "hero_chat_sub":"మీ షాపును సాధారణ మాటల్లో వివరించండి. 24 గంటల్లో మేము మీ స్టోర్ నిర్మించి ఆన్లైన్లో పెడతాము, మీరు ఒక్కసారి మాత్రమే చెల్లిస్తారు.",
+  "hero_chat_ph":"మీ షాపును వివరించండి: ఏమి అమ్ముతారు, ధరలు, మీ ఊరు…",
+  "hero_chat_btn":"Telegram లో కొనసాగండి",
+  "hero_trust":"ప్రారంభం ఉచితం · ఖాతా అవసరం లేదు · స్టోర్ లైవ్ అయిన తర్వాత మాత్రమే చెల్లించండి",
+  "chip1":"కొచ్చిలో ఒక బేకరీ",
+  "chip2":"ఒక పూల దుకాణం",
+  "chip3":"ఒక టైలర్ షాపు",
+  "chip4":"ఒక బార్బర్ షాపు",
+  "chip5":"ఒక చిన్న కేఫ్",
+  "chip6":"ఒక కిరాణా దుకాణం",
+  "gal_use":"ఈ ఆలోచనను వాడండి",
+  "pipe_h2":"మాటల నుండి ఆర్డర్ల వరకు",
+  "pipe1t":"మీ షాపును వివరించండి",
+  "pipe1b":"పైన ఉన్న పెట్టెలో కొన్ని పంక్తులు రాయండి, లేదా Telegram లో మాకు సందేశం పంపండి. సాధారణ మాటలు చాలు.",
+  "pipe2t":"మేము మీ స్టోర్ నిర్మిస్తాము",
+  "pipe2b":"మీ మాటలను మీ ఉత్పత్తులు, ధరలు, ఫోటోలతో శుభ్రమైన మొబైల్ స్టోర్‌గా మారుస్తాము.",
+  "pipe3t":"ఇది లైవ్ అవుతుంది",
+  "pipe3b":"మీ స్టోర్ 24 గంటల్లో దాని స్వంత లింక్‌తో ఆన్‌లైన్‌లోకి వస్తుంది.",
+  "pipe4t":"మీరు ఒక్కసారి చెల్లిస్తారు",
+  "pipe4b":"మీ స్టోర్ లైవ్ అయి మీకు నచ్చిన తర్వాత మాత్రమే. మా సురక్షిత PayPal లింక్ ద్వారా ఒక చెల్లింపు.",
+  "pipe5t":"దీన్ని షేర్ చేసి ఆర్డర్లు తీసుకోండి",
+  "pipe5b":"QR కోడ్ ప్రింట్ చేయండి, లింక్ ఎక్కడైనా షేర్ చేయండి. కస్టమర్లు పేజీ నుండే నేరుగా WhatsApp లో ఆర్డర్ చేస్తారు."
 };
 STR.bn = {
   "meta_title":"TalkShop: আপনার দোকানের কথা বলুন। অনলাইনে আসুন।",
@@ -2291,6 +2374,28 @@ STR.bn = {
   "pr_cta":"আমার দোকান বানান",
   "pr_pay":"PayPal দিয়ে নিরাপদ পেমেন্ট। কার্ড বা আপনার PayPal অ্যাকাউন্ট দিয়ে পেমেন্ট করুন, কোনো সাবস্ক্রিপশন নয়, শুধু একবার পেমেন্ট।",
   "pr_paynow":"এখনই পেমেন্ট করুন",
+  "hero_chat_sub":"সহজ ভাষায় আপনার দোকানের বর্ণনা দিন। 24 ঘণ্টার মধ্যে আমরা আপনার স্টোর বানিয়ে অনলাইনে তুলে দেব, আর আপনি শুধু একবার পেমেন্ট করবেন।",
+  "hero_chat_ph":"আপনার দোকানের বর্ণনা দিন: কী বিক্রি করেন, দাম, আপনার শহর…",
+  "hero_chat_btn":"Telegram-এ চালিয়ে যান",
+  "hero_trust":"শুরু করা ফ্রি · অ্যাকাউন্ট লাগবে না · দোকান লাইভ হওয়ার পরেই পেমেন্ট",
+  "chip1":"কোচিতে একটি বেকারি",
+  "chip2":"একটি ফুলের দোকান",
+  "chip3":"একটি দর্জির দোকান",
+  "chip4":"একটি সেলুন",
+  "chip5":"একটি ছোট ক্যাফে",
+  "chip6":"একটি মুদির দোকান",
+  "gal_use":"এই আইডিয়াটি ব্যবহার করুন",
+  "pipe_h2":"কথা থেকে অর্ডার পর্যন্ত",
+  "pipe1t":"আপনার দোকানের বর্ণনা দিন",
+  "pipe1b":"উপরের বাক্সে কয়েক লাইন লিখুন, অথবা Telegram-এ আমাদের মেসেজ করুন। সহজ কথাই যথেষ্ট।",
+  "pipe2t":"আমরা আপনার স্টোর বানিয়ে দিই",
+  "pipe2b":"আপনার কথাগুলোকে আপনার পণ্য, দাম ও ছবি দিয়ে একটি পরিষ্কার মোবাইল স্টোরে রূপ দিই।",
+  "pipe3t":"এটি লাইভ হয়ে যায়",
+  "pipe3b":"আপনার স্টোর 24 ঘণ্টার মধ্যে নিজস্ব লিঙ্কসহ অনলাইনে চলে আসে।",
+  "pipe4t":"আপনি শুধু একবার পেমেন্ট করেন",
+  "pipe4b":"শুধুমাত্র যখন আপনার স্টোর লাইভ হবে এবং আপনার ভালো লাগবে। আমাদের নিরাপদ PayPal লিঙ্ক দিয়ে একবার পেমেন্ট।",
+  "pipe5t":"শেয়ার করুন আর অর্ডার নিন",
+  "pipe5b":"QR কোড প্রিন্ট করুন, লিঙ্ক যেখানে খুশি শেয়ার করুন। গ্রাহকরা পেজ থেকেই সরাসরি WhatsApp-এ অর্ডার করেন।"
 };
 STR.kn = {
   "meta_title":"TalkShop: ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ವಿವರಿಸಿ. ಅದನ್ನು ಆನ್‌ಲೈನ್‌ಗೆ ತನ್ನಿ.",
@@ -2802,6 +2907,28 @@ STR.kn = {
   "pr_cta":"ನನ್ನ ಅಂಗಡಿ ಮಾಡಿಸಿ",
   "pr_pay":"PayPal ಮೂಲಕ ಸುರಕ್ಷಿತ ಪಾವತಿ. ಕಾರ್ಡ್ ಅಥವಾ ನಿಮ್ಮ PayPal ಖಾತೆಯಿಂದ ಪಾವತಿಸಿ, ಚಂದಾದಾರಿಕೆ ಇಲ್ಲ, ಒಂದೇ ಒಂದು ಪಾವತಿ.",
   "pr_paynow":"ಈಗ ಪಾವತಿಸಿ",
+  "hero_chat_sub":"ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ಸರಳ ಪದಗಳಲ್ಲಿ ವಿವರಿಸಿ. 24 ಗಂಟೆಗಳಲ್ಲಿ ನಾವು ನಿಮ್ಮ ಸ್ಟೋರ್ ನಿರ್ಮಿಸಿ ಆನ್‌ಲೈನ್‌ಗೆ ತರುತ್ತೇವೆ, ನೀವು ಒಮ್ಮೆ ಮಾತ್ರ ಪಾವತಿಸುತ್ತೀರಿ.",
+  "hero_chat_ph":"ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ವಿವರಿಸಿ: ನೀವು ಏನು ಮಾರುತ್ತೀರಿ, ಬೆಲೆಗಳು, ನಿಮ್ಮ ಊರು…",
+  "hero_chat_btn":"Telegram ನಲ್ಲಿ ಮುಂದುವರಿಸಿ",
+  "hero_trust":"ಪ್ರಾರಂಭ ಉಚಿತ · ಖಾತೆ ಬೇಡ · ಅಂಗಡಿ ಲೈವ್ ಆದ ನಂತರ ಮಾತ್ರ ಪಾವತಿಸಿ",
+  "chip1":"ಕೊಚ್ಚಿಯಲ್ಲಿ ಒಂದು ಬೇಕರಿ",
+  "chip2":"ಒಂದು ಹೂವಿನ ಅಂಗಡಿ",
+  "chip3":"ಒಂದು ಟೈಲರ್ ಅಂಗಡಿ",
+  "chip4":"ಒಂದು ಕ್ಷೌರದ ಅಂಗಡಿ",
+  "chip5":"ಒಂದು ಸಣ್ಣ ಕೆಫೆ",
+  "chip6":"ಒಂದು ಕಿರಾಣಿ ಅಂಗಡಿ",
+  "gal_use":"ಈ ಕಲ್ಪನೆಯನ್ನು ಬಳಸಿ",
+  "pipe_h2":"ಪದಗಳಿಂದ ಆರ್ಡರ್‌ಗಳವರೆಗೆ",
+  "pipe1t":"ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ವಿವರಿಸಿ",
+  "pipe1b":"ಮೇಲಿನ ಪೆಟ್ಟಿಗೆಯಲ್ಲಿ ಕೆಲವು ಸಾಲುಗಳನ್ನು ಬರೆಯಿರಿ, ಅಥವಾ Telegram ನಲ್ಲಿ ನಮಗೆ ಸಂದೇಶ ಕಳುಹಿಸಿ. ಸರಳ ಪದಗಳು ಸಾಕು.",
+  "pipe2t":"ನಾವು ನಿಮ್ಮ ಸ್ಟೋರ್ ನಿರ್ಮಿಸುತ್ತೇವೆ",
+  "pipe2b":"ನಿಮ್ಮ ಪದಗಳನ್ನು ನಿಮ್ಮ ಉತ್ಪನ್ನಗಳು, ಬೆಲೆಗಳು ಮತ್ತು ಫೋಟೋಗಳೊಂದಿಗೆ ಸ್ವಚ್ಛ ಮೊಬೈಲ್ ಸ್ಟೋರ್ ಆಗಿ ಪರಿವರ್ತಿಸುತ್ತೇವೆ.",
+  "pipe3t":"ಅದು ಲೈವ್ ಆಗುತ್ತದೆ",
+  "pipe3b":"ನಿಮ್ಮ ಸ್ಟೋರ್ 24 ಗಂಟೆಗಳಲ್ಲಿ ಅದರ ಸ್ವಂತ ಲಿಂಕ್‌ನೊಂದಿಗೆ ಆನ್‌ಲೈನ್‌ಗೆ ಬರುತ್ತದೆ.",
+  "pipe4t":"ನೀವು ಒಮ್ಮೆ ಮಾತ್ರ ಪಾವತಿಸುತ್ತೀರಿ",
+  "pipe4b":"ನಿಮ್ಮ ಸ್ಟೋರ್ ಲೈವ್ ಆಗಿ ನಿಮಗೆ ಇಷ್ಟವಾದ ನಂತರ ಮಾತ್ರ. ನಮ್ಮ ಸುರಕ್ಷಿತ PayPal ಲಿಂಕ್ ಮೂಲಕ ಒಂದು ಪಾವತಿ.",
+  "pipe5t":"ಇದನ್ನು ಹಂಚಿಕೊಂಡು ಆರ್ಡರ್‌ಗಳನ್ನು ಪಡೆಯಿರಿ",
+  "pipe5b":"QR ಕೋಡ್ ಪ್ರಿಂಟ್ ಮಾಡಿ, ಲಿಂಕ್ ಅನ್ನು ಎಲ್ಲಿಯಾದರೂ ಹಂಚಿಕೊಳ್ಳಿ. ಗ್ರಾಹಕರು ಪುಟದಿಂದ ನೇರವಾಗಿ WhatsApp ನಲ್ಲಿ ಆರ್ಡರ್ ಮಾಡುತ್ತಾರೆ."
 };
 STR.mr = {
   "meta_title":"TalkShop: तुमच्या दुकानाबद्दल सांगा. ते ऑनलाइन न्या.",
@@ -3313,6 +3440,28 @@ STR.mr = {
   "pr_cta":"माझे दुकान बनवून घ्या",
   "pr_pay":"PayPal ने सुरक्षित पेमेंट. कार्ड किंवा तुमच्या PayPal अकाउंटने पेमेंट करा, सब्सक्रिप्शन नाही, फक्त एकदा पेमेंट.",
   "pr_paynow":"आत्ता पेमेंट करा",
+  "hero_chat_sub":"तुमच्या दुकानाचे साध्या शब्दांत वर्णन करा. 24 तासांत आम्ही तुमचे स्टोअर बनवून ऑनलाइन करू, आणि तुम्ही फक्त एकदा पेमेंट कराल.",
+  "hero_chat_ph":"तुमच्या दुकानाचे वर्णन करा: तुम्ही काय विकता, किमती, तुमचे शहर…",
+  "hero_chat_btn":"Telegram वर पुढे जा",
+  "hero_trust":"सुरुवात मोफत · अकाउंट नको · दुकान लाइव्ह झाल्यावरच पेमेंट",
+  "chip1":"कोचीत एक बेकरी",
+  "chip2":"एक फुलांचे दुकान",
+  "chip3":"एक शिंप्याचे दुकान",
+  "chip4":"एक न्हाव्याचे दुकान",
+  "chip5":"एक छोटे कॅफे",
+  "chip6":"एक किराणा दुकान",
+  "gal_use":"ही कल्पना वापरा",
+  "pipe_h2":"शब्दांपासून ऑर्डरपर्यंत",
+  "pipe1t":"तुमच्या दुकानाचे वर्णन करा",
+  "pipe1b":"वरच्या बॉक्समध्ये काही ओळी लिहा, किंवा आम्हाला Telegram वर मेसेज करा. साधे शब्द पुरेसे आहेत.",
+  "pipe2t":"आम्ही तुमचे स्टोअर बनवतो",
+  "pipe2b":"तुमच्या शब्दांचे तुमची उत्पादने, किमती आणि फोटोंसह स्वच्छ मोबाइल स्टोअरमध्ये रूपांतर करतो.",
+  "pipe3t":"ते लाइव्ह होते",
+  "pipe3b":"तुमचे स्टोअर 24 तासांत स्वतःच्या लिंकसह ऑनलाइन होते.",
+  "pipe4t":"तुम्ही फक्त एकदा पेमेंट करता",
+  "pipe4b":"तुमचे स्टोअर लाइव्ह होऊन तुम्हाला आवडल्यानंतरच. आमच्या सुरक्षित PayPal लिंकने एक पेमेंट.",
+  "pipe5t":"ते शेअर करा आणि ऑर्डर घ्या",
+  "pipe5b":"QR कोड प्रिंट करा, लिंक कुठेही शेअर करा. ग्राहक पेजवरून थेट WhatsApp वर ऑर्डर करतात."
 };
 STR.zh = {
   "meta_title":"TalkShop：描述您的小店，轻松上线。",
@@ -3824,6 +3973,28 @@ STR.zh = {
   "pr_cta":"为我建店",
   "pr_pay":"通过 PayPal 安全付款。可用银行卡或 PayPal 账户支付，无订阅，一次付清。",
   "pr_paynow":"立即付款",
+  "hero_chat_sub":"用简单的话描述您的店铺。我们在 24 小时内建好并上线您的店铺，您只需付款一次。",
+  "hero_chat_ph":"描述您的店铺：卖什么、价格、所在城市…",
+  "hero_chat_btn":"前往 Telegram 继续",
+  "hero_trust":"免费开始 · 无需账户 · 店铺上线后才付款",
+  "chip1":"科钦的一家面包店",
+  "chip2":"一家花店",
+  "chip3":"一家裁缝店",
+  "chip4":"一家理发店",
+  "chip5":"一家小咖啡馆",
+  "chip6":"一家街角杂货店",
+  "gal_use":"试试这个",
+  "pipe_h2":"从一句话到接订单",
+  "pipe1t":"描述您的店铺",
+  "pipe1b":"在上面的输入框中写几句话，或直接在 Telegram 上给我们发消息。简单的话就够了。",
+  "pipe2t":"我们为您建店",
+  "pipe2b":"我们把您的话变成一家干净的移动端店铺，包含您的产品、价格和照片。",
+  "pipe3t":"店铺上线",
+  "pipe3b":"您的店铺在 24 小时内上线，拥有自己的专属链接。",
+  "pipe4t":"只需付款一次",
+  "pipe4b":"仅在您的店铺上线并且您满意之后。通过我们安全的 PayPal 链接付款一次。",
+  "pipe5t":"分享并接单",
+  "pipe5b":"打印二维码，随处分享链接。顾客直接在页面上通过 WhatsApp 下单。"
 };
 STR.ja = {
   "meta_title":"TalkShop：お店を紹介して、オンラインに。",
@@ -4335,6 +4506,28 @@ STR.ja = {
   "pr_cta":"ストアを作ってもらう",
   "pr_pay":"PayPal による安全な決済。カードまたは PayPal アカウントでお支払いください。サブスクなし、一度きりのお支払い。",
   "pr_paynow":"今すぐ支払う",
+  "hero_chat_sub":"お店のことを簡単な言葉で教えてください。24時間以内にストアを構築して公開します。お支払いは一度きりです。",
+  "hero_chat_ph":"お店について教えてください：何を売っているか、価格、地域…",
+  "hero_chat_btn":"Telegram で続ける",
+  "hero_trust":"無料ではじめられる · アカウント不要 · ストア公開後のみお支払い",
+  "chip1":"コーチのベーカリー",
+  "chip2":"花屋",
+  "chip3":"仕立て屋",
+  "chip4":"床屋",
+  "chip5":"小さなカフェ",
+  "chip6":"街角の食料品店",
+  "gal_use":"このアイデアを使う",
+  "pipe_h2":"言葉から注文へ",
+  "pipe1t":"お店について教える",
+  "pipe1b":"上のボックスに数行入力するか、Telegram でメッセージを送ってください。簡単な言葉で大丈夫です。",
+  "pipe2t":"ストアを構築します",
+  "pipe2b":"あなたの言葉を、商品・価格・写真付きのすっきりしたモバイルストアに変えます。",
+  "pipe3t":"公開されます",
+  "pipe3b":"ストアは24時間以内に専用リンクで公開されます。",
+  "pipe4t":"お支払いは一度きり",
+  "pipe4b":"ストアが公開され、気に入っていただけた後のみ。安全な PayPal リンクから一度だけお支払い。",
+  "pipe5t":"共有して注文を受ける",
+  "pipe5b":"QRコードを印刷し、リンクをどこでも共有。お客様はページから直接WhatsAppで注文します。"
 };
 STR.fr = {
   "meta_title":"TalkShop : Décrivez votre boutique. Mettez-la en ligne.",
@@ -4846,6 +5039,28 @@ STR.fr = {
   "pr_cta":"Créer ma boutique",
   "pr_pay":"Paiement sécurisé via PayPal. Payez par carte ou avec votre compte PayPal, sans abonnement, un seul paiement.",
   "pr_paynow":"Payer maintenant",
+  "hero_chat_sub":"Décrivez votre boutique en mots simples. Nous construisons votre boutique en ligne en 24 heures, et vous ne payez qu'une fois.",
+  "hero_chat_ph":"Décrivez votre boutique : ce que vous vendez, vos prix, votre ville…",
+  "hero_chat_btn":"Continuer sur Telegram",
+  "hero_trust":"Gratuit pour commencer · Sans compte · Payez seulement quand votre boutique est en ligne",
+  "chip1":"Une boulangerie à Cochin",
+  "chip2":"Un fleuriste",
+  "chip3":"Un tailleur",
+  "chip4":"Un salon de coiffure",
+  "chip5":"Un petit café",
+  "chip6":"Une épicerie de quartier",
+  "gal_use":"Utiliser cette idée",
+  "pipe_h2":"Des mots aux commandes",
+  "pipe1t":"Décrivez votre boutique",
+  "pipe1b":"Écrivez quelques lignes dans le champ ci-dessus, ou envoyez-nous un message sur Telegram. Des mots simples suffisent.",
+  "pipe2t":"Nous construisons votre boutique",
+  "pipe2b":"Nous transformons vos mots en une boutique mobile épurée avec vos produits, prix et photos.",
+  "pipe3t":"Elle est en ligne",
+  "pipe3b":"Votre boutique est en ligne en 24 heures, avec son propre lien.",
+  "pipe4t":"Vous payez une fois",
+  "pipe4b":"Seulement quand votre boutique est en ligne et que vous l'adorez. Un paiement via notre lien PayPal sécurisé.",
+  "pipe5t":"Partagez et recevez des commandes",
+  "pipe5b":"Imprimez le QR code, partagez le lien partout. Les clients commandent depuis la page sur WhatsApp."
 };
 STR.de = {
   "meta_title":"TalkShop: Beschreiben Sie Ihr Geschäft. Bringen Sie es online.",
@@ -5357,6 +5572,28 @@ STR.de = {
   "pr_cta":"Meinen Shop bauen lassen",
   "pr_pay":"Sichere Zahlung via PayPal. Zahle per Karte oder mit deinem PayPal-Konto, kein Abo, nur eine Zahlung.",
   "pr_paynow":"Jetzt zahlen",
+  "hero_chat_sub":"Beschreib deinen Shop in einfachen Worten. Wir bauen deinen Store und bringen ihn in 24 Stunden online, und du zahlst nur einmal.",
+  "hero_chat_ph":"Beschreib deinen Shop: was du verkaufst, deine Preise, dein Ort…",
+  "hero_chat_btn":"Auf Telegram fortfahren",
+  "hero_trust":"Kostenlos starten · Kein Konto · Zahle erst, wenn dein Shop live ist",
+  "chip1":"Eine Bäckerei in Kochi",
+  "chip2":"Ein Blumenladen",
+  "chip3":"Eine Schneiderei",
+  "chip4":"Ein Friseursalon",
+  "chip5":"Ein kleines Café",
+  "chip6":"Ein kleiner Lebensmittelladen",
+  "gal_use":"Diese Idee nutzen",
+  "pipe_h2":"Von Worten zu Bestellungen",
+  "pipe1t":"Beschreib deinen Shop",
+  "pipe1b":"Schreib ein paar Zeilen in das Feld oben oder schick uns eine Nachricht auf Telegram. Einfache Worte genügen.",
+  "pipe2t":"Wir bauen deinen Store",
+  "pipe2b":"Wir verwandeln deine Worte in einen sauberen mobilen Store mit deinen Produkten, Preisen und Fotos.",
+  "pipe3t":"Er geht live",
+  "pipe3b":"Dein Store ist in 24 Stunden mit eigenem Link online.",
+  "pipe4t":"Du zahlst einmal",
+  "pipe4b":"Erst wenn dein Store live ist und dir gefällt. Eine Zahlung über unseren sicheren PayPal-Link.",
+  "pipe5t":"Teile ihn und nimm Bestellungen an",
+  "pipe5b":"Druck den QR-Code, teile den Link überall. Kunden bestellen direkt von der Seite per WhatsApp."
 };
 STR.pt = {
   "meta_title":"TalkShop: Descreva sua loja. Coloque-a online.",
@@ -5868,6 +6105,28 @@ STR.pt = {
   "pr_cta":"Quero minha loja",
   "pr_pay":"Pagamento seguro via PayPal. Pague com cartão ou sua conta PayPal, sem assinatura, pagamento único.",
   "pr_paynow":"Pagar agora",
+  "hero_chat_sub":"Descreva sua loja em palavras simples. Construímos sua loja e a colocamos online em 24 horas, e você paga uma única vez.",
+  "hero_chat_ph":"Descreva sua loja: o que vende, seus preços, sua cidade…",
+  "hero_chat_btn":"Continuar no Telegram",
+  "hero_trust":"Grátis para começar · Sem conta · Pague só depois que sua loja estiver no ar",
+  "chip1":"Uma padaria em Cochim",
+  "chip2":"Uma floricultura",
+  "chip3":"Uma alfaiataria",
+  "chip4":"Uma barbearia",
+  "chip5":"Um pequeno café",
+  "chip6":"Uma mercearia de bairro",
+  "gal_use":"Usar esta ideia",
+  "pipe_h2":"De palavras a pedidos",
+  "pipe1t":"Descreva sua loja",
+  "pipe1b":"Escreva algumas linhas na caixa acima ou nos chame no Telegram. Palavras simples bastam.",
+  "pipe2t":"Nós construímos sua loja",
+  "pipe2b":"Transformamos suas palavras em uma loja móvel limpa com seus produtos, preços e fotos.",
+  "pipe3t":"Ela entra no ar",
+  "pipe3b":"Sua loja fica online em 24 horas, com seu próprio link.",
+  "pipe4t":"Você paga uma vez",
+  "pipe4b":"Só depois que sua loja estiver no ar e você amar. Um pagamento pelo nosso link seguro do PayPal.",
+  "pipe5t":"Compartilhe e receba pedidos",
+  "pipe5b":"Imprima o QR code, compartilhe o link onde quiser. Os clientes pedem direto da página no WhatsApp."
 };
 STR.ar = {
   "meta_title":"TalkShop: صف متجرك. وانشره على الإنترنت.",
@@ -6379,6 +6638,28 @@ STR.ar = {
   "pr_cta":"أريد متجري",
   "pr_pay":"دفع آمن عبر PayPal. ادفع بالبطاقة أو حساب PayPal الخاص بك، دون اشتراك، دفعة واحدة فقط.",
   "pr_paynow":"ادفع الآن",
+  "hero_chat_sub":"صِف متجرك بكلمات بسيطة. نبني متجرك ونضعه على الإنترنت خلال 24 ساعة، وتدفع مرة واحدة فقط.",
+  "hero_chat_ph":"صِف متجرك: ماذا تبيع، أسعارك، مدينتك…",
+  "hero_chat_btn":"المتابعة على Telegram",
+  "hero_trust":"البدء مجاني · دون حساب · لا تدفع إلا بعد أن يصبح متجرك مباشرًا",
+  "chip1":"مخبز في كوتشي",
+  "chip2":"محل زهور",
+  "chip3":"محل خياطة",
+  "chip4":"صالون حلاقة",
+  "chip5":"مقهى صغير",
+  "chip6":"بقالة",
+  "gal_use":"جرّب هذه الفكرة",
+  "pipe_h2":"من الكلمات إلى الطلبات",
+  "pipe1t":"صِف متجرك",
+  "pipe1b":"اكتب بضعة أسطر في المربع أعلاه، أو راسلنا على Telegram. الكلمات البسيطة تكفي.",
+  "pipe2t":"نبني متجرك",
+  "pipe2b":"نحوّل كلماتك إلى متجر جوال أنيق بمنتجاتك وأسعارك وصورك.",
+  "pipe3t":"يصبح مباشرًا",
+  "pipe3b":"يصبح متجرك على الإنترنت خلال 24 ساعة، برابطه الخاص.",
+  "pipe4t":"تدفع مرة واحدة",
+  "pipe4b":"فقط بعد أن يصبح متجرك مباشرًا ويعجبك. دفعة واحدة عبر رابط PayPal الآمن.",
+  "pipe5t":"شاركه واستقبل الطلبات",
+  "pipe5b":"اطبع رمز QR وشارك الرابط في أي مكان. يطلب العملاء مباشرة من الصفحة عبر WhatsApp."
 };
 let uiLang = "en";
 try{ uiLang = localStorage.getItem("ts_ui") || "en"; }catch(e){}
@@ -6899,6 +7180,28 @@ STR.ml = {
   "pr_cta":"എന്റെ കട ഉണ്ടാക്കൂ",
   "pr_pay":"PayPal വഴി സുരക്ഷിത പേയ്മെന്റ്. കാർഡ് അല്ലെങ്കിൽ നിങ്ങളുടെ PayPal അക്കൗണ്ട് വഴി പണമടയ്ക്കൂ, സബ്സ്ക്രിപ്ഷനില്ല, ഒറ്റത്തവണ പേയ്മെന്റ്.",
   "pr_paynow":"ഇപ്പോൾ അടയ്ക്കൂ",
+  "hero_chat_sub":"നിങ്ങളുടെ കടയെ ലളിതമായ വാക്കുകളിൽ വിവരിക്കൂ. 24 മണിക്കൂറിനുള്ളിൽ ഞങ്ങൾ നിങ്ങളുടെ സ്റ്റോർ ഉണ്ടാക്കി ഓൺലൈനിലാക്കും, നിങ്ങൾ ഒരിക്കൽ മാത്രം പണമടച്ചാൽ മതി.",
+  "hero_chat_ph":"നിങ്ങളുടെ കടയെ വിവരിക്കൂ: എന്താണ് വിൽക്കുന്നത്, വിലകൾ, നിങ്ങളുടെ നാട്…",
+  "hero_chat_btn":"Telegram-ൽ തുടരൂ",
+  "hero_trust":"തുടങ്ങാൻ സൗജന്യം · അക്കൗണ്ട് വേണ്ട · കട ലൈവായതിന് ശേഷം മാത്രം പണമടയ്ക്കൂ",
+  "chip1":"കൊച്ചിയിൽ ഒരു ബേക്കറി",
+  "chip2":"ഒരു പൂക്കട",
+  "chip3":"ഒരു തയ്യൽക്കട",
+  "chip4":"ഒരു ബാർബർ ഷോപ്പ്",
+  "chip5":"ഒരു ചെറിയ കഫേ",
+  "chip6":"ഒരു പലചരക്ക് കട",
+  "gal_use":"ഈ ആശയം ഉപയോഗിക്കൂ",
+  "pipe_h2":"വാക്കുകളിൽ നിന്ന് ഓർഡറുകളിലേക്ക്",
+  "pipe1t":"നിങ്ങളുടെ കടയെ വിവരിക്കൂ",
+  "pipe1b":"മുകളിലുള്ള പെട്ടിയിൽ കുറച്ച് വരികൾ എഴുതൂ, അല്ലെങ്കിൽ Telegram-ൽ ഞങ്ങൾക്ക് സന്ദേശം അയയ്ക്കൂ. ലളിതമായ വാക്കുകൾ മതി.",
+  "pipe2t":"ഞങ്ങൾ നിങ്ങളുടെ സ്റ്റോർ ഉണ്ടാക്കുന്നു",
+  "pipe2b":"നിങ്ങളുടെ വാക്കുകളെ നിങ്ങളുടെ ഉൽപ്പന്നങ്ങൾ, വിലകൾ, ഫോട്ടോകൾ എന്നിവയോടെ വൃത്തിയുള്ള മൊബൈൽ സ്റ്റോറാക്കി മാറ്റുന്നു.",
+  "pipe3t":"അത് ലൈവാകുന്നു",
+  "pipe3b":"നിങ്ങളുടെ സ്റ്റോർ 24 മണിക്കൂറിനുള്ളിൽ അതിന്റെ സ്വന്തം ലിങ്കോടെ ഓൺലൈനിലാകുന്നു.",
+  "pipe4t":"നിങ്ങൾ ഒരിക്കൽ മാത്രം പണമടയ്ക്കുന്നു",
+  "pipe4b":"നിങ്ങളുടെ സ്റ്റോർ ലൈവായി നിങ്ങൾക്ക് ഇഷ്ടപ്പെട്ടതിന് ശേഷം മാത്രം. ഞങ്ങളുടെ സുരക്ഷിത PayPal ലിങ്ക് വഴി ഒറ്റ പേയ്മെന്റ്.",
+  "pipe5t":"ഇത് പങ്കിട്ട് ഓർഡറുകൾ സ്വീകരിക്കൂ",
+  "pipe5b":"QR കോഡ് പ്രിന്റ് ചെയ്യൂ, ലിങ്ക് എവിടെയും പങ്കിടൂ. ഉപഭോക്താക്കൾ പേജിൽ നിന്ന് നേരിട്ട് WhatsApp-ൽ ഓർഡർ ചെയ്യുന്നു."
 };
 STR.hi = {
   "meta_title":"TalkShop: अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।",
@@ -7410,6 +7713,28 @@ STR.hi = {
   "pr_cta":"मेरी दुकान बनवाएं",
   "pr_pay":"PayPal से सुरक्षित भुगतान। कार्ड या आपके PayPal अकाउंट से भुगतान करें, कोई सब्सक्रिप्शन नहीं, सिर्फ एक बार भुगतान।",
   "pr_paynow":"अभी भुगतान करें",
+  "hero_chat_sub":"अपनी दुकान का साधारण शब्दों में वर्णन करें। हम 24 घंटों में आपका स्टोर बनाकर ऑनलाइन कर देंगे, और आप सिर्फ एक बार भुगतान करेंगे।",
+  "hero_chat_ph":"अपनी दुकान का वर्णन करें: आप क्या बेचते हैं, दाम, आपका शहर…",
+  "hero_chat_btn":"Telegram पर आगे बढ़ें",
+  "hero_trust":"शुरुआत मुफ्त · कोई अकाउंट नहीं · स्टोर लाइव होने के बाद ही भुगतान",
+  "chip1":"कोच्चि में एक बेकरी",
+  "chip2":"एक फूलों की दुकान",
+  "chip3":"एक दर्जी की दुकान",
+  "chip4":"एक नाई की दुकान",
+  "chip5":"एक छोटा कैफे",
+  "chip6":"एक किराने की दुकान",
+  "gal_use":"यह आइडिया इस्तेमाल करें",
+  "pipe_h2":"शब्दों से ऑर्डर तक",
+  "pipe1t":"अपनी दुकान का वर्णन करें",
+  "pipe1b":"ऊपर दिए बॉक्स में कुछ पंक्तियां लिखें, या हमें Telegram पर मैसेज करें। साधारण शब्द ही काफी हैं।",
+  "pipe2t":"हम आपका स्टोर बनाते हैं",
+  "pipe2b":"हम आपके शब्दों को आपके उत्पादों, दामों और फोटो के साथ एक साफ मोबाइल स्टोर में बदल देते हैं।",
+  "pipe3t":"यह लाइव हो जाता है",
+  "pipe3b":"आपका स्टोर 24 घंटों में अपने खुद के लिंक के साथ ऑनलाइन हो जाता है।",
+  "pipe4t":"आप सिर्फ एक बार भुगतान करते हैं",
+  "pipe4b":"सिर्फ तब जब आपका स्टोर लाइव हो और आपको पसंद आए। हमारे सुरक्षित PayPal लिंक से एक भुगतान।",
+  "pipe5t":"इसे शेयर करें और ऑर्डर लें",
+  "pipe5b":"QR कोड प्रिंट करें, लिंक कहीं भी शेयर करें। ग्राहक पेज से सीधे WhatsApp पर ऑर्डर करते हैं।"
 };
 STR.ta = {
   "meta_title":"TalkShop: உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.",
@@ -7921,6 +8246,28 @@ STR.ta = {
   "pr_cta":"என் கடையை உருவாக்குங்கள்",
   "pr_pay":"PayPal மூலம் பாதுகாப்பான கட்டணம். கார்டு அல்லது உங்கள் PayPal கணக்கு மூலம் செலுத்துங்கள், சந்தா இல்லை, ஒரே ஒரு கட்டணம்.",
   "pr_paynow":"இப்போது செலுத்துங்கள்",
+  "hero_chat_sub":"உங்கள் கடையை எளிய வார்த்தைகளில் விவரியுங்கள். 24 மணி நேரத்தில் உங்கள் கடையை உருவாக்கி ஆன்லைனில் வைக்கிறோம், நீங்கள் ஒரு முறை மட்டும் கட்டணம் செலுத்துகிறீர்கள்.",
+  "hero_chat_ph":"உங்கள் கடையை விவரியுங்கள்: என்ன விற்கிறீர்கள், விலைகள், உங்கள் ஊர்…",
+  "hero_chat_btn":"Telegram இல் தொடரவும்",
+  "hero_trust":"தொடங்க இலவசம் · கணக்கு தேவையில்லை · கடை நேரலையில் வந்த பிறகு மட்டும் கட்டணம்",
+  "chip1":"கொச்சியில் ஒரு பேக்கரி",
+  "chip2":"ஒரு பூக்கடை",
+  "chip3":"ஒரு தையல் கடை",
+  "chip4":"ஒரு முடிதிருத்தும் கடை",
+  "chip5":"ஒரு சிறிய கஃபே",
+  "chip6":"ஒரு மளிகைக் கடை",
+  "gal_use":"இந்த யோசனையைப் பயன்படுத்துங்கள்",
+  "pipe_h2":"வார்த்தைகளிலிருந்து ஆர்டர்கள் வரை",
+  "pipe1t":"உங்கள் கடையை விவரியுங்கள்",
+  "pipe1b":"மேலே உள்ள பெட்டியில் சில வரிகள் எழுதுங்கள், அல்லது Telegram இல் எங்களுக்கு செய்தி அனுப்புங்கள். எளிய வார்த்தைகளே போதும்.",
+  "pipe2t":"உங்கள் கடையை நாங்கள் உருவாக்குகிறோம்",
+  "pipe2b":"உங்கள் வார்த்தைகளை உங்கள் தயாரிப்புகள், விலைகள், புகைப்படங்களுடன் சுத்தமான மொபைல் கடையாக மாற்றுகிறோம்.",
+  "pipe3t":"அது நேரலைக்கு வருகிறது",
+  "pipe3b":"உங்கள் கடை 24 மணி நேரத்தில் அதன் சொந்த இணைப்புடன் ஆன்லைனில் வருகிறது.",
+  "pipe4t":"நீங்கள் ஒரு முறை செலுத்துகிறீர்கள்",
+  "pipe4b":"உங்கள் கடை நேரலையில் வந்து உங்களுக்குப் பிடித்த பிறகு மட்டும். எங்கள் பாதுகாப்பான PayPal இணைப்பு மூலம் ஒரு கட்டணம்.",
+  "pipe5t":"பகிர்ந்து ஆர்டர்களைப் பெறுங்கள்",
+  "pipe5b":"QR குறியீட்டை அச்சிடுங்கள், இணைப்பை எங்கும் பகிருங்கள். வாடிக்கையாளர்கள் பக்கத்திலிருந்து நேரடியாக WhatsApp இல் ஆர்டர் செய்கிறார்கள்."
 };
 STR.es = {
   "meta_title":"TalkShop: Describe tu tienda. Ponla en línea.",
@@ -8433,6 +8780,28 @@ STR.es = {
   "pr_cta":"Quiero mi tienda",
   "pr_pay":"Pago seguro con PayPal. Paga con tarjeta o tu cuenta PayPal, sin suscripción, un solo pago.",
   "pr_paynow":"Pagar ahora",
+  "hero_chat_sub":"Describe tu tienda con palabras sencillas. Creamos tu tienda online en 24 horas y pagas una sola vez.",
+  "hero_chat_ph":"Describe tu tienda: qué vendes, tus precios, tu ciudad…",
+  "hero_chat_btn":"Continuar en Telegram",
+  "hero_trust":"Gratis para empezar · Sin cuenta · Paga solo cuando tu tienda esté en línea",
+  "chip1":"Una panadería en Cochín",
+  "chip2":"Una floristería",
+  "chip3":"Una sastrería",
+  "chip4":"Una barbería",
+  "chip5":"Un pequeño café",
+  "chip6":"Una tienda de comestibles",
+  "gal_use":"Usar esta idea",
+  "pipe_h2":"De palabras a pedidos",
+  "pipe1t":"Describe tu tienda",
+  "pipe1b":"Escribe unas líneas en el recuadro o escríbenos por Telegram. Con palabras sencillas basta.",
+  "pipe2t":"Creamos tu tienda online",
+  "pipe2b":"Convertimos tus palabras en una tienda móvil limpia con tus productos, precios y fotos.",
+  "pipe3t":"Sale en línea",
+  "pipe3b":"Tu tienda está en línea en 24 horas, con su propio enlace.",
+  "pipe4t":"Pagas una vez",
+  "pipe4b":"Solo cuando tu tienda esté en línea y te encante. Un pago con nuestro enlace seguro de PayPal.",
+  "pipe5t":"Compártelo y recibe pedidos",
+  "pipe5b":"Imprime el código QR, comparte el enlace donde quieras. Los clientes piden desde la página por WhatsApp."
 };
 
 
@@ -8740,87 +9109,55 @@ function wireSampleLinks(){
   document.querySelectorAll(".sample-link").forEach(a => a.href = href);
 }
 /* ============================== home ============================== */
+function sendChat(){
+  window.open("https://t.me/TalkShopBot?start=site", "_blank", "noopener");
+}
+function fillChat(k){
+  const ta = document.getElementById("shopChat");
+  if(!ta) return;
+  ta.value = t(k); ta.focus();
+  try{ ta.scrollIntoView({behavior:"smooth", block:"center"}); }catch(e){}
+}
+document.addEventListener("keydown", e=>{
+  if(e.target && e.target.id === "shopChat" && e.key === "Enter" && !e.shiftKey){
+    e.preventDefault(); sendChat();
+  }
+});
 function homeView(){
-  const mqItems = [t("mq_t1"),t("mq_t2"),t("mq_t3"),t("mq_t4"),t("mq_t5"),t("mq_t6")]
-    .map(x=>'<span class="mq-item">'+x+'<span class="mq-dot">\u25cf</span></span>').join("");
-  const shopCards = [
-    ["assets/shop-bakery.jpg",t("sc1k"),t("sc1p")],
-    ["assets/shop-tailor.jpg",t("sc2k"),t("sc2p")],
-    ["assets/shop-barber.jpg",t("sc3k"),t("sc3p")],
-    ["assets/shop-cafe.jpg",t("sc4k"),t("sc4p")],
-    ["assets/shop-flowers.jpg",t("sc5k"),t("sc5p")],
-    ["assets/shop-grocery.jpg",t("sc6k"),t("sc6p")]
-  ].map(c=>'<div class="shopcard"><img src="'+c[0]+'" alt="'+c[1]+'" loading="lazy"><div class="b"><div class="k">'+c[1]+'</div><p>'+c[2]+'</p></div></div>').join("");
-  const menuRows = [[t("prod1"),fmt(4.50)],[t("prod2"),fmt(2.00)],[t("prod3"),fmt(28)]]
-    .map(r=>'<div class="mi"><span class="mn">'+r[0]+'</span><span class="dots"></span><span class="mp"><bdi>'+r[1]+'</bdi></span></div>').join("");
-  const stepMenu = [[t("prod1"),fmt(4.50)],[t("prod2"),fmt(2.00)],[t("prod3"),fmt(28)]]
-    .map(r=>'<div class="mm-row"><span>'+r[0]+'</span><span class="dots"></span><b><bdi>'+r[1]+'</bdi></b></div>').join("");
+  const chips = ["chip1","chip2","chip3","chip4","chip5","chip6"]
+    .map(k=>'<button type="button" class="chip" onclick="fillChat(\''+k+'\')">'+t(k)+'</button>').join("");
+  const gal = [
+    ["bread","mq_t1","mq_s1","chip1"],
+    ["clothes","mq_t2","mq_s2","chip3"],
+    ["beauty","mq_t3","mq_s3","chip4"],
+    ["coffee","mq_t4","mq_s4","chip5"],
+    ["parcel","mq_t5","mq_s5","chip2"],
+    ["grocery","mq_t6","mq_s6","chip6"]
+  ].map(g=>'<button type="button" class="gal-card" onclick="fillChat(\''+g[3]+'\')"><span class="gal-ic">'+CAT[g[0]].svg+'</span><span class="gal-k">'+t(g[1])+'</span><p class="gal-p">'+t(g[2])+'</p><span class="gal-use">'+t("gal_use")+' &rarr;</span></button>').join("");
+  const pipe = [1,2,3,4,5].map(n=>'<div class="pipe-row"><div class="pipe-n">0'+n+'</div><div><h3>'+t("pipe"+n+"t")+'</h3><p>'+t("pipe"+n+"b")+'</p></div></div>').join("");
   const feats = [t("pr_b1"),t("pr_b2"),t("pr_b3"),t("pr_b4")]
     .map(f=>'<li><i>\u2713</i>'+f+'</li>').join("");
   return header()
-  /* ---------- hero ---------- */
-  + '<div class="hero2"><div class="wrap hero2-in">'
-  + '<div class="hero-copy">'
+  /* ---------- chat hero ---------- */
+  + '<div class="chat-hero"><div class="wrap">'
   + '<span class="kick">'+t("hero_eyebrow")+'</span>'
   + '<h1 class="disp">'+t("hero_h1a")+' <span class="em">'+t("hero_h1b")+'</span></h1>'
-  + '<p class="sub">'+t("hero_sub")+'</p>'
-  + '<div class="cta-row"><a class="btn btn-ember btn-lg" href="#/build" onclick="freshBuild()">'+t("hero_cta1")+'</a>'
-  + '<a class="btn btn-line btn-lg sample-link" href="#/">'+t("hero_cta2")+'</a></div>'
-  + '<div class="trust">'+t("foot_note")+'</div>'
-  + '<div class="trust" style="margin-top:10px;"><a href="#/get-your-store">'+t("foot_service")+'</a> \u00b7 '+t("pr_l_note")+': <b><bdi>'+fmt(35)+'</bdi></b></div>'
-  + '</div>'
-  + '<div class="hero-visual"><div class="demo">'
-  + '<div class="demo-kick">'+t("mini_kicker")+'</div>'
-  + '<div class="demo-name">Sunrise Bakery</div>'
-  + '<div class="demo-tag">'+t("sample_tagline")+'</div>'
-  + '<div class="demo-menu">'+menuRows+'</div>'
-  + '<div class="demo-cta"><a class="wa-order sample-link" href="#/">'+t("wa_label")+'</a><div class="demo-qr"><div id="demoQr"></div><div>'+t("qr_cap")+'</div></div></div>'
-  + '<div class="ticket"><small>'+t("sale_tag")+'</small>'+t("sale_text")+'</div>'
+  + '<p class="sub">'+t("hero_chat_sub")+'</p>'
+  + '<div class="chatbox"><textarea id="shopChat" rows="3" placeholder="'+t("hero_chat_ph")+'" aria-label="'+t("hero_chat_ph")+'"></textarea>'
+  + '<div class="chatbar"><span class="chat-hint">'+t("hero_trust")+'</span>'
+  + '<button type="button" class="chat-submit" onclick="sendChat()" aria-label="'+t("hero_chat_btn")+'">&uarr;</button></div></div>'
+  + '<div class="chips">'+chips+'</div>'
   + '</div></div>'
-  + '</div></div>'
-  /* ---------- marquee ---------- */
-  + '<div class="marquee"><div class="mq-view"><div class="mq-track">'+mqItems+mqItems+'</div></div></div>'
-  /* ---------- how it works ---------- */
-  + '<div class="sec sec-dark" id="how"><div class="wrap">'
-  + '<div class="sec-head"><span class="kick">'+t("how_eyebrow")+'</span><h2>'+t("how_h2")+'</h2>'
-  + '<p class="lead">'+t("how_lead")+'</p></div>'
-  + '<div class="steps">'
-  + '<div class="step"><div class="step-n">01</div><h3>'+t("how1_h")+'</h3><p>'+t("how1_p")+'</p>'
-  + '<div class="step-vis"><div class="mock-type">'+t("how1_mock")+'</div></div></div>'
-  + '<div class="step"><div class="step-n">02</div><h3>'+t("how2_h")+'</h3><p>'+t("how2_p")+'</p>'
-  + '<div class="step-vis"><div class="mock-menu">'+stepMenu+'</div></div></div>'
-  + '<div class="step"><div class="step-n">03</div><h3>'+t("how3_h")+'</h3><p>'+t("how3_p")+'</p>'
-  + '<div class="step-vis"><div class="mock-qr"><div id="stepQr"></div><div class="qr-cap">'+t("qr_cap")+'</div></div></div></div>'
-  + '</div></div></div>'
-  /* ---------- bento features ---------- */
-  + '<div class="sec" id="features"><div class="wrap">'
-  + '<div class="sec-head"><span class="kick">'+t("b_eyebrow")+'</span><h2>'+t("b_h2")+'</h2>'
-  + '<p class="lead">'+t("b_lead")+'</p></div>'
-  + '<div class="bento">'
-  + '<div class="b-card w7"><div class="k">'+t("b1_k")+'</div><h3>'+t("b1_h")+'</h3>'
-  + '<p>'+t("b1_p")+'</p>'
-  + '<div class="b-visual"><div class="chat-mock">'
-  + '<div class="bubble">'+t("b1_c1")+'<span class="tick">\u2713\u2713 9:38</span></div>'
-  + '<div class="bubble out">'+t("b1_c2").replace("{price}",fmt(28))+'<span class="tick">\u2713\u2713 9:39</span></div>'
-  + '</div></div></div>'
-  + '<div class="b-card w5"><div class="k">'+t("b2_k")+'</div><h3>'+t("b2_h")+'</h3>'
-  + '<p>'+t("b2_p")+'</p>'
-  + '<div class="b-visual"><div class="qr-mock"><div id="bentoQr"></div><div class="t">'+t("b2_cap")+'</div></div></div></div>'
-  + '<div class="b-card w5"><div class="k">'+t("b3_k")+'</div><h3>'+t("b3_h")+'</h3>'
-  + '<p>'+t("b3_p")+'</p>'
-  + '<div class="b-visual"><div class="banner-mock">'+t("b3_m1")+'<small>'+t("b3_m2")+'</small></div></div></div>'
-  + '<div class="b-card w7"><div class="k">'+t("b4_k")+'</div><h3>'+t("b4_h")+'</h3>'
-  + '<p>'+t("b4_p")+'</p>'
-  + '<div class="b-visual"><div class="edit-mock">'
-  + '<div class="em"><div class="ek">'+t("b4_before")+'</div>'+t("b4_b1").replace("{p1}",fmt(4.00))+'<br><span style="color:var(--ink2)">'+t("b4_b2")+'</span></div>'
-  + '<div class="em new"><div class="ek">'+t("b4_after")+'</div>'+t("b4_a1").replace("{p1}",fmt(4.50))+'<br><span style="color:var(--accent);font-weight:700;">'+t("b4_a2")+'</span></div>'
-  + '</div></div></div>'
-  + '</div></div></div>'
-  /* ---------- examples ---------- */
+  /* ---------- gallery ---------- */
   + '<div class="sec" id="examples"><div class="wrap">'
   + '<div class="sec-head"><span class="kick">'+t("s_eyebrow")+'</span><h2>'+t("s_h2")+'</h2>'
   + '<p class="lead">'+t("s_lead")+'</p></div>'
-  + '<div class="shopgrid">'+shopCards+'</div>'
+  + '<div class="gal-grid">'+gal+'</div>'
+  + '</div></div>'
+  /* ---------- pipeline ---------- */
+  + '<div class="sec" id="how"><div class="wrap">'
+  + '<div class="sec-head"><span class="kick">'+t("how_eyebrow")+'</span><h2>'+t("pipe_h2")+'</h2></div>'
+  + '<div class="pipe">'+pipe+'</div>'
   + '</div></div>'
   /* ---------- pricing ---------- */
   + '<div class="sec" id="pricing"><div class="wrap">'
@@ -8855,7 +9192,7 @@ function homeView(){
   + '<span class="kick">'+t("hero_eyebrow")+'</span>'
   + '<h2>'+t("cta_h2")+'</h2>'
   + '<p>'+t("cta_p")+'</p>'
-  + '<a class="btn btn-ember btn-lg" href="#/build" onclick="freshBuild()">'+t("hero_cta1")+'</a>'
+  + '<a class="btn btn-ember btn-lg" href="https://t.me/TalkShopBot?start=site" target="_blank" rel="noopener">'+t("gys_cta")+'</a>'
   + '</div></div></div>'
   + footer();
 }
@@ -12108,7 +12445,7 @@ function router(){
     if(state.step===1 && !state.data) restoreDraft();
     render(buildView()); wireBuild();
   } else {
-    const anchors = {how:1, examples:1, pricing:1, faq:1, features:1};
+    const anchors = {how:1, examples:1, pricing:1, faq:1};
     render(homeView());
     afterHome();
     if(anchors[h]){
