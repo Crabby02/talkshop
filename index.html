@@ -11,14 +11,17 @@
 <meta name="theme-color" content="#175E3B">
 <meta property="og:image" content="https://crabby02.github.io/talkshop/assets/shop-bakery.jpg">
 <style>
+/* ================= landing: identity ================= */
 :root{
-  --paper:#FAFAF6; --paper2:#F3F1EA; --ink:#1B1B18; --ink2:#55534B;
-  --line:#E3E0D4; --accent:#175E3B; --accent-deep:#0C3D27; --accent-ink:#fff;
+  --paper:#FAF6EF; --paper2:#F2EBD9; --ink:#1B1712; --ink2:#5F5749;
+  --line:#E3D9C2; --accent:#E8480C; --accent-deep:#B53A08; --accent-ink:#fff;
+  --ember-soft:#FCE9DB;
   --amber:#F2B33D; --amber-soft:#FCF3DC; --wa:#1FA855;
-  --shadow-lg:0 30px 60px -20px rgba(27,27,24,.28);
-  --shadow-md:0 16px 34px -14px rgba(27,27,24,.22);
-  --shadow-sm:0 8px 20px -8px rgba(27,27,24,.18);
+  --shadow-lg:0 30px 60px -20px rgba(27,23,18,.28);
+  --shadow-md:0 16px 34px -14px rgba(27,23,18,.22);
+  --shadow-sm:0 8px 20px -8px rgba(27,23,18,.18);
   --r:20px;
+  --disp:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
 }
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-behavior:smooth;}
@@ -31,363 +34,220 @@ body{background:var(--paper); color:var(--ink);
 .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
 a{color:inherit;}
 img{display:block; max-width:100%;}
-/* masthead */
-.mast{border-bottom:1px solid var(--line); background:var(--paper); position:sticky; top:0; z-index:50;}
-.mast-in{display:flex; align-items:center; justify-content:space-between; height:66px;}
-.wordmark{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-weight:700; font-size:23px; letter-spacing:-0.5px; text-decoration:none;}
-.wordmark span{color:var(--accent);}
-.mast nav{display:flex; gap:28px; align-items:center;}
-.mast nav a.nl{text-decoration:none; font-size:15px; color:var(--ink2);}
-.mast nav a.nl:hover{color:var(--ink);}
-.btn{display:inline-block; text-decoration:none; border:1px solid var(--ink); border-radius:999px;
-  padding:12px 26px; font-size:16px; font-weight:600; cursor:pointer; background:transparent; color:var(--ink);
+/* type utilities */
+.disp{font-family:var(--disp); font-weight:800; letter-spacing:-.035em; line-height:1.02; overflow-wrap:break-word;}
+.kick,.eyebrow{display:block; font-size:12px; font-weight:800; letter-spacing:2.5px; text-transform:uppercase; color:var(--accent); margin-bottom:18px;}
+h1,h2,h3{overflow-wrap:break-word;}
+/* buttons */
+.btn{display:inline-block; text-decoration:none; border:1.5px solid var(--ink); border-radius:999px;
+  padding:13px 28px; font-size:16px; font-weight:700; cursor:pointer; background:transparent; color:var(--ink);
   transition:transform .12s ease, background .12s ease, box-shadow .12s ease;}
 .btn:hover{transform:translateY(-1px); box-shadow:var(--shadow-sm);}
+.btn-ember{background:var(--accent); border-color:var(--accent); color:#fff;}
+.btn-ember:hover{background:var(--accent-deep); border-color:var(--accent-deep);}
 .btn-solid{background:var(--ink); color:var(--paper);}
 .btn-solid:hover{background:#000;}
 .btn-accent{background:var(--accent); border-color:var(--accent); color:#fff;}
 .btn-accent:hover{background:var(--accent-deep);}
-.btn-sm{padding:8px 18px; font-size:14px;}
-.btn-lg{padding:16px 34px; font-size:18px;}
-/* ============ hero ============ */
-.hero2{position:relative; overflow:hidden; border-bottom:1px solid var(--line);
-  background:
-    radial-gradient(900px 480px at 88% -8%, #F8EAC9 0%, rgba(248,234,201,0) 60%),
-    radial-gradient(760px 520px at -12% 24%, #E2EBDA 0%, rgba(226,235,218,0) 55%),
-    var(--paper);}
-.hero2-in{display:grid; grid-template-columns:1.02fr .98fr; gap:40px; align-items:center; padding:88px 0 100px;}
-.eyebrow{overflow-wrap:break-word; font-size:13px; letter-spacing:1px; color:var(--accent); margin-bottom:22px; font-weight:800;}
-h1,h2,h3{overflow-wrap:break-word;}
-html[lang|="ml"] .hero2 h1,html[lang|="hi"] .hero2 h1,html[lang|="ta"] .hero2 h1{font-size:clamp(40px,5.8vw,76px);}
-.hero-copy{min-width:0;}
-.hero2 h1{overflow-wrap:break-word; font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(46px,6.2vw,82px);
-  line-height:1.02; letter-spacing:-2px; margin-bottom:24px; font-weight:700;}
-.hero2 h1 em{font-style:italic; color:var(--accent);}
-.hero2 p.sub{font-size:20px; color:var(--ink2); max-width:31em; margin-bottom:34px;}
-.cta-row{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:28px;}
-.meta-row{font-family:ui-monospace,Menlo,monospace; font-size:13px; color:var(--ink2); letter-spacing:.5px;}
-.meta-row b{color:var(--ink);}
-/* layered hero visual */
-.hero-visual{position:relative; min-height:620px;}
-.hv-photo{position:absolute; right:0; top:10px; width:76%; height:470px; object-fit:cover;
-  border-radius:28px; transform:rotate(2.5deg); box-shadow:var(--shadow-lg); border:7px solid #fff;}
-.hv-glow{position:absolute; left:6%; top:34%; width:280px; height:280px; border-radius:50%;
-  background:radial-gradient(circle, rgba(242,179,61,.35), rgba(242,179,61,0) 70%); filter:blur(6px);}
-.phone{position:absolute; left:2%; top:52px; width:288px; background:#fff; border-radius:40px;
-  border:1px solid var(--line); box-shadow:var(--shadow-lg); overflow:hidden; transform:rotate(-3deg); z-index:3;}
-.phone-notch{height:26px; display:flex; justify-content:center; align-items:center; background:#fff;}
-.phone-notch i{width:96px; height:20px; background:var(--ink); border-radius:999px; display:block;}
-.mini-shop{padding:6px 18px 22px;}
-.mini-kicker{font-size:10px; letter-spacing:1.5px; color:var(--accent); text-align:center; margin:8px 0 6px; font-weight:800;}
-.mini-shop h4{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:24px; text-align:center; letter-spacing:-.5px; margin-bottom:4px;}
-.mini-shop .tag{font-size:11.5px; color:var(--ink2); text-align:center; margin-bottom:12px; line-height:1.45;}
-.mini-prod{display:flex; justify-content:space-between; align-items:center; gap:8px; padding:9px 0; border-bottom:1px dotted var(--line); font-size:13.5px;}
-.mini-prod:last-of-type{border-bottom:none;}
-.mini-prod .mp{font-family:ui-monospace,Menlo,monospace; font-size:12px;}
-.mini-order{font-size:10.5px; font-weight:700; background:var(--accent); color:#fff; border-radius:999px; padding:4px 11px;}
-.mini-foot{display:flex; gap:8px; margin-top:14px;}
-.mini-foot span{flex:1; text-align:center; font-size:11px; font-weight:700; border-radius:999px; padding:8px 0;}
-.mini-foot .a{background:var(--accent); color:#fff;}
-.mini-foot .b{border:1px solid var(--line);}
-.float{position:absolute; background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow-md); padding:14px 16px; z-index:4;}
-.fc-sale{top:0; right:6%; background:var(--ink); color:#fff; border:none; border-radius:999px;
-  font-size:13.5px; font-weight:700; padding:11px 20px; transform:rotate(2deg); box-shadow:var(--shadow-md);}
-.fc-sale i{font-style:normal; background:var(--amber); color:var(--ink); border-radius:999px; padding:2px 9px; margin-right:8px; font-size:12px;}
-.fc-wa{left:0; bottom:56px; max-width:258px; transform:rotate(-2deg);}
-.wa-head{display:flex; gap:9px; align-items:center; margin-bottom:10px; font-weight:700; font-size:13.5px;}
-.wa-dot{width:30px; height:30px; border-radius:50%; background:var(--wa); color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; flex:none;}
-.wa-head small{display:block; font-weight:400; color:var(--wa); font-size:11px;}
-.bubble{background:#E9F8EA; border-radius:4px 14px 14px 14px; padding:10px 12px; font-size:13.5px; line-height:1.45;}
-.bubble .tick{color:var(--wa); font-size:11px; display:block; text-align:right; margin-top:4px;}
-.fc-qr{right:2%; bottom:8px; text-align:center; transform:rotate(2deg); padding:14px 16px 12px;}
-.fc-qr .cap{font-size:12px; color:var(--ink2); margin-top:8px; font-weight:600;}
-#heroQr img, #heroQr canvas{border-radius:8px;}
-/* ============ photo marquee ============ */
-.marquee{border-bottom:1px solid var(--line); background:var(--paper); overflow:hidden; padding:30px 0 34px;}
-.mq-label{text-align:center; font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:2.5px; color:var(--ink2); margin-bottom:20px;}
+.btn-line{background:transparent;}
+.price-card.launch .btn-line{color:var(--paper); border-color:rgba(250,246,239,.45);}
+.price-card.launch .btn-line:hover{background:rgba(250,246,239,.08); box-shadow:none;}
+.btn-sm{padding:9px 20px; font-size:14px;}
+.btn-lg{padding:16px 36px; font-size:18px;}
+/* ================= masthead ================= */
+.mast{background:var(--paper); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:50;}
+.mast-in{display:flex; align-items:center; justify-content:space-between; height:68px; gap:16px;}
+.wordmark{font-family:var(--disp); font-weight:800; font-size:24px; letter-spacing:-.03em; text-decoration:none; color:var(--ink);}
+.wordmark span{color:var(--accent);}
+.mast nav{display:flex; gap:30px; align-items:center;}
+.mast nav a.nl{text-decoration:none; font-size:15px; font-weight:600; color:var(--ink2);}
+.mast nav a.nl:hover{color:var(--ink);}
+/* ================= hero ================= */
+.hero2{border-bottom:1px solid var(--line); overflow:hidden;}
+.hero2-in{display:grid; grid-template-columns:1.04fr .96fr; gap:56px; align-items:center; padding:96px 0 110px;}
+.hero2 h1{font-size:clamp(48px,6vw,86px); margin-bottom:24px;}
+.hero2 h1 .em{color:var(--accent);}
+.hero2 p.sub{font-size:20px; color:var(--ink2); max-width:30em; margin-bottom:36px;}
+.cta-row{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:26px;}
+.trust{font-size:14px; color:var(--ink2); font-weight:600;}
+.trust b{color:var(--ink);}
+/* boutique demo mock: printed-menu styling */
+.hero-visual{position:relative; display:flex; justify-content:center;}
+.demo{position:relative; background:#FFFDF7; border:1px solid var(--line); border-radius:22px;
+  box-shadow:var(--shadow-lg); padding:38px 36px 30px; width:min(420px,100%); transform:rotate(-1.2deg);}
+.demo-kick{font-size:11px; font-weight:800; letter-spacing:2.5px; color:var(--accent); margin-bottom:10px;}
+.demo-name{font-family:var(--disp); font-weight:800; font-size:34px; letter-spacing:-.03em; line-height:1.05; margin-bottom:6px;}
+.demo-tag{font-size:14px; color:var(--ink2); margin-bottom:22px;}
+.demo-menu{border-top:2px solid var(--ink); padding-top:6px; margin-bottom:24px;}
+.mi{display:flex; align-items:baseline; gap:10px; padding:11px 0;}
+.mn{font-weight:700; font-size:16.5px;}
+.mi .dots{flex:1; border-bottom:2px dotted var(--line); transform:translateY(-4px); min-width:24px;}
+.mp{font-weight:800; font-size:16.5px; white-space:nowrap;}
+.demo-cta{display:flex; gap:10px;}
+.wa-order{flex:1; text-align:center; background:var(--wa); color:#fff; font-weight:700; border-radius:999px; padding:13px; text-decoration:none; font-size:15.5px;}
+.demo-qr{flex:none; border:1.5px dashed var(--ink2); border-radius:12px; padding:8px 10px; text-align:center; font-size:10.5px; font-weight:700; color:var(--ink2);}
+#demoQr img,#demoQr canvas{border-radius:6px;}
+.ticket{position:absolute; right:-34px; bottom:-24px; background:var(--paper); border:2px dashed var(--ink);
+  border-radius:14px; padding:12px 18px; transform:rotate(3deg); box-shadow:var(--shadow-md);
+  font-family:var(--disp); font-weight:800; font-size:15px; letter-spacing:-.01em;}
+.ticket small{display:block; font-size:10.5px; font-weight:800; letter-spacing:2px; color:var(--accent); margin-bottom:2px;}
+.stamp{display:inline-block; border:2px solid var(--accent); color:var(--accent); border-radius:8px;
+  padding:6px 14px; font-size:12px; font-weight:800; letter-spacing:2px; transform:rotate(-3deg); background:var(--paper);}
+/* ================= marquee ================= */
+.marquee{border-bottom:1px solid var(--line); background:var(--ink); color:var(--paper); overflow:hidden; padding:20px 0;}
 .mq-view{overflow:hidden; -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);}
-.mq-track{display:flex; gap:18px; width:max-content; animation:mq 42s linear infinite;}
+.mq-track{display:flex; gap:0; width:max-content; animation:mq 36s linear infinite;}
 .mq-track:hover{animation-play-state:paused;}
 @keyframes mq{to{transform:translateX(-50%);}}
-.mq-card{width:252px; flex:none; background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:var(--shadow-sm);}
-.mq-card img{width:100%; height:148px; object-fit:cover;}
-.mq-card .t{font-weight:700; font-size:15px; padding:12px 16px 2px;}
-.mq-card .s{color:var(--ink2); font-size:13px; padding:0 16px 14px;}
-/* ============ sections ============ */
-.sec{padding:88px 0; border-bottom:1px solid var(--line);}
-.sec h2{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(30px,4.2vw,44px); letter-spacing:-1px; margin-bottom:14px;}
-.sec p.lead{color:var(--ink2); font-size:19px; max-width:38em; margin-bottom:48px;}
-.sec-head{margin-bottom:8px;}
-/* how it works rows */
-.how-row{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; padding:52px 0; border-bottom:1px solid var(--line);}
-.how-row:last-child{border-bottom:none;}
-.how-row.flip .how-copy{order:2;}
-.how-num{font-family:ui-monospace,Menlo,monospace; font-size:13px; color:var(--accent); letter-spacing:2.5px; margin-bottom:14px; font-weight:700;}
-.how-copy h3{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(24px,3vw,32px); letter-spacing:-.6px; margin-bottom:12px;}
-.how-copy p{color:var(--ink2); font-size:18px; max-width:26em;}
-.how-vis{background:#fff; border:1px solid var(--line); border-radius:24px; padding:30px; box-shadow:var(--shadow-md); position:relative; overflow:hidden;}
-.how-vis .tag{font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:2px; color:var(--ink2); margin-bottom:16px;}
-.mock-type{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:16px; font-size:15px; color:var(--ink2); line-height:1.6; margin-bottom:16px;}
-.mock-mic{display:inline-flex; align-items:center; gap:10px; border:1.5px solid var(--accent); color:var(--accent); font-weight:700; border-radius:999px; padding:10px 20px; font-size:14px;}
-.mock-site{border:1px solid var(--line); border-radius:14px; overflow:hidden;}
-.mock-banner{background:var(--accent); color:#fff; text-align:center; font-size:13px; font-weight:700; padding:9px;}
-.mock-site .ms-body{padding:16px 18px;}
-.mock-site .ms-body h5{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:20px; margin-bottom:8px;}
-.mock-site .ms-prod{display:flex; justify-content:space-between; font-size:14px; padding:8px 0; border-bottom:1px dotted var(--line);}
-.mock-qr-row{display:flex; gap:16px; align-items:center;}
-.mock-qr-row .qr-ph{width:110px; height:110px; border-radius:12px; border:1px solid var(--line);
-  background:repeating-conic-gradient(#1B1B18 0 25%, #fff 0 50%) 0 0/22px 22px; flex:none;}
-.mock-share-btns{display:flex; flex-direction:column; gap:10px; flex:1;}
-.mock-share-btns span{border:1px solid var(--ink); border-radius:999px; text-align:center; font-size:13.5px; font-weight:600; padding:10px;}
-.mock-share-btns span.solid{background:var(--ink); color:#fff;}
-/* bento */
-.bento{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
-.b-card{background:#fff; border:1px solid var(--line); border-radius:var(--r); padding:32px; position:relative; overflow:hidden; display:flex; flex-direction:column;}
-.b-card.span2{grid-column:span 2;}
-.b-card.dark{background:var(--accent-deep); border-color:var(--accent-deep); color:#fff;}
-.b-card .k{font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:2px; color:var(--accent); margin-bottom:12px; font-weight:700;}
-.b-card.dark .k{color:var(--amber);}
-.b-card h3{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:25px; letter-spacing:-.5px; margin-bottom:10px;}
-.b-card p{color:var(--ink2); font-size:16px; max-width:30em;}
-.b-card.dark p{color:#CBDDD1;}
-.b-visual{margin-top:24px;}
-.chat-mock{max-width:340px;}
-.chat-mock .bubble{font-size:14.5px; margin-bottom:8px; color:var(--ink);}
-.chat-mock .bubble.out{background:var(--accent); color:#fff; border-radius:14px 14px 4px 14px; margin-left:36px;}
-.chat-mock .bubble.out .tick{color:#fff;}
+.mq-item{display:flex; align-items:center; gap:26px; padding-right:26px; font-family:var(--disp); font-weight:800; font-size:21px; letter-spacing:-.02em; white-space:nowrap;}
+.mq-dot{color:var(--accent); font-size:15px;}
+/* ================= sections ================= */
+.sec{padding:104px 0; border-bottom:1px solid var(--line); scroll-margin-top:72px;}
+.sec-head{margin-bottom:56px; max-width:720px;}
+.sec-head.center{margin-left:auto; margin-right:auto; text-align:center;}
+.sec h2{font-family:var(--disp); font-weight:800; letter-spacing:-.035em; line-height:1.04; font-size:clamp(34px,4.6vw,56px); margin-bottom:16px;}
+.sec p.lead{color:var(--ink2); font-size:20px; max-width:36em;}
+.sec-dark{background:var(--ink); color:var(--paper); border-bottom:none;}
+.sec-dark .kick{color:var(--amber);}
+.sec-dark p.lead{color:#B9B0A0;}
+/* how it works: giant outlined numerals */
+.steps{display:grid; grid-template-columns:repeat(3,1fr); gap:44px;}
+.step-n{font-family:var(--disp); font-weight:800; font-size:clamp(76px,7.5vw,116px); letter-spacing:-.045em; line-height:1;
+  color:transparent; -webkit-text-stroke:2px var(--accent); margin-bottom:20px;}
+.step h3{font-size:23px; font-weight:800; letter-spacing:-.02em; margin-bottom:10px;}
+.step p{color:#B9B0A0; font-size:16.5px; max-width:24em;}
+.step-vis{margin-top:22px; background:#241E16; border:1px solid #3A3226; border-radius:16px; padding:20px; min-height:130px;}
+.mock-type{background:#1B1712; border:1px solid #3A3226; border-radius:10px; padding:14px; font-size:14px; color:#B9B0A0; line-height:1.55; margin-bottom:14px;}
+.mock-mic{display:inline-flex; align-items:center; gap:8px; border:1.5px solid var(--accent); color:var(--accent); font-weight:700; border-radius:999px; padding:9px 18px; font-size:13.5px;}
+.mock-menu{border:1px solid #3A3226; border-radius:10px; overflow:hidden;}
+.mock-menu .mm-row{display:flex; align-items:baseline; gap:8px; padding:9px 14px; font-size:13.5px; border-bottom:1px dotted #3A3226;}
+.mock-menu .mm-row:last-child{border-bottom:none;}
+.mock-menu .dots{flex:1; border-bottom:2px dotted #3A3226; transform:translateY(-3px);}
+.mock-menu b{font-weight:800;}
+.mock-qr{display:flex; gap:14px; align-items:center;}
+.mock-qr .qr-ph{width:96px; height:96px; border-radius:10px; background:repeating-conic-gradient(#FAF6EF 0 25%, #1B1712 0 50%) 0 0/20px 20px; flex:none; border:1px solid #3A3226;}
+.mock-qr .qr-cap{font-size:13.5px; color:#B9B0A0; line-height:1.5;}
+/* ================= bento ================= */
+.bento{display:grid; grid-template-columns:repeat(12,1fr); gap:20px;}
+.bento>.b-card{grid-column:span 4;}
+.b-card{background:#FFFDF7; border:1px solid var(--line); border-radius:var(--r); padding:36px; position:relative; overflow:hidden;}
+.b-card.w7{grid-column:span 7;} .b-card.w5{grid-column:span 5;}
+.b-card .k{font-size:12px; letter-spacing:2px; color:var(--accent); margin-bottom:12px; font-weight:800; text-transform:uppercase;}
+.b-card h3{font-family:var(--disp); font-weight:800; font-size:26px; letter-spacing:-.025em; margin-bottom:10px;}
+.b-card p{color:var(--ink2); font-size:16.5px; max-width:32em;}
+.b-visual{margin-top:26px;}
+.chat-mock{max-width:360px;}
+.bubble{background:#E9F8EA; border-radius:4px 14px 14px 14px; padding:10px 14px; font-size:14.5px; line-height:1.45; margin-bottom:8px; color:var(--ink);}
+.bubble .tick{color:var(--wa); font-size:11px; display:block; text-align:right; margin-top:4px;}
+.chat-mock .bubble.out{background:var(--ink); color:var(--paper); border-radius:14px 14px 4px 14px; margin-left:40px;}
+.chat-mock .bubble.out .tick{color:var(--amber);}
 .qr-mock{display:flex; gap:18px; align-items:center;}
 #bentoQr img, #bentoQr canvas{border:1px solid var(--line); border-radius:12px; padding:8px; background:#fff;}
-.qr-mock .t{font-size:14px; color:var(--ink2);}
-.banner-mock{background:var(--accent); color:#fff; border-radius:12px; padding:16px 18px; font-weight:700; text-align:center; box-shadow:var(--shadow-sm);}
-.banner-mock small{display:block; font-weight:400; opacity:.85; font-size:13px; margin-top:4px;}
+.qr-mock .t{font-size:14.5px; color:var(--ink2);}
+.banner-mock{background:var(--accent); color:#fff; border-radius:12px; padding:18px; font-weight:800; text-align:center; font-size:17px; letter-spacing:-.01em;}
+.banner-mock small{display:block; font-weight:400; opacity:.9; font-size:13.5px; margin-top:4px;}
 .edit-mock{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
-.edit-mock .em{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:14px; font-size:13.5px;}
-.edit-mock .em .ek{font-family:ui-monospace,Menlo,monospace; font-size:10.5px; letter-spacing:1.5px; color:var(--ink2); margin-bottom:6px;}
-.edit-mock .em.new{border-color:var(--accent); background:#EFF6F0;}
-/* shop photo grid */
-.shopgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
-.shopcard{background:#fff; border:1px solid var(--line); border-radius:var(--r); overflow:hidden; transition:transform .15s ease, box-shadow .15s ease;}
+.edit-mock .em{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:14px; font-size:14px;}
+.edit-mock .em .ek{font-size:10.5px; letter-spacing:1.5px; color:var(--ink2); margin-bottom:6px; font-weight:800;}
+.edit-mock .em.new{border:1.5px solid var(--accent); background:var(--ember-soft);}
+/* ================= examples ================= */
+.shopgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+.shopcard{background:#FFFDF7; border:1px solid var(--line); border-radius:var(--r); overflow:hidden; transition:transform .15s ease, box-shadow .15s ease;}
 .shopcard:hover{transform:translateY(-4px); box-shadow:var(--shadow-md);}
-.shopcard img{width:100%; height:210px; object-fit:cover;}
-.shopcard .b{padding:22px 24px 26px;}
-.shopcard .k{font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:2px; color:var(--accent); font-weight:700; margin-bottom:8px;}
-.shopcard p{font-size:16px; color:var(--ink2);}
-/* stats band */
-.stats{background:var(--accent-deep); color:#fff; border-radius:28px; padding:60px 56px; display:grid; grid-template-columns:repeat(4,1fr); gap:32px; position:relative; overflow:hidden;}
-.stats::before{content:""; position:absolute; width:520px; height:520px; border-radius:50%;
-  background:radial-gradient(circle, rgba(242,179,61,.16), rgba(242,179,61,0) 70%); right:-140px; top:-160px;}
-.stat{position:relative;}
-.stat .n{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(36px,4vw,54px); letter-spacing:-1px; margin-bottom:6px;}
-.stat .n em{font-style:normal; color:var(--amber);}
-.stat .l{color:#BFD3C6; font-size:15px;}
-/* cta panel */
-.cta-panel{position:relative; border-radius:28px; overflow:hidden; padding:110px 32px; text-align:center; color:#fff;
-  background:linear-gradient(rgba(12,61,39,.84), rgba(12,61,39,.9)), url('assets/shop-bakery.jpg') center/cover;}
-.cta-panel h2{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(34px,5vw,58px); letter-spacing:-1.5px; margin-bottom:16px; max-width:18ch; margin-left:auto; margin-right:auto;}
-.cta-panel p{color:#DCE8DF; font-size:19px; max-width:32em; margin:0 auto 34px;}
-.cta-panel .btn-accent{background:#fff; border-color:#fff; color:var(--accent-deep);}
-.cta-panel .btn-accent:hover{background:var(--amber-soft);}
-/* faq */
-.faq{max-width:780px;}
-.faq details{border:1px solid var(--line); border-radius:12px; background:#fff; margin-bottom:12px; padding:0; transition:box-shadow .15s ease;}
-.faq details:hover{box-shadow:var(--shadow-sm);}
-.faq summary{cursor:pointer; padding:20px 24px; font-weight:600; font-size:17px; list-style:none;}
+.shopcard img{width:100%; height:220px; object-fit:cover;}
+.shopcard .b{padding:24px 26px 28px;}
+.shopcard .k{font-size:11.5px; letter-spacing:2px; color:var(--accent); font-weight:800; margin-bottom:8px; text-transform:uppercase;}
+.shopcard .n{font-family:var(--disp); font-weight:800; font-size:23px; letter-spacing:-.025em; margin-bottom:6px;}
+.shopcard p{font-size:15.5px; color:var(--ink2);}
+/* ================= pricing ================= */
+.price-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:920px; margin:0 auto;}
+.price-card{background:#FFFDF7; border:2px solid var(--ink); border-radius:22px; padding:44px 40px; position:relative;}
+.price-card.launch{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+.price-card .stamp{margin-bottom:22px;}
+.price-name{font-family:var(--disp); font-weight:800; font-size:26px; letter-spacing:-.025em; margin-bottom:4px;}
+.price-note{font-size:14.5px; color:var(--ink2); margin-bottom:20px;}
+.price-card.launch .price-note{color:#B9B0A0;}
+.price-amount{font-family:var(--disp); font-weight:800; font-size:clamp(56px,6vw,76px); letter-spacing:-.045em; line-height:1; margin-bottom:6px;}
+.price-was{font-size:16px; color:var(--ink2); margin-bottom:24px;}
+.price-card.launch .price-was{color:#B9B0A0;}
+.price-was s{margin-right:8px;}
+.price-feats{list-style:none; margin:0 0 32px; padding:0;}
+.price-feats li{padding:9px 0; border-bottom:1px dotted var(--line); font-size:16px; display:flex; gap:12px; align-items:baseline;}
+.price-card.launch .price-feats li{border-color:#3A3226;}
+.price-feats li i{font-style:normal; color:var(--accent); font-weight:800; flex:none;}
+.price-card .btn{width:100%; text-align:center;}
+.pay-note{max-width:620px; margin:36px auto 0; text-align:center; font-size:15.5px; color:var(--ink2);}
+.pay-note b{color:var(--ink);}
+/* ================= faq ================= */
+.faq{max-width:800px;}
+.faq details{border-bottom:1px solid var(--line); padding:6px 0;}
+.faq details:first-child{border-top:1px solid var(--line);}
+.faq summary{cursor:pointer; padding:20px 4px; font-weight:700; font-size:18.5px; letter-spacing:-.01em; list-style:none; display:flex; justify-content:space-between; gap:16px; align-items:baseline;}
 .faq summary::-webkit-details-marker{display:none;}
-.faq summary::after{content:"+"; float:right; color:var(--accent); font-weight:400; font-size:22px; line-height:1;}
+.faq summary::after{content:"+"; color:var(--accent); font-weight:400; font-size:24px; line-height:1; flex:none;}
 .faq details[open] summary::after{content:"–";}
-/* builder: review accordions for optional sections (native details, no JS) */
-.rv-acc{border:1px solid var(--line); border-radius:14px; margin:14px 0; background:#fff;}
-.rv-acc>summary{cursor:pointer; padding:14px 16px; font-weight:700; font-size:16px; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:12px;}
-.rv-acc>summary::-webkit-details-marker{display:none;}
-.rv-acc>summary::marker{display:none;}
-.rv-acc>summary::after{content:"+"; font-size:22px; font-weight:400; line-height:1; color:var(--ink2); transition:transform .18s ease; flex:none;}
-.rv-acc[open]>summary::after{transform:rotate(45deg);}
-.rv-acc .rv-body{padding:2px 16px 18px;}
-.rv-acc .rv-body .hrs-row:first-child{margin-top:2px;}
-.rv-acc .rv-body .field:last-child{margin-bottom:0;}
-.faq .a{padding:0 24px 22px; color:var(--ink2);}
-/* footer */
-footer{padding:56px 0 60px;}
-.foot{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:32px; color:var(--ink2); font-size:15px;}
-.foot h5{font-size:12px; letter-spacing:1px; color:var(--ink); margin-bottom:14px; font-weight:800;}
-.foot a{display:block; text-decoration:none; margin-bottom:10px;}
-.foot a:hover{color:var(--ink);}
-.foot .brand{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-weight:700; font-size:22px; color:var(--ink); margin-bottom:10px; display:block;}
+.faq .a{padding:0 4px 24px; color:var(--ink2); font-size:17px; max-width:44em;}
+/* ================= final cta + footer ================= */
+.cta-panel{background:var(--ink); color:var(--paper); border-radius:28px; padding:104px 32px; text-align:center; position:relative; overflow:hidden;}
+.cta-panel .kick{color:var(--amber);}
+.cta-panel h2{font-family:var(--disp); font-weight:800; letter-spacing:-.035em; line-height:1.02; font-size:clamp(36px,5.4vw,64px); margin-bottom:18px; max-width:20ch; margin-left:auto; margin-right:auto;}
+.cta-panel p{color:#B9B0A0; font-size:19px; max-width:32em; margin:0 auto 36px;}
+footer{background:var(--ink); color:#B9B0A0; padding:72px 0 40px;}
+.foot{display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:36px; font-size:15px;}
+.foot h5{font-size:12px; letter-spacing:2px; color:var(--paper); margin-bottom:16px; font-weight:800;}
+.foot a{display:block; text-decoration:none; margin-bottom:11px; color:#B9B0A0;}
+.foot a:hover{color:var(--paper);}
+.foot .brand{font-family:var(--disp); font-weight:800; font-size:26px; letter-spacing:-.03em; color:var(--paper); margin-bottom:12px; display:block; text-decoration:none;}
 .foot .brand span{color:var(--accent);}
-.foot-bottom{margin-top:44px; padding-top:24px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:13.5px; color:var(--ink2);}
-/* ---------- builder ---------- */
-.builder-head{padding:56px 0 8px;}
-.builder-head h1{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(30px,4.5vw,44px); letter-spacing:-1px; margin-bottom:10px;}
-.builder-head p{color:var(--ink2); font-size:18px; max-width:34em;}
-.stages{display:flex; gap:8px; margin:30px 0 10px;}
-.stage{flex:1; font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:1.5px; color:var(--ink2);
-  border-top:2px solid var(--line); padding-top:10px;}
-.stage.on{color:var(--ink); border-top-color:var(--accent); font-weight:700;}
-.card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:40px; margin:26px 0 70px;}
-.mic-btn{width:120px; height:120px; border-radius:50%; border:2px solid var(--accent); background:#fff;
-  cursor:pointer; display:inline-flex; align-items:center; justify-content:center; margin-bottom:18px;
-  transition:transform .15s ease, background .15s ease;}
-.mic-btn:hover{transform:scale(1.04);}
-.mic-btn.live{background:var(--accent); animation:pulse 1.6s infinite;}
-.mic-btn svg{width:44px; height:44px; stroke:var(--accent); fill:none; stroke-width:2;}
-.mic-btn.live svg{stroke:#fff;}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(23,94,59,.35);}70%{box-shadow:0 0 0 22px rgba(23,94,59,0);}100%{box-shadow:0 0 0 0 rgba(23,94,59,0);}}
-.mic-label{font-weight:600; font-size:18px; margin-bottom:6px;}
-.lang-row{display:flex; gap:10px; justify-content:center; align-items:center; margin-bottom:8px; font-size:14px; color:var(--ink2);}
-select,input[type=text],input[type=tel],textarea{font:inherit; color:var(--ink);}
-select{border:1px solid var(--line); border-radius:8px; padding:8px 12px; background:#fff;}
-.or-type{text-align:center; margin:14px 0; color:var(--ink2); font-size:14px;}
-textarea.typebox{width:100%; border:1px solid var(--line); border-radius:12px; padding:16px; min-height:110px; background:#fff;}
-.field{margin-bottom:20px;}
-.field label{display:block; font-weight:600; font-size:15px; margin-bottom:8px;}
-.field .hint{font-weight:400; color:var(--ink2); font-size:14px;}
-.field input,.field textarea{width:100%; border:1px solid var(--line); border-radius:10px; padding:13px 15px; background:#fff;}
-.field textarea{min-height:96px; resize:vertical;}
-.field input:focus,.field textarea:focus{outline:2px solid var(--accent); outline-offset:-1px; border-color:var(--accent);}
-.grid2{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
-.share-panel{text-align:center; padding:20px 0 6px;}
-.share-link{display:flex; gap:10px; margin:22px 0;}
-.share-link input{flex:1; border:1px solid var(--line); border-radius:10px; padding:13px 15px; background:var(--paper); font-size:14px;}
-.short-row{display:flex; gap:10px; justify-content:center; margin-top:2px;}
-.short-out{display:flex; gap:10px; margin-top:12px;}
-.short-out input{flex:1; border:1px solid var(--line); border-radius:10px; padding:13px 15px; background:var(--paper); font-size:14px;}
-/* ---------- merchant dashboard ---------- */
-.dash-list{display:flex; flex-direction:column; gap:12px; margin:22px 0;}
-.dash-row{display:flex; gap:12px; align-items:center; justify-content:space-between; border:1px solid var(--line); border-radius:14px; padding:14px 16px; background:var(--paper); flex-wrap:wrap;}
-.dash-meta{min-width:0; flex:1 1 180px;}
-.dash-name{font-weight:700; font-size:16px; margin-bottom:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-.dash-sub{font-size:13px; color:var(--ink2);}
-.dash-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
-.dash-actions .btn{width:100%;justify-content:center;}
-.btn-orders{grid-column:1/-1;}
-.ord-badge{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:#c0392b;color:#fff;font-size:12px;font-weight:700;margin-inline-start:6px;}
-.ord-top{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap;}
-.ord-h{font-size:24px;margin:0;flex:1 1 auto;}
-.ord-shop{margin:0 0 16px;}
-.ord-list{display:flex;flex-direction:column;gap:12px;}
-.ord-card{border:1px solid var(--line);border-radius:14px;background:var(--paper);padding:12px 14px;}
-.ord-head{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;padding:0;cursor:pointer;text-align:start;font:inherit;color:inherit;min-height:44px;}
-.ord-code{font-weight:800;font-size:16px;letter-spacing:.5px;}
-.ord-pill{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;}
-.ord-pill-new{background:#e8f0fe;color:#1a56db;}
-.ord-pill-prep{background:#fff4d6;color:#8a5a00;}
-.ord-pill-ready{background:#e6f7ec;color:#1e7e34;}
-.ord-pill-done{background:#e9ecef;color:#495057;}
-.ord-pill-cancel{background:#fde8e8;color:#a01f1f;}
-.ord-time{margin-inline-start:auto;font-size:12px;color:var(--ink2);white-space:nowrap;}
-.ord-caret{color:var(--ink2);font-size:14px;}
-.ord-sum{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;color:var(--ink2);margin-top:6px;}
-.ord-sep{opacity:.5;}
-.ord-total{font-weight:700;color:var(--ink);}
-.ord-detail{margin-top:10px;border-top:1px solid var(--line);padding-top:10px;}
-.ord-items{list-style:none;margin:0 0 8px;padding:0;}
-.ord-items li{padding:6px 0;border-bottom:1px dashed var(--line);font-size:14px;display:flex;justify-content:space-between;gap:10px;}
-.ord-li-price{font-weight:600;white-space:nowrap;}
-.ord-kv{display:flex;justify-content:space-between;gap:12px;font-size:14px;padding:4px 0;}
-.ord-kv span:first-child{color:var(--ink2);}
-.ord-contact{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap;}
-.ord-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
-.ord-empty{text-align:center;padding:32px 16px;color:var(--ink2);}
-.ord-empty p{margin:6px 0;}
-.share-btns{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:26px;}
-.note{font-size:14px; color:var(--ink2); max-width:34em; margin:0 auto;}
-/* ---------- published shop ---------- */
-.shop-mast{text-align:center; padding:70px 0 34px; border-bottom:1px solid var(--line);}
-.shop-mast .kicker{font-size:12px; letter-spacing:1px; color:var(--accent); margin-bottom:14px; font-weight:700;}
-.shop-mast h1{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(36px,6vw,58px); letter-spacing:-1.2px; margin-bottom:12px;}
-.shop-mast p{color:var(--ink2); font-size:19px; max-width:32em; margin:0 auto;}
-.shop-sec{padding:44px 0; border-bottom:1px solid var(--line);}
-.shop-sec h2{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:26px; letter-spacing:-0.5px; margin-bottom:6px;}
-.shop-sec .sub{color:var(--ink2); font-size:15px; margin-bottom:22px;}
-.prod{display:flex; justify-content:space-between; align-items:baseline; gap:16px; padding:14px 0; border-bottom:1px dotted var(--line);}
-.prod:last-child{border-bottom:none;}
-.prod .pn{font-size:17px;}
-.prod .pp{font-family:ui-monospace,Menlo,monospace; font-size:15px; white-space:nowrap;}
-.hours-row{display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dotted var(--line); font-size:16px;}
-.contact-btns{display:flex; gap:12px; flex-wrap:wrap; margin-top:6px;}
-.shop-foot{text-align:center; padding:34px 0 60px; color:var(--ink2); font-size:14px;}
-.shop-foot a{color:var(--accent);}
-.update-link{font-size:13px; color:var(--ink2) !important; text-decoration:underline;}
-.banner{background:var(--accent); color:#fff; text-align:center; padding:13px 20px; font-weight:600; font-size:16px;}
-.prod-right{display:flex; align-items:center; gap:12px;}
-.order-btn{font-size:13px; font-weight:700; background:var(--accent); color:#fff !important; border-radius:999px; padding:7px 16px; text-decoration:none; white-space:nowrap;}
-.mic-row{display:flex; gap:18px; align-items:center; background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:16px 20px; margin:18px 0;}
-.mic-row .mic-btn{width:64px; height:64px; margin:0; flex:none;}
-.mic-row .mic-btn svg{width:26px; height:26px;}
-.mic-row .mic-label{font-weight:600; font-size:16px; margin-bottom:4px;}
-.mic-row .lang-row{justify-content:flex-start; margin:0;}
-.type-first .field textarea{min-height:150px;}
-#qrCanvas canvas, #qrCanvas img{border:1px solid var(--line); border-radius:12px; padding:10px; background:#fff;}
-/* misc */
-.hidden{display:none !important;}
-.center{text-align:center;}
-.err{background:#FDF0EF; border:1px solid #E5B8B3; color:#8C2F28; border-radius:10px; padding:14px 18px; margin:16px 0; font-size:15px;}
-/* responsive */
-@media(max-width:1020px){
-  .hero2-in{grid-template-columns:1fr; padding:64px 0 80px; gap:56px;}
-  .hero-visual{min-height:560px; max-width:560px;}
-  .bento{grid-template-columns:1fr 1fr;}
-  .b-card.span2{grid-column:span 2;}
-  .shopgrid{grid-template-columns:1fr 1fr;}
-  .stats{grid-template-columns:1fr 1fr; padding:48px 40px;}
-}
+.foot .tag{max-width:26em; line-height:1.6;}
+.foot-bottom{margin-top:52px; padding-top:26px; border-top:1px solid #3A3226; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:13.5px;}
+.foot-loc{margin-top:18px; font-size:13.5px;}
+.foot-loc a{color:#B9B0A0;}
+/* ================= gys page ================= */
+.gys-hero{text-align:center; max-width:780px; margin:0 auto;}
+.gys-hero h1{font-size:clamp(38px,6vw,62px); margin-bottom:18px;}
+.gys-hero .lead{margin:0 auto 34px;}
+.gys-hero .cta-row{margin-bottom:18px;}
+/* ================= responsive ================= */
 @media(max-width:1024px){
   .mast nav a.nl{display:none;}
   .mast nav{gap:14px;}
+  .hero2-in{grid-template-columns:1fr; padding:64px 0 88px; gap:64px;}
+  .hero-visual{max-width:520px; margin:0 auto; width:100%;}
+  .ticket{right:6px;}
+  .steps{grid-template-columns:1fr; gap:36px;}
+  .b-card.w7,.b-card.w5{grid-column:span 12;}
+  .bento>.b-card{grid-column:span 6;}
+  .shopgrid{grid-template-columns:1fr 1fr;}
+  .price-grid{grid-template-columns:1fr; max-width:560px;}
+  .foot{grid-template-columns:1fr 1fr;}
 }
-@media(max-width:760px){
-  .mast-in{flex-wrap:wrap; height:auto; padding:10px 0; gap:8px;}
-  .mast nav{display:contents;}
-  .mast nav a.btn{order:2; margin-left:auto;}
-  .mast nav select.langsel{order:3; flex:1 1 120px; min-width:0; margin-left:0;}
-  .grid2{grid-template-columns:1fr;}
-  .card{padding:26px 20px;}
-  .share-link{flex-direction:column;}
-  .hero2-in{padding:52px 0 64px;}
-  .hero-visual{min-height:520px;}
-  .hv-photo{width:88%; height:380px;}
-  .phone{width:250px; top:80px;}
-  .fc-wa{left:4px; bottom:112px; max-width:192px; transform:rotate(-2deg);}
-  .fc-qr{right:4px; bottom:8px; transform:rotate(2deg);}
-  .how-row{grid-template-columns:1fr; gap:28px; padding:40px 0;}
-  .how-row.flip .how-copy{order:0;}
-  .bento{grid-template-columns:1fr;}
-  .b-card.span2{grid-column:span 1;}
+@media(max-width:640px){
+  .mast-in{height:60px;}
+  .wordmark{font-size:21px;}
+  .sec{padding:72px 0;}
+  .hero2-in{padding:52px 0 72px;}
+  .hero2 p.sub{font-size:18px;}
   .shopgrid{grid-template-columns:1fr;}
-  .stats{grid-template-columns:1fr; padding:40px 32px; gap:28px;}
+  .cta-row .btn{flex:1 1 auto; text-align:center;}
+  .demo{padding:30px 24px 24px;}
+  .price-card{padding:34px 26px;}
+  .cta-panel{padding:72px 22px;}
   .foot{grid-template-columns:1fr;}
-  .cta-panel{padding:72px 24px;}
-  .sec{padding:64px 0;}
+  .edit-mock{grid-template-columns:1fr;}
+  .bento>.b-card{grid-column:span 12;}
+  .sec-head{margin-bottom:40px;}
 }
-/* ============ fluid wide-screen layout: fill 16:9 and ultrawide ============ */
 @media(min-width:1440px){
-  .wrap{max-width:1420px; padding:0 40px;}
-  .hero2-in{gap:64px; padding:110px 0 120px;}
-  .hero2 h1{font-size:clamp(56px,5.6vw,104px);}
-  .hero-visual{min-height:680px;}
-  .hv-photo{height:560px;}
-  .shopgrid{gap:28px;}
-  .bento{gap:24px;}
-  .stats{padding:72px 80px;}
-  .sec{padding:110px 0;}
-}
-@media(min-width:1800px){
-  .wrap{max-width:1660px;}
-  .hero2-in{grid-template-columns:1fr 1.12fr; gap:80px; padding:130px 0 140px;}
-  .hero2 h1{font-size:clamp(64px,5.2vw,118px);}
-  .hero-visual{min-height:740px;}
-  .hv-photo{height:620px; width:78%;}
-  .phone{width:340px;}
-  .fc-wa{width:300px;}
-  .stats{padding:80px 96px;}
-}
-@media(min-width:2200px){
-  .wrap{max-width:1920px; padding:0 56px;}
+  .wrap{max-width:1360px; padding:0 40px;}
+  .hero2 h1{font-size:clamp(56px,5.4vw,100px);}
+  .sec{padding:124px 0;}
 }
 @media(prefers-reduced-motion:reduce){
   .mq-track{animation:none;}
   html{scroll-behavior:auto;}
 }
+
 
 html[dir="rtl"] body{direction:rtl}
 .langsel{background:transparent;border:1px solid var(--line);border-radius:99px;padding:8px 10px;font:inherit;font-size:13px;color:var(--ink);margin-left:10px;cursor:pointer}
@@ -1375,7 +1235,7 @@ const STR = { en: {
   "gys_price_title":"One simple price",
   "gys_price_note":"one-time payment, yours forever",
   "gys_launch_badge":"LAUNCH OFFER",
-  "gys_launch_text":"The first 5 shops pay only ₹2,999. Pay by UPI after your store is live.",
+  "gys_launch_text":"The first 5 shops pay {p}. You pay only after your store is live, through the secure payment link we send you.",
   "gys_faq_title":"Common questions",
   "gys_f1q":"Do I need any technical skills?",
   "gys_f1a":"None at all. You just chat with us on Telegram. We handle everything technical.",
@@ -1386,10 +1246,29 @@ const STR = { en: {
   "gys_f4q":"What if I don't like the store?",
   "gys_f4a":"Then you pay nothing. You only pay after your store is live and you are happy.",
   "gys_f5q":"How do I pay?",
-  "gys_f5a":"When your store goes live, we send our UPI ID and the exact amount to you on Telegram or WhatsApp. You pay that, and the store is fully yours. Outside India, you can pay with PayPal.",
+  "gys_f5a":"After your store goes live, we send you a secure payment link. Pay by card or PayPal, no account needed, and the store is fully yours once paid.",
   "gys_cta2_title":"Ready for your own online store?",
   "gys_meta":"Get Your Store: we build your online shop in 24 hours | TalkShop",
   "foot_service":"Get your store built",
+  nav_examples:"Examples",
+  nav_pricing:"Pricing",
+  nav_faq:"FAQ",
+  nav_build:"Build my shop",
+  pr_eyebrow:"PRICING",
+  pr_h2:"One payment. Yours forever.",
+  pr_lead:"No subscriptions, no commissions, no surprises. You pay once, after your store is live and you love it.",
+  pr_l_badge:"LAUNCH OFFER",
+  pr_l_name:"Launch",
+  pr_l_note:"For the first 5 shops",
+  pr_r_name:"Regular",
+  pr_r_note:"After the first 5",
+  pr_b1:"One-time payment, yours forever",
+  pr_b2:"No subscription, no commission",
+  pr_b3:"Storefront link and QR code included",
+  pr_b4:"We build it for you in 24 hours",
+  pr_cta:"Get my store built",
+  pr_pay:"Secure payment via PayPal. Pay by card or with your PayPal account, no subscription, just one payment.",
+  pr_paynow:"Pay now",
 } };
 STR.te = {
   "meta_title":"TalkShop: మీ దుకాణం గురించి చెప్పండి. ఆన్‌లైన్‌లోకి తీసుకురండి.",
@@ -1867,7 +1746,7 @@ STR.te = {
   "gys_price_title":"ఒక సులభమైన ధర",
   "gys_price_note":"ఒకేసారి చెల్లింపు, శాశ్వతంగా మీదే",
   "gys_launch_badge":"లాంచ్ ఆఫర్",
-  "gys_launch_text":"మొదటి 5 షాపులు ₹2,999 మాత్రమే. స్టోర్ లైవ్ అయిన తర్వాత UPI ద్వారా చెల్లించండి.",
+  "gys_launch_text":"మొదటి 5 షాపులు {p} చెల్లిస్తాయి. మీ స్టోర్ లైవ్ అయిన తర్వాత మాత్రమే చెల్లించండి, మేము పంపే సురక్షిత చెల్లింపు లింక్ ద్వారా.",
   "gys_faq_title":"సాధారణ ప్రశ్నలు",
   "gys_f1q":"నాకు సాంకేతిక పరిజ్ఞానం అవసరమా?",
   "gys_f1a":"అస్సలు అవసరం లేదు. Telegramలో మాతో చాట్ చేయండి. సాంకేతిక విషయాలన్నీ మేము చూసుకుంటాము.",
@@ -1878,10 +1757,29 @@ STR.te = {
   "gys_f4q":"స్టోర్ నచ్చకపోతే?",
   "gys_f4a":"అయితే ఏమీ చెల్లించకండి. స్టోర్ లైవ్ అయి మీకు సంతోషంగా ఉన్న తర్వాత మాత్రమే చెల్లించండి.",
   "gys_f5q":"నేను ఎలా చెల్లించాలి?",
-  "gys_f5a":"మీ స్టోర్ లైవ్ అయినప్పుడు, మా UPI ID మరియు సరైన మొత్తాన్ని Telegram లేదా WhatsApp ద్వారా పంపుతాము. మీరు చెల్లించగానే స్టోర్ పూర్తిగా మీదవుతుంది. భారతదేశం బయట PayPal ద్వారా చెల్లించవచ్చు.",
+  "gys_f5a":"మీ స్టోర్ లైవ్ అయ్యాక మేము సురక్షితమైన చెల్లింపు లింక్ పంపుతాము. కార్డ్ లేదా PayPal తో చెల్లించండి, ఖాతా అవసరం లేదు, చెల్లించిన తర్వాత స్టోర్ పూర్తిగా మీదే.",
   "gys_cta2_title":"మీ సొంత ఆన్‌లైన్ స్టోర్‌కు సిద్ధమా?",
   "gys_meta":"మీ స్టోర్ సిద్ధం: 24 గంటల్లో ఆన్‌లైన్ షాపు | TalkShop",
   "foot_service":"మీ స్టోర్‌ను నిర్మించండి",
+  "nav_examples":"ఉదాహరణలు",
+  "nav_pricing":"ధర",
+  "nav_faq":"FAQ",
+  "nav_build":"నా షాపు తయారు చేయండి",
+  "pr_eyebrow":"ధర",
+  "pr_h2":"ఒకసారి చెల్లింపు. ఎప్పటికీ మీదే.",
+  "pr_lead":"సబ్స్క్రిప్షన్లు లేవు, కమిషన్లు లేవు, ఆశ్చర్యాలు లేవు. మీ స్టోర్ లైవ్ అయి మీకు నచ్చిన తర్వాత ఒక్కసారి చెల్లించండి.",
+  "pr_l_badge":"లాంచ్ ఆఫర్",
+  "pr_l_name":"లాంచ్",
+  "pr_l_note":"మొదటి 5 షాపులకు",
+  "pr_r_name":"సాధారణ",
+  "pr_r_note":"మొదటి 5 తర్వాత",
+  "pr_b1":"ఒక్కసారి చెల్లింపు, ఎప్పటికీ మీదే",
+  "pr_b2":"సబ్స్క్రిప్షన్ లేదు, కమిషన్ లేదు",
+  "pr_b3":"స్టోర్ఫ్రంట్ లింక్ మరియు QR కోడ్ చేర్చబడ్డాయి",
+  "pr_b4":"24 గంటల్లో మేము మీ కోసం నిర్మిస్తాము",
+  "pr_cta":"నా స్టోర్ తయారు చేయండి",
+  "pr_pay":"PayPal ద్వారా సురక్షిత చెల్లింపు. కార్డ్ లేదా మీ PayPal ఖాతాతో చెల్లించండి, సబ్స్క్రిప్షన్ లేదు, ఒక్కసారి చెల్లింపు మాత్రమే.",
+  "pr_paynow":"ఇప్పుడే చెల్లించండి",
 };
 STR.bn = {
   "meta_title":"TalkShop: আপনার দোকানের কথা বলুন। অনলাইনে আসুন।",
@@ -2359,7 +2257,7 @@ STR.bn = {
   "gys_price_title":"একটাই সহজ দাম",
   "gys_price_note":"একবার পেমেন্ট, চিরকাল আপনার",
   "gys_launch_badge":"লঞ্চ অফার",
-  "gys_launch_text":"প্রথম ৫টি দোকান মাত্র ₹২,৯৯৯ দেবে। দোকান লাইভ হওয়ার পর UPI-তে পেমেন্ট করুন।",
+  "gys_launch_text":"প্রথম 5টি দোকান {p} দেবে। আপনার দোকান লাইভ হওয়ার পরেই পেমেন্ট করুন, আমাদের পাঠানো নিরাপদ পেমেন্ট লিঙ্ক দিয়ে।",
   "gys_faq_title":"সাধারণ প্রশ্ন",
   "gys_f1q":"আমার কি টেকনিক্যাল জ্ঞান দরকার?",
   "gys_f1a":"একদম না। শুধু Telegram-এ আমাদের সাথে চ্যাট করুন। টেকনিক্যাল সবকিছু আমরা সামলে নেব।",
@@ -2370,10 +2268,29 @@ STR.bn = {
   "gys_f4q":"দোকান পছন্দ না হলে?",
   "gys_f4a":"তাহলে কিছু দেবেন না। দোকান লাইভ হয়ে আপনি খুশি হলেই পেমেন্ট করবেন।",
   "gys_f5q":"আমি কীভাবে পেমেন্ট করব?",
-  "gys_f5a":"আপনার স্টোর লাইভ হলে, আমরা Telegram বা WhatsApp-এ আমাদের UPI ID এবং সঠিক পরিমাণ পাঠিয়ে দেব। আপনি পেমেন্ট করলেই স্টোর সম্পূর্ণ আপনার। ভারতের বাইরে PayPal দিয়ে পেমেন্ট করতে পারেন।",
+  "gys_f5a":"আপনার দোকান লাইভ হলে আমরা নিরাপদ পেমেন্ট লিঙ্ক পাঠাব। কার্ড বা PayPal দিয়ে পেমেন্ট করুন, অ্যাকাউন্ট লাগবে না, পেমেন্টের পর দোকান সম্পূর্ণ আপনার।",
   "gys_cta2_title":"নিজের অনলাইন দোকানের জন্য তৈরি?",
   "gys_meta":"আপনার দোকান তৈরি: ২৪ ঘণ্টায় অনলাইন দোকান | TalkShop",
   "foot_service":"আপনার দোকান বানান",
+  "nav_examples":"উদাহরণ",
+  "nav_pricing":"মূল্য",
+  "nav_faq":"FAQ",
+  "nav_build":"আমার দোকান বানান",
+  "pr_eyebrow":"মূল্য",
+  "pr_h2":"একবার পেমেন্ট। চিরকাল আপনার।",
+  "pr_lead":"কোনো সাবস্ক্রিপশন নয়, কোনো কমিশন নয়, কোনো চমক নয়। আপনার দোকান লাইভ হওয়ার পর এবং পছন্দ হলে একবার পেমেন্ট করুন।",
+  "pr_l_badge":"লঞ্চ অফার",
+  "pr_l_name":"লঞ্চ",
+  "pr_l_note":"প্রথম 5টি দোকানের জন্য",
+  "pr_r_name":"সাধারণ",
+  "pr_r_note":"প্রথম 5টির পর",
+  "pr_b1":"একবার পেমেন্ট, চিরকাল আপনার",
+  "pr_b2":"কোনো সাবস্ক্রিপশন নয়, কোনো কমিশন নয়",
+  "pr_b3":"স্টোরফ্রন্ট লিঙ্ক ও QR কোড সহ",
+  "pr_b4":"২৪ ঘণ্টায় আমরা আপনার জন্য বানিয়ে দেব",
+  "pr_cta":"আমার দোকান বানান",
+  "pr_pay":"PayPal দিয়ে নিরাপদ পেমেন্ট। কার্ড বা আপনার PayPal অ্যাকাউন্ট দিয়ে পেমেন্ট করুন, কোনো সাবস্ক্রিপশন নয়, শুধু একবার পেমেন্ট।",
+  "pr_paynow":"এখনই পেমেন্ট করুন",
 };
 STR.kn = {
   "meta_title":"TalkShop: ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ವಿವರಿಸಿ. ಅದನ್ನು ಆನ್‌ಲೈನ್‌ಗೆ ತನ್ನಿ.",
@@ -2851,7 +2768,7 @@ STR.kn = {
   "gys_price_title":"ಒಂದು ಸರಳ ಬೆಲೆ",
   "gys_price_note":"ಒಂದೇ ಬಾರಿ ಪಾವತಿ, ಶಾಶ್ವತವಾಗಿ ನಿಮ್ಮದು",
   "gys_launch_badge":"ಲಾಂಚ್ ಆಫರ್",
-  "gys_launch_text":"ಮೊದಲ 5 ಅಂಗಡಿಗಳು ಕೇವಲ ₹2,999. ಅಂಗಡಿ ಲೈವ್ ಆದ ನಂತರ UPI ಮೂಲಕ ಪಾವತಿಸಿ.",
+  "gys_launch_text":"ಮೊದಲ 5 ಅಂಗಡಿಗಳು {p} ಪಾವತಿಸುತ್ತವೆ. ನಿಮ್ಮ ಅಂಗಡಿ ಲೈವ್ ಆದ ನಂತರ ಮಾತ್ರ ಪಾವತಿಸಿ, ನಾವು ಕಳುಹಿಸುವ ಸುರಕ್ಷಿತ ಪಾವತಿ ಲಿಂಕ್ ಮೂಲಕ.",
   "gys_faq_title":"ಸಾಮಾನ್ಯ ಪ್ರಶ್ನೆಗಳು",
   "gys_f1q":"ನನಗೆ ತಾಂತ್ರಿಕ ಜ್ಞಾನ ಬೇಕೇ?",
   "gys_f1a":"ಬೇಕಿಲ್ಲ. Telegram ನಲ್ಲಿ ನಮ್ಮೊಂದಿಗೆ ಚಾಟ್ ಮಾಡಿ. ತಾಂತ್ರಿಕ ಎಲ್ಲವನ್ನೂ ನಾವು ನೋಡಿಕೊಳ್ಳುತ್ತೇವೆ.",
@@ -2862,10 +2779,29 @@ STR.kn = {
   "gys_f4q":"ಅಂಗಡಿ ಇಷ್ಟವಾಗದಿದ್ದರೆ?",
   "gys_f4a":"ಏನೂ ಪಾವತಿಸಬೇಡಿ. ಅಂಗಡಿ ಲೈವ್ ಆಗಿ ನಿಮಗೆ ಸಂತೋಷವಾದ ನಂತರ ಮಾತ್ರ ಪಾವತಿಸಿ.",
   "gys_f5q":"ನಾನು ಹೇಗೆ ಪಾವತಿಸಬೇಕು?",
-  "gys_f5a":"ನಿಮ್ಮ ಸ್ಟೋರ್ ಲೈವ್ ಆದಾಗ, ನಮ್ಮ UPI ID ಮತ್ತು ನಿಖರವಾದ ಮೊತ್ತವನ್ನು Telegram ಅಥವಾ WhatsApp ಮೂಲಕ ಕಳುಹಿಸುತ್ತೇವೆ. ನೀವು ಪಾವತಿಸಿದರೆ ಸ್ಟೋರ್ ಸಂಪೂರ್ಣವಾಗಿ ನಿಮ್ಮದಾಗುತ್ತದೆ. ಭಾರತದ ಹೊರಗೆ PayPal ಮೂಲಕ ಪಾವತಿಸಬಹುದು.",
+  "gys_f5a":"ನಿಮ್ಮ ಅಂಗಡಿ ಲೈವ್ ಆದ ಕೂಡಲೇ ನಾವು ಸುರಕ್ಷಿತ ಪಾವತಿ ಲಿಂಕ್ ಕಳುಹಿಸುತ್ತೇವೆ. ಕಾರ್ಡ್ ಅಥವಾ PayPal ಮೂಲಕ ಪಾವತಿಸಿ, ಖಾತೆ ಬೇಡ, ಪಾವತಿಸಿದ ನಂತರ ಅಂಗಡಿ ಸಂಪೂರ್ಣವಾಗಿ ನಿಮ್ಮದು.",
   "gys_cta2_title":"ನಿಮ್ಮ ಸ್ವಂತ ಆನ್‌ಲೈನ್ ಅಂಗಡಿಗೆ ಸಿದ್ಧರೇ?",
   "gys_meta":"ನಿಮ್ಮ ಅಂಗಡಿ ಸಿದ್ಧ: 24 ಗಂಟೆಗಳಲ್ಲಿ ಆನ್‌ಲೈನ್ ಅಂಗಡಿ | TalkShop",
   "foot_service":"ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ನಿರ್ಮಿಸಿ",
+  "nav_examples":"ಉದಾಹರಣೆಗಳು",
+  "nav_pricing":"ಬೆಲೆ",
+  "nav_faq":"FAQ",
+  "nav_build":"ನನ್ನ ಅಂಗಡಿ ಮಾಡಿ",
+  "pr_eyebrow":"ಬೆಲೆ",
+  "pr_h2":"ಒಂದು ಪಾವತಿ. ಶಾಶ್ವತವಾಗಿ ನಿಮ್ಮದು.",
+  "pr_lead":"ಚಂದಾದಾರಿಕೆ ಇಲ್ಲ, ಕಮಿಷನ್ ಇಲ್ಲ, ಅಚ್ಚರಿಗಳಿಲ್ಲ. ನಿಮ್ಮ ಅಂಗಡಿ ಲೈವ್ ಆಗಿ ನಿಮಗೆ ಇಷ್ಟವಾದ ನಂತರ ಒಮ್ಮೆ ಪಾವತಿಸಿ.",
+  "pr_l_badge":"ಲಾಂಚ್ ಆಫರ್",
+  "pr_l_name":"ಲಾಂಚ್",
+  "pr_l_note":"ಮೊದಲ 5 ಅಂಗಡಿಗಳಿಗೆ",
+  "pr_r_name":"ಸಾಮಾನ್ಯ",
+  "pr_r_note":"ಮೊದಲ 5 ರ ನಂತರ",
+  "pr_b1":"ಒಂದು ಬಾರಿ ಪಾವತಿ, ಶಾಶ್ವತವಾಗಿ ನಿಮ್ಮದು",
+  "pr_b2":"ಚಂದಾದಾರಿಕೆ ಇಲ್ಲ, ಕಮಿಷನ್ ಇಲ್ಲ",
+  "pr_b3":"ಸ್ಟೋರ್ಫ್ರಂಟ್ ಲಿಂಕ್ ಮತ್ತು QR ಕೋಡ್ ಸೇರಿದೆ",
+  "pr_b4":"24 ಗಂಟೆಗಳಲ್ಲಿ ನಾವು ನಿಮಗಾಗಿ ನಿರ್ಮಿಸುತ್ತೇವೆ",
+  "pr_cta":"ನನ್ನ ಅಂಗಡಿ ಮಾಡಿಸಿ",
+  "pr_pay":"PayPal ಮೂಲಕ ಸುರಕ್ಷಿತ ಪಾವತಿ. ಕಾರ್ಡ್ ಅಥವಾ ನಿಮ್ಮ PayPal ಖಾತೆಯಿಂದ ಪಾವತಿಸಿ, ಚಂದಾದಾರಿಕೆ ಇಲ್ಲ, ಒಂದೇ ಒಂದು ಪಾವತಿ.",
+  "pr_paynow":"ಈಗ ಪಾವತಿಸಿ",
 };
 STR.mr = {
   "meta_title":"TalkShop: तुमच्या दुकानाबद्दल सांगा. ते ऑनलाइन न्या.",
@@ -3343,7 +3279,7 @@ STR.mr = {
   "gys_price_title":"एकच सोपी किंमत",
   "gys_price_note":"एकदाच पैसे, कायमचे तुमचे",
   "gys_launch_badge":"लॉन्च ऑफर",
-  "gys_launch_text":"पहिली ५ दुकाने फक्त ₹२,९९९. दुकान लाइव्ह झाल्यावर UPI ने पैसे द्या.",
+  "gys_launch_text":"पहिली 5 दुकाने {p} देतील. तुमचे दुकान लाइव्ह झाल्यावरच पेमेंट करा, आम्ही पाठवलेल्या सुरक्षित पेमेंट लिंकने.",
   "gys_faq_title":"सामान्य प्रश्न",
   "gys_f1q":"मला तांत्रिक ज्ञान हवे का?",
   "gys_f1a":"अजिबात नाही. फक्त Telegram वर आमच्याशी चॅट करा. तांत्रिक सगळे आम्ही पाहून घेऊ.",
@@ -3354,10 +3290,29 @@ STR.mr = {
   "gys_f4q":"दुकान आवडले नाही तर?",
   "gys_f4a":"मग काही देऊ नका. दुकान लाइव्ह होऊन तुम्ही खुश झाल्यावरच पैसे द्या.",
   "gys_f5q":"मी पेमेंट कसे करू?",
-  "gys_f5a":"तुमचे स्टोअर लाइव्ह झाल्यावर आम्ही Telegram किंवा WhatsApp वर आमचा UPI ID आणि अचूक रक्कम पाठवतो. तुम्ही पेमेंट केले की स्टोअर पूर्णपणे तुमचे होते. भारताबाहेर PayPal ने पेमेंट करू शकता.",
+  "gys_f5a":"तुमचे दुकान लाइव्ह होताच आम्ही सुरक्षित पेमेंट लिंक पाठवतो. कार्ड किंवा PayPal ने पेमेंट करा, अकाउंट नको, पेमेंटनंतर दुकान पूर्णपणे तुमचे.",
   "gys_cta2_title":"तुमच्या स्वतःच्या ऑनलाइन दुकानासाठी तयार?",
   "gys_meta":"तुमचे दुकान तयार: २४ तासांत ऑनलाइन दुकान | TalkShop",
   "foot_service":"तुमचे दुकान बनवा",
+  "nav_examples":"उदाहरणे",
+  "nav_pricing":"किंमत",
+  "nav_faq":"FAQ",
+  "nav_build":"माझे दुकान बनवा",
+  "pr_eyebrow":"किंमत",
+  "pr_h2":"एकदा पेमेंट. कायमचे तुमचे.",
+  "pr_lead":"सब्सक्रिप्शन नाही, कमिशन नाही, धक्के नाहीत. तुमचे दुकान लाइव्ह झाले आणि आवडले की एकदा पेमेंट करा.",
+  "pr_l_badge":"लॉन्च ऑफर",
+  "pr_l_name":"लॉन्च",
+  "pr_l_note":"पहिल्या 5 दुकानांसाठी",
+  "pr_r_name":"नियमित",
+  "pr_r_note":"पहिल्या 5 नंतर",
+  "pr_b1":"एकदा पेमेंट, कायमचे तुमचे",
+  "pr_b2":"सब्सक्रिप्शन नाही, कमिशन नाही",
+  "pr_b3":"स्टोअरफ्रंट लिंक आणि QR कोड समाविष्ट",
+  "pr_b4":"२४ तासांत आम्ही तुमच्यासाठी बनवून देऊ",
+  "pr_cta":"माझे दुकान बनवून घ्या",
+  "pr_pay":"PayPal ने सुरक्षित पेमेंट. कार्ड किंवा तुमच्या PayPal अकाउंटने पेमेंट करा, सब्सक्रिप्शन नाही, फक्त एकदा पेमेंट.",
+  "pr_paynow":"आत्ता पेमेंट करा",
 };
 STR.zh = {
   "meta_title":"TalkShop：描述您的小店，轻松上线。",
@@ -3835,7 +3790,7 @@ STR.zh = {
   "gys_price_title":"一个简单的价格",
   "gys_price_note":"一次付费,永久拥有",
   "gys_launch_badge":"首发优惠",
-  "gys_launch_text":"前5家店铺只需₹2,999。店铺上线后通过UPI付款。",
+  "gys_launch_text":"前 5 家店铺只需支付 {p}。店铺上线后，通过我们发送的安全付款链接付款。",
   "gys_faq_title":"常见问题",
   "gys_f1q":"我需要懂技术吗?",
   "gys_f1a":"完全不需要。你只需要在Telegram上和我们聊天,技术上的事都交给我们。",
@@ -3846,10 +3801,29 @@ STR.zh = {
   "gys_f4q":"要是不喜欢店铺呢?",
   "gys_f4a":"那就不用付钱。店铺上线、你满意之后才付款。",
   "gys_f5q":"如何付款？",
-  "gys_f5a":"您的商店上线后，我们会通过 Telegram 或 WhatsApp 发送我们的 UPI ID 和确切金额。您付款后，商店就完全属于您了。在印度以外，可以用 PayPal 付款。",
+  "gys_f5a":"店铺上线后，我们会发送安全的付款链接。用银行卡或 PayPal 付款，无需账户，付款后店铺完全属于您。",
   "gys_cta2_title":"准备好拥有自己的网店了吗?",
   "gys_meta":"店铺代建:24小时上线你的网店 | TalkShop",
   "foot_service":"代建你的店铺",
+  "nav_examples":"示例",
+  "nav_pricing":"价格",
+  "nav_faq":"FAQ",
+  "nav_build":"创建我的店铺",
+  "pr_eyebrow":"价格",
+  "pr_h2":"一次付款，永久拥有。",
+  "pr_lead":"无订阅，无佣金，无隐藏费用。店铺上线并让您满意后，一次付清。",
+  "pr_l_badge":"首发优惠",
+  "pr_l_name":"首发价",
+  "pr_l_note":"仅限前 5 家店铺",
+  "pr_r_name":"常规价",
+  "pr_r_note":"前 5 家之后",
+  "pr_b1":"一次付款，永久拥有",
+  "pr_b2":"无订阅，无佣金",
+  "pr_b3":"包含店铺链接和二维码",
+  "pr_b4":"我们在 24 小时内为您建好",
+  "pr_cta":"为我建店",
+  "pr_pay":"通过 PayPal 安全付款。可用银行卡或 PayPal 账户支付，无订阅，一次付清。",
+  "pr_paynow":"立即付款",
 };
 STR.ja = {
   "meta_title":"TalkShop：お店を紹介して、オンラインに。",
@@ -4327,7 +4301,7 @@ STR.ja = {
   "gys_price_title":"シンプルな料金",
   "gys_price_note":"買い切り、ずっとあなたのもの",
   "gys_launch_badge":"ローンチ特価",
-  "gys_launch_text":"最初の5店舗は₹2,999のみ。店舗公開後にUPIでお支払いください。",
+  "gys_launch_text":"最初の5店舗は {p} のみ。ストア公開後に、お送りする安全な決済リンクからお支払いください。",
   "gys_faq_title":"よくある質問",
   "gys_f1q":"技術的な知識は必要ですか?",
   "gys_f1a":"不要です。Telegramでチャットするだけ。技術的なことはすべてお任せください。",
@@ -4338,10 +4312,29 @@ STR.ja = {
   "gys_f4q":"店舗が気に入らなかったら?",
   "gys_f4a":"その場合はお支払い不要です。店舗が公開され、ご満足いただいてからのお支払いです。",
   "gys_f5q":"支払い方法を教えてください。",
-  "gys_f5a":"ストアが公開されたら、Telegram または WhatsApp で UPI ID と正確な金額をお送りします。お支払いいただければストアは完全にあなたのものになります。インド国外からは PayPal でもお支払いいただけます。",
+  "gys_f5a":"ストア公開後、安全な決済リンクをお送りします。カードまたは PayPal でお支払いください。アカウント不要、お支払い後はストアが完全にあなたのものになります。",
   "gys_cta2_title":"自分のネットショップを持つ準備はできましたか?",
   "gys_meta":"店舗代行:24時間でネットショップ開設 | TalkShop",
   "foot_service":"店舗を作ってもらう",
+  "nav_examples":"事例",
+  "nav_pricing":"料金",
+  "nav_faq":"FAQ",
+  "nav_build":"ショップを作る",
+  "pr_eyebrow":"料金",
+  "pr_h2":"一度の支払いで、ずっとあなたのもの。",
+  "pr_lead":"サブスクなし、手数料なし、驚きなし。ストアが公開され、気に入ってから一度だけお支払いください。",
+  "pr_l_badge":"ローンチ特価",
+  "pr_l_name":"ローンチ",
+  "pr_l_note":"最初の5店舗限定",
+  "pr_r_name":"通常",
+  "pr_r_note":"最初の5店舗の後",
+  "pr_b1":"一度の支払いで永久に所有",
+  "pr_b2":"サブスクなし、手数料なし",
+  "pr_b3":"ストアリンクとQRコード付き",
+  "pr_b4":"24時間以内に代行して構築します",
+  "pr_cta":"ストアを作ってもらう",
+  "pr_pay":"PayPal による安全な決済。カードまたは PayPal アカウントでお支払いください。サブスクなし、一度きりのお支払い。",
+  "pr_paynow":"今すぐ支払う",
 };
 STR.fr = {
   "meta_title":"TalkShop : Décrivez votre boutique. Mettez-la en ligne.",
@@ -4819,7 +4812,7 @@ STR.fr = {
   "gys_price_title":"Un prix simple",
   "gys_price_note":"paiement unique, à vous pour toujours",
   "gys_launch_badge":"OFFRE DE LANCEMENT",
-  "gys_launch_text":"Les 5 premières boutiques ne paient que ₹2,999. Payez par UPI une fois la boutique en ligne.",
+  "gys_launch_text":"Les 5 premières boutiques paient {p}. Vous ne payez que lorsque votre boutique est en ligne, via le lien de paiement sécurisé que nous vous envoyons.",
   "gys_faq_title":"Questions fréquentes",
   "gys_f1q":"Ai-je besoin de compétences techniques ?",
   "gys_f1a":"Aucune. Discutez simplement avec nous sur Telegram. Nous gérons toute la technique.",
@@ -4830,10 +4823,29 @@ STR.fr = {
   "gys_f4q":"Et si la boutique ne me plaît pas ?",
   "gys_f4a":"Alors vous ne payez rien. Vous ne payez que lorsque la boutique est en ligne et vous satisfait.",
   "gys_f5q":"Comment payer ?",
-  "gys_f5a":"Quand votre boutique est en ligne, nous vous envoyons notre ID UPI et le montant exact sur Telegram ou WhatsApp. Vous payez, et la boutique est entièrement à vous. Hors d'Inde, vous pouvez payer avec PayPal.",
+  "gys_f5a":"Dès que votre boutique est en ligne, nous vous envoyons un lien de paiement sécurisé. Payez par carte ou PayPal, sans compte, et la boutique est entièrement à vous une fois payée.",
   "gys_cta2_title":"Prêt pour votre propre boutique en ligne ?",
   "gys_meta":"Votre boutique clé en main : en ligne en 24 heures | TalkShop",
   "foot_service":"Faites créer votre boutique",
+  "nav_examples":"Exemples",
+  "nav_pricing":"Tarifs",
+  "nav_faq":"FAQ",
+  "nav_build":"Créer ma boutique",
+  "pr_eyebrow":"TARIFS",
+  "pr_h2":"Un seul paiement. À vous pour toujours.",
+  "pr_lead":"Pas d'abonnement, pas de commission, pas de surprises. Vous payez une fois, quand votre boutique est en ligne et que vous l'adorez.",
+  "pr_l_badge":"OFFRE DE LANCEMENT",
+  "pr_l_name":"Lancement",
+  "pr_l_note":"Pour les 5 premières boutiques",
+  "pr_r_name":"Standard",
+  "pr_r_note":"Après les 5 premières",
+  "pr_b1":"Paiement unique, à vous pour toujours",
+  "pr_b2":"Pas d'abonnement, pas de commission",
+  "pr_b3":"Lien de la boutique et QR code inclus",
+  "pr_b4":"Nous la construisons pour vous en 24 heures",
+  "pr_cta":"Créer ma boutique",
+  "pr_pay":"Paiement sécurisé via PayPal. Payez par carte ou avec votre compte PayPal, sans abonnement, un seul paiement.",
+  "pr_paynow":"Payer maintenant",
 };
 STR.de = {
   "meta_title":"TalkShop: Beschreiben Sie Ihr Geschäft. Bringen Sie es online.",
@@ -5311,7 +5323,7 @@ STR.de = {
   "gys_price_title":"Ein einfacher Preis",
   "gys_price_note":"einmalig zahlen, für immer Ihrer",
   "gys_launch_badge":"START-ANGEBOT",
-  "gys_launch_text":"Die ersten 5 Shops zahlen nur ₹2,999. Per UPI zahlen, nachdem der Shop live ist.",
+  "gys_launch_text":"Die ersten 5 Shops zahlen {p}. Du zahlst erst, wenn dein Shop live ist, über den sicheren Zahlungslink, den wir dir senden.",
   "gys_faq_title":"Häufige Fragen",
   "gys_f1q":"Brauche ich technisches Wissen?",
   "gys_f1a":"Gar keins. Chatten Sie einfach mit uns auf Telegram. Den Rest übernehmen wir.",
@@ -5322,10 +5334,29 @@ STR.de = {
   "gys_f4q":"Was, wenn mir der Shop nicht gefällt?",
   "gys_f4a":"Dann zahlen Sie nichts. Sie zahlen erst, wenn der Shop live ist und Sie zufrieden sind.",
   "gys_f5q":"Wie bezahle ich?",
-  "gys_f5a":"Sobald Ihr Shop live ist, senden wir Ihnen unsere UPI-ID und den genauen Betrag per Telegram oder WhatsApp. Sie zahlen, und der Shop gehört ganz Ihnen. Außerhalb Indiens können Sie mit PayPal zahlen.",
+  "gys_f5a":"Sobald dein Shop live ist, senden wir dir einen sicheren Zahlungslink. Zahle per Karte oder PayPal, kein Konto nötig, und der Shop gehört dir, sobald bezahlt ist.",
   "gys_cta2_title":"Bereit für Ihren eigenen Online-Shop?",
   "gys_meta":"Ihr Shop, fertig gebaut: in 24 Stunden online | TalkShop",
   "foot_service":"Shop bauen lassen",
+  "nav_examples":"Beispiele",
+  "nav_pricing":"Preise",
+  "nav_faq":"FAQ",
+  "nav_build":"Meinen Shop erstellen",
+  "pr_eyebrow":"PREISE",
+  "pr_h2":"Einmal zahlen. Für immer dir.",
+  "pr_lead":"Kein Abo, keine Provision, keine Überraschungen. Du zahlst einmal, wenn dein Shop live ist und dir gefällt.",
+  "pr_l_badge":"STARTANGEBOT",
+  "pr_l_name":"Start",
+  "pr_l_note":"Für die ersten 5 Shops",
+  "pr_r_name":"Regulär",
+  "pr_r_note":"Nach den ersten 5",
+  "pr_b1":"Einmalige Zahlung, für immer dein",
+  "pr_b2":"Kein Abo, keine Provision",
+  "pr_b3":"Storefront-Link und QR-Code inklusive",
+  "pr_b4":"Wir bauen ihn in 24 Stunden für dich",
+  "pr_cta":"Meinen Shop bauen lassen",
+  "pr_pay":"Sichere Zahlung via PayPal. Zahle per Karte oder mit deinem PayPal-Konto, kein Abo, nur eine Zahlung.",
+  "pr_paynow":"Jetzt zahlen",
 };
 STR.pt = {
   "meta_title":"TalkShop: Descreva sua loja. Coloque-a online.",
@@ -5803,7 +5834,7 @@ STR.pt = {
   "gys_price_title":"Um preço simples",
   "gys_price_note":"pagamento único, sua para sempre",
   "gys_launch_badge":"OFERTA DE LANÇAMENTO",
-  "gys_launch_text":"As 5 primeiras lojas pagam só ₹2,999. Pague por UPI depois que a loja estiver no ar.",
+  "gys_launch_text":"As 5 primeiras lojas pagam {p}. Você só paga depois que sua loja estiver no ar, pelo link de pagamento seguro que enviamos.",
   "gys_faq_title":"Perguntas frequentes",
   "gys_f1q":"Preciso de conhecimento técnico?",
   "gys_f1a":"Nenhum. É só conversar com a gente no Telegram. Cuidamos de toda a parte técnica.",
@@ -5814,10 +5845,29 @@ STR.pt = {
   "gys_f4q":"E se eu não gostar da loja?",
   "gys_f4a":"Então você não paga nada. Você só paga quando a loja estiver no ar e você estiver feliz.",
   "gys_f5q":"Como faço o pagamento?",
-  "gys_f5a":"Quando sua loja estiver no ar, enviamos nosso ID UPI e o valor exato para você no Telegram ou no WhatsApp. Você paga, e a loja é totalmente sua. Fora da Índia, dá para pagar com PayPal.",
+  "gys_f5a":"Assim que sua loja estiver no ar, enviamos um link de pagamento seguro. Pague com cartão ou PayPal, sem conta, e a loja é totalmente sua após o pagamento.",
   "gys_cta2_title":"Pronto para ter sua própria loja online?",
   "gys_meta":"Sua loja pronta: online em 24 horas | TalkShop",
   "foot_service":"Monte minha loja",
+  "nav_examples":"Exemplos",
+  "nav_pricing":"Preços",
+  "nav_faq":"FAQ",
+  "nav_build":"Criar minha loja",
+  "pr_eyebrow":"PREÇOS",
+  "pr_h2":"Um pagamento. Seu para sempre.",
+  "pr_lead":"Sem assinaturas, sem comissões, sem surpresas. Você paga uma vez, depois que sua loja estiver no ar e você amar.",
+  "pr_l_badge":"OFERTA DE LANÇAMENTO",
+  "pr_l_name":"Lançamento",
+  "pr_l_note":"Para as 5 primeiras lojas",
+  "pr_r_name":"Normal",
+  "pr_r_note":"Após as 5 primeiras",
+  "pr_b1":"Pagamento único, seu para sempre",
+  "pr_b2":"Sem assinatura, sem comissão",
+  "pr_b3":"Link da loja e QR code incluídos",
+  "pr_b4":"Construímos para você em 24 horas",
+  "pr_cta":"Quero minha loja",
+  "pr_pay":"Pagamento seguro via PayPal. Pague com cartão ou sua conta PayPal, sem assinatura, pagamento único.",
+  "pr_paynow":"Pagar agora",
 };
 STR.ar = {
   "meta_title":"TalkShop: صف متجرك. وانشره على الإنترنت.",
@@ -6295,7 +6345,7 @@ STR.ar = {
   "gys_price_title":"سعر واحد بسيط",
   "gys_price_note":"دفعة واحدة، ولك للأبد",
   "gys_launch_badge":"عرض الإطلاق",
-  "gys_launch_text":"أول ٥ متاجر تدفع فقط ₹2,999. ادفع عبر UPI بعد أن يصبح متجرك مباشرًا.",
+  "gys_launch_text":"أول 5 متاجر تدفع {p}. لا تدفع إلا بعد أن يصبح متجرك مباشرًا، عبر رابط الدفع الآمن الذي نرسله لك.",
   "gys_faq_title":"أسئلة شائعة",
   "gys_f1q":"هل أحتاج إلى مهارات تقنية؟",
   "gys_f1a":"لا على الإطلاق. فقط تحدث معنا على تيليغرام. نحن نتولى كل الأمور التقنية.",
@@ -6306,10 +6356,29 @@ STR.ar = {
   "gys_f4q":"ماذا لو لم يعجبني المتجر؟",
   "gys_f4a":"فلن تدفع شيئًا. تدفع فقط بعد أن يصبح متجرك مباشرًا وتكون راضيًا.",
   "gys_f5q":"كيف أدفع؟",
-  "gys_f5a":"عندما يصبح متجرك مباشرًا، نرسل لك معرف UPI الخاص بنا والمبلغ الدقيق على تيليغرام أو واتساب. تدفع، ويصبح المتجر ملكك بالكامل. خارج الهند، يمكنك الدفع عبر PayPal.",
+  "gys_f5a":"بعد أن يصبح متجرك مباشرًا، نرسل لك رابط دفع آمن. ادفع بالبطاقة أو PayPal، دون الحاجة إلى حساب، والمتجر لك بالكامل بعد الدفع.",
   "gys_cta2_title":"جاهز لمتجرك الإلكتروني الخاص؟",
   "gys_meta":"متجرك جاهز: متجر إلكتروني خلال ٢٤ ساعة | TalkShop",
   "foot_service":"ابنِ متجرك",
+  "nav_examples":"أمثلة",
+  "nav_pricing":"الأسعار",
+  "nav_faq":"FAQ",
+  "nav_build":"أنشئ متجري",
+  "pr_eyebrow":"الأسعار",
+  "pr_h2":"دفعة واحدة. لك للأبد.",
+  "pr_lead":"لا اشتراكات، لا عمولات، لا مفاجآت. تدفع مرة واحدة، بعد أن يصبح متجرك مباشرًا ويعجبك.",
+  "pr_l_badge":"عرض الإطلاق",
+  "pr_l_name":"الإطلاق",
+  "pr_l_note":"لأول 5 متاجر",
+  "pr_r_name":"العادي",
+  "pr_r_note":"بعد أول 5",
+  "pr_b1":"دفعة واحدة، لك للأبد",
+  "pr_b2":"لا اشتراك، لا عمولة",
+  "pr_b3":"يشمل رابط المتجر ورمز QR",
+  "pr_b4":"نبنيه لك خلال 24 ساعة",
+  "pr_cta":"أريد متجري",
+  "pr_pay":"دفع آمن عبر PayPal. ادفع بالبطاقة أو حساب PayPal الخاص بك، دون اشتراك، دفعة واحدة فقط.",
+  "pr_paynow":"ادفع الآن",
 };
 let uiLang = "en";
 try{ uiLang = localStorage.getItem("ts_ui") || "en"; }catch(e){}
@@ -6796,7 +6865,7 @@ STR.ml = {
   "gys_price_title":"ഒരു ലളിതമായ വില",
   "gys_price_note":"ഒറ്റത്തവണ പേയ്മെന്റ്, എന്നെന്നും നിങ്ങളുടേത്",
   "gys_launch_badge":"ലോഞ്ച് ഓഫർ",
-  "gys_launch_text":"ആദ്യ 5 കടകൾക്ക് ₹2,999 മാത്രം. കട ലൈവായ ശേഷം UPI വഴി നൽകൂ.",
+  "gys_launch_text":"ആദ്യ 5 കടകൾ {p} അടയ്ക്കുന്നു. നിങ്ങളുടെ കട ലൈവായതിന് ശേഷം മാത്രം പണമടയ്ക്കൂ, ഞങ്ങൾ അയയ്ക്കുന്ന സുരക്ഷിത പേയ്മെന്റ് ലിങ്ക് വഴി.",
   "gys_faq_title":"സാധാരണ ചോദ്യങ്ങൾ",
   "gys_f1q":"സാങ്കേതിക പരിജ്ഞാനം വേണോ?",
   "gys_f1a":"ഒട്ടും വേണ്ട. Telegram-ൽ ഞങ്ങളോട് സംസാരിച്ചാൽ മതി. സാങ്കേതികമായതെല്ലാം ഞങ്ങൾ നോക്കിക്കോളാം.",
@@ -6807,10 +6876,29 @@ STR.ml = {
   "gys_f4q":"കട ഇഷ്ടപ്പെട്ടില്ലെങ്കിൽ?",
   "gys_f4a":"പണം നൽകേണ്ട. കട ലൈവായി നിങ്ങൾക്ക് സന്തോഷമായ ശേഷം മാത്രം നൽകൂ.",
   "gys_f5q":"ഞാൻ എങ്ങനെ പണമടയ്ക്കും?",
-  "gys_f5a":"നിങ്ങളുടെ സ്റ്റോർ ലൈവാകുമ്പോൾ, ഞങ്ങളുടെ UPI IDയും കൃത്യമായ തുകയും Telegram അല്ലെങ്കിൽ WhatsApp വഴി അയയ്ക്കും. നിങ്ങൾ അടച്ചാൽ സ്റ്റോർ പൂർണ്ണമായും നിങ്ങളുടേതാകും. ഇന്ത്യക്ക് പുറത്ത് PayPal വഴി അടയ്ക്കാം.",
+  "gys_f5a":"നിങ്ങളുടെ കട ലൈവായാൽ ഞങ്ങൾ സുരക്ഷിതമായ പേയ്മെന്റ് ലിങ്ക് അയയ്ക്കും. കാർഡ് അല്ലെങ്കിൽ PayPal വഴി പണമടയ്ക്കൂ, അക്കൗണ്ട് വേണ്ട, പണമടച്ചാൽ കട പൂർണ്ണമായും നിങ്ങളുടേത്.",
   "gys_cta2_title":"നിങ്ങളുടെ സ്വന്തം ഓൺലൈൻ കട തയ്യാറാണോ?",
   "gys_meta":"നിങ്ങളുടെ കട തയ്യാർ: 24 മണിക്കൂറിൽ ഓൺലൈൻ കട | TalkShop",
   "foot_service":"നിങ്ങളുടെ കട നിർമ്മിക്കൂ",
+  "nav_examples":"ഉദാഹരണങ്ങൾ",
+  "nav_pricing":"വില",
+  "nav_faq":"FAQ",
+  "nav_build":"എന്റെ കട ഉണ്ടാക്കൂ",
+  "pr_eyebrow":"വില",
+  "pr_h2":"ഒറ്റത്തവണ പേയ്മെന്റ്. എന്നെന്നും നിങ്ങളുടേത്.",
+  "pr_lead":"സബ്സ്ക്രിപ്ഷനില്ല, കമ്മീഷനില്ല, അപ്രതീക്ഷിത ചെലവുകളില്ല. നിങ്ങളുടെ കട ലൈവായി നിങ്ങൾക്ക് ഇഷ്ടപ്പെട്ടതിന് ശേഷം ഒരിക്കൽ പണമടയ്ക്കൂ.",
+  "pr_l_badge":"ലോഞ്ച് ഓഫർ",
+  "pr_l_name":"ലോഞ്ച്",
+  "pr_l_note":"ആദ്യ 5 കടകൾക്ക്",
+  "pr_r_name":"സാധാരണ",
+  "pr_r_note":"ആദ്യ 5 ന് ശേഷം",
+  "pr_b1":"ഒറ്റത്തവണ പേയ്മെന്റ്, എന്നെന്നും നിങ്ങളുടേത്",
+  "pr_b2":"സബ്സ്ക്രിപ്ഷനില്ല, കമ്മീഷനില്ല",
+  "pr_b3":"സ്റ്റോർഫ്രണ്ട് ലിങ്കും QR കോഡും ഉൾപ്പെടുന്നു",
+  "pr_b4":"24 മണിക്കൂറിനുള്ളിൽ ഞങ്ങൾ നിങ്ങൾക്കായി നിർമ്മിക്കും",
+  "pr_cta":"എന്റെ കട ഉണ്ടാക്കൂ",
+  "pr_pay":"PayPal വഴി സുരക്ഷിത പേയ്മെന്റ്. കാർഡ് അല്ലെങ്കിൽ നിങ്ങളുടെ PayPal അക്കൗണ്ട് വഴി പണമടയ്ക്കൂ, സബ്സ്ക്രിപ്ഷനില്ല, ഒറ്റത്തവണ പേയ്മെന്റ്.",
+  "pr_paynow":"ഇപ്പോൾ അടയ്ക്കൂ",
 };
 STR.hi = {
   "meta_title":"TalkShop: अपनी दुकान के बारे में बताइए। ऑनलाइन लाइए।",
@@ -7288,7 +7376,7 @@ STR.hi = {
   "gys_price_title":"एक सरल कीमत",
   "gys_price_note":"एक बार भुगतान, हमेशा आपका",
   "gys_launch_badge":"लॉन्च ऑफ़र",
-  "gys_launch_text":"पहली 5 दुकानें सिर्फ़ ₹2,999 दें। स्टोर लाइव होने के बाद UPI से भुगतान करें।",
+  "gys_launch_text":"पहली 5 दुकानें {p} देंगी। स्टोर लाइव होने के बाद ही भुगतान करें, हमारे भेजे सुरक्षित पेमेंट लिंक से।",
   "gys_faq_title":"आम सवाल",
   "gys_f1q":"क्या मुझे तकनीकी ज्ञान चाहिए?",
   "gys_f1a":"बिल्कुल नहीं। बस Telegram पर हमसे बात करें। तकनीकी सब कुछ हम संभालेंगे।",
@@ -7299,10 +7387,29 @@ STR.hi = {
   "gys_f4q":"अगर स्टोर पसंद न आए तो?",
   "gys_f4a":"तो कुछ न दें। भुगतान तभी करें जब स्टोर लाइव हो और आप खुश हों।",
   "gys_f5q":"मैं भुगतान कैसे करूँ?",
-  "gys_f5a":"आपका स्टोर लाइव होते ही हम Telegram या WhatsApp पर अपना UPI ID और सही राशि भेज देते हैं। आप भुगतान करते हैं, और स्टोर पूरी तरह आपका हो जाता है। भारत के बाहर PayPal से भुगतान कर सकते हैं।",
+  "gys_f5a":"आपका स्टोर लाइव होते ही हम सुरक्षित पेमेंट लिंक भेजते हैं। कार्ड या PayPal से भुगतान करें, अकाउंट की जरूरत नहीं, और भुगतान के बाद स्टोर पूरी तरह आपका।",
   "gys_cta2_title":"अपना ऑनलाइन स्टोर तैयार है?",
   "gys_meta":"आपका स्टोर तैयार: 24 घंटों में ऑनलाइन दुकान | TalkShop",
   "foot_service":"अपना स्टोर बनवाएं",
+  "nav_examples":"उदाहरण",
+  "nav_pricing":"मूल्य",
+  "nav_faq":"FAQ",
+  "nav_build":"मेरी दुकान बनाएं",
+  "pr_eyebrow":"मूल्य",
+  "pr_h2":"एक बार भुगतान। हमेशा आपका।",
+  "pr_lead":"कोई सब्सक्रिप्शन नहीं, कोई कमीशन नहीं, कोई छिपा खर्च नहीं। स्टोर लाइव होने और पसंद आने के बाद एक बार भुगतान करें।",
+  "pr_l_badge":"लॉन्च ऑफर",
+  "pr_l_name":"लॉन्च",
+  "pr_l_note":"पहली 5 दुकानों के लिए",
+  "pr_r_name":"नियमित",
+  "pr_r_note":"पहली 5 के बाद",
+  "pr_b1":"एक बार भुगतान, हमेशा आपका",
+  "pr_b2":"कोई सब्सक्रिप्शन नहीं, कोई कमीशन नहीं",
+  "pr_b3":"स्टोरफ्रंट लिंक और QR कोड शामिल",
+  "pr_b4":"हम 24 घंटों में आपके लिए बना देंगे",
+  "pr_cta":"मेरी दुकान बनवाएं",
+  "pr_pay":"PayPal से सुरक्षित भुगतान। कार्ड या आपके PayPal अकाउंट से भुगतान करें, कोई सब्सक्रिप्शन नहीं, सिर्फ एक बार भुगतान।",
+  "pr_paynow":"अभी भुगतान करें",
 };
 STR.ta = {
   "meta_title":"TalkShop: உங்கள் கடை பற்றி சொல்லுங்கள். ஆன்லைனில் செல்லுங்கள்.",
@@ -7780,7 +7887,7 @@ STR.ta = {
   "gys_price_title":"ஒரு எளிய விலை",
   "gys_price_note":"ஒருமுறை கட்டணம், என்றும் உங்களுடையது",
   "gys_launch_badge":"தொடக்கச் சலுகை",
-  "gys_launch_text":"முதல் 5 கடைகள் ₹2,999 மட்டுமே. கடை நேரலையான பிறகு UPI மூலம் செலுத்துங்கள்.",
+  "gys_launch_text":"முதல் 5 கடைகள் {p} செலுத்துகின்றன. உங்கள் கடை நேரலையில் வந்த பிறகு மட்டும் கட்டணம் செலுத்துங்கள், நாங்கள் அனுப்பும் பாதுகாப்பான கட்டண இணைப்பு மூலம்.",
   "gys_faq_title":"பொதுவான கேள்விகள்",
   "gys_f1q":"எனக்குத் தொழில்நுட்ப அறிவு தேவையா?",
   "gys_f1a":"தேவையில்லை. Telegram-ல் எங்களுடன் பேசுங்கள். தொழில்நுட்ப அனைத்தையும் நாங்கள் பார்த்துக்கொள்கிறோம்.",
@@ -7791,10 +7898,29 @@ STR.ta = {
   "gys_f4q":"கடை பிடிக்கவில்லை என்றால்?",
   "gys_f4a":"பணம் செலுத்த வேண்டாம். கடை நேரலையாகி நீங்கள் மகிழ்ந்த பிறகு மட்டுமே பணம்.",
   "gys_f5q":"நான் எப்படி பணம் செலுத்துவது?",
-  "gys_f5a":"உங்கள் கடை நேரலையில் வரும்போது, எங்கள் UPI ID மற்றும் சரியான தொகையை Telegram அல்லது WhatsApp மூலம் அனுப்புவோம். நீங்கள் செலுத்தியதும் கடை முழுமையாக உங்களுடையது. இந்தியாவுக்கு வெளியே PayPal மூலம் செலுத்தலாம்.",
+  "gys_f5a":"உங்கள் கடை நேரலையில் வந்ததும், பாதுகாப்பான கட்டண இணைப்பை அனுப்புகிறோம். கார்டு அல்லது PayPal மூலம் செலுத்துங்கள், கணக்கு தேவையில்லை, கட்டணம் செலுத்தியதும் கடை முழுமையாக உங்களுடையது.",
   "gys_cta2_title":"உங்கள் சொந்த ஆன்லைன் கடை தயாரா?",
   "gys_meta":"உங்கள் கடை தயார்: 24 மணி நேரத்தில் ஆன்லைன் கடை | TalkShop",
   "foot_service":"உங்கள் கடையை உருவாக்குங்கள்",
+  "nav_examples":"எடுத்துக்காட்டுகள்",
+  "nav_pricing":"விலை",
+  "nav_faq":"FAQ",
+  "nav_build":"என் கடையை உருவாக்கு",
+  "pr_eyebrow":"விலை",
+  "pr_h2":"ஒரு முறை கட்டணம். என்றும் உங்களுடையது.",
+  "pr_lead":"சந்தா இல்லை, கமிஷன் இல்லை, ஆச்சரியங்கள் இல்லை. உங்கள் கடை நேரலையில் வந்து உங்களுக்குப் பிடித்த பிறகு ஒரு முறை கட்டணம் செலுத்துங்கள்.",
+  "pr_l_badge":"தொடக்கச் சலுகை",
+  "pr_l_name":"தொடக்கம்",
+  "pr_l_note":"முதல் 5 கடைகளுக்கு",
+  "pr_r_name":"வழக்கமான",
+  "pr_r_note":"முதல் 5 க்குப் பிறகு",
+  "pr_b1":"ஒரு முறை கட்டணம், என்றும் உங்களுடையது",
+  "pr_b2":"சந்தா இல்லை, கமிஷன் இல்லை",
+  "pr_b3":"ஸ்டோர் இணைப்பு மற்றும் QR குறியீடு உள்ளடக்கம்",
+  "pr_b4":"24 மணி நேரத்தில் உங்களுக்காக உருவாக்கித் தருகிறோம்",
+  "pr_cta":"என் கடையை உருவாக்குங்கள்",
+  "pr_pay":"PayPal மூலம் பாதுகாப்பான கட்டணம். கார்டு அல்லது உங்கள் PayPal கணக்கு மூலம் செலுத்துங்கள், சந்தா இல்லை, ஒரே ஒரு கட்டணம்.",
+  "pr_paynow":"இப்போது செலுத்துங்கள்",
 };
 STR.es = {
   "meta_title":"TalkShop: Describe tu tienda. Ponla en línea.",
@@ -8273,7 +8399,7 @@ STR.es = {
   "gys_price_title":"Un precio simple",
   "gys_price_note":"pago único, tuya para siempre",
   "gys_launch_badge":"OFERTA DE LANZAMIENTO",
-  "gys_launch_text":"Las primeras 5 tiendas pagan solo ₹2,999. Paga por UPI después de que tu tienda esté en línea.",
+  "gys_launch_text":"Las 5 primeras tiendas pagan {p}. Solo pagas cuando tu tienda esté en línea, con el enlace de pago seguro que te enviamos.",
   "gys_faq_title":"Preguntas frecuentes",
   "gys_f1q":"¿Necesito conocimientos técnicos?",
   "gys_f1a":"Ninguno. Solo chatea con nosotros por Telegram. Nosotros nos encargamos de todo lo técnico.",
@@ -8284,10 +8410,29 @@ STR.es = {
   "gys_f4q":"¿Y si no me gusta la tienda?",
   "gys_f4a":"Entonces no pagas nada. Solo pagas cuando tu tienda esté en línea y estés contento.",
   "gys_f5q":"¿Cómo pago?",
-  "gys_f5a":"Cuando tu tienda esté en línea, te enviamos nuestro ID de UPI y el monto exacto por Telegram o WhatsApp. Pagas eso y la tienda es totalmente tuya. Fuera de la India, puedes pagar con PayPal.",
+  "gys_f5a":"Cuando tu tienda esté en línea, te enviamos un enlace de pago seguro. Paga con tarjeta o PayPal, sin cuenta, y la tienda es totalmente tuya una vez pagada.",
   "gys_cta2_title":"¿Listo para tener tu propia tienda en línea?",
   "gys_meta":"Tu tienda lista: creamos tu tienda en línea en 24 horas | TalkShop",
   "foot_service":"Creamos tu tienda",
+  "nav_examples":"Ejemplos",
+  "nav_pricing":"Precios",
+  "nav_faq":"FAQ",
+  "nav_build":"Crear mi tienda",
+  "pr_eyebrow":"PRECIOS",
+  "pr_h2":"Un pago. Tuyo para siempre.",
+  "pr_lead":"Sin suscripciones, sin comisiones, sin sorpresas. Pagas una vez, cuando tu tienda esté en línea y te encante.",
+  "pr_l_badge":"OFERTA DE LANZAMIENTO",
+  "pr_l_name":"Lanzamiento",
+  "pr_l_note":"Para las 5 primeras tiendas",
+  "pr_r_name":"Normal",
+  "pr_r_note":"Después de las 5 primeras",
+  "pr_b1":"Pago único, tuyo para siempre",
+  "pr_b2":"Sin suscripción, sin comisión",
+  "pr_b3":"Enlace de la tienda y código QR incluidos",
+  "pr_b4":"La construimos por ti en 24 horas",
+  "pr_cta":"Quiero mi tienda",
+  "pr_pay":"Pago seguro con PayPal. Paga con tarjeta o tu cuenta PayPal, sin suscripción, un solo pago.",
+  "pr_paynow":"Pagar ahora",
 };
 
 
@@ -8366,6 +8511,11 @@ function fmt(usd){
   const locTag = (state.cc && CC_LOCALE[state.cc]) ? CC_LOCALE[state.cc] : (LOCALE_TAG[uiLang] || "en");
   try{ return new Intl.NumberFormat(locTag, { style:"currency", currency: fxCur }).format(usd * fxRate); }
   catch(e){ return fxCur + " " + (usd * fxRate).toFixed(2); }
+}
+/* PayPal.me payment link with prefilled amount: USD for the world, INR for India */
+function payLink(usd, inr){
+  const amt = (state.cc === "IN") ? inr + "INR" : usd + "USD";
+  return "https://www.paypal.me/harinandanjv/" + amt;
 }
 async function setCurrency(cur, save){
   if(save === undefined) save = true;
@@ -8572,15 +8722,14 @@ const LANGS = [["en-US","English (US)"],["en-GB","English (UK)"],["en-IN","Engli
 function header(){
   return '<div class="mast"><div class="wrap mast-in">'
     + '<a class="wordmark" href="#/">Talk<span>Shop</span></a>'
-    + '<nav><a class="nl" href="#how">'+t("nav_how")+'</a><a class="nl sample-link" href="#/">'+t("nav_sample")+'</a>'
-    + '<a class="btn btn-sm btn-solid" href="#/build" onclick="freshBuild()">'+t("nav_start")+'</a></nav></div></div>';
+    + '<nav><a class="nl" href="#how">'+t("nav_how")+'</a><a class="nl" href="#examples">'+t("nav_examples")+'</a><a class="nl" href="#pricing">'+t("nav_pricing")+'</a><a class="nl" href="#faq">'+t("nav_faq")+'</a>'
+    + '<a class="btn btn-sm btn-ember" href="#/build" onclick="freshBuild()">'+t("nav_build")+'</a></nav></div></div>';
 }
 function footer(){
   return '<footer><div class="wrap"><div class="foot">'
-    + '<div><span class="brand">Talk<span>Shop</span></span>'
-    + '<div>'+t("foot_tag")+'</div></div>'
-    + '<div><h5>'+t("foot_product")+'</h5><a href="#/build" onclick="freshBuild()">'+t("foot_build")+'</a><a href="#/get-your-store">'+t("foot_service")+'</a><a class="sample-link" href="#/">'+t("foot_sample")+'</a><a href="#features">'+t("foot_features")+'</a><a href="#how">'+t("foot_how")+'</a></div>'
-    + '<div><h5>'+t("foot_help")+'</h5><a href="#faq">'+t("foot_faq")+'</a><a href="#/build" onclick="freshBuild()">'+t("foot_update")+'</a></div>'
+    + '<div><a class="brand" href="#/">Talk<span>Shop</span></a><div class="tag">'+t("foot_tag")+'</div></div>'
+    + '<div><h5>'+t("foot_product")+'</h5><a href="#/build" onclick="freshBuild()">'+t("foot_build")+'</a><a href="#/get-your-store">'+t("foot_service")+'</a><a class="sample-link" href="#/">'+t("foot_sample")+'</a><a href="#pricing">'+t("nav_pricing")+'</a><a href="#examples">'+t("nav_examples")+'</a></div>'
+    + '<div><h5>'+t("foot_help")+'</h5><a href="#how">'+t("foot_how")+'</a><a href="#features">'+t("foot_features")+'</a><a href="#faq">'+t("foot_faq")+'</a><a href="#/build" onclick="freshBuild()">'+t("foot_update")+'</a></div>'
     + '<div><h5>'+t("foot_legal")+'</h5><a href="#/privacy">'+t("foot_privacy")+'</a><a href="#/terms">'+t("foot_terms")+'</a></div>'
     + '</div><div class="foot-bottom"><div>'+t("foot_rights")+'</div><div>'+t("foot_note")+'</div></div>'
     + footLocHTML() + '</div></footer>';
@@ -8592,14 +8741,8 @@ function wireSampleLinks(){
 }
 /* ============================== home ============================== */
 function homeView(){
-  const mqCards = [
-    ["assets/shop-bakery.jpg",t("mq_t1"),t("mq_s1")],
-    ["assets/shop-tailor.jpg",t("mq_t2"),t("mq_s2")],
-    ["assets/shop-barber.jpg",t("mq_t3"),t("mq_s3")],
-    ["assets/shop-cafe.jpg",t("mq_t4"),t("mq_s4")],
-    ["assets/shop-flowers.jpg",t("mq_t5"),t("mq_s5")],
-    ["assets/shop-grocery.jpg",t("mq_t6"),t("mq_s6")]
-  ].map(c=>'<div class="mq-card"><img src="'+c[0]+'" alt="'+c[1]+'" loading="lazy"><div class="t">'+c[1]+'</div><div class="s">'+c[2]+'</div></div>').join("");
+  const mqItems = [t("mq_t1"),t("mq_t2"),t("mq_t3"),t("mq_t4"),t("mq_t5"),t("mq_t6")]
+    .map(x=>'<span class="mq-item">'+x+'<span class="mq-dot">\u25cf</span></span>').join("");
   const shopCards = [
     ["assets/shop-bakery.jpg",t("sc1k"),t("sc1p")],
     ["assets/shop-tailor.jpg",t("sc2k"),t("sc2p")],
@@ -8608,100 +8751,98 @@ function homeView(){
     ["assets/shop-flowers.jpg",t("sc5k"),t("sc5p")],
     ["assets/shop-grocery.jpg",t("sc6k"),t("sc6p")]
   ].map(c=>'<div class="shopcard"><img src="'+c[0]+'" alt="'+c[1]+'" loading="lazy"><div class="b"><div class="k">'+c[1]+'</div><p>'+c[2]+'</p></div></div>').join("");
+  const menuRows = [[t("prod1"),fmt(4.50)],[t("prod2"),fmt(2.00)],[t("prod3"),fmt(28)]]
+    .map(r=>'<div class="mi"><span class="mn">'+r[0]+'</span><span class="dots"></span><span class="mp"><bdi>'+r[1]+'</bdi></span></div>').join("");
+  const stepMenu = [[t("prod1"),fmt(4.50)],[t("prod2"),fmt(2.00)],[t("prod3"),fmt(28)]]
+    .map(r=>'<div class="mm-row"><span>'+r[0]+'</span><span class="dots"></span><b><bdi>'+r[1]+'</bdi></b></div>').join("");
+  const feats = [t("pr_b1"),t("pr_b2"),t("pr_b3"),t("pr_b4")]
+    .map(f=>'<li><i>\u2713</i>'+f+'</li>').join("");
   return header()
   /* ---------- hero ---------- */
   + '<div class="hero2"><div class="wrap hero2-in">'
   + '<div class="hero-copy">'
-  + '<div class="eyebrow">'+t("hero_eyebrow")+'</div>'
-  + '<h1>'+t("hero_h1a")+'<em>'+t("hero_h1b")+'</em></h1>'
+  + '<span class="kick">'+t("hero_eyebrow")+'</span>'
+  + '<h1 class="disp">'+t("hero_h1a")+' <span class="em">'+t("hero_h1b")+'</span></h1>'
   + '<p class="sub">'+t("hero_sub")+'</p>'
-  + '<div class="cta-row"><a class="btn btn-accent btn-lg" href="#/build" onclick="freshBuild()">'+t("hero_cta1")+'</a>'
-  + '<a class="btn btn-lg sample-link" href="#/">'+t("hero_cta2")+'</a></div>'
-  + '<div class="meta-row"><a href="#/get-your-store">'+t("foot_service")+'</a></div>'
-  + '<div class="meta-row"><b>'+t("meta_free")+'</b>  ·  <b>'+t("meta_noaccount")+'</b>  ·  <b>'+t("meta_noapp")+'</b>  ·  '+t("meta_browser")+'</div>'
+  + '<div class="cta-row"><a class="btn btn-ember btn-lg" href="#/build" onclick="freshBuild()">'+t("hero_cta1")+'</a>'
+  + '<a class="btn btn-line btn-lg sample-link" href="#/">'+t("hero_cta2")+'</a></div>'
+  + '<div class="trust">'+t("foot_note")+'</div>'
+  + '<div class="trust" style="margin-top:10px;"><a href="#/get-your-store">'+t("foot_service")+'</a> \u00b7 '+t("pr_l_note")+': <b><bdi>'+fmt(35)+'</bdi></b></div>'
   + '</div>'
-  + '<div class="hero-visual">'
-  + '<div class="hv-glow"></div>'
-  + '<img class="hv-photo" src="assets/shop-bakery.jpg" alt="A neighborhood bakery">'
-  + '<div class="phone"><div class="phone-notch"><i></i></div><div class="mini-shop">'
-  + '<div class="mini-kicker">'+t("mini_kicker")+'</div><h4>Sunrise Bakery</h4>'
-  + '<div class="tag">'+t("sample_tagline")+'</div>'
-  + '<div class="mini-prod"><span>'+t("prod1")+'</span><span class="mp">'+fmt(4.50)+'</span><span class="mini-order">'+t("order")+'</span></div>'
-  + '<div class="mini-prod"><span>'+t("prod2")+'</span><span class="mp">'+fmt(2.00)+'</span><span class="mini-order">'+t("order")+'</span></div>'
-  + '<div class="mini-prod"><span>'+t("prod3")+'</span><span class="mp">'+fmt(28)+'</span><span class="mini-order">'+t("order")+'</span></div>'
-  + '<div class="mini-foot"><span class="a">'+t("call_us")+'</span><span class="b">'+t("wa_label")+'</span></div>'
+  + '<div class="hero-visual"><div class="demo">'
+  + '<div class="demo-kick">'+t("mini_kicker")+'</div>'
+  + '<div class="demo-name">Sunrise Bakery</div>'
+  + '<div class="demo-tag">'+t("sample_tagline")+'</div>'
+  + '<div class="demo-menu">'+menuRows+'</div>'
+  + '<div class="demo-cta"><a class="wa-order sample-link" href="#/">'+t("wa_label")+'</a><div class="demo-qr"><div id="demoQr"></div><div>'+t("qr_cap")+'</div></div></div>'
+  + '<div class="ticket"><small>'+t("sale_tag")+'</small>'+t("sale_text")+'</div>'
   + '</div></div>'
-  + '<div class="float fc-sale"><i>'+t("sale_tag")+'</i>'+t("sale_text")+'</div>'
-  + '<div class="float fc-wa"><div class="wa-head"><div class="wa-dot">✆</div><div>Sunrise Bakery<small>'+t("wa_online")+'</small></div></div>'
-  + '<div class="bubble">'+t("wa_bubble").replace("{name}","Sunrise Bakery").replace("{item}",t("prod1")).replace("{price}",fmt(4.50))+'<span class="tick">✓✓ 9:41</span></div></div>'
-  + '<div class="float fc-qr"><div id="heroQr"></div><div class="cap">'+t("qr_cap")+'</div></div>'
-  + '</div>'
   + '</div></div>'
   /* ---------- marquee ---------- */
-  + '<div class="marquee"><div class="mq-label">'+t("mq_label")+'</div>'
-  + '<div class="mq-view"><div class="mq-track">'+mqCards+mqCards+'</div></div></div>'
+  + '<div class="marquee"><div class="mq-view"><div class="mq-track">'+mqItems+mqItems+'</div></div></div>'
   /* ---------- how it works ---------- */
-  + '<div class="sec" id="how"><div class="wrap">'
-  + '<div class="sec-head"><div class="eyebrow">'+t("how_eyebrow")+'</div><h2>'+t("how_h2")+'</h2>'
+  + '<div class="sec sec-dark" id="how"><div class="wrap">'
+  + '<div class="sec-head"><span class="kick">'+t("how_eyebrow")+'</span><h2>'+t("how_h2")+'</h2>'
   + '<p class="lead">'+t("how_lead")+'</p></div>'
-  + '<div class="how-row"><div class="how-copy"><div class="how-num">01</div><h3>'+t("how1_h")+'</h3>'
-  + '<p>'+t("how1_p")+'</p></div>'
-  + '<div class="how-vis"><div class="tag">'+t("how1_tag")+'</div>'
-  + '<div class="mock-type">'+t("how1_mock")+'</div>'
-  + '<span class="mock-mic">'+t("how1_mic")+'</span></div></div>'
-  + '<div class="how-row flip"><div class="how-copy"><div class="how-num">02</div><h3>'+t("how2_h")+'</h3>'
-  + '<p>'+t("how2_p")+'</p></div>'
-  + '<div class="how-vis"><div class="tag">'+t("how2_tag")+'</div>'
-  + '<div class="mock-site"><div class="mock-banner">'+t("sale_text")+'</div><div class="ms-body"><h5>Sunrise Bakery</h5>'
-  + '<div class="ms-prod"><span>'+t("prod1")+'</span><span>'+fmt(4.50)+'</span></div>'
-  + '<div class="ms-prod"><span>'+t("prod2")+'</span><span>'+fmt(2.00)+'</span></div>'
-  + '<div class="ms-prod"><span>'+t("prod3")+'</span><span>'+fmt(28)+'</span></div>'
-  + '</div></div></div></div>'
-  + '<div class="how-row"><div class="how-copy"><div class="how-num">03</div><h3>'+t("how3_h")+'</h3>'
-  + '<p>'+t("how3_p")+'</p></div>'
-  + '<div class="how-vis"><div class="tag">'+t("how3_tag")+'</div>'
-  + '<div class="mock-qr-row"><div class="qr-ph"></div><div class="mock-share-btns"><span class="solid">'+t("btn_copy")+'</span><span>'+t("btn_sharewa")+'</span><span>'+t("btn_qr")+'</span></div></div>'
-  + '</div></div>'
-  + '</div></div>'
+  + '<div class="steps">'
+  + '<div class="step"><div class="step-n">01</div><h3>'+t("how1_h")+'</h3><p>'+t("how1_p")+'</p>'
+  + '<div class="step-vis"><div class="mock-type">'+t("how1_mock")+'</div></div></div>'
+  + '<div class="step"><div class="step-n">02</div><h3>'+t("how2_h")+'</h3><p>'+t("how2_p")+'</p>'
+  + '<div class="step-vis"><div class="mock-menu">'+stepMenu+'</div></div></div>'
+  + '<div class="step"><div class="step-n">03</div><h3>'+t("how3_h")+'</h3><p>'+t("how3_p")+'</p>'
+  + '<div class="step-vis"><div class="mock-qr"><div id="stepQr"></div><div class="qr-cap">'+t("qr_cap")+'</div></div></div></div>'
+  + '</div></div></div>'
   /* ---------- bento features ---------- */
   + '<div class="sec" id="features"><div class="wrap">'
-  + '<div class="sec-head"><div class="eyebrow">'+t("b_eyebrow")+'</div><h2>'+t("b_h2")+'</h2>'
+  + '<div class="sec-head"><span class="kick">'+t("b_eyebrow")+'</span><h2>'+t("b_h2")+'</h2>'
   + '<p class="lead">'+t("b_lead")+'</p></div>'
   + '<div class="bento">'
-  + '<div class="b-card dark span2"><div class="k">'+t("b1_k")+'</div><h3>'+t("b1_h")+'</h3>'
+  + '<div class="b-card w7"><div class="k">'+t("b1_k")+'</div><h3>'+t("b1_h")+'</h3>'
   + '<p>'+t("b1_p")+'</p>'
   + '<div class="b-visual"><div class="chat-mock">'
-  + '<div class="bubble">'+t("b1_c1")+'<span class="tick">✓✓ 9:38</span></div>'
-  + '<div class="bubble out">'+t("b1_c2").replace("{price}",fmt(28))+'<span class="tick">✓✓ 9:39</span></div>'
+  + '<div class="bubble">'+t("b1_c1")+'<span class="tick">\u2713\u2713 9:38</span></div>'
+  + '<div class="bubble out">'+t("b1_c2").replace("{price}",fmt(28))+'<span class="tick">\u2713\u2713 9:39</span></div>'
   + '</div></div></div>'
-  + '<div class="b-card"><div class="k">'+t("b2_k")+'</div><h3>'+t("b2_h")+'</h3>'
+  + '<div class="b-card w5"><div class="k">'+t("b2_k")+'</div><h3>'+t("b2_h")+'</h3>'
   + '<p>'+t("b2_p")+'</p>'
   + '<div class="b-visual"><div class="qr-mock"><div id="bentoQr"></div><div class="t">'+t("b2_cap")+'</div></div></div></div>'
-  + '<div class="b-card"><div class="k">'+t("b3_k")+'</div><h3>'+t("b3_h")+'</h3>'
+  + '<div class="b-card w5"><div class="k">'+t("b3_k")+'</div><h3>'+t("b3_h")+'</h3>'
   + '<p>'+t("b3_p")+'</p>'
   + '<div class="b-visual"><div class="banner-mock">'+t("b3_m1")+'<small>'+t("b3_m2")+'</small></div></div></div>'
-  + '<div class="b-card span2"><div class="k">'+t("b4_k")+'</div><h3>'+t("b4_h")+'</h3>'
+  + '<div class="b-card w7"><div class="k">'+t("b4_k")+'</div><h3>'+t("b4_h")+'</h3>'
   + '<p>'+t("b4_p")+'</p>'
   + '<div class="b-visual"><div class="edit-mock">'
   + '<div class="em"><div class="ek">'+t("b4_before")+'</div>'+t("b4_b1").replace("{p1}",fmt(4.00))+'<br><span style="color:var(--ink2)">'+t("b4_b2")+'</span></div>'
   + '<div class="em new"><div class="ek">'+t("b4_after")+'</div>'+t("b4_a1").replace("{p1}",fmt(4.50))+'<br><span style="color:var(--accent);font-weight:700;">'+t("b4_a2")+'</span></div>'
   + '</div></div></div>'
   + '</div></div></div>'
-  /* ---------- shop grid ---------- */
-  + '<div class="sec"><div class="wrap">'
-  + '<div class="sec-head"><div class="eyebrow">'+t("s_eyebrow")+'</div><h2>'+t("s_h2")+'</h2>'
+  /* ---------- examples ---------- */
+  + '<div class="sec" id="examples"><div class="wrap">'
+  + '<div class="sec-head"><span class="kick">'+t("s_eyebrow")+'</span><h2>'+t("s_h2")+'</h2>'
   + '<p class="lead">'+t("s_lead")+'</p></div>'
   + '<div class="shopgrid">'+shopCards+'</div>'
   + '</div></div>'
-  /* ---------- stats ---------- */
-  + '<div class="sec"><div class="wrap"><div class="stats">'
-  + '<div class="stat"><div class="n">~<em>1</em> '+t("min_unit")+'</div><div class="l">'+t("st1l")+'</div></div>'
-  + '<div class="stat"><div class="n"><em>'+fmt(0)+'</em></div><div class="l">'+t("st2l")+'</div></div>'
-  + '<div class="stat"><div class="n"><em>21</em></div><div class="l">'+t("st3l")+'</div></div>'
-  + '<div class="stat"><div class="n"><em>0</em></div><div class="l">'+t("st4l")+'</div></div>'
-  + '</div></div></div>'
+  /* ---------- pricing ---------- */
+  + '<div class="sec" id="pricing"><div class="wrap">'
+  + '<div class="sec-head center"><span class="kick">'+t("pr_eyebrow")+'</span><h2>'+t("pr_h2")+'</h2>'
+  + '<p class="lead" style="margin-left:auto;margin-right:auto;">'+t("pr_lead")+'</p></div>'
+  + '<div class="price-grid">'
+  + '<div class="price-card launch"><span class="stamp">'+t("pr_l_badge")+'</span>'
+  + '<div class="price-name">'+t("pr_l_name")+'</div><div class="price-note">'+t("pr_l_note")+'</div>'
+  + '<div class="price-amount"><bdi>'+fmt(35)+'</bdi></div>'
+  + '<div class="price-was"><s><bdi>'+fmt(79)+'</bdi></s> '+t("pr_r_name").toLowerCase()+'</div>'
+  + '<ul class="price-feats">'+feats+'</ul>'
+  + '<a class="btn btn-ember btn-lg" href="'+payLink(35,2999)+'" target="_blank" rel="noopener">'+t("pr_paynow")+'</a></div>'
+  + '<div class="price-card"><div class="price-name">'+t("pr_r_name")+'</div><div class="price-note">'+t("pr_r_note")+'</div>'
+  + '<div class="price-amount"><bdi>'+fmt(79)+'</bdi></div>'
+  + '<div class="price-was">&nbsp;</div>'
+  + '<ul class="price-feats">'+feats+'</ul>'
+  + '<a class="btn btn-line btn-lg" href="'+payLink(79,6999)+'" target="_blank" rel="noopener">'+t("pr_paynow")+'</a></div>'
+  + '</div>'
+  + '<div class="pay-note">'+t("pr_pay").replace("PayPal","<b>PayPal</b>")+'</div>'
+  + '</div></div>'
   /* ---------- faq ---------- */
-  + '<div class="sec" id="faq"><div class="wrap"><div class="sec-head"><div class="eyebrow">'+t("faq_eyebrow")+'</div><h2>'+t("faq_h2")+'</h2></div><div class="faq">'
+  + '<div class="sec" id="faq"><div class="wrap"><div class="sec-head"><span class="kick">'+t("faq_eyebrow")+'</span><h2>'+t("faq_h2")+'</h2></div><div class="faq">'
   + '<details><summary>'+t("q1")+'</summary><div class="a">'+t("a1")+'</div></details>'
   + '<details><summary>'+t("q2")+'</summary><div class="a">'+t("a2")+'</div></details>'
   + '<details><summary>'+t("q3")+'</summary><div class="a">'+t("a3")+'</div></details>'
@@ -8711,9 +8852,10 @@ function homeView(){
   + '</div></div></div>'
   /* ---------- final CTA ---------- */
   + '<div class="sec"><div class="wrap"><div class="cta-panel">'
+  + '<span class="kick">'+t("hero_eyebrow")+'</span>'
   + '<h2>'+t("cta_h2")+'</h2>'
   + '<p>'+t("cta_p")+'</p>'
-  + '<a class="btn btn-accent btn-lg" href="#/build" onclick="freshBuild()">'+t("hero_cta1")+'</a>'
+  + '<a class="btn btn-ember btn-lg" href="#/build" onclick="freshBuild()">'+t("hero_cta1")+'</a>'
   + '</div></div></div>'
   + footer();
 }
@@ -8725,7 +8867,7 @@ function afterHome(){
     el.innerHTML = "";
     try{ new QRCode(el, {text:link, width:size, height:size, correctLevel:QRCode.CorrectLevel.M}); }catch(e){}
   };
-  paint("heroQr", 118); paint("bentoQr", 132);
+  paint("demoQr", 84); paint("stepQr", 96); paint("bentoQr", 132);
 }
 
 /* ============================== shared shop helpers ============================== */
@@ -11464,12 +11606,12 @@ function gysView(){
     [t("gys_f5q"), t("gys_f5a")]
   ].map(f=>'<details><summary>'+f[0]+'</summary><div class="a">'+f[1]+'</div></details>').join("");
   return header()
-  + '<div class="sec"><div class="wrap" style="max-width:780px;text-align:center;">'
-  + '<div class="eyebrow">'+t("gys_eyebrow")+'</div>'
-  + '<h1 class="serif" style="font-size:clamp(34px,6vw,58px);letter-spacing:-1px;line-height:1.08;margin:0 0 16px;">'+t("gys_h1")+'</h1>'
-  + '<p class="lead" style="margin-left:auto;margin-right:auto;">'+t("gys_sub")+'</p>'
+  + '<div class="sec"><div class="wrap gys-hero">'
+  + '<span class="kick">'+t("gys_eyebrow")+'</span>'
+  + '<h1 class="disp">'+t("gys_h1")+'</h1>'
+  + '<p class="lead">'+t("gys_sub")+'</p>'
   + '<div class="cta-row" style="justify-content:center;">'+tgBtn+'</div>'
-  + '<div class="meta-row" style="margin-bottom:0;">'+t("gys_cta_note")+'</div>'
+  + '<div class="trust">'+t("gys_cta_note")+'</div>'
   + '</div></div>'
   + '<div class="sec"><div class="wrap">'
   + '<div class="sec-head"><h2>'+t("gys_inc_title")+'</h2></div>'
@@ -11479,14 +11621,15 @@ function gysView(){
   + '<div class="sec-head"><h2>'+t("gys_steps_title")+'</h2></div>'
   + '<div class="bento">'+steps+'</div>'
   + '</div></div>'
-  + '<div class="sec"><div class="wrap" style="max-width:660px;">'
-  + '<div class="sec-head" style="text-align:center;"><h2>'+t("gys_price_title")+'</h2></div>'
-  + '<div class="b-card dark" style="align-items:center;text-align:center;padding:44px 32px;">'
-  + '<div class="k" style="color:var(--amber);">'+t("gys_launch_badge")+'</div>'
-  + '<div style="font-size:16px;opacity:.85;"><s>\u20b96,999</s> '+t("gys_price_note")+'</div>'
-  + '<div class="serif" style="font-size:clamp(52px,9vw,80px);letter-spacing:-2px;line-height:1;margin:10px 0 14px;">\u20b92,999</div>'
-  + '<p style="max-width:24em;margin:0 auto 28px;">'+t("gys_launch_text")+'</p>'
+  + '<div class="sec"><div class="wrap" style="max-width:620px;">'
+  + '<div class="sec-head center"><h2>'+t("gys_price_title")+'</h2></div>'
+  + '<div class="price-card launch">'
+  + '<span class="stamp">'+t("gys_launch_badge")+'</span>'
+  + '<div class="price-amount"><bdi>'+fmt(35)+'</bdi></div>'
+  + '<div class="price-was"><s>'+fmt(79)+'</s> '+t("gys_price_note")+'</div>'
+  + '<p style="margin:0 0 28px;color:#B9B0A0;">'+t("gys_launch_text").replace("{p}","<bdi>"+fmt(35)+"</bdi>")+'</p>'
   + tgBtn
+  + '<div style="margin-top:14px;"><a class="btn btn-line" href="'+payLink(35,2999)+'" target="_blank" rel="noopener">'+t("pr_paynow")+'</a></div>'
   + '</div></div></div>'
   + '<div class="sec"><div class="wrap" style="max-width:760px;">'
   + '<div class="sec-head"><h2>'+t("gys_faq_title")+'</h2></div>'
@@ -11965,8 +12108,13 @@ function router(){
     if(state.step===1 && !state.data) restoreDraft();
     render(buildView()); wireBuild();
   } else {
+    const anchors = {how:1, examples:1, pricing:1, faq:1, features:1};
     render(homeView());
     afterHome();
+    if(anchors[h]){
+      setTimeout(()=>{ const el = document.getElementById(h); if(el) el.scrollIntoView(); }, 40);
+      return;
+    }
   }
   window.scrollTo(0,0);
 }
