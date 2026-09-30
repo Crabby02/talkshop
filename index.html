@@ -473,6 +473,9 @@ mark{background:#ffe58f;color:inherit;border-radius:3px;padding:0 2px;}
 .sortbar{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:0 0 10px;}
 .sortlab{font-size:13px;color:var(--muted);}
 .sortsel{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;font-size:14px;color:var(--ink);min-height:44px;max-width:70vw;cursor:pointer;}
+/* Narrow screens: the Price/Sort selects carry their own aria-labels, so the
+   redundant text labels hide to give the two dropdowns room in one row. */
+@media(max-width:560px){.sortbar .sortlab{display:none;}}
 .msh-rail .sortbar{margin:6px 0 0;}
 .chip.on{background:var(--s-accent);border-color:var(--s-accent);color:#fff;font-weight:700;}
 .prod2{display:block;padding:16px 0;border-bottom:1px dotted var(--line);}
@@ -1202,6 +1205,12 @@ const STR = { en: {
   "wa_ask":"Hi {name}! I have a question about {item}.",
   "notify_me":"Notify me",
   "wa_notify":"Hi {name}! Please tell me when {item} is back in stock.",
+  "price_filter":"Price",
+  "price_any":"Any price",
+  "price_under":"Under {x}",
+  "price_mid":"{x} to {y}",
+  "price_over":"Over {x}",
+  "filters_clear":"Clear filters",
   "wa_name":"Name",
   "wa_phone":"Phone",
   "wa_type":"Order type",
@@ -1686,6 +1695,12 @@ STR.te = {
   "wa_ask":"హాయ్ {name}! {item} గురించి నాకు ఒక ప్రశ్న ఉంది.",
   "notify_me":"నాకు తెలియజేయండి",
   "wa_notify":"హాయ్ {name}! {item} మళ్లీ స్టాక్‌లోకి వచ్చినప్పుడు నాకు తెలియజేయండి.",
+  "price_filter":"ధర",
+  "price_any":"ఏదైనా ధర",
+  "price_under":"{x} కంటే తక్కువ",
+  "price_mid":"{x} నుండి {y} వరకు",
+  "price_over":"{x} కంటే ఎక్కువ",
+  "filters_clear":"ఫిల్టర్లు తొలగించండి",
   "wa_name":"పేరు",
   "wa_phone":"ఫోన్",
   "wa_type":"ఆర్డర్ రకం",
@@ -2170,6 +2185,12 @@ STR.bn = {
   "wa_ask":"হাই {name}! {item} নিয়ে আমার একটা প্রশ্ন আছে।",
   "notify_me":"আমাকে জানান",
   "wa_notify":"হাই {name}! {item} আবার স্টকে এলে আমাকে জানান।",
+  "price_filter":"দাম",
+  "price_any":"যেকোনো দাম",
+  "price_under":"{x}-এর কম",
+  "price_mid":"{x} থেকে {y}",
+  "price_over":"{x}-এর বেশি",
+  "filters_clear":"ফিল্টার মুছুন",
   "wa_name":"নাম",
   "wa_phone":"ফোন",
   "wa_type":"অর্ডারের ধরন",
@@ -2654,6 +2675,12 @@ STR.kn = {
   "wa_ask":"ಹಾಯ್ {name}! ನನಗೆ {item} ಬಗ್ಗೆ ಒಂದು ಪ್ರಶ್ನೆ ಇದೆ.",
   "notify_me":"ನನಗೆ ತಿಳಿಸಿ",
   "wa_notify":"ಹಾಯ್ {name}! {item} ಮತ್ತೆ ಸ್ಟಾಕ್‌ನಲ್ಲಿದ್ದಾಗ ದಯವಿಟ್ಟು ನನಗೆ ತಿಳಿಸಿ.",
+  "price_filter":"ಬೆಲೆ",
+  "price_any":"ಯಾವುದೇ ಬೆಲೆ",
+  "price_under":"{x} ಗಿಂತ ಕಡಿಮೆ",
+  "price_mid":"{x} ರಿಂದ {y}",
+  "price_over":"{x} ಗಿಂತ ಹೆಚ್ಚು",
+  "filters_clear":"ಫಿಲ್ಟರ್‌ಗಳನ್ನು ತೆರವುಗೊಳಿಸಿ",
   "wa_name":"ಹೆಸರು",
   "wa_phone":"ಫೋನ್",
   "wa_type":"ಆರ್ಡರ್ ಪ್ರಕಾರ",
@@ -3138,6 +3165,12 @@ STR.mr = {
   "wa_ask":"नमस्कार {name}! मला {item} बद्दल प्रश्न आहे.",
   "notify_me":"मला कळवा",
   "wa_notify":"नमस्कार {name}! {item} पुन्हा स्टॉकमध्ये आल्यावर कृपया मला कळवा.",
+  "price_filter":"किंमत",
+  "price_any":"कोणतीही किंमत",
+  "price_under":"{x} पेक्षा कमी",
+  "price_mid":"{x} ते {y}",
+  "price_over":"{x} पेक्षा जास्त",
+  "filters_clear":"फिल्टर काढा",
   "wa_name":"नाव",
   "wa_phone":"फोन",
   "wa_type":"ऑर्डर प्रकार",
@@ -3622,6 +3655,12 @@ STR.zh = {
   "wa_ask":"您好{name}！我想问一下{item}。",
   "notify_me":"到货通知我",
   "wa_notify":"您好{name}！{item}到货后请通知我。",
+  "price_filter":"价格",
+  "price_any":"任何价格",
+  "price_under":"{x}以下",
+  "price_mid":"{x}至{y}",
+  "price_over":"{x}以上",
+  "filters_clear":"清除筛选",
   "wa_name":"姓名",
   "wa_phone":"电话",
   "wa_type":"订单类型",
@@ -4106,6 +4145,12 @@ STR.ja = {
   "wa_ask":"こんにちは{name}さん！{item}について質問があります。",
   "notify_me":"入荷を通知",
   "wa_notify":"こんにちは{name}さん！{item}が入荷したら教えてください。",
+  "price_filter":"価格",
+  "price_any":"すべての価格",
+  "price_under":"{x}未満",
+  "price_mid":"{x}から{y}",
+  "price_over":"{x}以上",
+  "filters_clear":"フィルターをクリア",
   "wa_name":"お名前",
   "wa_phone":"電話番号",
   "wa_type":"注文方法",
@@ -4590,6 +4635,12 @@ STR.fr = {
   "wa_ask":"Bonjour {name} ! J'ai une question sur {item}.",
   "notify_me":"Me notifier",
   "wa_notify":"Bonjour {name} ! Dites-moi quand {item} sera de nouveau disponible.",
+  "price_filter":"Prix",
+  "price_any":"Tous les prix",
+  "price_under":"Moins de {x}",
+  "price_mid":"De {x} à {y}",
+  "price_over":"Plus de {x}",
+  "filters_clear":"Effacer les filtres",
   "wa_name":"Nom",
   "wa_phone":"Téléphone",
   "wa_type":"Type de commande",
@@ -5074,6 +5125,12 @@ STR.de = {
   "wa_ask":"Hallo {name}! Ich habe eine Frage zu {item}.",
   "notify_me":"Benachrichtigen",
   "wa_notify":"Hallo {name}! Bitte sag mir Bescheid, wenn {item} wieder verfügbar ist.",
+  "price_filter":"Preis",
+  "price_any":"Alle Preise",
+  "price_under":"Unter {x}",
+  "price_mid":"Von {x} bis {y}",
+  "price_over":"Über {x}",
+  "filters_clear":"Filter zurücksetzen",
   "wa_name":"Name",
   "wa_phone":"Telefon",
   "wa_type":"Bestellart",
@@ -5558,6 +5615,12 @@ STR.pt = {
   "wa_ask":"Oi {name}! Tenho uma dúvida sobre {item}.",
   "notify_me":"Avise-me",
   "wa_notify":"Oi {name}! Por favor, me avise quando {item} estiver disponível novamente.",
+  "price_filter":"Preço",
+  "price_any":"Qualquer preço",
+  "price_under":"Abaixo de {x}",
+  "price_mid":"De {x} a {y}",
+  "price_over":"Acima de {x}",
+  "filters_clear":"Limpar filtros",
   "wa_name":"Nome",
   "wa_phone":"Telefone",
   "wa_type":"Tipo de pedido",
@@ -6042,6 +6105,12 @@ STR.ar = {
   "wa_ask":"مرحباً {name}! لدي سؤال عن {item}.",
   "notify_me":"أعلمني",
   "wa_notify":"مرحباً {name}! من فضلك أخبرني عندما يعود {item} إلى المخزون.",
+  "price_filter":"السعر",
+  "price_any":"أي سعر",
+  "price_under":"أقل من {x}",
+  "price_mid":"من {x} إلى {y}",
+  "price_over":"أكثر من {x}",
+  "filters_clear":"مسح عوامل التصفية",
   "wa_name":"الاسم",
   "wa_phone":"الهاتف",
   "wa_type":"نوع الطلب",
@@ -6535,6 +6604,12 @@ STR.ml = {
   "wa_ask":"ഹായ് {name}! {item}-നെക്കുറിച്ച് ചോദിക്കാനുണ്ട്.",
   "notify_me":"എന്നെ അറിയിക്കൂ",
   "wa_notify":"ഹായ് {name}! {item} വീണ്ടും സ്റ്റോക്കിൽ വരുമ്പോൾ എന്നെ അറിയിക്കൂ.",
+  "price_filter":"വില",
+  "price_any":"ഏത് വിലയും",
+  "price_under":"{x}-ൽ താഴെ",
+  "price_mid":"{x} മുതൽ {y} വരെ",
+  "price_over":"{x}-ന് മുകളിൽ",
+  "filters_clear":"ഫിൽട്ടറുകൾ മായ്ക്കുക",
   "wa_name":"പേര്",
   "wa_phone":"ഫോൺ",
   "wa_type":"ഓർഡർ തരം",
@@ -7019,6 +7094,12 @@ STR.hi = {
   "wa_ask":"नमस्ते {name}! मुझे {item} के बारे में पूछना है।",
   "notify_me":"मुझे बताएं",
   "wa_notify":"नमस्ते {name}! {item} फिर से स्टॉक में आए तो कृपया मुझे बताएं।",
+  "price_filter":"कीमत",
+  "price_any":"कोई भी कीमत",
+  "price_under":"{x} से कम",
+  "price_mid":"{x} से {y} तक",
+  "price_over":"{x} से अधिक",
+  "filters_clear":"फ़िल्टर साफ़ करें",
   "wa_name":"नाम",
   "wa_phone":"फ़ोन",
   "wa_type":"ऑर्डर का प्रकार",
@@ -7503,6 +7584,12 @@ STR.ta = {
   "wa_ask":"வணக்கம் {name}! {item} பற்றி கேட்க விரும்புகிறேன்.",
   "notify_me":"எனக்கு தெரிவியுங்கள்",
   "wa_notify":"வணக்கம் {name}! {item} மீண்டும் கிடைக்கும்போது எனக்கு தெரிவியுங்கள்.",
+  "price_filter":"விலை",
+  "price_any":"எந்த விலையும்",
+  "price_under":"{x}-க்கும் குறைவு",
+  "price_mid":"{x} முதல் {y} வரை",
+  "price_over":"{x}-க்கும் அதிகம்",
+  "filters_clear":"வடிப்பான்களை அழி",
   "wa_name":"பெயர்",
   "wa_phone":"தொலைபேசி",
   "wa_type":"ஆர்டர் வகை",
@@ -7988,6 +8075,12 @@ STR.es = {
   "wa_ask":"¡Hola {name}! Tengo una pregunta sobre {item}.",
   "notify_me":"Avísame",
   "wa_notify":"¡Hola {name}! Por favor avísame cuando {item} vuelva a estar disponible.",
+  "price_filter":"Precio",
+  "price_any":"Cualquier precio",
+  "price_under":"Menos de {x}",
+  "price_mid":"De {x} a {y}",
+  "price_over":"Más de {x}",
+  "filters_clear":"Borrar filtros",
   "wa_name":"Nombre",
   "wa_phone":"Teléfono",
   "wa_type":"Tipo de pedido",
@@ -9929,6 +10022,12 @@ function renderProds(){
       .sort((a,b)=>b.s-a.s);
   }
   items=items.filter(o=>RT.cat==="all"||o.p.cat===RT.cat);
+  /* Price filter: keep only products in the selected price band. Bands are
+     computed from the full catalog so the options stay stable while filtering. */
+  const pBands=priceBands(d), pSel=RT.pf||0;
+  if(pSel>0&&pBands){
+    items=items.filter(o=>priceInBand(priceNum(o.p,selViOf(o.p,o.i)),pBands,pSel));
+  }
   /* Sort control (familiar Amazon/Flipkart/Zomato pattern): "Recommended" keeps
      the default order (search relevance while searching, merchant order otherwise);
      the other options reorder the visible items by price or name. */
@@ -9939,24 +10038,35 @@ function renderProds(){
     else if(so==="az"){ const sl=LOCALE_TAG[uiLang]||"en"; items.sort((a,b)=>prodName(a.p).localeCompare(prodName(b.p),sl)); }
   }
   const sortOpts=[["rec","sort_rec"],["plh","sort_plh"],["phl","sort_phl"],["az","sort_az"]];
-  const sortHtml='<div class="sortbar"><span class="sortlab" aria-hidden="true">'+esc(t("sort"))+'</span>'
+  let pfHtml="";
+  if(pBands){
+    const mx0=shopMoney(pBands[0]), mx1=shopMoney(pBands[1]);
+    const pfLbl=[t("price_any"),
+      t("price_under").replace("{x}",mx0),
+      t("price_mid").replace("{x}",mx0).replace("{y}",mx1),
+      t("price_over").replace("{x}",mx1)];
+    pfHtml='<span class="sortlab" aria-hidden="true">'+esc(t("price_filter"))+'</span>'
+      +'<select class="sortsel" id="pfSel" aria-label="'+esc(t("price_filter"))+'">'
+      +[0,1,2,3].map(function(i){ return '<option value="'+i+'"'+(pSel===i?" selected":"")+'>'+esc(pfLbl[i])+'</option>'; }).join("")+'</select>';
+  }
+  const sortHtml='<div class="sortbar">'+pfHtml+'<span class="sortlab" aria-hidden="true">'+esc(t("sort"))+'</span>'
     +'<select class="sortsel" id="sortSel" aria-label="'+esc(t("sort"))+'">'
     +sortOpts.map(o=>'<option value="'+o[0]+'"'+(so===o[0]?" selected":"")+'>'+esc(t(o[1]))+'</option>').join("")+'</select></div>';
   let rows=items.map(o=>prodRow(o.p,o.i,nq?sHiName(prodName(o.p),q):null)).join("");
-  if(nq){
-    if(items.length===0){
-      /* Graceful zero-results: a clear recovery path (one-tap clear search)
-         instead of a dead empty grid. Familiar Amazon/Zomato pattern;
-         category chips above still offer one-tap browsing. */
-      rows='<div class="sr-none" role="status"><div class="sr-none-ic" aria-hidden="true">&#x2315;</div>'
-        +'<p class="sr-none-t">'+esc(t("search_none"))+'</p>'
-        +'<p class="sr-none-s">'+esc(t("search_none_sub"))+'</p>'
-        +'<button type="button" class="btn btn-solid sr-none-clear" data-clearq>'+esc(t("search_none_clear"))+'</button>'
-        +'</div>';
-    }else{
-      const lbl=t(items.length===1?"search_one":"search_other").replace("{n}",items.length);
-      rows='<div class="sr-count" role="status">'+esc(lbl)+'</div>'+rows;
-    }
+  const filtActive=(RT.cat!=="all")||pSel>0;
+  if(items.length===0&&(nq||filtActive)){
+    /* Graceful zero-results: a clear recovery path (one-tap clear) instead of
+       a dead empty grid. Familiar Amazon/Zomato pattern. Shows for an empty
+       search and for a filter combination (category + price) with no matches;
+       the button resets the whole filter state. */
+    rows='<div class="sr-none" role="status"><div class="sr-none-ic" aria-hidden="true">&#x2315;</div>'
+      +'<p class="sr-none-t">'+esc(t("search_none"))+'</p>'
+      +'<p class="sr-none-s">'+esc(t("search_none_sub"))+'</p>'
+      +'<button type="button" class="btn btn-solid sr-none-clear" data-clearq>'+esc(t(nq?"search_none_clear":"filters_clear"))+'</button>'
+      +'</div>';
+  }else if(nq){
+    const lbl=t(items.length===1?"search_one":"search_other").replace("{n}",items.length);
+    rows='<div class="sr-count" role="status">'+esc(lbl)+'</div>'+rows;
   }
   if(mob&&rail){
     rail.innerHTML=html+sortHtml;
@@ -10773,9 +10883,35 @@ if(!window._lbEsc){
     if(e.key==="Escape"&&$("#lb")) closeLightbox();
   });
 }
+/* Price filter (familiar Amazon/Flipkart pattern): data-driven tertile bands from
+   the shop's own prices, so every band always matches at least one product
+   (verified by counting, pathological tie clusters bail out and hide the
+   control). Prices use the selected/default variant, same as sort. The control
+   is hidden when the shop has fewer than 3 positive prices. Zero backend. */
+function priceBands(d){
+  const ps=(d.products||[]);
+  const vals=ps.map(function(p,i){ return priceNum(p, selViOf(p,i)); })
+    .filter(function(v){ return v>0; }).sort(function(a,b){ return a-b; });
+  if(vals.length<3) return null;
+  const n=vals.length, c1=Math.ceil(n/3), c2=Math.ceil(2*n/3);
+  const b1=(vals[c1-1]+vals[c1])/2, b2=(vals[c2-1]+vals[c2])/2;
+  if(!(b2>b1)) return null;
+  const c=[0,0,0];
+  vals.forEach(function(v){ if(v<b1) c[0]++; else if(v<=b2) c[1]++; else c[2]++; });
+  if(c[0]===0||c[1]===0||c[2]===0) return null;
+  return [b1,b2];
+}
+function priceInBand(v,bands,pf){
+  if(pf===1) return v<bands[0];
+  if(pf===2) return v>=bands[0]&&v<=bands[1];
+  if(pf===3) return v>bands[1];
+  return true;
+}
 function shopListChange(e){
   const ss=e.target&&e.target.closest?e.target.closest("#sortSel"):null;
-  if(ss){ shopRT.sort=ss.value; renderProds(); }
+  if(ss){ shopRT.sort=ss.value; renderProds(); return; }
+  const pf=e.target&&e.target.closest?e.target.closest("#pfSel"):null;
+  if(pf){ shopRT.pf=+pf.value; renderProds(); }
 }
 /* Per-product share (familiar Flipkart/Amazon pattern): builds a deep link
    #/s/<id>?p=<i> that scrolls to and highlights the product on arrival.
@@ -11041,7 +11177,7 @@ function shopListClick(e){
   }
   const clearq=e.target.closest("[data-clearq]");
   if(clearq){
-    shopRT.q=""; shopRT.cat="all";
+    shopRT.q=""; shopRT.cat="all"; shopRT.pf=0;
     const si=$("#shopSearch"); if(si){ si.value=""; si.focus(); }
     renderProds(); return;
   }
