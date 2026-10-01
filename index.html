@@ -5,14 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Saylo: Describe your shop. Get it online.</title>
 <meta name="description" content="Saylo turns a few lines about your shop into a mobile storefront you can share anywhere. Free, no account needed.">
+<link rel="canonical" href="https://talkshop-six.vercel.app/">
 <meta property="og:title" content="Saylo: Describe your shop. Get it online.">
 <meta property="og:description" content="Free mobile storefronts for small shops. Describe your shop, share the link anywhere. No account, no cost.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#175E3B">
-<meta property="og:image" content="https://crabby02.github.io/talkshop/assets/shop-bakery.jpg">
+<meta property="og:url" content="https://talkshop-six.vercel.app/">
+<meta property="og:site_name" content="Saylo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Saylo: Describe your shop. Get it online.">
+<meta name="twitter:description" content="Free mobile storefronts for small shops. Describe your shop, share the link anywhere. No account, no cost.">
+<meta name="twitter:image" content="https://talkshop-six.vercel.app/assets/shop-bakery.jpg">
+<meta name="theme-color" content="#FAF6EF">
+<meta property="og:image" content="https://talkshop-six.vercel.app/assets/shop-bakery.jpg">
 <link rel="preconnect" href="https://translate.google.com">
 <link rel="preconnect" href="https://translate.googleapis.com">
 <script defer src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Saylo","url":"https://talkshop-six.vercel.app/","slogan":"Say it, sell it.","description":"Saylo turns a few lines about your shop into a mobile storefront you can share anywhere. Free, no account needed."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Product","name":"Saylo storefront build","description":"We build your mobile storefront and put it online within 24 hours. One-time payment, yours forever.","brand":{"@type":"Brand","name":"Saylo"},"offers":[{"@type":"Offer","name":"Launch offer","price":"35","priceCurrency":"USD","availability":"https://schema.org/LimitedAvailability","url":"https://talkshop-six.vercel.app/#pricing"},{"@type":"Offer","name":"Regular","price":"79","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://talkshop-six.vercel.app/#pricing"}]}
+</script>
 <style>
 /* ================= landing: identity ================= */
 :root{
@@ -36,6 +49,7 @@ body{background:var(--paper); color:var(--ink);
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
 .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
 a{color:inherit;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 img{display:block; max-width:100%;}
 /* type utilities */
 .disp{font-family:var(--disp); font-weight:800; letter-spacing:-.035em; line-height:1.02; overflow-wrap:break-word;}
@@ -984,10 +998,6 @@ async function ipCountry(){
 }
 
 /* ============================== locale UI ============================== */
-function waMsg(name, item, price){
-  const m = "Hi {name}! I would like to order: {item} ({price})".replace("{name}", name).replace("{item}", item);
-  return price ? m.replace("{price}", price) : m.replace(" ({price})", "");
-}
 function applyLangHead(){
   try{ document.title = "Saylo: Describe your shop. Get it online."; }catch(e){}
 }
@@ -1730,15 +1740,6 @@ function parseProductsText(txt){
     if(variants && variants.length) p.variants=variants;
     return p;
   }).filter(p=>p.name);
-}
-function productToLine(p){
-  const nm = (p.k&&PROD_EN[p.k])||(p.name||"");
-  const pr = p.usd!=null ? "$"+p.usd : (p.price||"");
-  let s = nm + (pr ? " - "+pr : "");
-  if(p.cat) s += " #"+p.cat;
-  if(p.variants && p.variants.length) s += " {"+p.variants.map(v=>v.n+(v.usd!=null?": $"+v.usd:(v.p?": "+v.p:""))).join(", ")+"}";
-  if(p.stock) s += " !"+p.stock;
-  return s;
 }
 function parseNum(s){
   let t=String(s==null?"":s).trim().replace(/\s/g,"");
@@ -4029,8 +4030,8 @@ function legalView(title, intro, sections){
 }
 function privacyView(){
   return legalView("Privacy Policy", "Saylo is a free tool that turns a short description of your shop into a shareable storefront page. It runs entirely in your browser. There are no accounts, no sign-ups, and no analytics or advertising trackers on this site.", [
-    ["What we collect", "Almost nothing. To suggest your country and currency, we look up the country of your current IP address through ipapi.co. This is country-level only: we never ask for or receive your precise location. The result is used for the suggestion and is not stored anywhere."], ["What stays on your device", "Your language and country choices, and a cached currency exchange rate, are saved in your browser's local storage so the site remembers your preferences. If you accept the privacy prompt on a shop page, the products you view and order are also remembered on that device, only to show you better suggestions, and this is never sent to any server. You can erase this at any time by clearing this site's data in your browser settings."], ["Your shop data", "Your storefront content is encoded directly into your share link. We have no server that receives or stores it, so we never see your shop details, prices, or orders. When a customer taps an order button, your browser opens WhatsApp with a pre-filled message to your number. That conversation happens between you and your customer; Saylo is not part of it."],
-    ["Third parties", "Three outside services are involved, each with its own policy: ipapi.co (IP address to country lookup), api.frankfurter.app (currency exchange rates), and WhatsApp (only when you or a customer taps an order or share button). We do not send them your shop content."], ["Your control", "The country suggestion is only a suggestion: it never changes your settings silently, and the banner has a close button. You can change country, currency, and language yourself at any time from the header."]
+    ["What we collect", "Almost nothing. To suggest your country and currency, we look up the country of your current IP address through ipapi.co. This is country-level only: we never ask for or receive your precise location. The result is used for the suggestion and is not stored anywhere."], ["What stays on your device", "Your country choice, and a cached currency exchange rate, are saved in your browser's local storage so the site remembers your preferences. If you accept the privacy prompt on a shop page, the products you view and order are also remembered on that device, only to show you better suggestions, and this is never sent to any server. You can erase this at any time by clearing this site's data in your browser settings."], ["Your shop data", "Your storefront content is encoded directly into your share link. We have no server that receives or stores it, so we never see your shop details, prices, or orders. When a customer taps an order button, your browser opens WhatsApp with a pre-filled message to your number. That conversation happens between you and your customer; Saylo is not part of it."],
+    ["Third parties", "Four outside services are involved, each with its own policy: ipapi.co (IP address to country lookup), api.frankfurter.app (currency exchange rates), Google Translate (only if you use the Translate control to read the site in another language), and WhatsApp (only when you or a customer taps an order or share button). We do not send them your shop content."], ["Your control", "The country suggestion is only a suggestion: it never changes your settings silently, and the banner has a close button. You can change country and currency yourself at any time from the Region page linked in the footer."]
   ]);
 }
 function termsView(){
