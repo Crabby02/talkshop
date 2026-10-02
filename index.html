@@ -24,7 +24,7 @@
 {"@context":"https://schema.org","@type":"Organization","name":"Saylo","url":"https://talkshop-six.vercel.app/","slogan":"Say it, sell it.","description":"Saylo turns a few lines about your shop into a mobile storefront you can share anywhere. Free, no account needed."}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Product","name":"Saylo storefront subscription","description":"We build your mobile storefront and put it online within 24 hours. Plans from $5 a month, cancel anytime.","brand":{"@type":"Brand","name":"Saylo"},"offers":[{"@type":"Offer","name":"Starter","price":"5","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://talkshop-six.vercel.app/#pricing"},{"@type":"Offer","name":"Pro","price":"15","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://talkshop-six.vercel.app/#pricing"},{"@type":"Offer","name":"Max","price":"19","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://talkshop-six.vercel.app/#pricing"},{"@type":"Offer","name":"Lifetime","price":"499","priceCurrency":"USD","availability":"https://schema.org/LimitedAvailability","url":"https://talkshop-six.vercel.app/#pricing"}]}
+{"@context":"https://schema.org","@type":"Product","name":"Saylo storefront subscription","description":"We build your mobile storefront and put it online within 24 hours. Plans from $5 a month, cancel anytime.","brand":{"@type":"Brand","name":"Saylo"},"offers":[{"@type":"Offer","name":"Free","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://talkshop-six.vercel.app/#pricing"},{"@type":"Offer","name":"Starter","price":"5","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://talkshop-six.vercel.app/#pricing"},{"@type":"Offer","name":"Pro","price":"15","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://talkshop-six.vercel.app/#pricing"},{"@type":"Offer","name":"Max","price":"19","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://talkshop-six.vercel.app/#pricing"},{"@type":"Offer","name":"Lifetime","price":"499","priceCurrency":"USD","availability":"https://schema.org/LimitedAvailability","url":"https://talkshop-six.vercel.app/#pricing"}]}
 </script>
 <style>
 /* ================= landing: identity ================= */
@@ -243,7 +243,7 @@ iframe.VIpgJd-ZVi9od-ORHb-OEVmcd,div.VIpgJd-ZVi9od-aZ2wEe-wOHMyf{display:none!im
 .shopcard .n{font-family:var(--disp); font-weight:800; font-size:23px; letter-spacing:-.025em; margin-bottom:6px;}
 .shopcard p{font-size:15.5px; color:var(--ink2);}
 /* ================= pricing ================= */
-.price-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; max-width:1120px; margin:0 auto;}
+.price-grid{display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:24px; max-width:1280px; margin:0 auto;}
 .price-card{background:#FFFDF7; border:2px solid var(--ink); border-radius:22px; padding:44px 40px; position:relative;}
 .price-card.launch{background:var(--ink); color:var(--paper); border-color:var(--ink);}
 .price-card .stamp{margin-bottom:22px;}
@@ -254,6 +254,11 @@ iframe.VIpgJd-ZVi9od-ORHb-OEVmcd,div.VIpgJd-ZVi9od-aZ2wEe-wOHMyf{display:none!im
 .price-per{color:#8A8172; font-size:15px; margin-bottom:20px;}
 .price-card.launch .price-per{color:#B9B0A0;}
 .anchor-line{font-weight:700; color:var(--ink); margin:18px auto 0; max-width:640px;}
+.price-card.free{border-color:#D8D0BE; background:#FDFBF4;}
+.price-card.free .price-amount{color:#8A8172;}
+.price-card.free .price-per{color:#A89E88;}
+.price-card.free .btn-line{border-color:#C9BFA8; color:#6E6552;}
+.tier-note{font-size:14px; color:#8A8172; margin:-8px 0 18px; line-height:1.45;}
 .bill-toggle{display:inline-flex; gap:6px; background:#FFFDF7; border:2px solid var(--ink); border-radius:999px; padding:5px; margin-top:26px;}
 .bill-btn{border:0; background:transparent; border-radius:999px; padding:10px 22px; font-weight:700; font-size:15px; color:var(--ink2); cursor:pointer;}
 .bill-btn span{font-weight:600; font-size:12.5px; color:var(--accent);}
@@ -992,6 +997,9 @@ function subLink(tier, period){
 /* Pricing tiers. Pro exists as the decoy: at $15 vs Max at $19, anyone
    considering Pro jumps to Max for $4 more. Max is the target. */
 const TIERS = [
+  {id:"free", name:"Free", monthly:0, annual:0, cta:"Start free", cls:"free", free:true,
+   link:"https://t.me/TalkShopBot?start=free", note:"A taste. WhatsApp ordering and updates need a paid plan.",
+   feats:["One-page template storefront","Up to 10 products","Phone-number ordering, no WhatsApp button","Saylo subdomain","Powered by Saylo badge"]},
   {id:"starter", name:"Starter", monthly:5, annual:50, cta:"Start with Starter", cls:"",
    feats:["Storefront built in 24 hours","Hosting included","WhatsApp ordering"]},
   {id:"pro", name:"Pro", monthly:15, annual:150, cta:"Choose Pro", cls:"",
@@ -1010,14 +1018,18 @@ function renderTiers(){
   const g = document.getElementById("tierGrid");
   if(!g) return;
   g.innerHTML = TIERS.map(t=>{
-    const p = tierPrice(t);
+    const p = t.free ? {amount: fmt(0), per: "free forever"} : tierPrice(t);
     const fl = t.feats.map(f=>'<li><i>\u2713</i>'+esc(f)+'</li>').join("");
+    const href = t.free ? t.link : subLink(t.id, billPeriod);
+    const tail = t.free ? "" : '<li><i>\u2713</i>Cancel anytime</li>';
+    const note = t.note ? '<div class="tier-note">'+t.note+'</div>' : "";
     return '<div class="price-card '+t.cls+'">'
       + (t.stamp ? '<span class="stamp">'+t.stamp+'</span>' : '')
       + '<div class="price-name">'+t.name+'</div>'
       + '<div class="price-amount"><bdi>'+p.amount+'</bdi></div><div class="price-per">'+p.per+'</div>'
-      + '<ul class="price-feats">'+fl+'<li><i>\u2713</i>Cancel anytime</li></ul>'
-      + '<a class="btn '+(t.cls==="launch"?"btn-ember":"btn-line")+' btn-lg" href="'+subLink(t.id, billPeriod)+'" target="_blank" rel="noopener">'+t.cta+'</a></div>';
+      + note
+      + '<ul class="price-feats">'+fl+tail+'</ul>'
+      + '<a class="btn '+(t.cls==="launch"?"btn-ember":"btn-line")+' btn-lg" href="'+href+'" target="_blank" rel="noopener">'+t.cta+'</a></div>';
   }).join("");
   const bm = document.getElementById("billM"), ba = document.getElementById("billA");
   if(bm) bm.classList.toggle("on", billPeriod==="monthly");
@@ -1367,6 +1379,7 @@ function homeView(){
   + '<details><summary>'+"Which languages work?"+'</summary><div class="a">'+"Saylo is available in 15 languages, including English, Spanish, Hindi, Tamil, Arabic and more."+'</div></details>'
   + '<details><summary>'+"Can customers order from my site?"+'</summary><div class="a">'+"Yes. Every product gets an “Order” button that opens a WhatsApp chat with your shop and the item pre-typed, so customers order in the app they already use. No checkout system needed."+'</div></details>'
   + '<details><summary>'+"Can I print a QR code for my shop?"+'</summary><div class="a">'+"Yes. After publishing, tap “Get QR code” for a printable code that opens your storefront. Stick it on your counter or window."+'</div></details>'
+  + '<details><summary>'+"Is there a free plan?"+'</summary><div class="a">'+"Yes, Free forever: a one-page template storefront with up to 10 products on a Saylo subdomain, with phone-number ordering. WhatsApp ordering, menu updates and removing the Powered by Saylo badge need a paid plan. You can upgrade anytime."+'</div></details>'
   + '</div></div></div>'
   /* ---------- final CTA ---------- */
   + '<div class="sec"><div class="wrap"><div class="cta-panel">'
