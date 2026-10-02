@@ -1321,8 +1321,6 @@ function homeView(){
   ].map(g=>'<button type="button" class="gal-card" onclick="fillChat('+g[3]+')"><span class="gal-ic">'+CAT[g[0]].svg+'</span><span class="gal-k">'+esc(g[1])+'</span><p class="gal-p">'+esc(g[2])+'</p><span class="gal-use">'+"Use this idea"+' &rarr;</span></button>').join("");
   const PIPE_TXT = [["Describe your shop","Type a few lines in the box above, or just message us on Telegram. Plain words are enough."],["We build your storefront","We turn your words into a clean mobile storefront with your products, prices, and photos."],["It goes live","Your store is online within 24 hours, at its own link."],["Pick your plan","Starter $5, Pro $15, Max $19 a month. Cancel anytime. Your store goes live before you pay anything."],["Share it and take orders","Print the QR code, share the link anywhere. Customers order straight from the page on WhatsApp."]];
   const pipe = PIPE_TXT.map((p,i)=>'<div class="pipe-row"><div class="pipe-n">0'+(i+1)+'</div><div><h3>'+esc(p[0])+'</h3><p>'+esc(p[1])+'</p></div></div>').join("");
-  const feats = ["One-time payment, yours forever","No subscription, no commission","Storefront link and QR code included","We build it for you in 24 hours"]
-    .map(f=>'<li><i>\u2713</i>'+f+'</li>').join("");
   return header()
   /* ---------- chat hero ---------- */
   + '<div class="chat-hero"><div class="wrap">'
