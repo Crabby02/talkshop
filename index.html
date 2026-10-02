@@ -24,7 +24,7 @@
 {"@context":"https://schema.org","@type":"Organization","name":"Saylo","url":"https://talkshop-six.vercel.app/","slogan":"Say it, sell it.","description":"Saylo turns a few lines about your shop into a mobile storefront you can share anywhere. Free, no account needed."}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Product","name":"Saylo storefront build","description":"We build your mobile storefront and put it online within 24 hours. One-time payment, yours forever.","brand":{"@type":"Brand","name":"Saylo"},"offers":[{"@type":"Offer","name":"Launch offer","price":"35","priceCurrency":"USD","availability":"https://schema.org/LimitedAvailability","url":"https://talkshop-six.vercel.app/#pricing"},{"@type":"Offer","name":"Regular","price":"79","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://talkshop-six.vercel.app/#pricing"}]}
+{"@context":"https://schema.org","@type":"Product","name":"Saylo storefront subscription","description":"We build your mobile storefront and put it online within 24 hours. Plans from $5 a month, cancel anytime.","brand":{"@type":"Brand","name":"Saylo"},"offers":[{"@type":"Offer","name":"Starter","price":"5","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://talkshop-six.vercel.app/#pricing"},{"@type":"Offer","name":"Pro","price":"15","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://talkshop-six.vercel.app/#pricing"},{"@type":"Offer","name":"Max","price":"19","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://talkshop-six.vercel.app/#pricing"},{"@type":"Offer","name":"Lifetime","price":"499","priceCurrency":"USD","availability":"https://schema.org/LimitedAvailability","url":"https://talkshop-six.vercel.app/#pricing"}]}
 </script>
 <style>
 /* ================= landing: identity ================= */
@@ -254,6 +254,15 @@ iframe.VIpgJd-ZVi9od-ORHb-OEVmcd,div.VIpgJd-ZVi9od-aZ2wEe-wOHMyf{display:none!im
 .price-per{color:#8A8172; font-size:15px; margin-bottom:20px;}
 .price-card.launch .price-per{color:#B9B0A0;}
 .anchor-line{font-weight:700; color:var(--ink); margin:18px auto 0; max-width:640px;}
+.bill-toggle{display:inline-flex; gap:6px; background:#FFFDF7; border:2px solid var(--ink); border-radius:999px; padding:5px; margin-top:26px;}
+.bill-btn{border:0; background:transparent; border-radius:999px; padding:10px 22px; font-weight:700; font-size:15px; color:var(--ink2); cursor:pointer;}
+.bill-btn span{font-weight:600; font-size:12.5px; color:var(--accent);}
+.bill-btn.on{background:var(--ink); color:var(--paper);}
+.bill-btn.on span{color:#E8B48C;}
+.bill-btn:focus-visible{outline:3px solid var(--accent); outline-offset:2px;}
+.life-banner{max-width:1120px; margin:28px auto 0; background:#FFFDF7; border:2px dashed var(--ink); border-radius:22px; padding:30px 36px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;}
+.life-banner .price-note{margin-bottom:0;}
+.gys-tier{display:flex; align-items:center; justify-content:space-between; gap:16px; background:#FFFDF7; border:2px solid var(--ink); border-radius:16px; padding:16px 20px; margin-bottom:12px; font-size:16px;}
 .price-was{font-size:16px; color:var(--ink2); margin-bottom:24px;}
 .price-card.launch .price-was{color:#B9B0A0;}
 .price-was s{margin-right:8px;}
@@ -969,18 +978,52 @@ function payLink(usd, inr){
   const amt = (state.cc === "IN") ? inr + "INR" : usd + "USD";
   return "https://www.paypal.me/harinandanjv/" + amt;
 }
-/* Subscription checkout. PayPal.me cannot do recurring billing, so monthly and
-   annual need real PayPal subscription plan links. Harinandan pastes them here
-   when created; while empty, those CTAs fall back to the Telegram onboarding bot.
+/* Subscription checkout. PayPal.me cannot do recurring billing, so each tier x
+   billing period needs a real PayPal subscription plan link. Harinandan pastes
+   them here when created; while a link is empty, that CTA falls back to the
+   Telegram onboarding bot.
    NOTE: subscriptions bill in USD only for now. INR recurring has RBI/PayPal
    restrictions; revisit later. */
-const SUB_MONTHLY_URL = "";
-const SUB_ANNUAL_URL = "";
+const SUB_LINKS = {starter_monthly:"", starter_annual:"", pro_monthly:"", pro_annual:"", max_monthly:"", max_annual:""};
 const SUB_FALLBACK = "https://t.me/TalkShopBot?start=sub";
-function subLink(which){
-  const u = (which === "annual") ? SUB_ANNUAL_URL : SUB_MONTHLY_URL;
-  return u || SUB_FALLBACK;
+function subLink(tier, period){
+  return SUB_LINKS[tier + "_" + period] || SUB_FALLBACK;
 }
+/* Pricing tiers. Pro exists as the decoy: at $15 vs Max at $19, anyone
+   considering Pro jumps to Max for $4 more. Max is the target. */
+const TIERS = [
+  {id:"starter", name:"Starter", monthly:5, annual:50, cta:"Start with Starter", cls:"",
+   feats:["Storefront built in 24 hours","Hosting included","WhatsApp ordering"]},
+  {id:"pro", name:"Pro", monthly:15, annual:150, cta:"Choose Pro", cls:"",
+   feats:["Everything in Starter, plus:","Priority 12-hour build","Menu and price updates included","QR code + share link"]},
+  {id:"max", name:"Max", monthly:19, annual:190, stamp:"MOST POPULAR", cta:"Choose Max", cls:"launch",
+   feats:["Everything in Pro, plus:","Unlimited priority updates (same-day)","Seasonal and festival banner updates","Custom domain setup","Priority support"]}
+];
+let billPeriod = "monthly";
+function tierPrice(t){
+  if(billPeriod === "annual"){
+    return {amount: fmt(t.annual), per: "per year, $" + (t.annual/12).toFixed(2) + "/mo effective"};
+  }
+  return {amount: fmt(t.monthly), per: "per month"};
+}
+function renderTiers(){
+  const g = document.getElementById("tierGrid");
+  if(!g) return;
+  g.innerHTML = TIERS.map(t=>{
+    const p = tierPrice(t);
+    const fl = t.feats.map(f=>'<li><i>\u2713</i>'+esc(f)+'</li>').join("");
+    return '<div class="price-card '+t.cls+'">'
+      + (t.stamp ? '<span class="stamp">'+t.stamp+'</span>' : '')
+      + '<div class="price-name">'+t.name+'</div>'
+      + '<div class="price-amount"><bdi>'+p.amount+'</bdi></div><div class="price-per">'+p.per+'</div>'
+      + '<ul class="price-feats">'+fl+'<li><i>\u2713</i>Cancel anytime</li></ul>'
+      + '<a class="btn '+(t.cls==="launch"?"btn-ember":"btn-line")+' btn-lg" href="'+subLink(t.id, billPeriod)+'" target="_blank" rel="noopener">'+t.cta+'</a></div>';
+  }).join("");
+  const bm = document.getElementById("billM"), ba = document.getElementById("billA");
+  if(bm) bm.classList.toggle("on", billPeriod==="monthly");
+  if(ba) ba.classList.toggle("on", billPeriod==="annual");
+}
+function setBill(p){ billPeriod = p; renderTiers(); }
 async function setCurrency(cur, save){
   if(save === undefined) save = true;
   fxCur = cur;
@@ -1276,9 +1319,9 @@ function homeView(){
     ["parcel","Florists","One link for wedding clients and daily orders.",1],
     ["grocery","Corner groceries","Daily prices and offers, always current.",5]
   ].map(g=>'<button type="button" class="gal-card" onclick="fillChat('+g[3]+')"><span class="gal-ic">'+CAT[g[0]].svg+'</span><span class="gal-k">'+esc(g[1])+'</span><p class="gal-p">'+esc(g[2])+'</p><span class="gal-use">'+"Use this idea"+' &rarr;</span></button>').join("");
-  const PIPE_TXT = [["Describe your shop","Type a few lines in the box above, or just message us on Telegram. Plain words are enough."],["We build your storefront","We turn your words into a clean mobile storefront with your products, prices, and photos."],["It goes live","Your store is online within 24 hours, at its own link."],["Subscribe","From $9 a month, cancel anytime. Your store goes live before you pay anything."],["Share it and take orders","Print the QR code, share the link anywhere. Customers order straight from the page on WhatsApp."]];
+  const PIPE_TXT = [["Describe your shop","Type a few lines in the box above, or just message us on Telegram. Plain words are enough."],["We build your storefront","We turn your words into a clean mobile storefront with your products, prices, and photos."],["It goes live","Your store is online within 24 hours, at its own link."],["Pick your plan","Starter $5, Pro $15, Max $19 a month. Cancel anytime. Your store goes live before you pay anything."],["Share it and take orders","Print the QR code, share the link anywhere. Customers order straight from the page on WhatsApp."]];
   const pipe = PIPE_TXT.map((p,i)=>'<div class="pipe-row"><div class="pipe-n">0'+(i+1)+'</div><div><h3>'+esc(p[0])+'</h3><p>'+esc(p[1])+'</p></div></div>').join("");
-  const feats = ["Done-for-you storefront in 24 hours","Hosting, we keep it online","WhatsApp ordering built in","Menu and price updates included","QR code + share link"];
+  const feats = ["One-time payment, yours forever","No subscription, no commission","Storefront link and QR code included","We build it for you in 24 hours"]
     .map(f=>'<li><i>\u2713</i>'+f+'</li>').join("");
   return header()
   /* ---------- chat hero ---------- */
@@ -1286,7 +1329,7 @@ function homeView(){
   + '<span class="kick">'+"FOR SMALL SHOPS, EVERYWHERE"+'</span>'
   + '<h1 class="disp">'+"Describe your shop. "+' <span class="em">'+"Get it online."+'</span></h1>'
   + '<p class="tagline">'+"Say it, sell it."+'</p>'
-  + '<p class="sub">'+"Describe your shop in plain words. We build your storefront, put it online within 24 hours, and keep it running for one small subscription."+'</p>'
+  + '<p class="sub">'+"Describe your shop in plain words. We build your storefront, put it online within 24 hours, and keep it running for plans from $5 a month."+'</p>'
   + '<div class="chatbox"><textarea id="shopChat" rows="3" placeholder="'+"Describe your shop: what you sell, your prices, your town…"+'" aria-label="'+"Describe your shop: what you sell, your prices, your town…"+'"></textarea>'
   + '<div class="chatbar"><span class="chat-hint">'+"Free to start · No account · Pay only after your store is live"+'</span>'
   + '<button type="button" class="chat-submit" onclick="sendChat()" aria-label="'+"Continue on Telegram"+'">&uarr;</button></div></div>'
@@ -1305,26 +1348,18 @@ function homeView(){
   + '</div></div>'
   /* ---------- pricing ---------- */
   + '<div class="sec" id="pricing"><div class="wrap">'
-  + '<div class="sec-head center"><span class="kick">'+"PRICING"+'</span><h2>'+"One plan. Three ways to pay."+'</h2>'
-  + '<p class="lead" style="margin-left:auto;margin-right:auto;">'+"Your store, built for you in 24 hours, taking orders on WhatsApp. It goes live before you pay anything."+'</p>'
-  + '<p class="anchor-line">'+"Shopify costs $29/month, forever. Saylo starts at $9."+'</p></div>'
-  + '<div class="price-grid">'
-  + '<div class="price-card"><div class="price-name">'+"Monthly"+'</div><div class="price-note">'+"Cancel anytime"+'</div>'
-  + '<div class="price-amount"><bdi>'+fmt(9)+'</bdi></div><div class="price-per">'+"per month"+'</div>'
-  + '<ul class="price-feats">'+feats.map(f=>'<li>'+f+'</li>').join("")+'<li>'+"Cancel anytime"+'</li></ul>'
-  + '<a class="btn btn-line btn-lg" href="'+subLink("monthly")+'" target="_blank" rel="noopener">'+"Start monthly"+'</a></div>'
-  + '<div class="price-card launch"><span class="stamp">'+"BEST VALUE"+'</span>'
-  + '<div class="price-name">'+"Annual"+'</div><div class="price-note">'+"2 months free"+'</div>'
-  + '<div class="price-amount"><bdi>'+fmt(90)+'</bdi></div><div class="price-per">'+"per year, $7.50/mo effective"+'</div>'
-  + '<ul class="price-feats">'+feats.map(f=>'<li>'+f+'</li>').join("")+'<li>'+"Cancel anytime"+'</li></ul>'
-  + '<a class="btn btn-ember btn-lg" href="'+subLink("annual")+'" target="_blank" rel="noopener">'+"Start annual"+'</a></div>'
-  + '<div class="price-card"><span class="stamp">'+"FOUNDING"+'</span>'
-  + '<div class="price-name">'+"Lifetime"+'</div><div class="price-note">'+"Limited to the first 50"+'</div>'
-  + '<div class="price-amount"><bdi>'+fmt(499)+'</bdi></div><div class="price-per">'+"one-time payment"+'</div>'
-  + '<ul class="price-feats">'+feats.map(f=>'<li>'+f+'</li>').join("")+'<li>'+"Pay once, yours forever"+'</li></ul>'
-  + '<a class="btn btn-line btn-lg" href="'+payLink(499,42999)+'" target="_blank" rel="noopener">'+"Get lifetime"+'</a></div>'
-  + '</div>'
-  + '<div class="pay-note">'+"Secure payment via <b>PayPal</b>. Subscriptions bill automatically, cancel anytime. From $0.30 a day, less than a cup of chai."+'</div>'
+  + '<div class="sec-head center"><span class="kick">'+"PRICING"+'</span><h2>'+"One store. Pick your pace."+'</h2>'
+  + '<p class="lead" style="margin-left:auto;margin-right:auto;">'+"We build your storefront in 24 hours. You take orders on WhatsApp. It goes live before you pay anything."+'</p>'
+  + '<p class="anchor-line">'+"Shopify costs $29/month, forever. Saylo starts at $5."+'</p>'
+  + '<div class="bill-toggle" role="group" aria-label="'+"Billing period"+'">'
+  + '<button type="button" id="billM" class="bill-btn on" onclick="setBill(\'monthly\')">'+"Monthly"+'</button>'
+  + '<button type="button" id="billA" class="bill-btn" onclick="setBill(\'annual\')">'+"Annual"+' <span>'+"2 months free"+'</span></button>'
+  + '</div></div>'
+  + '<div class="price-grid" id="tierGrid"></div>'
+  + '<div class="life-banner"><div><div class="price-name">'+"Hate subscriptions? Get Max for life."+'</div>'
+  + '<div class="price-note">'+"One payment of "+'<bdi>'+fmt(499)+'</bdi>'+" for Max, forever. Limited to the first 50."+'</div></div>'
+  + '<a class="btn btn-ember btn-lg" href="'+payLink(499,41999)+'" target="_blank" rel="noopener">'+"Get lifetime"+'</a></div>'
+  + '<div class="pay-note">'+"Secure payment via <b>PayPal</b>. Cancel anytime. $5/mo is $0.17 a day."+'</div>'
   + '</div></div>'
   /* ---------- faq ---------- */
   + '<div class="sec" id="faq"><div class="wrap"><div class="sec-head"><span class="kick">'+"QUESTIONS"+'</span><h2>'+"Straight answers"+'</h2></div><div class="faq">'
@@ -1345,6 +1380,7 @@ function homeView(){
   + footer();
 }
 function afterHome(){
+  renderTiers();
   const link = location.origin + location.pathname + "#/s/" + encodeSite(SAMPLE);
   const paint = (id, size) => {
     const el = document.getElementById(id);
@@ -4074,7 +4110,7 @@ function gysView(){
   const faq = [
     ["Do I need any technical skills?", "None at all. You just chat with us on Telegram. We handle everything technical."], ["How do customers place orders?", "They browse your store on their phone and order through WhatsApp, like texting a friend."],
     ["Can I change my products later?", "Yes. Message us anytime and we will update your store for free."], ["What if I don't like the store?", "Then you pay nothing. You only pay after your store is live and you are happy."],
-    ["How do I pay?", "After your store goes live, we send you a secure payment link. Pay by card or PayPal, no account needed, and the store is fully yours once paid."]
+    ["How do I pay?", "After your store goes live, we send you a secure payment link. Starter ($5), Pro ($15) and Max ($19) bill monthly or annually through PayPal recurring, and you can cancel anytime. Lifetime ($499) is a single PayPal payment. Your store goes live before you pay anything."]
   ].map(f=>'<details><summary>'+f[0]+'</summary><div class="a">'+f[1]+'</div></details>').join("");
   return header()
   + '<div class="sec"><div class="wrap gys-hero">'
@@ -4092,16 +4128,25 @@ function gysView(){
   + '<div class="sec-head"><h2>'+"How it works"+'</h2></div>'
   + '<div class="bento">'+steps+'</div>'
   + '</div></div>'
-  + '<div class="sec"><div class="wrap" style="max-width:620px;">'
-  + '<div class="sec-head center"><h2>'+"One simple price"+'</h2></div>'
-  + '<div class="price-card launch">'
-  + '<span class="stamp">'+"LAUNCH OFFER"+'</span>'
-  + '<div class="price-amount"><bdi>'+fmt(35)+'</bdi></div>'
-  + '<div class="price-was"><s>'+fmt(79)+'</s> '+"one-time payment, yours forever"+'</div>'
-  + '<p style="margin:0 0 28px;color:#B9B0A0;">'+"The first 5 shops pay {p}. You pay only after your store is live, through the secure payment link we send you.".replace("{p}","<bdi>"+fmt(35)+"</bdi>")+'</p>'
-  + tgBtn
-  + '<div style="margin-top:14px;"><a class="btn btn-line" href="'+payLink(35,2999)+'" target="_blank" rel="noopener">'+"Pay now"+'</a></div>'
-  + '</div></div></div>'
+  + '<div class="sec"><div class="wrap" style="max-width:720px;">'
+  + '<div class="sec-head center"><h2>'+"One store. Pick your pace."+'</h2>'
+  + '<p class="lead" style="margin-left:auto;margin-right:auto;">'+"Your store goes live before you pay anything. Cancel anytime."+'</p></div>'
+  + '<div class="price-card launch" style="margin-bottom:20px;">'
+  + '<span class="stamp">'+"MOST POPULAR"+'</span>'
+  + '<div class="price-name">'+"Max"+'</div>'
+  + '<div class="price-amount"><bdi>'+fmt(19)+'</bdi></div><div class="price-per">'+"per month"+'</div>'
+  + '<p style="margin:0 0 28px;color:#B9B0A0;">'+"Everything included: priority same-day updates, seasonal banners, custom domain, priority support."+'</p>'
+  + '<a class="btn btn-ember btn-lg" href="'+subLink("max","monthly")+'" target="_blank" rel="noopener">'+"Choose Max"+'</a></div>'
+  + '<div class="gys-tiers">'
+  + '<div class="gys-tier"><div><b>'+"Starter"+"</b> "+'<bdi>'+fmt(5)+'</bdi>'+" /month</div>"
+  + '<a class="btn btn-line" href="'+subLink("starter","monthly")+'" target="_blank" rel="noopener">'+"Choose"+'</a></div>'
+  + '<div class="gys-tier"><div><b>'+"Pro"+"</b> "+'<bdi>'+fmt(15)+'</bdi>'+" /month</div>"
+  + '<a class="btn btn-line" href="'+subLink("pro","monthly")+'" target="_blank" rel="noopener">'+"Choose"+'</a></div>'
+  + '<div class="gys-tier"><div><b>'+"Lifetime"+"</b> "+'<bdi>'+fmt(499)+'</bdi>'+" once, first 50 only</div>"
+  + '<a class="btn btn-line" href="'+payLink(499,41999)+'" target="_blank" rel="noopener">'+"Get"+'</a></div>'
+  + '</div>'
+  + '<div style="text-align:center;margin-top:26px;">'+tgBtn+'</div>'
+  + '</div></div>'
   + '<div class="sec"><div class="wrap" style="max-width:760px;">'
   + '<div class="sec-head"><h2>'+"Common questions"+'</h2></div>'
   + '<div class="faq">'+faq+'</div>'
